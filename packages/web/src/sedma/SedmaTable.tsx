@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { sedmaLegalFromView, type RoomView } from '@balik/shared';
 import { CardBack } from '../cards/Card';
-import { BrandMascot } from '../brand/BrandMascot';
 import { BrandResults } from '../brand/BrandResults';
 import { EmoteBubble, ResultReactions, useEmotes } from '../brand/Emotes';
 import { brandAudio } from '../brand/audio';
-import { avatarColor } from '../lib/format';
+import { Avatar, AvatarTurnLabel } from '../avatars/Avatar';
+import { avatarTurn } from '../avatars/status';
 import { useElementSize } from '../lib/useElementSize';
 import { useApp } from '../net/store';
 import { eveningAction, leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
@@ -73,8 +73,8 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
         const isCurrent = view.phase === 'playing' && view.currentPlayerId === p.id;
         const message = emotes.find((m) => m.playerId === p.id);
         return <div key={p.id} className={`sedma-seat sedma-team-${p.team}${isCurrent ? ' is-current' : ''}`} style={{ left: seat.x, top: seat.y + geo.cardH * geo.oppScale * .56 + 8 }}>
-          <span className="avatar sm" style={{ background: avatarColor(p.id) }}>{name(p.id).slice(0, 1)}</span>
-          <span><b>{name(p.id)}</b><small>Tým {p.team + 1} · {(display.hands[p.id] ?? []).length} karty{room.players.find((r) => r.id === p.id)?.connected ? '' : ' · odpojeno'}</small></span>
+          <Avatar player={room.players.find(r => r.id === p.id) ?? { id: p.id, name: name(p.id) }} size={32} turn={avatarTurn(room, p.id, status === 'open')} reduced={quiet} />
+          <span><b>{name(p.id)}</b><AvatarTurnLabel turn={avatarTurn(room, p.id, status === 'open')} /><small>Tým {p.team + 1} · {(display.hands[p.id] ?? []).length} karty{room.players.find((r) => r.id === p.id)?.connected ? '' : ' · odpojeno'}</small></span>
           {message && <EmoteBubble message={message} author={name(p.id)} />}
         </div>;
       })}
@@ -96,7 +96,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
         {name(display.resolution.winnerId)} bere štych · +{display.resolution.points}
       </motion.div>}</AnimatePresence>
       <div className={`sedma-controls sedma-team-${myTeam}`} style={{ top: geo.controlY }}>
-        <BrandMascot state={display.resolution ? 'celebrate' : !idle ? 'deal' : canAct ? 'thinking' : 'idle'} size={28} reduced={quiet} />
+        <Avatar player={room.players.find(p => p.id === me) ?? { id: me, name: name(me) }} size={30} turn={avatarTurn(room, me, status === 'open')} reduced={quiet} />
         <span className="sedma-turn" role="status">{view.phase === 'finished' ? 'Konec partie' : !idle ? 'Karty jsou v pohybu…' : canAct ? truth.deciding ? 'Ukončit, nebo pokračovat?' : 'Jsi na tahu' : `${name(view.currentPlayerId)} je na tahu`}<small>Tým {myTeam + 1} · {truth.deciding ? 'Pokračování: sedma nebo původní hodnota' : 'Hraješ jakoukoli kartu'}</small></span>
         {canCollect && <button className="btn btn-primary" onClick={() => sendAction({ type: 'collect' })}>Ukončit štych</button>}
         {selected && <button className="btn btn-primary" onClick={() => { const card = (display.hands[me] ?? []).find((e) => e.key === selected)?.card; if (card) play(card.id); }}>Zahrát</button>}

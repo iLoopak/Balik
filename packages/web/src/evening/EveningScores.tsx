@@ -1,5 +1,5 @@
 import { eveningSummary, gameName, type AnyRoomView, type EveningMatch, type EveningView } from '@balik/shared';
-import { avatarColor } from '../lib/format';
+import { Avatar } from '../avatars/Avatar';
 import './evening.css';
 
 export function EveningScores({ room, compact = false }: { room: AnyRoomView; compact?: boolean }) {
@@ -11,7 +11,7 @@ export function EveningScores({ room, compact = false }: { room: AnyRoomView; co
   return <section className={`evening-scoreboard${compact ? ' is-compact' : ''}`} aria-label="Skóre večera">
     <h2>Společné skóre <small>{evening.completedMatches} odehraných partií</small></h2>
     <ol tabIndex={0} aria-label="Výsledky hráčů">{rows.map((p) => <li key={p.id}>
-      <span className="avatar sm" style={{background:avatarColor(p.id)}} aria-hidden>{p.name.slice(0,1)}</span>
+      <Avatar player={room.players.find(seat => seat.id === p.id) ?? p} size={32} winner={evening.history.at(-1)?.winnerIds.includes(p.id)} />
       <span className="evening-score-name"><b>{p.name}{p.id === room.you ? ' (ty)' : ''}</b><small>{room.players.some((seat) => seat.id === p.id) ? '' : 'Mimo stůl · '}{p.played} partií{p.teamWins ? ` · ${p.teamWins} týmových výher` : ''}{p.streak > 1 ? ` · série ${p.streak}` : ''}</small></span>
       <strong>{p.wins}<small>výher</small></strong>
     </li>)}</ol>

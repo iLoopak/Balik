@@ -1,7 +1,8 @@
-import type { ClientMessage, GameAction, GameId, ServerMessage, EmoteMessage, EmoteId } from '@balik/shared';
+import type { AvatarId, ClientMessage, GameAction, GameId, ServerMessage, EmoteMessage, EmoteId } from '@balik/shared';
 import { forgetRoom, getToken, rememberRoom, saveName } from '../lib/identity';
 import { navigate, showToast, useApp } from './store';
 import { createGameTransport } from './transports/factory';
+import { useAvatarPreference } from '../avatars/preferences';
 import type { GameTransport } from './transports/types';
 
 export type StateMessage = Extract<ServerMessage, { t: 'state' }>;
@@ -14,6 +15,7 @@ const PENDING_TIMEOUT_MS = 5_000;
 const listeners = new Set<(msg: StateMessage) => void>();
 const socialListeners = new Set<(msg: EmoteMessage) => void>();
 export function onEmote(listener: (msg: EmoteMessage) => void) { socialListeners.add(listener); return () => { socialListeners.delete(listener); }; }
+export function sendAvatar(avatarId: AvatarId) { return send({ t: 'profile', avatarId }); }
 export function sendEmote(emote: EmoteId) { return send({ t: 'emote', emote }); }
 export function returnToLobby() { sendGuarded({ t: 'lobby', round: useApp.getState().room?.round }); }
 let transport: GameTransport | null = null;
@@ -121,8 +123,8 @@ function sendIntentOrConnect() {
 function sendIntent() {
   if (!intent) return;
   const token = getToken();
-  if (intent.kind === 'create') send({ t: 'create', token, name: intent.name, bots: intent.bots || undefined, gameId: intent.gameId, sedmaBonus: intent.sedmaBonus });
-  else send({ t: 'join', token, name: intent.name, code: intent.code });
+  if (intent.kind === 'create') send({ t: 'create', token, avatarId: useAvatarPreference.getState().avatarId, name: intent.name, bots: intent.bots || undefined, gameId: intent.gameId, sedmaBonus: intent.sedmaBonus });
+  else send({ t: 'join', token, avatarId: useAvatarPreference.getState().avatarId, name: intent.name, code: intent.code });
 }
 
 async function connect() {

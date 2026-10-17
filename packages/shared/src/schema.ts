@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { RANKS, SUITS } from './cards';
 import { GAME_IDS } from './games';
 import { EMOTE_IDS } from './social';
+import { AVATAR_IDS } from './avatars';
 import { MAX_BOTS, MAX_NAME_LENGTH, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from './protocol';
 
 // Runtime validation of client messages. Server-only entry point (`@balik/shared/schema`)
@@ -31,15 +32,16 @@ export const gameActionSchema = z.union([prsiActionSchema, z.object({ type: z.li
 const round = z.number().int().nonnegative().optional();
 
 export const clientMessageSchema = z.discriminatedUnion('t', [
+  z.object({ t: z.literal('profile'), avatarId: z.enum(AVATAR_IDS) }),
   z.object({ t: z.literal('vote'), ballotId: z.number().int().nonnegative(), gameId: z.enum(GAME_IDS) }),
   z.object({ t: z.literal('evening'), baseRevision: z.number().int().nonnegative(), action: z.enum(['between','openVote','close','confirm']), gameId: z.enum(GAME_IDS).optional() }).refine((m) => m.action !== 'confirm' || !!m.gameId),
   z.object({ t: z.literal('emote'), emote: z.enum(EMOTE_IDS) }),
   z.object({ t: z.literal('lobby'), round }),
   /** `bots` > 0 = single player: the room gets computer opponents and starts right away. */
-  z.object({ t: z.literal('create'), token, name, gameId: z.enum(GAME_IDS).optional(), sedmaBonus: z.union([z.literal(0), z.literal(10)]).optional(), bots: z.number().int().min(0).max(MAX_BOTS).optional() }),
+  z.object({ t: z.literal('create'), token, name, avatarId: z.enum(AVATAR_IDS).optional(), gameId: z.enum(GAME_IDS).optional(), sedmaBonus: z.union([z.literal(0), z.literal(10)]).optional(), bots: z.number().int().min(0).max(MAX_BOTS).optional() }),
   z.object({ t: z.literal('addBot'), round }),
   z.object({ t: z.literal('removeBot'), round, playerId: z.string().min(1).max(64) }),
-  z.object({ t: z.literal('join'), token, name, code }),
+  z.object({ t: z.literal('join'), token, name, code, avatarId: z.enum(AVATAR_IDS).optional() }),
   z.object({ t: z.literal('start'), round }),
   z.object({ t: z.literal('act'), baseSeq: z.number().int().nonnegative(), action: gameActionSchema }),
   z.object({ t: z.literal('rematch'), round }),

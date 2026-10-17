@@ -6,6 +6,8 @@
   "outputDirectory": "packages/web/dist",
   "rewrites": [
     { "source": "/r/:code", "destination": "/index.html" },
+    { "source": "/decks/retro-arcade", "destination": "/index.html" },
+    { "source": "/decks/retro-arcade/", "destination": "/index.html" },
     { "source": "/dev/:path*", "destination": "/index.html" }
   ]
 }

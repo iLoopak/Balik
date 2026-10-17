@@ -3,7 +3,7 @@ import {
   ROOM_MAX_PLAYERS,
   ROOM_CODE_ALPHABET,
   ROOM_CODE_LENGTH,
-  MAX_BOTS,
+  MAX_BOTS, BOT_AVATAR_IDS, defaultAvatarId, type AvatarId,
   createEvening, ensureRoomEvening, eveningView, applyEveningCommand, beginEveningMatch, finishEveningMatch, EveningError, type EveningState, type EveningCommand,
   emoteAllowed, EMOTE_TTL_MS, type EmoteId,
   applyGameAction as applyAction,
@@ -32,6 +32,7 @@ export interface Conn {
 
 interface Player {
   lastEmoteAt: number | null;
+  avatarId?: AvatarId;
   /** Public id, visible to everyone. */
   id: string;
   /** Secret reconnect token, never sent to other players. */
@@ -177,6 +178,11 @@ export class RoomManager {
   handle(conn: Conn, msg: ClientMessage): void {
     switch (msg.t) {
       case 'vote': case 'evening': return this.eveningCommand(conn, msg);
+      case 'profile': {
+        const ctx = this.context(conn); if (!ctx || ctx.player.avatarId === msg.avatarId) return;
+        ctx.player.avatarId = msg.avatarId;
+        this.broadcast(ctx.room, []); return;
+      }
       case 'emote': return this.emote(conn, msg.emote);
       case 'lobby': {
         const ctx = this.context(conn); if (!ctx) return;
@@ -193,13 +199,13 @@ export class RoomManager {
         conn.send({ t: 'pong' });
         return;
       case 'create':
-        return this.create(conn, msg.token, msg.name, msg.bots ?? 0, msg.gameId ?? 'prsi', msg.sedmaBonus ?? 10);
+        return this.create(conn, msg.token, msg.name, msg.bots ?? 0, msg.gameId ?? 'prsi', msg.sedmaBonus ?? 10, msg.avatarId);
       case 'addBot':
         return this.addBot(conn, msg.round);
       case 'removeBot':
         return this.removeBot(conn, msg.playerId, msg.round);
       case 'join':
-        return this.join(conn, msg.code, msg.token, msg.name);
+        return this.join(conn, msg.code, msg.token, msg.name, msg.avatarId);
       case 'start':
       case 'rematch':
         return this.start(conn, msg.round);
@@ -250,11 +256,12 @@ export class RoomManager {
     }
   }
 
-  private create(conn: Conn, token: string, name: string, bots: number, gameId: GameId, sedmaBonus: 0 | 10): void {
+  private create(conn: Conn, token: string, name: string, bots: number, gameId: GameId, sedmaBonus: 0 | 10, avatarId?: AvatarId): void {
     if (bots && !canStartGame(gameId, bots + 1)) return this.error(conn, 'not-enough-players', 'Sedma potřebuje přesně 2 nebo 4 hráče.');
     this.detach(conn);
     const code = this.newCode();
     const player = this.newPlayer(token, name, conn);
+    player.avatarId = avatarId ?? defaultAvatarId(player.id);
     const room: Room = {
       code, gameId, sedmaBonus, evening: createEvening(this.now()),
       players: [player], departed: [],
@@ -300,7 +307,7 @@ export class RoomManager {
     this.removeFromRoom(room, botId);
   }
 
-  private join(conn: Conn, code: string, token: string, name: string): void {
+  private join(conn: Conn, code: string, token: string, name: string, avatarId?: AvatarId): void {
     const room = this.rooms.get(code);
     if (!room) return this.error(conn, 'room-not-found');
     const existing = room.players.find((p) => p.token === token);
@@ -312,6 +319,7 @@ export class RoomManager {
       }
       existing.conn = conn;
       existing.disconnectedAt = null;
+      if (avatarId) existing.avatarId = avatarId;
       if (room.status === 'lobby') existing.name = name;
       room.emptySince = null;
       this.seats.set(conn, { code, playerId: existing.id });
@@ -326,6 +334,7 @@ export class RoomManager {
     this.detach(conn);
     const retired = room.departed.find((p) => p.token === token);
     const player = retired ? { ...retired, name, conn, disconnectedAt: null } : this.newPlayer(token, name, conn);
+    player.avatarId = avatarId ?? player.avatarId ?? defaultAvatarId(player.id);
     room.departed = room.departed.filter((p) => p.token !== token);
     room.players.push(player);
     room.emptySince = null;
@@ -489,7 +498,7 @@ export class RoomManager {
       you: viewerId,
       hostId: room.hostId,
       status: room.status,
-      players: room.players.map((p) => ({ id: p.id, name: p.name, connected: p.bot || !!p.conn, wins: p.wins, bot: p.bot })),
+      players: room.players.map((p) => ({ id: p.id, name: p.name, connected: p.bot || !!p.conn, wins: p.wins, bot: p.bot, avatarId: p.avatarId ?? defaultAvatarId(p.id, p.bot) })),
       round: room.round,
       seq: room.seq,
       game: room.game ? viewFor(room.game, viewerId) : null,
@@ -546,7 +555,7 @@ export class RoomManager {
   private newBot(room: Room): Player {
     const used = new Set(room.players.map((p) => p.name));
     const name = BOT_NAMES.find((n) => !used.has(n)) ?? `Bot ${room.players.length}`;
-    return { id: randomBytes(6).toString('base64url'), token: randomBytes(16).toString('base64url'), name, conn: null, disconnectedAt: null, wins: 0, bot: true, lastEmoteAt: null };
+    return { id: randomBytes(6).toString('base64url'), token: randomBytes(16).toString('base64url'), name, avatarId: BOT_AVATAR_IDS[BOT_NAMES.indexOf(name)] ?? BOT_AVATAR_IDS[0], conn: null, disconnectedAt: null, wins: 0, bot: true, lastEmoteAt: null };
   }
 
   private newCode(): string {

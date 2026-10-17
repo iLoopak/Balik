@@ -3,7 +3,7 @@ import { BrandMascot } from '../brand/BrandMascot';
 import { AppSettings } from '../themes/AppearancePicker';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
 import { useMotionPref } from '../lib/motionPref';
-import { avatarColor } from '../lib/format';
+import { Avatar } from '../avatars/Avatar';
 import { addBot, eveningAction, leaveRoom, rematch, removeBot, voteGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import { EveningHistory, EveningScores, EveningSummary, MatchDetail } from './EveningScores';
@@ -29,7 +29,7 @@ export function EveningScreen({room}: {room: AnyRoomView}) {
     <div className="evening-layout">
       <section className={`evening-feature${closed ? ' is-closed' : ''}`} aria-labelledby="evening-title">
         <div className="evening-welcome"><BrandMascot state={closed ? summary.winners.includes(room.you) ? 'celebrate' : 'idle' : voting ? 'thinking' : streak >= 2 ? 'celebrate' : 'deal'} size={88} reduced={reduced}/><div><p className="evening-kicker">JEDNA PARTA. JEDEN BALÍK.</p><h1 id="evening-title" className="brand-word">{closed ? 'To byl večer.' : voting ? 'Co dáme dál?' : 'Ještě jednu?'}</h1><p>{closed ? winnerNames ? `Večer vyhrává ${winnerNames}.` : 'Díky za společnou hru.' : streak >= 2 ? `Tvoje série: ${streak} výher. Balík je v pohybu.` : 'Stejná parta, stejný kód. Další hra může začít.'}</p></div></div>
-        <div className="evening-party" aria-label="Parta u stolu">{room.players.map((p) => <div key={p.id} className={p.connected ? '' : 'is-offline'}><span className="avatar" style={{background:avatarColor(p.id)}}>{p.name.slice(0,1)}</span><span>{p.name}{p.id === room.you ? ' (ty)' : ''}<small>{p.id === room.hostId ? 'Hostitel · ' : ''}{p.bot ? 'Počítač' : p.connected ? 'Připojeno' : 'Místo čeká na návrat'}</small></span>{host && p.bot && !closed && <button className="evening-remove-bot" onClick={()=>removeBot(p.id)} disabled={disabled} aria-label={`Odebrat ${p.name}`}>×</button>}</div>)}</div>
+        <div className="evening-party" aria-label="Parta u stolu">{room.players.map((p) => <div key={p.id} className={p.connected ? '' : 'is-offline'}><Avatar player={p} size={44} winner={closed && summary.winners.includes(p.id)} ready={!closed && p.connected} reduced={reduced} /><span>{p.name}{p.id === room.you ? ' (ty)' : ''}<small>{p.id === room.hostId ? 'Hostitel · ' : ''}{p.bot ? 'Počítač' : p.connected ? 'Připojeno' : 'Místo čeká na návrat'}</small></span>{host && p.bot && !closed && <button className="evening-remove-bot" onClick={()=>removeBot(p.id)} disabled={disabled} aria-label={`Odebrat ${p.name}`}>×</button>}</div>)}</div>
         {!closed && room.players.length < 4 && host && <button className="btn btn-ghost" disabled={disabled} onClick={addBot}>+ Přidat počítač</button>}
         <div className="evening-emotes">{emotes.map((m) => <div key={m.id}><b>{room.players.find((p)=>p.id===m.playerId)?.name}</b><EmoteBubble message={m} author={room.players.find((p)=>p.id===m.playerId)?.name ?? 'Hráč'}/></div>)}</div>
         {closed ? <><EveningSummary evening={e}/><button className="btn btn-primary wide" onClick={leaveRoom}>Zpět na úvod</button></> : voting ? <>

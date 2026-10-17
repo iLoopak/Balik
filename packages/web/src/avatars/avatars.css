@@ -1,0 +1,275 @@
+.player-avatar {
+  --avatar-size: 40px;
+  display: inline-flex;
+  width: var(--avatar-size);
+  height: var(--avatar-size);
+  position: relative;
+  flex: none;
+  vertical-align: middle;
+  isolation: isolate;
+}
+.player-avatar-disk {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--avatar-color) 22%, #182132);
+  border: 1px solid color-mix(in srgb, var(--avatar-color) 38%, transparent);
+}
+.player-avatar-portrait {
+  position: absolute;
+  inset: -6% 0 0;
+  border-radius: 0 0 48% 48%;
+  overflow: hidden;
+}
+.player-avatar-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+}
+.player-avatar-fallback {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: #fff2d8;
+  font-weight: 800;
+  font-size: calc(var(--avatar-size) * 0.45);
+}
+.player-avatar-ring {
+  pointer-events: none;
+  position: absolute;
+  inset: -4px;
+  border: 2px solid var(--avatar-color);
+  border-radius: 50%;
+  opacity: 0;
+  transition:
+    opacity 0.22s,
+    box-shadow 0.22s;
+}
+.player-avatar[data-turn='self'] .player-avatar-ring,
+.player-avatar[data-turn='thinking'] .player-avatar-ring {
+  opacity: 1;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--avatar-color) 35%, transparent);
+}
+.player-avatar[data-winner='true'] .player-avatar-ring {
+  opacity: 1;
+  border-color: #ffd074;
+  box-shadow: 0 0 16px #ffc85a55;
+}
+.player-avatar[data-offline='true'] .player-avatar-disk {
+  filter: grayscale(0.9);
+  opacity: 0.6;
+}
+.player-avatar-badge {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  z-index: 3;
+  width: calc(var(--avatar-size) * 0.34);
+  min-width: 13px;
+  height: calc(var(--avatar-size) * 0.34);
+  min-height: 13px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #ffd074;
+  color: #192132;
+  border: 1px solid #192132;
+  font-size: calc(var(--avatar-size) * 0.22);
+  font-weight: 900;
+  line-height: 1;
+}
+.player-avatar-badge.is-bot {
+  background: #c8d9e7;
+}
+.player-avatar[data-offline='true'] .player-avatar-badge {
+  background: #c1bac4;
+}
+.player-avatar[data-danger='true'] .player-avatar-ring {
+  opacity: 1;
+  border-color: #f48b74;
+}
+.avatar-thinking {
+  position: absolute;
+  width: 34px;
+  height: 22px;
+  top: -15px;
+  right: -10px;
+  z-index: 4;
+  opacity: 0;
+  transform: translateY(3px) scale(0.8);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  pointer-events: none;
+}
+.player-avatar[data-turn='thinking'] .avatar-thinking {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+.avatar-thinking i {
+  position: absolute;
+  width: 12px;
+  height: 17px;
+  left: calc(var(--i) * 9px);
+  top: calc(4px - var(--i) * 2px);
+  border: 1px solid #fff0cb;
+  border-radius: 3px;
+  background: #24364b;
+  transform: rotate(calc((var(--i) - 1) * 13deg));
+  box-shadow: 0 1px 3px #10142180;
+  display: grid;
+  place-items: center;
+}
+.avatar-thinking b {
+  color: #ffc668;
+  font-size: 7px;
+  font-style: normal;
+}
+.player-avatar[data-turn='thinking']:not([data-reduced='true']) .avatar-thinking i {
+  animation: avatar-card-float 1.8s ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.18s);
+}
+@keyframes avatar-card-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -4px;
+  }
+}
+.player-avatar-reaction {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  z-index: 5;
+}
+.avatar-turn-label {
+  display: block;
+  color: #ffce83;
+  font-size: 10px;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.sedma-seat .avatar-turn-label,
+.lhar-seat .avatar-turn-label {
+  color: #ffce83;
+  font-size: 10px;
+}
+.player-avatar .avatar-thinking b {
+  font-size: 7px;
+  line-height: 1;
+  overflow: visible;
+}
+.lhar-seat > span:not(.player-avatar) {
+  min-width: 0;
+}
+.avatar-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 20px 0;
+}
+.avatar-choice-grid > button {
+  position: relative;
+  border: 1px solid #8d9aaf30;
+  border-radius: 14px;
+  padding: 18px 5px 10px;
+  background: #101621;
+  color: #eef0f4;
+  cursor: pointer;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 8px;
+}
+.avatar-choice-grid > button:hover {
+  background: #232d40;
+}
+.avatar-choice-grid > button[aria-pressed='true'] {
+  border-color: #ffbf59;
+  background: #303040;
+  box-shadow: inset 0 0 0 1px #ffbf59;
+}
+.avatar-choice-grid strong {
+  font-size: 13px;
+}
+.avatar-choice-grid small {
+  color: #b9c0ce;
+  font-size: 10px;
+  line-height: 1.25;
+}
+.avatar-choice-check {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  color: #ffbf59;
+  font-weight: 900;
+}
+.avatar-picker-dialog {
+  max-width: 720px;
+}
+.avatar-picker-open .player-avatar {
+  pointer-events: none;
+}
+.avatar-playground {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+  color: #e9edf2;
+}
+.avatar-demo-row {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 36px 0;
+}
+.avatar-demo-row figure {
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+.avatar-demo-row figcaption {
+  font-size: 12px;
+  color: #adb8c9;
+}
+@media (max-width: 480px) {
+  .avatar-choice-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+  .avatar-choice-grid .player-avatar {
+    --avatar-size: 54px !important;
+  }
+}
+@media (max-width: 699px) {
+  .sedma-seat .player-avatar,
+  .lhar-seat .player-avatar {
+    --avatar-size: 24px !important;
+  }
+  .sedma-seat .avatar-turn-label,
+  .lhar-seat .avatar-turn-label {
+    font-size: 8px;
+  }
+  .lhar-seat b {
+    max-width: 66px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .player-avatar .avatar-thinking i {
+    animation: none !important;
+  }
+  .avatar-thinking,
+  .player-avatar-ring {
+    transition: none;
+  }
+}
+.player-avatar[data-reduced='true'] .avatar-thinking,
+.player-avatar[data-reduced='true'] .player-avatar-ring {
+  transition: none;
+}

@@ -36,6 +36,34 @@ class StubConn implements Conn {
 
 const tok = (n: number) => `token-${String(n).padStart(12, '0')}`;
 
+describe('public cosmetic identity', () => {
+  it('validates ids and cannot target another seat or inject an asset URL', () => {
+    for (const avatarId of ['https://evil.test/avatar.png', '../sova', '__proto__', '', 7]) {
+      expect(clientMessageSchema.safeParse({ t: 'profile', avatarId }).success).toBe(false);
+    }
+    expect(clientMessageSchema.parse({ t: 'profile', avatarId: 'sova', playerId: 'other' })).toEqual({ t: 'profile', avatarId: 'sova' });
+  });
+  it('broadcasts avatars, preserves game views and reconnects with the saved identity', () => {
+    const s = setup(); const [a, b] = s.conns as [StubConn, StubConn];
+    s.rooms.handle(a, { t: 'profile', avatarId: 'vega' });
+    s.rooms.handle(b, { t: 'profile', avatarId: 'sova' });
+    s.rooms.handle(a, { t: 'start' });
+    const before = structuredClone(a.last);
+    s.rooms.handle(b, { t: 'profile', avatarId: 'gambit' });
+    expect(a.last.players.find(p => p.id === b.last.you)?.avatarId).toBe('gambit');
+    expect(a.last.players.find(p => p.id === a.last.you)?.avatarId).toBe('vega');
+    expect(a.last.game).toEqual(before.game);
+    expect(a.last.evening).toEqual(before.evening);
+    expect(a.last.seq).toBe(before.seq);
+    expect(a.states.at(-1)).toMatchObject({ reset: false, events: [] });
+    s.rooms.disconnect(b);
+    const replacement = new StubConn();
+    s.rooms.handle(replacement, { t: 'join', code: s.code, token: tok(1), name: 'P1' });
+    expect(replacement.last.players.find(p => p.id === replacement.last.you)?.avatarId).toBe('gambit');
+    expect(replacement.last.game).toEqual(b.last.game);
+  });
+});
+
 function setup(players = 2) {
   let now = 1_000_000;
   const rooms = new RoomManager({ rng: mulberry32(1), now: () => now });

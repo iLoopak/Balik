@@ -8,13 +8,21 @@ import { GameFeelPlayground } from './effects/GameFeelPlayground';
 import { lazy, Suspense, useEffect } from 'react';
 import { BrandInteraction } from './brand/BrandInteraction';
 import { preloadDeck, useAppearance } from './themes/preferences';
+const ArcadeGallery = lazy(() => import('./decks/ArcadeGallery'));
+const AvatarPlayground = import.meta.env.DEV ? lazy(() => import('./avatars/AvatarPlayground')) : null;
 const DeckLab = import.meta.env.DEV ? lazy(() => import('./dev/DeckLab')) : null;
 const BrandPlayground = import.meta.env.DEV ? lazy(() => import('./dev/BrandPlayground')) : null;
 
 export function App() {
-  const deck = useAppearance(p => p.deck);
-  useEffect(() => preloadDeck(deck), [deck]);
+  const deck = useAppearance((p) => p.deck);
   const path = useApp((s) => s.path);
+  const arcadeGallery = path.replace(/\/$/, '') === '/decks/retro-arcade';
+  const assetDeck = arcadeGallery
+    ? 'retro-arcade'
+    : path.replace(/\/$/, '') === '/dev/deck-stormpunk'
+      ? 'stormpunk'
+      : deck;
+  useEffect(() => preloadDeck(assetDeck), [assetDeck]);
   const toast = useApp((s) => s.toast);
   const { pref } = useMotionPref();
   const code = roomCodeFromPath(path);
@@ -22,7 +30,31 @@ export function App() {
   return (
     <MotionConfig reducedMotion={pref === 'reduced' ? 'always' : 'user'}>
       <BrandInteraction />
-      {DeckLab && path.replace(/\/$/, '') === '/dev/decks' ? <Suspense fallback={<p>Načítám edice…</p>}><DeckLab /></Suspense> : BrandPlayground && path.replace(/\/$/, '') === '/dev/brand' ? <Suspense fallback={<p>Načítám náhled…</p>}><BrandPlayground /></Suspense> : path.replace(/\/$/, '') === '/dev/deck-stormpunk' ? <DeckGallery /> : path.replace(/\/$/, '') === '/dev/game-feel' ? <GameFeelPlayground /> : code ? <RoomScreen key={code} code={code} /> : <Home />}
+      {AvatarPlayground && path.replace(/\/$/, '') === '/dev/avatars' ? (
+        <Suspense fallback={<p>Načítám postavy…</p>}>
+          <AvatarPlayground />
+        </Suspense>
+      ) : arcadeGallery ? (
+        <Suspense fallback={<p>Načítám sbírku…</p>}>
+          <ArcadeGallery />
+        </Suspense>
+      ) : DeckLab && path.replace(/\/$/, '') === '/dev/decks' ? (
+        <Suspense fallback={<p>Načítám edice…</p>}>
+          <DeckLab />
+        </Suspense>
+      ) : BrandPlayground && path.replace(/\/$/, '') === '/dev/brand' ? (
+        <Suspense fallback={<p>Načítám náhled…</p>}>
+          <BrandPlayground />
+        </Suspense>
+      ) : path.replace(/\/$/, '') === '/dev/deck-stormpunk' ? (
+        <DeckGallery />
+      ) : path.replace(/\/$/, '') === '/dev/game-feel' ? (
+        <GameFeelPlayground />
+      ) : code ? (
+        <RoomScreen key={code} code={code} />
+      ) : (
+        <Home />
+      )}
       <div className="toast-host" aria-live="polite">
         <AnimatePresence>
           {toast && (

@@ -5,6 +5,7 @@ export * from './prsi/engine';
 export * from './prsi/view';
 export * from './prsi/bot';
 export * from './social';
+export * from './avatars';
 
 export * from "./games";
 export * from "./sedma/types";

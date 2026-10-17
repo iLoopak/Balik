@@ -240,3 +240,16 @@ Lhář sdílí lobby, pozvánky, avatary/značku, emotes, odvetu, obě edice a H
 
 **W5 vyžaduje deploy frontendu i Supabase funkce `game`** (`npm run build:supabase`,
 pak `supabase functions deploy game --project-ref <project-ref>`). SQL a env se nemění.
+
+
+## Postavy BALÍKu a veřejná galerie Arcade
+
+- 16 hráčských postav + 4 rozdílné robotí portréty; volba přes **Postava** v nastavení.
+- Avatar se přenáší spoluhráčům, uchová při reconnectu a funguje napříč hrami i edicemi.
+- Aktivní ring a přemýšlející mini kartičky vycházejí z veřejného tahu; omezený pohyb má statickou variantu.
+- `/dev/avatars`: vývojový přehled všech postav, pickeru, stavů a velikostí.
+- `/decks/retro-arcade`: veřejná produkční galerie všech 32 karet, dostupná z úvodu.
+- [Architektura, prompty, rozšíření, QA a nasazení](docs/brand/AVATARS.md).
+
+Tato změna vyžaduje nový frontend **i Supabase funkci `game`** (nebo Node server).
+SQL, bucket ani proměnné prostředí nepřibývají.

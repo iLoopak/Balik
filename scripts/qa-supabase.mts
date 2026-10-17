@@ -44,9 +44,9 @@ function client(tab = crypto.randomUUID()) {
 try {
   const a = client(), b = client();
   await Promise.all([a.connected(), b.connected()]);
-  a.send({ t: 'create', name: 'Ada', token: 'qa-token-player-a-123' });
+  a.send({ t: 'create', name: 'Ada', token: 'qa-token-player-a-123', avatarId: 'vega' });
   const initial = await a.state(); const code = initial.room.code;
-  b.send({ t: 'join', name: 'Max', token: 'qa-token-player-b-123', code });
+  b.send({ t: 'join', name: 'Max', token: 'qa-token-player-b-123', code, avatarId: 'sova' });
   await Promise.all([a.state((r) => r.players.length === 2), b.state((r) => r.players.length === 2)]);
   a.send({ t: 'emote', emote: 'nice' });
   await Promise.all([wait(() => a.messages.find((m) => m.t === 'emote'), 'sender emote'), wait(() => b.messages.find((m) => m.t === 'emote' && m.emote === 'nice'), 'opponent emote')]);
@@ -57,6 +57,17 @@ try {
   assert.equal(aStart.room.game!.myHand!.length, 4);
   assert.equal(bStart.room.game!.myHand!.length, 4);
   for (const card of bStart.room.game!.myHand!) assert.ok(!JSON.stringify(aStart).includes(`"${card.id}"`), 'No opponent hand leaks');
+
+  b.send({ t: 'profile', avatarId: 'gambit' });
+  const [profileA, profileB] = await Promise.all([a.state(r => r.players.find(p => p.id === bStart.room.you)?.avatarId === 'gambit'), b.state(r => r.players.find(p => p.id === bStart.room.you)?.avatarId === 'gambit')]);
+  assert.equal(profileA.room.seq, aStart.room.seq);
+  assert.deepEqual(profileA.room.game, aStart.room.game);
+  assert.deepEqual(profileB.room.game, bStart.room.game);
+  assert.deepEqual(profileA.room.evening, aStart.room.evening);
+  assert.deepEqual(profileA.events, []);
+  assert.equal(profileA.reset, false);
+  a.send({ t: 'profile', avatarId: 'mina' });
+  await Promise.all([a.state(r => r.players.find(p => p.id === aStart.room.you)?.avatarId === 'mina'), b.state(r => r.players.find(p => p.id === aStart.room.you)?.avatarId === 'mina')]);
 
   // Repeat the actual action HTTP request concurrently; its UUID must make it idempotent.
   const originalFetch = globalThis.fetch;
@@ -84,6 +95,7 @@ try {
   resumed.send({ t: 'join', name: 'Ada', token: 'qa-token-player-a-123', code });
   const snapshot = await resumed.state();
   assert.equal(snapshot.room.you, aStart.room.you);
+  assert.equal(snapshot.room.players.find(p => p.id === snapshot.room.you)?.avatarId, 'mina');
   assert.deepEqual(snapshot.room.game!.myHand, aDraw.room.game!.myHand);
   assert.equal(snapshot.reset, true); assert.deepEqual(snapshot.events, []);
   assert.equal(resumed.messages.some((m) => m.t === 'emote'), false, 'Reconnect does not replay old emotes');
@@ -252,7 +264,7 @@ try {
     seats.forEach(p=>p.send({t:'leave'}));await Promise.all(seats.map(p=>wait(()=>p.messages.find(m=>m.t==='left'),'Lhar leave')));
     seats.forEach(p=>p.transport.close());
   }
-  console.log('PASS: Supabase Auth/JWT/RLS, idempotency, emotes, bots; Sedma 1v1/2v2; full Prší → Sedma → Prší evening, concurrent votes, reconnect, exact history/stats and closing summary.');
+  console.log('PASS: Supabase Auth/JWT/RLS, idempotency, cosmetic profile propagation/reconnect, emotes, bots; Sedma 1v1/2v2; full Prší → Sedma → Prší evening, concurrent votes, reconnect, exact history/stats and closing summary.');
 } finally {
   transports.forEach((transport) => transport.close());
   await anon.removeAllChannels(); anon.auth.stopAutoRefresh();
