@@ -6,6 +6,7 @@ import type { EffectEvent, EffectInstance } from './effectEvents';
 import { EFFECT_PRESETS, primitiveTransition } from './effectPresets';
 import { EFFECT_BUDGET, effectQuality, effectTheme, particleBudget, type EffectQuality } from './effectTokens';
 import './effects.css';
+import { useAppearance } from '../themes/preferences';
 
 export function playerEffectAnchor(geo: Geometry, id?: string, me?: string): Pt {
   if (!id) return geo.discard;
@@ -20,6 +21,7 @@ function Anchor({ at, size, color, children, className = '' }: { at: Pt; size: n
 }
 
 const SHAPES = {
+  pixel: 'M46 8h8v8h-8Z',
   spark: 'M50 7 53 16 50 23 47 16Z',
   dash: 'M47 8h6v17h-6Z',
   leaf: 'M50 7q12 8 0 19Q38 15 50 7Z',
@@ -154,6 +156,7 @@ function EffectVisual({ item, geo, me, quality }: { item: EffectInstance; geo: G
 export function EffectOrchestrator({ items, geo, me, reduced = false, lite = false }: {
   items: readonly EffectInstance[]; geo: Geometry; me: string; reduced?: boolean; lite?: boolean;
 }) {
+  useAppearance(p => p.deck);
   const quality = effectQuality(reduced, lite, geo.compact);
   const visible = items.slice(-EFFECT_BUDGET.concurrent);
   return <div className={`game-fx-layer fx-quality-${quality}`} data-effect-quality={quality} aria-hidden="true">

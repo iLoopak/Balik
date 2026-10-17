@@ -298,3 +298,13 @@
 @media (prefers-reduced-motion: reduce) {
   .sticker-demo-active .card-sticker img { animation: none; filter: drop-shadow(0 0 4px #f4c430); }
 }
+
+/* Theme geometry stays in this shared renderer; artwork remains a separate image. */
+.card-back-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; border-radius: inherit; }
+.card-deck-retro-arcade .card-base { background: #fff9e9; box-shadow: inset 0 0 0 .9cqw #dfd5bf, inset 0 -1.3cqw 0 #ede3cf; }
+.card-deck-retro-arcade .card-rank { font-size: 25cqw; color: #202338; font-weight: 900; }
+.card-deck-retro-arcade .card-index-tl { top: 7cqw; left: 5cqw; width: 24cqw; }
+.card-deck-retro-arcade .card-index-br { bottom: 7cqw; right: 5cqw; width: 24cqw; }
+.card-deck-retro-arcade .card-index-suit { width: 18cqw; height: 18cqw; margin: 1cqw 0 0; }
+.card-deck-retro-arcade .card-sticker { inset: 27% 21.5%; }
+.card-deck-retro-arcade .card-sticker img { width: 100%; height: 100%; object-fit: contain; }

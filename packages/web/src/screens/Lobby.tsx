@@ -5,7 +5,7 @@ import { addBot, eveningAction, leaveRoom, removeBot, startGame } from '../net/c
 import { showToast, useApp } from '../net/store';
 import './screens.css';
 import { BrandMascot } from '../brand/BrandMascot';
-import { BrandSettings } from '../brand/BrandSettings';
+import { AppSettings } from '../themes/AppearancePicker';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
 
 export function Lobby({ room }: { room: AnyRoomView }) {
@@ -42,7 +42,7 @@ export function Lobby({ room }: { room: AnyRoomView }) {
         </div>
 
         <div className="code-block">
-          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><BrandSettings compact /><EmotePicker /></div>
+          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><div className="lobby-options"><AppSettings compact /><EmotePicker /></div></div>
           <span className="label">Kód místnosti</span>
           <div className="code-big brand-word" aria-label={`Kód ${room.code.split('').join(' ')}`}>
             {room.code.split('').map((ch, i) => (

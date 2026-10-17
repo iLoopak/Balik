@@ -1,6 +1,6 @@
 import { canStartGame, eveningBallot, eveningSummary, gameName, type AnyRoomView } from '@balik/shared';
 import { BrandMascot } from '../brand/BrandMascot';
-import { BrandSettings } from '../brand/BrandSettings';
+import { AppSettings } from '../themes/AppearancePicker';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
 import { useMotionPref } from '../lib/motionPref';
 import { avatarColor } from '../lib/format';
@@ -24,7 +24,7 @@ export function EveningScreen({room}: {room: AnyRoomView}) {
   const last = e.history.at(-1);
   const canRematch = canStartGame(room.gameId,room.players.length) && room.players.every((p) => p.connected);
   return <main className="evening-screen">
-    <header className="evening-header"><span className="brand-word">BALÍK</span><span>Herní večer · <b>{room.code}</b></span><EmotePicker/><BrandSettings compact/><button className="btn btn-ghost" onClick={leaveRoom}>Odejít</button></header>
+    <header className="evening-header"><span className="brand-word">BALÍK</span><span>Herní večer · <b>{room.code}</b></span><EmotePicker/><AppSettings compact/><button className="btn btn-ghost" onClick={leaveRoom}>Odejít</button></header>
     {connection !== 'open' && <p className="evening-connection" role="status">Obnovuji spojení se stolem…</p>}
     <div className="evening-layout">
       <section className={`evening-feature${closed ? ' is-closed' : ''}`} aria-labelledby="evening-title">

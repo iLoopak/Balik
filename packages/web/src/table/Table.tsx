@@ -1,10 +1,11 @@
+import { useAppearance } from '../themes/preferences';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { legalMovesFromView, type RoomView, type Suit } from '@balik/shared';
 import type { CardFx } from '../cards/Card';
 import { CardBack } from '../cards/Card';
 import { SuitIcon } from '../cards/SuitIcon';
-import { SUIT_TONE } from '../cards/skin';
+import { suitTone } from '../cards/skin';
 import { eveningAction, leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import { avatarColor, cardsWord } from '../lib/format';
@@ -364,6 +365,7 @@ function Seat({
 }
 
 function CenterHud({ display, geo, me, nameOf }: { display: Display; geo: Geometry; me: string; nameOf: (id: string) => string }) {
+  useAppearance(p => p.deck);
   const top = display.discard.at(-1)?.card;
   const suit = display.activeSuit;
   const forced = !!(suit && top && top.rank === 'Q');
@@ -375,7 +377,7 @@ function CenterHud({ display, geo, me, nameOf }: { display: Display; geo: Geomet
           <motion.div
             key={suit}
             className={`suit-chip${forced ? ' is-forced' : ''}`}
-            style={{ ['--suit-tone' as string]: SUIT_TONE[suit] }}
+            style={{ ['--suit-tone' as string]: suitTone(suit) }}
             initial={{ scale: 0.6, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: 'spring', stiffness: 480, damping: 18 }}
