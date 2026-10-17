@@ -85,6 +85,9 @@ function animationMs(events: GameEvent[]): number {
   let ms = 0;
   for (const e of events) {
     switch (e.type) {
+      case 'lharStarted':
+        ms += 650 + e.dealOrder.length * 45;
+        break;
       case 'sedmaStarted':
       case 'roundStarted':
         ms += 1900 + e.dealOrder.length * 85;
@@ -108,7 +111,11 @@ function animationMs(events: GameEvent[]): number {
       case 'turnSkipped':
         ms += 900;
         break;
+      case 'lharResolved':
+        ms += 1400;
+        break;
       case 'trickResolved':
+      case 'lharEnded':
       case 'sedmaEnded':
       case 'roundWon':
         ms += 900;

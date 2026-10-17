@@ -97,3 +97,5 @@
 
 .evening-match summary::after { content: '+'; color: var(--accent); font-size: 18px; flex-shrink: 0; }
 .evening-match[open] summary::after { content: '−'; }
+
+.evening-game-mark.is-lhar { color: #c7afff; background: #a679ff18; border-color: #a679ff55; }

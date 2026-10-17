@@ -223,3 +223,20 @@ pravidla a výsledky se tím nemění.
 - `SHARP_MODULE=/cesta/k/sharp npm run qa:assets`: volitelný raster audit a přehledy do `qa-output/themes` (Sharp je pouze QA nástroj, není závislost hry).
 
 W4 nasazuje pouze frontend na Vercelu. **Supabase funkce, SQL ani proměnné prostředí se kvůli W4 nemění.**
+
+## Lhář · vlna 5
+
+Třetí hra pro **2–4 hráče**: polož 1–4 karty rubem, tvrdíš povinnou hodnotu z cyklu
+7–A a další hráč pokračuje, nebo zpochybní poslední sadu. Za lež bere střed autor,
+za pravdu vyzyvatel. Vítěz sporu začíná hodnotou napadeného tvrzení. Poslední karta
+vyhrává až po uzavření okna pro výzvu. Ve třech se rozdává 11/11/10 od začínajícího.
+
+První partii provede krátký onboarding. Boti používají jen vlastní redigovaný view;
+Lhář sdílí lobby, pozvánky, avatary/značku, emotes, odvetu, obě edice a Herní večer.
+
+- [Přesná pravidla, bezpečnost, eventy, QA a nasazení](docs/games/LHAR_RULES.md)
+- `npm run qa:lhar` a `REDUCED=1 npm run qa:lhar`: browser QA ve schváleném prostředí.
+- `npm run qa:supabase`: reálný Auth/Edge/RLS/Realtime průchod pro 2/3 hráče včetně přechodu Lhář → Prší.
+
+**W5 vyžaduje deploy frontendu i Supabase funkce `game`** (`npm run build:supabase`,
+pak `supabase functions deploy game --project-ref <project-ref>`). SQL a env se nemění.

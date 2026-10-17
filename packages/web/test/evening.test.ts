@@ -39,7 +39,7 @@ describe('Evening shared UI',()=>{
   });
   it('shows honest zero-game and tied-game summaries',()=>{
     const e=createEvening(1);let html=renderToStaticMarkup(createElement(EveningSummary,{evening:eveningView(e)}));expect(html).toContain('>0<');expect(html).toContain('—');
-    e.gameCounts={prsi:1,sedma:1};e.completedMatches=2;
+    e.gameCounts={prsi:1,sedma:1,lhar:0};e.completedMatches=2;
     html=renderToStaticMarkup(createElement(EveningSummary,{evening:eveningView(e)}));expect(html).toContain('Prší + Sedma');expect(html).toContain('shoda');
   });
 });

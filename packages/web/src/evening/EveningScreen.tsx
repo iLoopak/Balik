@@ -1,4 +1,4 @@
-import { canStartGame, eveningBallot, eveningSummary, gameName, type AnyRoomView } from '@balik/shared';
+import { canStartGame, GAME_IDS, eveningBallot, eveningSummary, gameName, type AnyRoomView } from '@balik/shared';
 import { BrandMascot } from '../brand/BrandMascot';
 import { AppSettings } from '../themes/AppearancePicker';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
@@ -33,10 +33,10 @@ export function EveningScreen({room}: {room: AnyRoomView}) {
         {!closed && room.players.length < 4 && host && <button className="btn btn-ghost" disabled={disabled} onClick={addBot}>+ Přidat počítač</button>}
         <div className="evening-emotes">{emotes.map((m) => <div key={m.id}><b>{room.players.find((p)=>p.id===m.playerId)?.name}</b><EmoteBubble message={m} author={room.players.find((p)=>p.id===m.playerId)?.name ?? 'Hráč'}/></div>)}</div>
         {closed ? <><EveningSummary evening={e}/><button className="btn btn-primary wide" onClick={leaveRoom}>Zpět na úvod</button></> : voting ? <>
-          <div className="evening-game-choices">{(['prsi','sedma'] as const).map((id) => {
+          <div className="evening-game-choices">{GAME_IDS.map((id) => {
             const available = ballot.available.includes(id), selected = e.votes[room.you] === id;
             return <div key={id} className={`evening-game-option${selected ? ' is-selected' : ''}`}>
-              <button type="button" aria-pressed={selected} disabled={!available || disabled} onClick={()=>voteGame(id)}><span className={`evening-game-mark is-${id}`} aria-hidden>{id==='prsi'?'P':'7'}</span><b>{gameName(id)}</b><small>{id==='prsi'?'2–4 hráči':'2 nebo 4 hráči'}</small><strong>{ballot.counts[id]} hlasů{selected ? ' · tvůj hlas' : ''}</strong></button>
+              <button type="button" aria-pressed={selected} disabled={!available || disabled} onClick={()=>voteGame(id)}><span className={`evening-game-mark is-${id}`} aria-hidden>{id==='prsi'?'P':id==='sedma'?'7':'L'}</span><b>{gameName(id)}</b><small>{id==='sedma'?'2 nebo 4 hráči':'2–4 hráči'}</small><strong>{ballot.counts[id]} hlasů{selected ? ' · tvůj hlas' : ''}</strong></button>
               <p>{available ? room.players.filter((p)=>p.connected && e.votes[p.id]===id).map((p)=>p.name).join(', ') || 'Zatím bez hlasu' : id==='sedma'?'Sedma ve třech nejde. Zvolte Prší, upravte počet botů nebo počkejte na návrat hráče.':'Čekáme alespoň na dva hráče.'}</p>
               {host && <button className="btn btn-primary" disabled={disabled || !ballot.ready || !ballot.leaders.includes(id)} onClick={()=>eveningAction('confirm',id)}>Rozdat {gameName(id)}</button>}
             </div>;

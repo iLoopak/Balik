@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { chooseSedmaBotFromView, legalMovesFromView, mulberry32, type AnyRoomView, type ClientMessage, type ServerMessage } from '@balik/shared';
+import { chooseLharBotFromView, chooseSedmaBotFromView, legalMovesFromView, mulberry32, type AnyRoomView, type ClientMessage, type ServerMessage } from '@balik/shared';
 import { RoomManager, type Conn } from '../src/rooms';
 class Seat implements Conn {
   messages: ServerMessage[]=[];
@@ -15,6 +15,7 @@ function setup(n=2,opts={}) {
   return {rooms,seats,code};
 }
 function legal(room:AnyRoomView):Extract<ClientMessage,{t:'act'}> {
+  if(room.gameId==='lhar')return {t:'act',baseSeq:room.seq,action:chooseLharBotFromView(room.game!,room.you,mulberry32(room.seq))};
   if(room.gameId==='sedma')return {t:'act',baseSeq:room.seq,action:chooseSedmaBotFromView(room.game!,room.you)};
   const moves=legalMovesFromView(room.game!,room.you),id=moves.playable[0];
   return {t:'act',baseSeq:room.seq,action:id?{type:'play',cardId:id,chosenSuit:id.endsWith('-Q')?'hearts':undefined}:moves.canPass?{type:'pass'}:{type:'draw'}};

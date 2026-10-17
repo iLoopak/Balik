@@ -23,7 +23,7 @@ describe('interchangeable cosmetic editions', () => {
   it('renders both complete decks with actual layered indices, distinct symbols and stickers in both games', () => {
     for (const theme of EDITIONS) {
       expect(new Set(Object.values(theme.suits).map(s => s.paths.join(' '))).size).toBe(4);
-      for (const game of ['prsi', 'sedma'] as const) for (const card of createDeck32()) {
+      for (const game of ['prsi', 'sedma', 'lhar'] as const) for (const card of createDeck32()) {
         const html = renderToStaticMarkup(createElement(CardView, { card, faceUp: true, deck: theme.id, game, fx: { current: true } }));
         expect(html).toContain(`>${card.rank}</span>`);
         expect(html).toContain(theme.suits[card.suit].paths[0]);
@@ -96,7 +96,7 @@ describe('interchangeable cosmetic editions', () => {
     expect(requested.every(s => s.startsWith('/decks/retro-arcade/'))).toBe(true);
     expect(deckAssetUrls('classic')).toEqual([]); stop();
   });
-  it.each(['prsi','sedma'] as GameId[])('finishes %s identically while switching appearance at every turn', (game) => {
+  it.each(['prsi','sedma','lhar'] as GameId[])('finishes %s identically while switching appearance at every turn', (game) => {
     function run(switching: boolean) {
       vi.stubGlobal('localStorage', {setItem() {}});
       const rng = mulberry32(71); let state: GameState = createGameRound(game, ['a','b'], 0, rng).state;

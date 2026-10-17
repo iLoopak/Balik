@@ -213,9 +213,11 @@ export function scheduleBot(room: Room, events: GameEvent[], env: Environment) {
   if (room.status !== 'playing' || !current?.bot || !room.players.some((p) => !p.bot && p.connected)) { room.botDueAt = null; return; }
   if (events.length === 0 && room.botDueAt !== null) return;
   const animation = events.reduce((sum, event) => sum + (
+    event.type === 'lharStarted' ? 650 + event.dealOrder.length * 45 :
+    event.type === 'lharResolved' ? 1400 :
     event.type === 'sedmaStarted' || event.type === 'roundStarted' ? 1900 + event.dealOrder.length * 85 :
     event.type === 'sedmaDrawn' || event.type === 'cardsDrawn' ? 600 + Math.max(0, event.cards.length - 1) * 150 :
-    event.type === 'trickResolved' || event.type === 'sedmaEnded' || event.type === 'turnSkipped' || event.type === 'roundWon' ? 900 :
+    event.type === 'lharEnded' || event.type === 'trickResolved' || event.type === 'sedmaEnded' || event.type === 'turnSkipped' || event.type === 'roundWon' ? 900 :
     event.type === 'suitChanged' ? 720 : event.type === 'turnChanged' ? 160 : 560
   ), 0);
   room.botDueAt = env.now + animation + 500 + env.rng() * 600;

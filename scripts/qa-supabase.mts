@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createClient } from '@supabase/supabase-js';
-import { chooseSedmaBotFromView, legalMovesFromView, type ClientMessage, type AnyRoomView, type ServerMessage } from '@balik/shared';
+import { chooseLharBotFromView, mulberry32, chooseSedmaBotFromView, legalMovesFromView, type ClientMessage, type AnyRoomView, type ServerMessage } from '@balik/shared';
 import { SupabaseTransport } from '../packages/web/src/net/transports/supabase';
 
 const status = JSON.parse(readFileSync(process.env.SUPABASE_STATUS_FILE ?? '/tmp/balik-supabase-status.json', 'utf8'));
@@ -170,7 +170,8 @@ try {
       const seatIndex=eveningFrames.findIndex((f)=>f.room.you===eveningFrames[0]!.room.game!.currentPlayerId);
       const room=eveningFrames[seatIndex]!.room;
       let message:ClientMessage;
-      if(room.gameId==='sedma')message={t:'act',baseSeq:room.seq,action:chooseSedmaBotFromView(room.game!,room.you)};
+      if(room.gameId==='lhar')message={t:'act',baseSeq:room.seq,action:chooseLharBotFromView(room.game!,room.you,mulberry32(step+78))};
+      else if(room.gameId==='sedma')message={t:'act',baseSeq:room.seq,action:chooseSedmaBotFromView(room.game!,room.you)};
       else { const moves=legalMovesFromView(room.game!,room.you),id=moves.playable[0]; message={t:'act',baseSeq:room.seq,action:id?{type:'play',cardId:id,chosenSuit:id.endsWith('-Q')?'hearts':undefined}:moves.canPass?{type:'pass'}:{type:'draw'}}; }
       eveningSeats[seatIndex]!.send(message);
       eveningFrames=await Promise.all(eveningSeats.map((p)=>p.state((r)=>r.seq>room.seq)));
@@ -212,6 +213,45 @@ try {
   assert.equal(closedEvening.game,null);assert.deepEqual(closedEvening.evening!.stats,finalEvening.evening!.stats);
   eveningSeats.forEach((p)=>p.send({t:'leave'}));
   await Promise.all(eveningSeats.map((p)=>wait(()=>p.messages.find((m)=>m.t==='left'),'evening leave')));
+  // W5: the real filtered journal, reconnect and a full game at 2/3 seats.
+  for(const count of [2,3]) {
+    const seats=Array.from({length:count},()=>client());await Promise.all(seats.map(p=>p.connected()));
+    seats[0]!.send({t:'create',name:'Lhář host',token:'qa-lhar-host-1234567',gameId:'lhar'});
+    const code=(await seats[0]!.state()).room.code;
+    for(let i=1;i<count;i++)seats[i]!.send({t:'join',code,name:`Lhář ${i}`,token:'qa-lhar-guest-1234567'});
+    await seats[0]!.state(r=>r.players.length===count);seats[0]!.send({t:'start'});
+    let frames=await Promise.all(seats.map(p=>p.state(r=>r.status==='playing'))),resolved=0;
+    for(let turn=0;turn<1000&&frames[0]!.room.status==='playing';turn++) {
+      const index=frames.findIndex(f=>f.room.you===frames[0]!.room.game!.currentPlayerId),room=frames[index]!.room;
+      if(room.gameId!=='lhar')throw Error('Expected Lhar');
+      if(turn===1) {
+        const old=seats[index]!;old.transport.close();const next=client(old.tab);seats[index]=next;await next.connected();
+        next.send({t:'join',code,name:'Lhář resumed',token:'qa-lhar-guest-1234567'});
+        const snapshot=await next.state();assert.equal(snapshot.reset,true);assert.deepEqual(snapshot.events,[]);assert.deepEqual(snapshot.room.game,room.game);
+      }
+      let action=chooseLharBotFromView(room.game!,room.you,mulberry32(turn+count*55));
+      if(turn===0)action={type:'lharPlay',cardIds:[room.game!.myHand!.find(c=>c.rank!=='7')!.id],declaredRank:'7'};
+      if(turn===1)action={type:'lharChallenge',claimId:room.game!.lastClaim!.id};
+      seats[index]!.send({t:'act',baseSeq:room.seq,action});frames=await Promise.all(seats.map(p=>p.state(r=>r.seq>room.seq)));
+      resolved+=frames[0]!.events.filter(e=>e.type==='lharResolved').length;
+      for(const [i,frame] of frames.entries()) {
+        if(frame.room.gameId!=='lhar')throw Error('Expected Lhar');
+        const view=frame.room.game!;assert.ok(!('pile' in view));assert.ok(!view.lastClaim||!('cards' in view.lastClaim));
+        for(const p of view.players)assert.ok(!('hand' in p));
+        const revealed=new Set([...(view.lastResolution?.revealed.map(c=>c.id)??[]),...frame.events.flatMap(e=>e.type==='lharResolved'?e.resolution.revealed.map(c=>c.id):[])]);
+        for(const other of frames.filter((_,j)=>j!==i))for(const c of other.room.game!.myHand??[])if(!revealed.has(c.id))assert.ok(!JSON.stringify(frame).includes(`"${c.id}"`),'Lhar private hand never leaks');
+      }
+    }
+    const final=frames[0]!.room;assert.equal(final.status,'finished');assert.ok(resolved>0);assert.equal(final.evening!.gameCounts.lhar,1);assert.equal(final.evening!.history[0]!.winnerIds.length,1);
+    const ids=final.players.map(p=>p.id);seats[0]!.send({t:'evening',baseRevision:final.evening!.revision,action:'openVote'});
+    let voting=(await seats[0]!.state(r=>r.evening?.phase==='voting')).room;const ballotId=voting.evening!.ballotId;
+    seats.forEach(p=>p.send({t:'vote',ballotId,gameId:'prsi'}));voting=(await seats[0]!.state(r=>Object.keys(r.evening?.votes??{}).length===count)).room;
+    seats[0]!.send({t:'evening',baseRevision:voting.evening!.revision,action:'confirm',gameId:'prsi'});
+    const switched=await seats[0]!.state(r=>r.gameId==='prsi'&&r.round===2&&r.status==='playing');assert.deepEqual(switched.room.players.map(p=>p.id),ids);
+    console.log(`PASS: Lhář ${count} real Supabase clients, private hidden plays, challenge, reconnect, complete game, Lhář → Prší in same room.`);
+    seats.forEach(p=>p.send({t:'leave'}));await Promise.all(seats.map(p=>wait(()=>p.messages.find(m=>m.t==='left'),'Lhar leave')));
+    seats.forEach(p=>p.transport.close());
+  }
   console.log('PASS: Supabase Auth/JWT/RLS, idempotency, emotes, bots; Sedma 1v1/2v2; full Prší → Sedma → Prší evening, concurrent votes, reconnect, exact history/stats and closing summary.');
 } finally {
   transports.forEach((transport) => transport.close());

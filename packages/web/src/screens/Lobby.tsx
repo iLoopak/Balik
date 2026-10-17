@@ -117,7 +117,7 @@ export function Lobby({ room }: { room: AnyRoomView }) {
       </div>
       <details className="rules">
         <summary>Pravidla {gameName(room.gameId)} v kostce</summary>
-        {room.gameId === 'sedma' ? <ul><li>Hraj jakoukoli kartu. Barva nerozhoduje.</li><li>Štych drží poslední sedma nebo karta původní hodnoty.</li><li>Vycházející může ukončit štych nebo pokračovat sedmou či původní hodnotou.</li><li>Vítěz dobírá první. Eso i desítka mají 10 bodů, poslední štych {room.sedmaBonus ?? 10}.</li><li>Ve čtyřech sedí spoluhráči naproti sobě. Tři hráči nejsou podporovaní.</li></ul> : (
+        {room.gameId === 'lhar' ? <ul><li>Polož 1–4 karty rubem. Povinné tvrzení postupuje 7–A.</li><li>Další hráč pokračuje, nebo zpochybní poslední sadu.</li><li>Za lež bere střed autor, za pravdu vyzyvatel. Vítěz sporu začíná hodnotou napadeného tvrzení.</li><li>Poslední karta vyhraje až po přijetí či vyřešení výzvy.</li><li>Ve třech se rozdává 11/11/10 od začínajícího.</li></ul> : room.gameId === 'sedma' ? <ul><li>Hraj jakoukoli kartu. Barva nerozhoduje.</li><li>Štych drží poslední sedma nebo karta původní hodnoty.</li><li>Vycházející může ukončit štych nebo pokračovat sedmou či původní hodnotou.</li><li>Vítěz dobírá první. Eso i desítka mají 10 bodů, poslední štych {room.sedmaBonus ?? 10}.</li><li>Ve čtyřech sedí spoluhráči naproti sobě. Tři hráči nejsou podporovaní.</li></ul> : (
         <ul>
           <li>Každý dostane 4 karty. Přikládáš stejnou barvu nebo hodnotu.</li>
           <li>

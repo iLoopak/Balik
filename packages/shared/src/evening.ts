@@ -1,4 +1,4 @@
-import { canStartGame, gameWinnerIds, type GameId, type GameState } from './games';
+import { GAME_IDS, canStartGame, gameWinnerIds, type GameId, type GameState } from './games';
 import { isSedma } from './sedma/engine';
 import type { ErrorCode } from './protocol';
 
@@ -33,7 +33,7 @@ export class EveningError extends Error {
 const fail = (code: ErrorCode, message: string): never => { throw new EveningError(code, message); };
 export function createEvening(now: number): EveningState {
   return { revision: 0, phase: 'ready', startedAt: now, closedAt: null, ballotId: 0, votes: {}, stats: {},
-    history: [], completedMatches: 0, gameCounts: { prsi: 0, sedma: 0 }, active: null, lastRecordedId: -1, rosterSignature: '' };
+    history: [], completedMatches: 0, gameCounts: { prsi: 0, sedma: 0, lhar: 0 }, active: null, lastRecordedId: -1, rosterSignature: '' };
 }
 export function eveningView(state: EveningState): EveningView {
   const { active: _active, lastRecordedId: _recorded, rosterSignature: _roster, ...view } = state;
@@ -79,8 +79,8 @@ export function finishEveningMatch(state: EveningState, game: GameState, now: nu
 export function eveningBallot(state: EveningView, people: EveningPerson[]) {
   const present = people.filter((p) => p.connected || p.bot);
   const voters = present.filter((p) => !p.bot);
-  const available = (['prsi', 'sedma'] as const).filter((game) => canStartGame(game, present.length));
-  const counts: Record<GameId, number> = { prsi: 0, sedma: 0 };
+  const available = GAME_IDS.filter((game) => canStartGame(game, present.length));
+  const counts: Record<GameId, number> = { prsi: 0, sedma: 0, lhar: 0 };
   let cast = 0;
   for (const p of voters) { const game = state.votes[p.id]; if (game && available.includes(game)) { counts[game]++; cast++; } }
   const majority = available.find((game) => counts[game] > voters.length / 2);
@@ -131,8 +131,8 @@ export function eveningSummary(state: EveningView) {
   const stats = Object.values(state.stats);
   const maxWins = Math.max(0, ...stats.map((p) => p.wins));
   const winners = maxWins ? stats.filter((p) => p.wins === maxWins).map((p) => p.id) : [];
-  const maxGames = Math.max(state.gameCounts.prsi, state.gameCounts.sedma);
-  const mostPlayed = maxGames ? (['prsi', 'sedma'] as const).filter((id) => state.gameCounts[id] === maxGames) : [];
+  const maxGames = Math.max(...GAME_IDS.map(id=>state.gameCounts[id] ?? 0));
+  const mostPlayed = maxGames ? GAME_IDS.filter((id) => state.gameCounts[id] === maxGames) : [];
   return { winners, mostPlayed, played: state.completedMatches, bestStreak: Math.max(0, ...stats.map((p) => p.bestStreak)) };
 }
 
@@ -143,6 +143,7 @@ export function ensureRoomEvening(room: { evening?: EveningState; status: 'lobby
     if (room.status === 'playing' && room.game) beginEveningMatch(room.evening, room.round, room.gameId ?? 'prsi', room.game, people, null);
     else if (room.status === 'finished') room.evening.phase = 'between';
   }
+  room.evening.gameCounts.lhar ??= 0; // Lazy upgrade of persisted pre-W5 sessions.
   reconcileEvening(room.evening, people);
   return room.evening;
 }

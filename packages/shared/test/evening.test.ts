@@ -43,7 +43,7 @@ describe('Herní večer: shared session ledger and voting',()=>{
     vote(e,roster,'p0','sedma'); vote(e,roster,'p1','sedma'); vote(e,roster,'p2','sedma');
     const revision=e.revision; roster[3]!.connected=false; reconcileEvening(e,roster);
     expect(e.revision).toBeGreaterThan(revision); expect(e.votes).toEqual({});
-    expect(eveningBallot(e,roster)).toMatchObject({available:['prsi'],allPresent:false,ready:false});
+    expect(eveningBallot(e,roster)).toMatchObject({available:['prsi','lhar'],allPresent:false,ready:false});
     expect(()=>vote(e,roster,'p0','sedma')).toThrow('2 nebo 4');
     roster[3]!.connected=true; reconcileEvening(e,roster); expect(e.votes).toEqual({});
     roster[1]!.bot=true; reconcileEvening(e,roster);
@@ -102,4 +102,19 @@ describe('Herní večer: shared session ledger and voting',()=>{
     expect(clientMessageSchema.safeParse({t:'start'}).success).toBe(true);
     expect(clientMessageSchema.safeParse({t:'start',round:2}).success).toBe(true);
   });
+});
+
+it('adds Lhář to a three-seat ballot and records its verified win without card points',()=>{
+  const {e,roster}=setup(3);applyEveningCommand(e,roster,'p0','p0',command(e,'openVote'),2);
+  expect(eveningBallot(e,roster).available).toEqual(['prsi','lhar']);vote(e,roster,'p0','lhar');vote(e,roster,'p1','lhar');
+  expect(applyEveningCommand(e,roster,'p0','p0',command(e,'confirm','lhar'),3)).toMatchObject({directive:'start',gameId:'lhar'});
+  const game=createGameRound('lhar',roster.map(p=>p.id),0,mulberry32(3)).state;
+  if(!('kind' in game)||game.kind!=='lhar')throw Error();game.phase='finished';game.winnerId='p1';game.result={winnerIds:['p1'],reason:'cards'};
+  beginEveningMatch(e,1,'lhar',game,roster,4);expect(finishEveningMatch(e,game,10)).toBe(true);expect(finishEveningMatch(e,game,11)).toBe(false);
+  expect(e.gameCounts.lhar).toBe(1);expect(e.stats.p1).toMatchObject({wins:1,played:1,teamWins:0});expect(e.history[0]).not.toHaveProperty('scores');expect(eveningSummary(e).mostPlayed).toEqual(['lhar']);
+});
+it('upgrades pre-W5 game counts without fabricating Lhář history or changing prior stats',()=>{
+  const {e,roster}=setup();Object.assign(e,{gameCounts:{prsi:2,sedma:1}});
+  const room={status:'lobby' as const,round:3,gameId:'prsi' as const,game:null,evening:e};
+  const upgraded=ensureRoomEvening(room,roster,100);expect(upgraded.gameCounts).toEqual({prsi:2,sedma:1,lhar:0});expect(upgraded.history).toEqual([]);
 });
