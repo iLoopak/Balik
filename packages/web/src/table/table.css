@@ -707,3 +707,41 @@
     animation: none;
   }
 }
+
+/* Command arena: quiet controls, tactile objects, amber active-turn identity. */
+.table.command-table { background: #0c1422; }
+.command-table .my-turn-glow { background: radial-gradient(65% 75% at 50% 100%, #ffb23f0d, transparent 75%); }
+.command-table .card-slot { filter: drop-shadow(0 3px 2px #0004) drop-shadow(0 13px 18px #0005); }
+.command-table .card-slot:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
+.command-table .deck-card { filter: drop-shadow(0 5px 3px #0006) drop-shadow(0 12px 14px #0004); }
+.command-table .deck-hit { border-radius: 10px; }
+.command-table .deck-hit.is-ready { animation: none; box-shadow: 0 0 0 1px #ffb23f99, 0 0 22px -9px #ffb23f66; }
+.command-table .deck-hit.is-penalty { animation: none; box-shadow: 0 0 0 2px var(--penalty), 0 0 22px -9px #ff4d5e66; }
+.command-table .deck-hit:hover:not(:disabled), .command-table .deck-hit:focus-visible { box-shadow: 0 0 0 2px var(--accent), 0 0 30px -8px #ffb23f80; outline: none; }
+.command-table .deck-count { display: flex; align-items: baseline; gap: 4px; font: 650 13px var(--font-brand); color: #c1c9d6; }
+.command-table .deck-count > span { font: 500 9px var(--font-ui); color: #8894a8; }
+.command-table .seat-inner { padding: 4px 12px 4px 4px; background: #111c2ce8; box-shadow: inset 0 0 0 1px #7d96ba26; backdrop-filter: none; }
+.command-table .seat.is-active .seat-inner { background: #24251fe8; box-shadow: inset 0 0 0 1px #ffb23fb3, 0 0 26px -12px #ffb23f55; }
+.command-table .seat-name { font-size: 12px; }
+.command-table .seat-count { font-size: 10px; }
+.command-table .status-bar { gap: 9px; padding: 3px 4px 3px 7px; background: #111c2ce8; border-radius: 14px; box-shadow: inset 0 0 0 1px #7d96ba33, 0 7px 22px -12px #0008; backdrop-filter: none; }
+.command-table .status-bar.is-mine { background: #1c211fe8; box-shadow: inset 0 0 0 1px #ffb23f80, 0 8px 24px -14px #ffb23f33; }
+.command-table .status-text { font-size: 13px; font-weight: 550; }
+.command-table .status-bar.is-mine .status-text { color: #ffe2b3; }
+.command-table .status-actions .btn-sm { min-height: 36px; padding: 0 15px; border-radius: 10px; font-size: 12px; }
+.command-table .status-wins { color: #9ba6b9; font-size: 11px; }
+.command-table .suit-chip { background: #101c2ce8; box-shadow: inset 0 0 0 1px #7d96ba33; font-size: 11px; font-weight: 600; padding: 5px 11px 5px 8px; }
+.command-table .suit-chip.is-forced { box-shadow: inset 0 0 0 1px var(--suit-tone), 0 0 20px -12px var(--suit-tone); }
+.command-table .fx-label { max-width: min(420px, calc(100vw - 32px)); overflow: hidden; text-overflow: ellipsis; font-size: 12px; padding: 6px 13px; }
+.table-short .seat-inner { min-height: 32px; padding-block: 3px; }
+.table-short .avatar { width: 24px; height: 24px; font-size: 12px; }
+.table-short .seat-name { font-size: 10px; }
+.table-short .seat-count { font-size: 8px; }
+.table-short .status-bar { padding-block: 2px; }
+.table-short .suit-chip { font-size: 10px; padding: 3px 8px; }
+.table-short .fx-label { font-size: 10px; padding-block: 4px; }
+@media (max-width: 699px) {
+  .command-table .status-text { font-size: 12px; }
+  .command-table .status-actions .btn-sm { min-height: 38px; padding-inline: 13px; }
+  .command-table .status-bar { border-radius: 13px; }
+}

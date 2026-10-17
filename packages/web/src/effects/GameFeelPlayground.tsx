@@ -10,6 +10,7 @@ import { ActionLabel } from '../table/Effects';
 import type { FxItem } from '../table/display';
 import { computeGeometry, placeAll, type HandUi } from '../table/layout';
 import { usePerfLite } from '../table/usePerfLite';
+import { GameTableTheme } from '../table/GameTableTheme';
 import { EffectOrchestrator, playerEffectAnchor } from './EffectOrchestrator';
 import type { EffectInstance } from './effectEvents';
 import { PREVIEW_ACTIONS, PREVIEW_PLAYERS, type PreviewAction } from './previewScenarios';
@@ -76,16 +77,16 @@ export function GameFeelPlayground() {
             <button className={`feel-phone${phone ? ' is-on' : ''}`} onClick={() => setPhone((v) => !v)} aria-pressed={phone}>Mobilní stůl</button>
           </div>
           <div className={`feel-stage-holder${phone ? ' is-phone' : ''}`}>
-            <div className="table feel-stage" ref={stageRef} data-preview="game-feel" data-running={running}>
-              <div className="feel-table-orbit" style={{ left: geo.w / 2, top: geo.discard.y, width: geo.cardW * 4, height: geo.cardH * 2.1 }} />
-              <div className="feel-deck" style={{ left: geo.deck.x - geo.cardW / 2, top: geo.deck.y - geo.cardH / 2, width: geo.cardW, height: geo.cardH }}><CardView card={null} faceUp={false} /><span>{display.drawCount}</span></div>
+            <div className="table command-table feel-stage" ref={stageRef} data-preview="game-feel" data-running={running}>
+              <GameTableTheme geo={geo} suit={display.activeSuit} reduced={reduced} lite={lite} myTurn={display.currentPlayerId === 'me'} />
+              <div className="feel-deck" style={{ left: geo.deck.x - geo.deckW / 2, top: geo.deck.y - geo.deckH / 2, width: geo.deckW, height: geo.deckH }}><CardView card={null} faceUp={false} /><span>{display.drawCount}</span></div>
               <CardLayer key={sceneId} placed={placed} geo={geo} stamp={display.stamp} speed={speed} reduced={reduced} fxFor={(p) => p.zone === 'discard' && p.entity.key === display.discard.at(-1)?.key ? { current: true } : undefined} hoverKey={null} interactive={() => false} onHover={noop} onActivate={noop} />
               {display.order.filter((id) => id !== 'me').map((id) => {
                 const at = playerEffectAnchor(geo, id, 'me');
                 const count = display.hands[id]?.length ?? 0;
                 return <div className={`feel-seat${display.currentPlayerId === id ? ' is-active' : ''}${count === 1 ? ' is-danger' : ''}`} key={id} style={{ left: at.x, top: at.y }}><span className="feel-avatar">{PREVIEW_PLAYERS[id as keyof typeof PREVIEW_PLAYERS]?.slice(0, 1)}</span><span><b>{PREVIEW_PLAYERS[id as keyof typeof PREVIEW_PLAYERS]}</b><small>{count} karet {count === 1 ? '· poslední' : ''}</small></span>{fx.some((f) => f.kind === 'skip' && f.playerId === id) && <strong className="feel-stop">STOP</strong>}</div>;
               })}
-              <div className={`feel-own-status${display.hands.me?.length === 1 ? ' is-danger' : ''}`} style={{ left: geo.w / 2, top: geo.handTop - 45 }}><b>TY</b><span>{display.phase === 'finished' ? 'Vítězství' : `${display.hands.me?.length ?? 0} karet`}</span>{display.hands.me?.length === 1 && <strong>POSLEDNÍ KARTA</strong>}</div>
+              <div className={`feel-own-status${display.hands.me?.length === 1 ? ' is-danger' : ''}`} style={{ left: geo.w / 2, top: geo.controlY }}><b>TY</b><span>{display.phase === 'finished' ? 'Vítězství' : `${display.hands.me?.length ?? 0} karet`}</span>{display.hands.me?.length === 1 && <strong>POSLEDNÍ KARTA</strong>}</div>
               <EffectOrchestrator items={effectItems} geo={geo} me="me" reduced={reduced} lite={lite} />
               <ActionLabel item={label} at={{ x: geo.w / 2, y: geo.labelY }} />
               <span className="feel-stage-mark">BALÍK / MOTION LAB</span>

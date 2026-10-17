@@ -1,5 +1,5 @@
 import { motion, useAnimate } from 'motion/react';
-import { memo, useEffect, type PointerEvent } from 'react';
+import { memo, useEffect, type KeyboardEvent, type PointerEvent } from 'react';
 import { CardView, type CardFx } from '../cards/Card';
 import type { CardEntity } from './display';
 import type { Geometry, PlacedCard, Placement } from './layout';
@@ -7,6 +7,7 @@ import { placeSpawn } from './layout';
 import { HOVER, flipTransition, moveTransition } from './transitions';
 import { cardAccent, MOTION_PRIMITIVES, primitiveTransition } from '../effects/effectPresets';
 import { EFFECT_TIMING } from '../effects/effectTokens';
+import { suitName } from '../cards/skin';
 
 interface CardLayerProps {
   placed: PlacedCard[];
@@ -126,12 +127,23 @@ const CardSlot = memo(function CardSlot({
         onPointerEnter: (e: PointerEvent) => e.pointerType === 'mouse' && onHover(entity.key),
         onPointerLeave: (e: PointerEvent) => e.pointerType === 'mouse' && onHover(null),
         onClick: () => onActivate(entity.key),
+        onFocus: () => onHover(entity.key),
+        onBlur: () => onHover(null),
+        onKeyDown: (e: KeyboardEvent) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            if (!e.repeat) onActivate(entity.key);
+          }
+        },
       }
     : {};
 
   return (
     <motion.div
       className={`card-slot${interactive ? ' is-interactive' : ''}`}
+      role={interactive ? 'button' : undefined}
+      tabIndex={interactive ? 0 : undefined}
+      aria-label={interactive && entity.card ? `${entity.card.rank} ${suitName(entity.card.suit)}` : undefined}
       style={{ width: cardW, height: cardH, zIndex: active && entity.move && FLYING.has(entity.move) ? place.z + 600 : place.z }}
       initial={initial}
       animate={target}

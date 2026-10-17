@@ -1,4 +1,5 @@
 import type { CardEntity, Display, Spawn } from './display';
+import { responsiveCardScale, TABLE_METRICS } from './responsiveCardScale';
 
 // Every card on the table lives in one absolutely positioned layer. This module turns the
 // display state + table size into target transforms; Motion animates between targets, so
@@ -20,6 +21,17 @@ export interface Geometry {
   cardW: number;
   cardH: number;
   oppScale: number;
+  short: boolean;
+  handRows: 1 | 2;
+  discardScale: number;
+  deckScale: number;
+  pileW: number;
+  pileH: number;
+  deckW: number;
+  deckH: number;
+  controlY: number;
+  controlHeight: number;
+  suitBadge: Pt;
   deck: Pt;
   discard: Pt;
   /** Centre line of the own hand's front row. */
@@ -42,8 +54,6 @@ export interface Placement {
   z: number;
 }
 
-const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
-
 /** Opponents in turn order after me, laid out left → right. */
 export function opponentsOf(order: string[], me: string): string[] {
   const i = order.indexOf(me);
@@ -52,20 +62,23 @@ export function opponentsOf(order: string[], me: string): string[] {
 }
 
 export function computeGeometry(w: number, h: number, order: string[], me: string, myHandCount: number): Geometry {
-  const compact = w < 700;
-  const cardW = compact ? clamp(Math.min(w * 0.235, h * 0.13), 58, 104) : clamp(Math.min(w * 0.085, h * 0.13), 78, 124);
-  const cardH = cardW * 1.4;
-  const oppScale = compact ? 0.44 : 0.52;
-  const handMaxW = Math.min(w - 24, compact ? w : 820);
-
-  const twoRows = needsTwoRows(myHandCount, cardW, handMaxW, compact);
-  const handY = h - cardH * 0.57 - (compact ? 12 : 24);
-  const handTop = handY - cardH / 2 - (twoRows ? cardH * 0.42 : 0) - cardH * 0.08;
-
-  const seatsY = compact ? cardH * 0.44 * 0.5 + 22 : cardH * 0.55 + 18;
-  const hudSpace = 96;
-  const centerY = clamp((seatsY + 70 + handTop - hudSpace) / 2, seatsY + cardH * 0.9, handTop - hudSpace - cardH * 0.5);
-  const pileGap = cardW * 0.72;
+  const metrics = responsiveCardScale(w, h, myHandCount);
+  const { compact, cardW, cardH, oppScale, handMaxW, rows, discardScale, deckScale } = metrics;
+  const handY = h - metrics.edge - cardH * TABLE_METRICS.handBottom;
+  // Includes a fully lifted card: the control bar never sits underneath the hand.
+  const handTop = handY - cardH * (TABLE_METRICS.handHeadroom + (rows - 1) * TABLE_METRICS.rowOffset);
+  const controlY = handTop - metrics.controlHeight - metrics.controlGap;
+  const seatsY = metrics.topInset + cardH * oppScale * .5;
+  const opponentsBottom = metrics.topInset + cardH * oppScale + metrics.seatGap + metrics.seatHeight;
+  const pileHalf = cardH * metrics.pileEnvelope * .5;
+  const upperCenter = opponentsBottom + metrics.zoneGap + pileHalf;
+  const lowerCenter = controlY - metrics.hudClearance - pileHalf;
+  const centerY = (upperCenter + Math.max(upperCenter, lowerCenter)) / 2;
+  const pileGap = cardW * (compact ? .75 : .86);
+  const pileW = cardW * discardScale;
+  const pileH = cardH * discardScale;
+  const deckW = cardW * deckScale;
+  const deckH = cardH * deckScale;
 
   const opps = opponentsOf(order, me);
   const seats: Record<string, SeatGeo> = {};
@@ -86,21 +99,22 @@ export function computeGeometry(w: number, h: number, order: string[], me: strin
     cardW,
     cardH,
     oppScale,
+    short: metrics.short,
+    handRows: rows,
+    discardScale, deckScale, pileW, pileH, deckW, deckH,
+    controlY, controlHeight: metrics.controlHeight,
+    suitBadge: metrics.badgeBeside
+      ? { x: w / 2 + pileGap + pileW / 2 + 64, y: centerY + pileH * .08 }
+      : { x: w / 2 + pileGap, y: centerY + pileH / 2 + 10 },
     deck: { x: w / 2 - pileGap, y: centerY },
     discard: { x: w / 2 + pileGap, y: centerY },
     handY,
     handMaxW,
     handTop,
     seats,
-    hudY: centerY + cardH / 2 + 30,
-    labelY: Math.min(centerY + cardH / 2 + 70, handTop - 90),
+    hudY: centerY + pileH / 2 + 24,
+    labelY: controlY - 22,
   };
-}
-
-function needsTwoRows(n: number, cardW: number, maxW: number, compact: boolean): boolean {
-  if (!compact || n <= 6) return false;
-  const spacing = (maxW - cardW) / (n - 1);
-  return spacing < cardW * 0.4;
 }
 
 /** Deterministic small jitter per card so the discard pile looks hand-placed. */
@@ -133,25 +147,25 @@ export function placeMyHand(geo: Geometry, hand: CardEntity[], collapsed: boolea
     hand.forEach((e, i) => out.set(e.key, { x: cx + i * 1.2, y: geo.handY - i * 0.8, rotate: (i % 2 ? 1 : -1) * 1.5, scale: 1, faceUp: false, z: 200 + i }));
     return out;
   }
-  const twoRows = needsTwoRows(n, geo.cardW, geo.handMaxW, geo.compact);
+  const twoRows = geo.handRows === 2;
   const rows: CardEntity[][] = twoRows ? [hand.slice(0, Math.ceil(n / 2)), hand.slice(Math.ceil(n / 2))] : [hand];
   rows.forEach((row, r) => {
     const m = row.length;
     const isBack = twoRows && r === 0;
-    const baseY = isBack ? geo.handY - geo.cardH * 0.42 : geo.handY;
-    const spacing = m > 1 ? Math.min(geo.cardW * (geo.compact ? 0.66 : 0.6), (geo.handMaxW - geo.cardW) / (m - 1)) : 0;
-    const maxAngle = Math.min(geo.compact ? 9 : 12, m * 2.2);
+    const baseY = isBack ? geo.handY - geo.cardH * TABLE_METRICS.rowOffset : geo.handY;
+    const spacing = m > 1 ? Math.min(geo.cardW * (geo.compact ? 0.66 : 0.68), (geo.handMaxW - geo.cardW) / (m - 1)) : 0;
+    const maxAngle = Math.min(geo.compact ? 9 : 10, m * 1.8);
     row.forEach((e, i) => {
       const f = fan(m, i, spacing, maxAngle);
-      let y = baseY + f.arc * geo.cardH * 0.07;
+      let y = baseY + f.arc * geo.cardH * 0.045;
       let rotate = f.rotate;
       let scale = 1;
       let z = (isBack ? 200 : 260) + i;
       const lifted = ui.hovered === e.key || ui.selected === e.key || ui.pendingKey === e.key;
       if (lifted) {
-        y -= geo.cardH * (ui.selected === e.key || ui.pendingKey === e.key ? 0.26 : 0.18);
-        rotate *= 0.35;
-        scale = 1.06;
+        y -= geo.cardH * (ui.selected === e.key || ui.pendingKey === e.key ? TABLE_METRICS.selectedLift : TABLE_METRICS.hoverLift);
+        rotate *= ui.selected === e.key ? .15 : .3;
+        scale = TABLE_METRICS.emphasisScale;
         z += 300;
       } else if (ui.myTurn && ui.playable.has(e.key)) {
         y -= geo.cardH * 0.06;
@@ -187,14 +201,14 @@ export function placeDiscard(geo: Geometry, key: string, index: number, count: n
     x: geo.discard.x + jitter(key, 1) * geo.cardW * 0.05,
     y: geo.discard.y + jitter(key, 2) * geo.cardW * 0.05,
     rotate: jitter(key, 3) * 11,
-    scale: 1,
+    scale: geo.discardScale,
     faceUp: true,
     z: top ? 300 : 100 + index,
   };
 }
 
 export function placeDeck(geo: Geometry): Placement {
-  return { x: geo.deck.x, y: geo.deck.y, rotate: 0, scale: 1, faceUp: false, z: 60 };
+  return { x: geo.deck.x, y: geo.deck.y, rotate: 0, scale: geo.deckScale, faceUp: false, z: 60 };
 }
 
 export function placeSpawn(geo: Geometry, spawn: Spawn): Placement | null {
