@@ -4,8 +4,12 @@ import { avatarColor } from '../lib/format';
 import { addBot, leaveRoom, removeBot, startGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import './screens.css';
+import { BrandMascot } from '../brand/BrandMascot';
+import { BrandSettings } from '../brand/BrandSettings';
+import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
 
 export function Lobby({ room }: { room: RoomView }) {
+  const emotes = useEmotes(room.code);
   const pending = useApp((s) => s.pending);
   const isHost = room.hostId === room.you;
   const connected = room.players.filter((p) => p.connected).length;
@@ -38,6 +42,7 @@ export function Lobby({ room }: { room: RoomView }) {
         </div>
 
         <div className="code-block">
+          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><BrandSettings compact /><EmotePicker /></div>
           <span className="label">Kód místnosti</span>
           <div className="code-big brand-word" aria-label={`Kód ${room.code.split('').join(' ')}`}>
             {room.code.split('').map((ch, i) => (
@@ -97,6 +102,7 @@ export function Lobby({ room }: { room: RoomView }) {
           </AnimatePresence>
         </ul>
 
+        <div className="lobby-emotes">{emotes.map((message) => <div className="lobby-emote" key={message.id}><b>{room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'}</b><EmoteBubble message={message} author={room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'} /></div>)}</div>
         {isHost ? (
           <button className="btn btn-primary wide" onClick={startGame} disabled={pending || connected < PRSI_MIN_PLAYERS}>
             {connected < PRSI_MIN_PLAYERS ? 'Čekáme na dalšího hráče…' : `Rozdat karty (${connected} hráči)`}

@@ -13,6 +13,7 @@
     "typecheck": "tsc -p packages/shared --noEmit && tsc -p packages/backend --noEmit && tsc -p packages/server --noEmit && tsc -p packages/web --noEmit",
     "build:supabase": "node scripts/build-supabase.mjs",
     "qa:supabase": "node --import tsx scripts/qa-supabase.mts",
+    "preview:brand": "node scripts/preview-brand.mjs",
     "bot": "npm run bot -w @balik/server --",
     "qa:e2e": "node scripts/e2e-play.mjs"
   },

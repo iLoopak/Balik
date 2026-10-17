@@ -1,6 +1,8 @@
 import { type Card, type PrsiView, type SeqEvent, type Suit } from '@balik/shared';
 import { suitName } from '../cards/skin';
 import { effectsForGameEvent, type EffectEvent, type EffectInstance } from '../effects/effectEvents';
+import type { SoundCue } from '../brand/feedback';
+import { soundForEvent } from './feedback';
 
 // The display state is what the table currently *shows*. It trails the server snapshot:
 // every server event becomes a few cue steps that move the display one visual beat at a time,
@@ -62,6 +64,7 @@ export type FxItem =
 type FxSpec = FxItem extends infer T ? (T extends FxItem ? Omit<T, 'id'> : never) : never;
 
 export interface CueStep {
+  feedback?: SoundCue;
   apply?: (d: Display) => Display;
   /** Milliseconds before the next step starts (scaled by the director); may depend on the applied display. */
   wait: number | ((d: Display) => number);
@@ -169,7 +172,10 @@ export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
   const steps = movementCuesFor(ev, ctx);
   const index = ev.type === 'roundWon' ? 1 : 0;
   const step = steps[index];
-  if (step) step.effects = (before, after) => effectsForGameEvent(ev, before, after, ctx);
+  if (step) {
+    step.effects = (before, after) => effectsForGameEvent(ev, before, after, ctx);
+    step.feedback = soundForEvent(ev, ctx.me);
+  }
   if (ev.type !== 'roundStarted') {
     for (const cue of steps) cue.fx = cue.fx?.filter((f) => f.kind !== 'impact' && f.kind !== 'suit');
   }
@@ -219,6 +225,7 @@ function movementCuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
             return { ...d, hands: { ...d.hands, [pid]: [...(d.hands[pid] ?? []), e] }, drawCount: Math.max(0, d.drawCount - 1) };
           },
           wait: 85,
+          feedback: { id: `${ev.seq}:deal:${steps.length}`, kind: 'deal', delay: 0 },
         });
       }
       steps.push({ wait: 340 });

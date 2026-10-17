@@ -1,4 +1,4 @@
-import type { ClientMessage, PrsiAction, ServerMessage } from '@balik/shared';
+import type { ClientMessage, PrsiAction, ServerMessage, EmoteMessage, EmoteId } from '@balik/shared';
 import { forgetRoom, getToken, rememberRoom, saveName } from '../lib/identity';
 import { navigate, showToast, useApp } from './store';
 import { createGameTransport } from './transports/factory';
@@ -12,6 +12,10 @@ const SILENCE_MS = 40_000;
 const PENDING_TIMEOUT_MS = 5_000;
 
 const listeners = new Set<(msg: StateMessage) => void>();
+const socialListeners = new Set<(msg: EmoteMessage) => void>();
+export function onEmote(listener: (msg: EmoteMessage) => void) { socialListeners.add(listener); return () => { socialListeners.delete(listener); }; }
+export function sendEmote(emote: EmoteId) { return send({ t: 'emote', emote }); }
+export function returnToLobby() { sendGuarded({ t: 'lobby' }); }
 let transport: GameTransport | null = null;
 let connecting = false;
 let intent: Intent | null = null;
@@ -166,6 +170,9 @@ async function connect() {
 
 function handle(msg: ServerMessage) {
   switch (msg.t) {
+    case 'emote':
+      if (intent && msg.code === useApp.getState().room?.code && msg.expiresAt > Date.now()) for (const listener of socialListeners) listener(msg);
+      return;
     case 'state': {
       if (!intent) return; // Ignore delayed responses after an explicit leave.
       lastState = msg;

@@ -49,7 +49,7 @@ export class RoomApplication {
         const notify = creating || joining || presence.changed || result.changed;
         const deliveries = notify ? room.players.flatMap((p) => p.userId ? [{
           userId: p.userId,
-          frame: frameFor(room, p.userId, stamped, p.userId === userId && (creating || joining)),
+          frame: { ...frameFor(room, p.userId, stamped, p.userId === userId && (creating || joining)), ...(result.signals ? { signals: result.signals } : {}) },
         }] : []) : [];
         const reply: Reply = leaving ? { message: { t: 'left' }, code } : {
           code, wakeAt: room.botDueAt,

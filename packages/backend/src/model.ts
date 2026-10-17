@@ -1,6 +1,7 @@
 import {
   applyAction, chooseBotAction, createRound, filterEventFor, removePlayer, viewFor,
   MAX_BOTS, PRSI_MAX_PLAYERS, PRSI_MIN_PLAYERS,
+  emoteAllowed, EMOTE_TTL_MS, type EmoteMessage,
   type ClientMessage, type ErrorCode, type PrsiEvent, type PrsiState, type Rng,
   type RoomStatus, type RoomView, type ServerMessage,
 } from '@balik/shared';
@@ -14,6 +15,7 @@ export interface Player {
   lastSeen: number;
   connected: boolean;
   connectionId: string;
+  lastEmoteAt?: number | null;
 }
 
 /** Plain data only: no SDK, socket, timer or process-local references. */
@@ -34,6 +36,7 @@ export interface Room {
 export type Command = ClientMessage | { t: 'tick' } | { t: 'sync' };
 export interface Request { id: string; code?: string; connectionId?: string; message: Command }
 export interface Frame {
+  signals?: EmoteMessage[];
   revision: number;
   message: Extract<ServerMessage, { t: 'state' }>;
   wakeAt: number | null;
@@ -100,7 +103,7 @@ export function refreshPresence(room: Room, userId: string, env: Environment): {
 }
 
 /** Room orchestration; the only card rules remain in @balik/shared. */
-export function execute(room: Room, userId: string, command: Command, env: Environment): { events: PrsiEvent[]; changed: boolean } {
+export function execute(room: Room, userId: string, command: Command, env: Environment): { events: PrsiEvent[]; changed: boolean; signals?: EmoteMessage[] } {
   let player = room.players.find((p) => p.userId === userId);
   if (command.t === 'join') {
     if (player) {
@@ -117,6 +120,18 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
   if (!player) fail('not-in-room', 'Nejsi v této místnosti.');
   const host = () => { if (room.hostId !== player!.id) fail('not-host', 'Tohle může jen hostitel.'); };
   switch (command.t) {
+    case 'emote': {
+      if (!emoteAllowed(player!.lastEmoteAt ?? null, env.now)) fail('rate-limited', 'Další reakci můžeš poslat za chvíli.');
+      player!.lastEmoteAt = env.now;
+      return { events: [], changed: true, signals: [{ t: 'emote', id: env.id(), code: room.code,
+        playerId: player!.id, emote: command.emote, at: env.now, expiresAt: env.now + EMOTE_TTL_MS }] };
+    }
+    case 'lobby': {
+      host();
+      if (room.status === 'playing') fail('game-in-progress', 'Hra ještě běží.');
+      room.game = null; room.status = 'lobby'; room.botDueAt = null;
+      return { events: [], changed: true };
+    }
     case 'create': {
       for (let i = 0; i < Math.min(command.bots ?? 0, MAX_BOTS); i++) addBot(room, env);
       if (!command.bots) return { events: [], changed: true };

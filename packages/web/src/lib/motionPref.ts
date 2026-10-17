@@ -5,6 +5,7 @@ type Pref = 'system' | 'reduced';
 const KEY = 'balik.motion';
 
 function load(): Pref {
+  if (typeof window === 'undefined') return 'system';
   try {
     return localStorage.getItem(KEY) === 'reduced' ? 'reduced' : 'system';
   } catch {

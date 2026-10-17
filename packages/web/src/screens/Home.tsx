@@ -6,6 +6,8 @@ import { getName } from '../lib/identity';
 import { createRoom } from '../net/client';
 import { navigate, useApp } from '../net/store';
 import './screens.css';
+import { BrandMascot } from '../brand/BrandMascot';
+import { BrandSettings } from '../brand/BrandSettings';
 
 const HERO: Card[] = [
   { id: 'hearts-Q', suit: 'hearts', rank: 'Q' },
@@ -35,6 +37,7 @@ export function Home() {
 
   return (
     <main className="screen home">
+      <BrandSettings />
       <div className="hero">
         <div className="hero-cards" aria-hidden>
           {HERO.map((card, i) => (
@@ -70,6 +73,7 @@ export function Home() {
           <span className="game-dot" /> Prší · 2–4 hráči
         </div>
         <form onSubmit={onCreate}>
+          <div className="brand-welcome"><BrandMascot state={busy ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>Celý stůl v jednom BALÍKu.</strong>Rozdej přátelům dobrý večer.</span></div>
           <label className="label" htmlFor="name">
             Tvoje jméno
           </label>
@@ -129,6 +133,7 @@ export function Home() {
       </motion.div>
       <p className="home-foot">Máš odkaz od kamaráda? Stačí ho otevřít.</p>
       <a className="btn btn-ghost" href="/dev/deck-stormpunk">Prohlédnout balíček Stormpunk ↗</a>
+      {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/brand">BLIK · brand & game feel lab ↗</a>}
     </main>
   );
 }

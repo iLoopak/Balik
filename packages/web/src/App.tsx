@@ -5,6 +5,9 @@ import { Home } from './screens/Home';
 import { RoomScreen } from './screens/RoomScreen';
 import { DeckGallery } from './decks/DeckGallery';
 import { GameFeelPlayground } from './effects/GameFeelPlayground';
+import { lazy, Suspense } from 'react';
+import { BrandInteraction } from './brand/BrandInteraction';
+const BrandPlayground = import.meta.env.DEV ? lazy(() => import('./dev/BrandPlayground')) : null;
 
 export function App() {
   const path = useApp((s) => s.path);
@@ -14,7 +17,8 @@ export function App() {
 
   return (
     <MotionConfig reducedMotion={pref === 'reduced' ? 'always' : 'user'}>
-      {path.replace(/\/$/, '') === '/dev/deck-stormpunk' ? <DeckGallery /> : path.replace(/\/$/, '') === '/dev/game-feel' ? <GameFeelPlayground /> : code ? <RoomScreen key={code} code={code} /> : <Home />}
+      <BrandInteraction />
+      {BrandPlayground && path.replace(/\/$/, '') === '/dev/brand' ? <Suspense fallback={<p>Načítám náhled…</p>}><BrandPlayground /></Suspense> : path.replace(/\/$/, '') === '/dev/deck-stormpunk' ? <DeckGallery /> : path.replace(/\/$/, '') === '/dev/game-feel' ? <GameFeelPlayground /> : code ? <RoomScreen key={code} code={code} /> : <Home />}
       <div className="toast-host" aria-live="polite">
         <AnimatePresence>
           {toast && (

@@ -6,6 +6,8 @@ import { useApp } from '../net/store';
 import { useMotionPref } from '../lib/motionPref';
 import { Table } from '../table/Table';
 import './screens.css';
+import { BrandOptions, BrandSettings } from '../brand/BrandSettings';
+import { EmotePicker } from '../brand/Emotes';
 
 export function GameScreen({ room }: { room: RoomView }) {
   const status = useApp((s) => s.status);
@@ -26,6 +28,7 @@ export function GameScreen({ room }: { room: RoomView }) {
             </motion.span>
           )}
         </AnimatePresence>
+        <EmotePicker /><BrandSettings compact />
         <button className="btn btn-ghost topbar-menu" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label="Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
             <path fill="currentColor" d="M4 7h16v2H4zm0 4h16v2H4zm0 4h16v2H4z" />
@@ -40,6 +43,7 @@ export function GameScreen({ room }: { room: RoomView }) {
               exit={{ opacity: 0, y: -6 }}
               transition={{ duration: 0.16 }}
             >
+              <BrandOptions />
               <label className="menu-row">
                 <input type="checkbox" checked={pref === 'reduced'} onChange={(e) => setPref(e.target.checked ? 'reduced' : 'system')} />
                 Omezit animace

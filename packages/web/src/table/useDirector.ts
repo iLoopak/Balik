@@ -3,6 +3,8 @@ import type { RoomView } from '@balik/shared';
 import { getLastStateMessage, onStateMessage, type StateMessage } from '../net/client';
 import { cuesFor, emptyDisplay, reconcile, type CueStep, type Display, type FxItem } from './display';
 import { effectLifetime } from '../effects/effectPresets';
+import { brandAudio } from '../brand/audio';
+import { feedbackGate } from '../brand/feedback';
 
 /**
  * Turns server messages into a paced sequence of display changes.
@@ -98,6 +100,10 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
       setSpeed(scale);
       const before = state.display;
       if (step.apply) commit(step.apply(before));
+      if (step.feedback) {
+        const cue = step.feedback;
+        feedbackGate.once(`${state.target.code}:${me}:${state.target.round}:${cue.id}`, () => brandAudio.play(cue.kind, cue.delay * scale));
+      }
       const effects = step.effects?.(before, state.display) ?? [];
       const specs: NonNullable<CueStep['fx']> = [
         ...(step.fx ?? []),
@@ -118,6 +124,7 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
     (room: RoomView) => {
       const state = r.current;
       state.gen++;
+      brandAudio.cancel();
       state.queue = [];
       state.running = false;
       for (const t of state.timers) window.clearTimeout(t);
@@ -182,6 +189,7 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
     document.addEventListener('visibilitychange', onVisible);
     return () => {
       off();
+      brandAudio.cancel();
       document.removeEventListener('visibilitychange', onVisible);
       state.gen++;
       for (const t of state.timers) window.clearTimeout(t);

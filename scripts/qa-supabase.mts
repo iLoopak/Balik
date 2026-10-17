@@ -48,6 +48,10 @@ try {
   const initial = await a.state(); const code = initial.room.code;
   b.send({ t: 'join', name: 'Max', token: 'qa-token-player-b-123', code });
   await Promise.all([a.state((r) => r.players.length === 2), b.state((r) => r.players.length === 2)]);
+  a.send({ t: 'emote', emote: 'nice' });
+  await Promise.all([wait(() => a.messages.find((m) => m.t === 'emote'), 'sender emote'), wait(() => b.messages.find((m) => m.t === 'emote' && m.emote === 'nice'), 'opponent emote')]);
+  a.send({ t: 'emote', emote: 'gg' });
+  await wait(() => a.messages.find((m) => m.t === 'error' && m.code === 'rate-limited'), 'server emote cooldown');
   a.send({ t: 'start' });
   const [aStart, bStart] = await Promise.all([a.state((r) => r.status === 'playing'), b.state((r) => r.status === 'playing')]);
   assert.equal(aStart.room.game!.myHand!.length, 4);
@@ -82,6 +86,7 @@ try {
   assert.equal(snapshot.room.you, aStart.room.you);
   assert.deepEqual(snapshot.room.game!.myHand, aDraw.room.game!.myHand);
   assert.equal(snapshot.reset, true); assert.deepEqual(snapshot.events, []);
+  assert.equal(resumed.messages.some((m) => m.t === 'emote'), false, 'Reconnect does not replay old emotes');
 
   // A separate authenticated outsider can read neither raw rooms nor somebody else's journal.
   const auth = await anon.auth.signInAnonymously(); assert.ifError(auth.error);
@@ -102,7 +107,7 @@ try {
   assert.ok(botMove.events.length > 0);
   resumed.send({ t: 'leave' });
   await wait(() => resumed.messages.filter((m) => m.t === 'left').length >= 2, 'final leave acknowledgment');
-  console.log('PASS: real local Supabase Auth, Edge JWT, atomic/idempotent move, two-player Realtime, hidden data/RLS, reload reconnect, leave and scheduled bot.');
+  console.log('PASS: Supabase Auth, Edge JWT, idempotent move, two-player Realtime, emotes/cooldown/no replay, hidden data/RLS, reload reconnect, leave and scheduled bot.');
 } finally {
   transports.forEach((transport) => transport.close());
   await anon.removeAllChannels(); anon.auth.stopAutoRefresh();

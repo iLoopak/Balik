@@ -13,6 +13,7 @@ import {
 } from '@balik/shared';
 import { RoomManager, type Conn } from '../src/rooms';
 import { startServer } from '../src/server';
+import { clientMessageSchema } from '@balik/shared/schema';
 
 class StubConn implements Conn {
   messages: ServerMessage[] = [];
@@ -62,6 +63,29 @@ function playOut(rooms: RoomManager, conns: StubConn[]) {
 }
 
 describe('RoomManager', () => {
+  it('validates reactions, delivers them to every player and retains cooldown across reconnect', () => {
+    expect(clientMessageSchema.safeParse({ t: 'emote', emote: '<script>bad</script>' }).success).toBe(false);
+    const { rooms, conns, code, advance } = setup(2);
+    rooms.handle(conns[0]!, { t: 'emote', emote: 'gg' });
+    expect(conns[1]!.messages.at(-1)).toMatchObject({ t: 'emote', emote: 'gg', playerId: conns[0]!.last.you });
+    rooms.disconnect(conns[0]!); const fresh = new StubConn();
+    rooms.handle(fresh, { t: 'join', code, token: tok(0), name: 'Host' });
+    expect(fresh.messages.some((m) => m.t === 'emote')).toBe(false);
+    rooms.handle(fresh, { t: 'emote', emote: 'nice' }); expect(fresh.lastError?.code).toBe('rate-limited');
+    advance(2500); rooms.handle(fresh, { t: 'emote', emote: 'nice' });
+    expect(fresh.messages.at(-1)).toMatchObject({ t: 'emote', emote: 'nice' });
+  });
+
+  it('returns the same room to lobby after a round without losing scores', () => {
+    const { rooms, conns } = setup(2); rooms.handle(conns[0]!, { t: 'start' });
+    rooms.handle(conns[0]!, { t: 'lobby' }); expect(conns[0]!.lastError?.code).toBe('game-in-progress');
+    playOut(rooms, conns); const players = conns[0]!.last.players;
+    rooms.handle(conns[1]!, { t: 'lobby' }); expect(conns[1]!.lastError?.code).toBe('not-host');
+    rooms.handle(conns[0]!, { t: 'lobby' });
+    expect(conns[0]!.last.status).toBe('lobby'); expect(conns[0]!.last.game).toBeNull();
+    expect(conns[0]!.last.players).toEqual(players);
+    rooms.handle(conns[0]!, { t: 'start' }); expect(conns[0]!.last.round).toBe(2);
+  });
   it('creates a room, lets players join and only the host start', () => {
     const { rooms, conns } = setup(3);
     expect(conns[0]!.last.players.map((p) => p.name)).toEqual(['Host', 'P1', 'P2']);
@@ -327,6 +351,10 @@ describe('WebSocket server', () => {
 
     b.send({ t: 'join', token: tok(101), name: 'Bob', code });
     await b.next((m) => m.t === 'state');
+    a.send({ t: 'emote', emote: 'gg' });
+    expect(await b.next((m) => m.t === 'emote')).toMatchObject({ emote: 'gg', playerId: created.room.you });
+    a.send({ t: 'emote', emote: 'nice' });
+    expect(await a.next((m) => m.t === 'error')).toMatchObject({ code: 'rate-limited' });
     a.send({ t: 'start' });
     const started = (await b.next((m) => m.t === 'state' && m.room.status === 'playing')) as Extract<ServerMessage, { t: 'state' }>;
     expect(started.room.game!.myHand).toHaveLength(4);
