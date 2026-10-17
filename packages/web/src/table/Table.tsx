@@ -19,6 +19,7 @@ import { computeGeometry, placeAll, type Geometry, type HandUi, type PlacedCard 
 import { SuitPicker } from './SuitPicker';
 import { useDirector } from './useDirector';
 import { usePerfLite } from './usePerfLite';
+import { GameTableTheme } from './GameTableTheme';
 import './table.css';
 
 const CAN_HOVER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -118,7 +119,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
   };
 
   // ---- placement -----------------------------------------------------------
-  const ui: HandUi = { hovered: CAN_HOVER && canAct ? hovered : null, selected: selected ?? picking, pendingKey, playable, myTurn: canAct };
+  const ui: HandUi = { hovered: canAct ? hovered : null, selected: selected ?? picking, pendingKey, playable, myTurn: canAct };
   const placed = placeAll(display, geo, ui);
 
   const fxFor = (p: PlacedCard): CardFx | undefined => {
@@ -137,8 +138,8 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
   const showWin = display.phase === 'finished' && idle;
 
   return (
-    <div className="table" ref={tableRef} onClick={onTableClick}>
-      <div className="table-felt" style={{ top: geo.deck.y - geo.cardH * 1.15, height: geo.cardH * 2.3 }} />
+    <div className={`table command-table${geo.short ? ' table-short' : ''}`} ref={tableRef} onClick={onTableClick}>
+      <GameTableTheme geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown} />
       <AnimatePresence>
         {myTurnShown && display.phase === 'playing' && (
           <motion.div
@@ -271,7 +272,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
 function DeckStack({ geo, count, canDraw, penalty, onDraw }: { geo: Geometry; count: number; canDraw: boolean; penalty: number; onDraw: () => void }) {
   const layers = Math.min(3, count);
   return (
-    <div className="deck" style={{ left: geo.deck.x - geo.cardW / 2, top: geo.deck.y - geo.cardH / 2, width: geo.cardW, height: geo.cardH }}>
+    <div className="deck" style={{ left: geo.deck.x - geo.deckW / 2, top: geo.deck.y - geo.deckH / 2, width: geo.deckW, height: geo.deckH }}>
       {count === 0 && <div className="deck-empty">prázdný</div>}
       {Array.from({ length: layers }, (_, i) => (
         <div key={i} className="deck-card" style={{ transform: `translate(${-(layers - 1 - i) * 1.5}px, ${-(layers - 1 - i) * 1.5}px)` }}>
@@ -289,7 +290,7 @@ function DeckStack({ geo, count, canDraw, penalty, onDraw }: { geo: Geometry; co
         disabled={!canDraw}
         aria-label={penalty ? `Brát ${penalty} karty` : 'Líznout kartu'}
       />
-      <div className="deck-count">{count}</div>
+      <div className="deck-count">{count} <span>{cardsWord(count)}</span></div>
     </div>
   );
 }
@@ -320,7 +321,7 @@ function Seat({
   const seat = geo.seats[id];
   if (!seat) return null;
   const s = geo.oppScale;
-  const top = seat.side === 'top' ? seat.y + geo.cardH * s * 0.5 + 10 : seat.y + geo.cardH * s * 0.9;
+  const top = seat.side === 'top' ? seat.y + geo.cardH * s * 0.5 + (geo.short ? 6 : 10) : seat.y + geo.cardH * s * 0.9;
   const hit = fx.some((f) => f.kind === 'hit' && f.playerId === id);
   const skipped = fx.some((f) => f.kind === 'skip' && f.playerId === id);
   return (
@@ -381,7 +382,7 @@ function CenterHud({ display, geo, me, nameOf }: { display: Display; geo: Geomet
   return (
     <>
       {suit && display.phase !== 'idle' && (
-        <div className="suit-anchor" style={{ left: geo.discard.x, top: geo.discard.y + geo.cardH / 2 + 16 }}>
+        <div className="suit-anchor" style={{ left: geo.suitBadge.x, top: geo.suitBadge.y }}>
           <motion.div
             key={suit}
             className={`suit-chip${forced ? ' is-forced' : ''}`}
@@ -400,7 +401,7 @@ function CenterHud({ display, geo, me, nameOf }: { display: Display; geo: Geomet
         {display.pendingDraw > 0 && (
           <motion.div
             className="penalty-anchor"
-            style={{ left: geo.discard.x + geo.cardW * 0.48, top: geo.discard.y - geo.cardH * 0.5 }}
+            style={{ left: geo.discard.x + geo.pileW * 0.48, top: geo.discard.y - geo.pileH * 0.5 }}
             initial={{ opacity: 0, scale: 0.3 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.4, transition: { duration: 0.25 } }}
@@ -467,7 +468,7 @@ function StatusBar({
   return (
     <motion.div
       className={`status-bar${mine && display.phase === 'playing' ? ' is-mine' : ''}`}
-      style={{ top: geo.handTop - 62, width: Math.min(geo.w - 16, 640) }}
+      style={{ top: geo.controlY, width: Math.min(geo.w - 24, 620), minHeight: geo.controlHeight }}
       animate={hit && !reduced ? MOTION_PRIMITIVES.shake : { x: 0 }}
       transition={primitiveTransition(.42)}
       onClick={(e) => e.stopPropagation()}

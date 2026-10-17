@@ -138,3 +138,22 @@ Herní pravidla, síťový protokol i přesuny karet dál zůstávají v původn
 Změna směru je pouze demo/API pro budoucí hry; Prší toto pravidlo nemá.
 Architektura, hotové efekty, výkon a limity ověření:
 [Game feel dokumentace](packages/web/src/effects/README.md).
+
+## Provoz a nasazení
+
+Doporučené MVP: Vercel pro web, jedna dlouhodobě běžící Node instance pro
+multiplayer. Kořenový `vercel.json` nastavuje Vite build, výstup a SPA routy;
+`Dockerfile` připravuje backend s `/health` a `/ws`. Na Vercelu vyber **Vite**,
+root `./`, a nastav `VITE_WS_URL` na veřejnou `wss://…/ws` adresu backendu.
+Podrobný postup a důvod oddělení backendu: [Nasazení](docs/DEPLOYMENT.md).
+Web i backend lze přesunout jinam; `VITE_WS_URL` je volitelná adresa a bez ní
+funguje dosavadní společná doména s `/ws`.
+
+## Stormpunk command arena
+
+Stůl sdílí `GameTableTheme` mezi hrou a `/dev/game-feel`. Jemný ambient reaguje
+na aktivní frakci a respektuje reduced motion i lite režim. Sizing tokeny v
+`responsiveCardScale.ts` zvětšují běžnou desktopovou ruku o 20–35 % a rezervují
+místo pro střed, ovládání a zvednuté karty. Dlouhá ruka přechází do dvou řad.
+Geometrické testy kontrolují 8 rozměrů včetně mobilu na šířku a až 31 karet;
+živá vizuální kontrola v prohlížeči zatím nebyla provedena.

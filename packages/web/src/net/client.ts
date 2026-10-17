@@ -6,7 +6,7 @@ export type StateMessage = Extract<ServerMessage, { t: 'state' }>;
 type Intent = { kind: 'create'; name: string; bots: number } | { kind: 'join'; code: string; name: string };
 
 const WS_URL =
-  (import.meta.env.VITE_WS_URL as string | undefined) ??
+  (import.meta.env.VITE_WS_URL as string | undefined)?.trim() ||
   `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws`;
 
 const PING_MS = 15_000;

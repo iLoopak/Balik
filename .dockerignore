@@ -1,0 +1,13 @@
+.git
+.claude
+.codex
+node_modules
+**/node_modules
+**/dist
+output
+qa-output
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
