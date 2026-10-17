@@ -5,7 +5,8 @@ export { FACTIONS, SUIT_FACTION } from '../decks/stormpunk/tokens';
 export type { FactionId } from '../decks/stormpunk/tokens';
 
 // A visual choice only: no game state, rules or protocol depends on this module.
-export type GameId = 'prsi';
+export type { GameId } from '@balik/shared';
+import type { GameId } from '@balik/shared';
 export type DeckId = 'classic' | 'stormpunk';
 export const ACTIVE_DECK: DeckId = typeof window !== 'undefined' &&
   new URLSearchParams(window.location.search).get('deck') === 'classic' ? 'classic' : 'stormpunk';

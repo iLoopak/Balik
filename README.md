@@ -1,6 +1,6 @@
 # BALÍK
 
-Moderní webová herna karetních her. První hra: **Prší** pro 2–4 hráče, online přes sdílený kód nebo odkaz, případně sólo proti počítači.
+Moderní webová herna karetních her. **Prší** pro 2–4 hráče a **Sedma** pro 2 nebo 4 hráče, online přes sdílený kód nebo odkaz, případně sólo proti počítači.
 Cílové platformy: web, později Android/iOS (Capacitor) a Steam (Electron/Tauri). Klient je proto čisté SPA bez SSR.
 
 ## Rychlý start
@@ -23,7 +23,7 @@ Obnovení stránky tě vrátí na stejné místo u stolu.
 
 ### Sólo proti počítači
 
-Na úvodu zvol počet soupeřů (1–3) a klikni na **Hrát proti počítači**. V lobby může hostitel počítačové hráče i přidávat a odebírat. Boti běží na serveru a táhnou se zpožděním odpovídajícím délce animací.
+Na úvodu zvol hru a počet soupeřů (Prší 1–3, Sedma 1 nebo 3) a klikni na **Hrát proti počítači**. V lobby může hostitel počítačové hráče i přidávat a odebírat. Boti běží na serveru a táhnou se zpožděním odpovídajícím délce animací.
 
 ### Dev boti z terminálu
 
@@ -120,8 +120,8 @@ Přesné integrační API, původ a prompty všech ilustrací, export a stav QA:
 
 ## Známé limity (MVP)
 
-- Stav místností je v paměti serveru, restart serveru je ukončí.
-- Bez účtů, chatu, zvuků a nastavení variant pravidel.
+- Node/WebSocket adaptér drží místnosti v paměti. Supabase je ukládá trvale přes přenositelný repository adaptér.
+- Bez povinných účtů a volného chatu. SFX a rychlé reakce jsou společné oběma hrám.
 - Boti jsou jednoduchá heuristika, ne silný soupeř.
 - Sólo hra potřebuje server. Engine je ale čistý TS, takže offline režim (Capacitor/Steam) půjde spustit přímo v klientovi.
 
@@ -167,3 +167,17 @@ serverovým cooldownem. Výsledky používají skutečné skóre a hostitel mů�
 na odvetu nebo zpět do stejné lobby. Nový dev-only playground je `/dev/brand`.
 Audit, API, rozdělení vrstev a limity ověření:
 [Brand & feel](docs/brand/BALIK_BRAND_AND_FEEL.md).
+
+## Sedma · vlna 2
+
+Na úvodu zvol Prší nebo Sedmu. Sedma nabízí 1v1 a 2v2 (protější hráči v týmu),
+štychy s pokračováním, esa/desítky po 10 bodech a výchozí bonus za poslední
+štych +10. Při vytvoření lze bonus vypnout; pak je možná remíza 40:40.
+Tři hráči nemohou rozehrát Sedmu. Odveta zachová hru, variantu a výhry.
+
+- Pravidla, příklady, architektura a QA: [Sedma](docs/games/SEDMA_RULES.md).
+- Čistý modul `shared/sedma`, dispatcher `shared/games.ts`; Prší se nepřepisuje.
+- Obě hry sdílejí oba backendy, transport, lobby, identitu, emotes, BLIK,
+  výsledkový shell, CardLayer, pohybové tokeny a vrstvené karty/stickery.
+- Pro publikaci W2 sestav a nasaď funkci `game` i frontend. Nová SQL migrace
+  ani změna proměnných prostředí není potřeba. Viz [Supabase](docs/SUPABASE.md).

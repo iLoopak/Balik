@@ -1,9 +1,9 @@
 import {
-  applyAction, chooseBotAction, createRound, filterEventFor, removePlayer, viewFor,
-  MAX_BOTS, PRSI_MAX_PLAYERS, PRSI_MIN_PLAYERS,
+  applyGameAction as applyAction, chooseGameBotAction as chooseBotAction, createGameRound as createRound, filterGameEventFor as filterEventFor, removeGamePlayer as removePlayer, gameViewFor as viewFor, canStartGame, gameWinnerIds,
+  MAX_BOTS, ROOM_MAX_PLAYERS,
   emoteAllowed, EMOTE_TTL_MS, type EmoteMessage,
-  type ClientMessage, type ErrorCode, type PrsiEvent, type PrsiState, type Rng,
-  type RoomStatus, type RoomView, type ServerMessage,
+  type ClientMessage, type ErrorCode, type GameEvent, type GameState, type GameId, type Rng,
+  type RoomStatus, type AnyRoomView, type ServerMessage,
 } from '@balik/shared';
 
 export interface Player {
@@ -25,7 +25,10 @@ export interface Room {
   players: Player[];
   hostId: string;
   status: RoomStatus;
-  game: PrsiState | null;
+  /** Missing in pre-W2 persisted rooms means Prší. */
+  gameId?: GameId;
+  sedmaBonus?: 0 | 10;
+  game: GameState | null;
   seq: number;
   round: number;
   startIndex: number;
@@ -44,7 +47,7 @@ export interface Frame {
 }
 export interface Reply { frame?: Frame; message?: ServerMessage; code?: string; wakeAt?: number | null }
 export interface Delivery { userId: string; frame: Frame }
-type EngineEvent = PrsiEvent & { seq: number };
+type EngineEvent = GameEvent & { seq: number };
 export interface Environment { now: number; rng: Rng; id: () => string; connectionId?: string }
 
 export class GameError extends Error {
@@ -54,9 +57,9 @@ const fail = (code: ErrorCode, message: string): never => { throw new GameError(
 const BOT_NAMES = ['Robo Rudla', 'Bot Božka', 'Čip Čeněk', 'Kyber Květa'];
 export const ONLINE_MS = 45_000;
 
-export function newRoom(code: string, userId: string, name: string, env: Environment): Room {
+export function newRoom(code: string, userId: string, name: string, env: Environment, gameId: GameId = 'prsi', sedmaBonus: 0 | 10 = 10): Room {
   return {
-    code, version: 0, players: [human(userId, name, env.now, env.connectionId ?? userId)], hostId: userId,
+    code, version: 0, gameId, sedmaBonus, players: [human(userId, name, env.now, env.connectionId ?? userId)], hostId: userId,
     status: 'lobby', game: null, seq: 0, round: 0, startIndex: -1,
     botDueAt: null, updatedAt: env.now,
   };
@@ -65,17 +68,16 @@ function human(userId: string, name: string, now: number, connectionId: string):
   return { id: userId, userId, name, bot: false, wins: 0, lastSeen: now, connected: true, connectionId };
 }
 function addBot(room: Room, env: Environment) {
-  if (room.players.length >= PRSI_MAX_PLAYERS) fail('room-full', 'Místnost je plná.');
+  if (room.players.length >= ROOM_MAX_PLAYERS) fail('room-full', 'Místnost je plná.');
   const name = BOT_NAMES.find((n) => !room.players.some((p) => p.name === n)) ?? 'Bot';
   room.players.push({ id: env.id(), userId: null, name, bot: true, wins: 0, lastSeen: env.now, connected: true, connectionId: '' });
 }
 function afterGameChange(room: Room) {
   if (room.game?.phase !== 'finished' || room.status === 'finished') return;
   room.status = 'finished';
-  const winner = room.players.find((p) => p.id === room.game!.winnerId);
-  if (winner) winner.wins++;
+  for (const id of gameWinnerIds(room.game!)) { const winner = room.players.find((p) => p.id === id); if (winner) winner.wins++; }
 }
-function remove(room: Room, playerId: string, env: Environment): PrsiEvent[] {
+function remove(room: Room, playerId: string, env: Environment): GameEvent[] {
   room.players = room.players.filter((p) => p.id !== playerId);
   if (room.hostId === playerId) room.hostId = (room.players.find((p) => !p.bot && p.connected) ?? room.players.find((p) => !p.bot))?.id ?? '';
   if (!room.game || room.status !== 'playing') return [];
@@ -86,9 +88,9 @@ function remove(room: Room, playerId: string, env: Environment): PrsiEvent[] {
 }
 
 /** Expiration is evaluated by any authenticated room request, never by client-supplied time. */
-export function refreshPresence(room: Room, userId: string, env: Environment): { changed: boolean; events: PrsiEvent[] } {
+export function refreshPresence(room: Room, userId: string, env: Environment): { changed: boolean; events: GameEvent[] } {
   let changed = false;
-  const events: PrsiEvent[] = [];
+  const events: GameEvent[] = [];
   const grace = room.status === 'playing' ? 120_000 : 45_000;
   for (const p of [...room.players]) {
     if (p.bot) continue;
@@ -103,7 +105,7 @@ export function refreshPresence(room: Room, userId: string, env: Environment): {
 }
 
 /** Room orchestration; the only card rules remain in @balik/shared. */
-export function execute(room: Room, userId: string, command: Command, env: Environment): { events: PrsiEvent[]; changed: boolean; signals?: EmoteMessage[] } {
+export function execute(room: Room, userId: string, command: Command, env: Environment): { events: GameEvent[]; changed: boolean; signals?: EmoteMessage[] } {
   let player = room.players.find((p) => p.userId === userId);
   if (command.t === 'join') {
     if (player) {
@@ -112,7 +114,7 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
       if (room.status === 'lobby') player.name = command.name;
     } else {
       if (room.status === 'playing') fail('game-in-progress', 'Hra už běží, počkej na další partii.');
-      if (room.players.length >= PRSI_MAX_PLAYERS) fail('room-full', 'Místnost je plná.');
+      if (room.players.length >= ROOM_MAX_PLAYERS) fail('room-full', 'Místnost je plná.');
       player = human(userId, command.name, env.now, env.connectionId ?? userId); room.players.push(player);
     }
     return { events: [], changed: true };
@@ -141,10 +143,10 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
       host();
       if (room.status === 'playing') return { events: [], changed: false };
       room.players = room.players.filter((p) => p.bot || p.connected);
-      if (room.players.length < PRSI_MIN_PLAYERS) fail('not-enough-players', 'Ke hře jsou potřeba aspoň 2 hráči.');
+      if (!canStartGame(room.gameId ?? 'prsi', room.players.length)) fail('not-enough-players', room.gameId === 'sedma' ? 'Sedma potřebuje přesně 2 nebo 4 hráče.' : 'Ke hře jsou potřeba aspoň 2 hráči.');
       room.round++;
       room.startIndex = (room.startIndex + 1) % room.players.length;
-      const result = createRound(room.players.map((p) => p.id), room.startIndex, env.rng);
+      const result = createRound(room.gameId ?? 'prsi', room.players.map((p) => p.id), room.startIndex, env.rng, room.sedmaBonus);
       room.game = result.state; room.status = 'playing';
       return { events: result.events, changed: true };
     }
@@ -178,32 +180,32 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
   }
 }
 
-export function scheduleBot(room: Room, events: PrsiEvent[], env: Environment) {
+export function scheduleBot(room: Room, events: GameEvent[], env: Environment) {
   const game = room.game;
   const current = game && room.players.find((p) => p.id === game.players[game.currentIndex]!.id);
   if (room.status !== 'playing' || !current?.bot || !room.players.some((p) => !p.bot && p.connected)) { room.botDueAt = null; return; }
   if (events.length === 0 && room.botDueAt !== null) return;
   const animation = events.reduce((sum, event) => sum + (
-    event.type === 'roundStarted' ? 1900 + event.dealOrder.length * 85 :
-    event.type === 'cardsDrawn' ? 600 + Math.max(0, event.cards.length - 1) * 150 :
-    event.type === 'turnSkipped' || event.type === 'roundWon' ? 900 :
+    event.type === 'sedmaStarted' || event.type === 'roundStarted' ? 1900 + event.dealOrder.length * 85 :
+    event.type === 'sedmaDrawn' || event.type === 'cardsDrawn' ? 600 + Math.max(0, event.cards.length - 1) * 150 :
+    event.type === 'trickResolved' || event.type === 'sedmaEnded' || event.type === 'turnSkipped' || event.type === 'roundWon' ? 900 :
     event.type === 'suitChanged' ? 720 : event.type === 'turnChanged' ? 160 : 560
   ), 0);
   room.botDueAt = env.now + animation + 500 + env.rng() * 600;
 }
 
-export function stamp(room: Room, events: PrsiEvent[]): EngineEvent[] {
+export function stamp(room: Room, events: GameEvent[]): EngineEvent[] {
   return events.map((event) => ({ ...event, seq: ++room.seq }));
 }
 export function frameFor(room: Room, userId: string, events: EngineEvent[], reset: boolean): Frame {
   const viewer = room.players.find((p) => p.userId === userId);
   if (!viewer) throw new Error('Cannot produce a view for a non-member');
-  const view: RoomView = {
-    code: room.code, gameId: 'prsi', you: viewer.id, hostId: room.hostId,
+  const view = {
+    code: room.code, gameId: room.gameId ?? 'prsi', sedmaBonus: room.sedmaBonus, you: viewer.id, hostId: room.hostId,
     status: room.status, round: room.round, seq: room.seq,
     players: room.players.map((p) => ({ id: p.id, name: p.name, bot: p.bot, wins: p.wins, connected: p.connected })),
     game: room.game ? viewFor(room.game, viewer.id) : null,
-  };
+  } as AnyRoomView;
   return { revision: room.version, wakeAt: room.botDueAt, connectionId: viewer.connectionId, message: {
     t: 'state', room: view, reset,
     events: reset ? [] : events.map((event) => ({ ...filterEventFor(event, viewer.id), seq: event.seq })),

@@ -1,11 +1,11 @@
-import type { ClientMessage, PrsiAction, ServerMessage, EmoteMessage, EmoteId } from '@balik/shared';
+import type { ClientMessage, GameAction, GameId, ServerMessage, EmoteMessage, EmoteId } from '@balik/shared';
 import { forgetRoom, getToken, rememberRoom, saveName } from '../lib/identity';
 import { navigate, showToast, useApp } from './store';
 import { createGameTransport } from './transports/factory';
 import type { GameTransport } from './transports/types';
 
 export type StateMessage = Extract<ServerMessage, { t: 'state' }>;
-type Intent = { kind: 'create'; name: string; bots: number } | { kind: 'join'; code: string; name: string };
+type Intent = { kind: 'create'; name: string; bots: number; gameId: GameId; sedmaBonus: 0 | 10 } | { kind: 'join'; code: string; name: string };
 
 const PING_MS = 15_000;
 const SILENCE_MS = 40_000;
@@ -39,9 +39,9 @@ export function onStateMessage(listener: (msg: StateMessage) => void): () => voi
 }
 
 /** `bots` > 0 starts a single-player game against computer opponents right away. */
-export function createRoom(name: string, bots = 0) {
+export function createRoom(name: string, bots = 0, gameId: GameId = 'prsi', sedmaBonus: 0 | 10 = 10) {
   saveName(name);
-  intent = { kind: 'create', name, bots };
+  intent = { kind: 'create', name, bots, gameId, sedmaBonus };
   useApp.setState({ joinError: null });
   sendIntentOrConnect();
 }
@@ -78,7 +78,7 @@ export function rematch() {
   sendGuarded({ t: 'rematch' });
 }
 
-export function sendAction(action: PrsiAction): boolean {
+export function sendAction(action: GameAction): boolean {
   const room = useApp.getState().room;
   if (!room) return false;
   return sendGuarded({ t: 'act', baseSeq: room.seq, action });
@@ -110,7 +110,7 @@ function sendIntentOrConnect() {
 function sendIntent() {
   if (!intent) return;
   const token = getToken();
-  if (intent.kind === 'create') send({ t: 'create', token, name: intent.name, bots: intent.bots || undefined });
+  if (intent.kind === 'create') send({ t: 'create', token, name: intent.name, bots: intent.bots || undefined, gameId: intent.gameId, sedmaBonus: intent.sedmaBonus });
   else send({ t: 'join', token, name: intent.name, code: intent.code });
 }
 

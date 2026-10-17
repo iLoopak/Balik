@@ -1,3 +1,5 @@
+import type { GameId } from './games';
+import type { SedmaClientEvent, SedmaView } from './sedma/types';
 import type { PrsiClientEvent, PrsiView } from './prsi/types';
 import type { EmoteMessage } from './social';
 
@@ -7,6 +9,7 @@ export const ROOM_CODE_LENGTH = 4;
 export const ROOM_CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ';
 export const MAX_NAME_LENGTH = 20;
 export const MAX_BOTS = 3;
+export const ROOM_MAX_PLAYERS = 4;
 
 export type RoomStatus = 'lobby' | 'playing' | 'finished';
 
@@ -18,9 +21,10 @@ export interface RoomPlayerView {
   bot: boolean;
 }
 
-export interface RoomView {
+export interface RoomView<G extends GameId = 'prsi'> {
   code: string;
-  gameId: 'prsi';
+  gameId: G;
+  sedmaBonus?: 0 | 10;
   /** Public id of the receiving player. */
   you: string;
   hostId: string;
@@ -30,18 +34,20 @@ export interface RoomView {
   round: number;
   /** Sequence number of the last game event; actions must reference it. */
   seq: number;
-  game: PrsiView | null;
+  game: (G extends 'sedma' ? SedmaView : PrsiView) | null;
 }
 
+export type AnyRoomView = RoomView<'prsi'> | RoomView<'sedma'>;
+export type GameSeqEvent = SeqEvent | (SedmaClientEvent & { seq: number });
 export type SeqEvent = PrsiClientEvent & { seq: number };
 
 export type ServerMessage =
   | EmoteMessage
   | {
       t: 'state';
-      room: RoomView;
+      room: AnyRoomView;
       /** Events since the previous message, in order. Empty for pure presence updates. */
-      events: SeqEvent[];
+      events: GameSeqEvent[];
       /** True on join/reconnect: render the snapshot directly, don't replay anything. */
       reset: boolean;
     }

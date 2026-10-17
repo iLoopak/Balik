@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { PRSI_MAX_PLAYERS, PRSI_MIN_PLAYERS, type RoomView } from '@balik/shared';
+import { ROOM_MAX_PLAYERS, canStartGame, gameName, type AnyRoomView } from '@balik/shared';
 import { avatarColor } from '../lib/format';
 import { addBot, leaveRoom, removeBot, startGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
@@ -8,7 +8,7 @@ import { BrandMascot } from '../brand/BrandMascot';
 import { BrandSettings } from '../brand/BrandSettings';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
 
-export function Lobby({ room }: { room: RoomView }) {
+export function Lobby({ room }: { room: AnyRoomView }) {
   const emotes = useEmotes(room.code);
   const pending = useApp((s) => s.pending);
   const isHost = room.hostId === room.you;
@@ -19,7 +19,7 @@ export function Lobby({ room }: { room: RoomView }) {
   const share = async () => {
     try {
       if (navigator.share && matchMedia('(pointer: coarse)').matches) {
-        await navigator.share({ title: 'BALÍK — Prší', text: `Pojď hrát Prší! Kód: ${room.code}`, url: link });
+        await navigator.share({ title: `BALÍK — ${gameName(room.gameId)}`, text: `Pojď hrát ${gameName(room.gameId)}! Kód: ${room.code}`, url: link });
         return;
       }
       await navigator.clipboard.writeText(link);
@@ -34,7 +34,7 @@ export function Lobby({ room }: { room: RoomView }) {
       <div className="panel">
         <div className="lobby-head">
           <div className="game-tag">
-            <span className="game-dot" /> Prší · lobby
+            <span className="game-dot" /> {gameName(room.gameId)} · lobby
           </div>
           <button className="btn btn-ghost" onClick={leaveRoom}>
             Odejít
@@ -57,7 +57,7 @@ export function Lobby({ room }: { room: RoomView }) {
         </div>
 
         <span className="label">
-          Hráči ({room.players.length}/{PRSI_MAX_PLAYERS})
+          Hráči ({room.players.length}/{ROOM_MAX_PLAYERS})
         </span>
         <ul className="seat-list">
           <AnimatePresence initial={false}>
@@ -78,6 +78,7 @@ export function Lobby({ room }: { room: RoomView }) {
                   {p.name}
                   {p.id === room.you && <em> (ty)</em>}
                 </span>
+                {room.gameId === 'sedma' && <span className={`pill sedma-team-${room.players.indexOf(p) % 2}`}>Tým {room.players.indexOf(p) % 2 + 1}</span>}
                 {p.id === room.hostId && <span className="pill">hostitel</span>}
                 {p.bot && <span className="pill bot">počítač</span>}
                 {p.bot && isHost && (
@@ -88,7 +89,7 @@ export function Lobby({ room }: { room: RoomView }) {
                 {!p.connected && <span className="pill muted">odpojeno</span>}
               </motion.li>
             ))}
-            {Array.from({ length: PRSI_MAX_PLAYERS - room.players.length }, (_, i) => (
+            {Array.from({ length: ROOM_MAX_PLAYERS - room.players.length }, (_, i) => (
               <motion.li key={`empty-${i}`} layout className="is-empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                 <span className="avatar empty" />
                 <span className="seat-list-name">volné místo</span>
@@ -104,8 +105,8 @@ export function Lobby({ room }: { room: RoomView }) {
 
         <div className="lobby-emotes">{emotes.map((message) => <div className="lobby-emote" key={message.id}><b>{room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'}</b><EmoteBubble message={message} author={room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'} /></div>)}</div>
         {isHost ? (
-          <button className="btn btn-primary wide" onClick={startGame} disabled={pending || connected < PRSI_MIN_PLAYERS}>
-            {connected < PRSI_MIN_PLAYERS ? 'Čekáme na dalšího hráče…' : `Rozdat karty (${connected} hráči)`}
+          <button className="btn btn-primary wide" onClick={startGame} disabled={pending || !canStartGame(room.gameId, connected)}>
+            {!canStartGame(room.gameId, connected) ? (room.gameId === 'sedma' ? 'Sedma potřebuje 2 nebo 4 hráče' : 'Čekáme na dalšího hráče…') : `Rozdat karty (${connected} hráči)`}
           </button>
         ) : (
           <p className="lobby-wait">
@@ -114,7 +115,8 @@ export function Lobby({ room }: { room: RoomView }) {
         )}
       </div>
       <details className="rules">
-        <summary>Pravidla Prší v kostce</summary>
+        <summary>Pravidla {gameName(room.gameId)} v kostce</summary>
+        {room.gameId === 'sedma' ? <ul><li>Hraj jakoukoli kartu. Barva nerozhoduje.</li><li>Štych drží poslední sedma nebo karta původní hodnoty.</li><li>Vycházející může ukončit štych nebo pokračovat sedmou či původní hodnotou.</li><li>Vítěz dobírá první. Eso i desítka mají 10 bodů, poslední štych {room.sedmaBonus ?? 10}.</li><li>Ve čtyřech sedí spoluhráči naproti sobě. Tři hráči nejsou podporovaní.</li></ul> : (
         <ul>
           <li>Každý dostane 4 karty. Přikládáš stejnou barvu nebo hodnotu.</li>
           <li>
@@ -129,6 +131,7 @@ export function Lobby({ room }: { room: RoomView }) {
           <li>Nemáš co hrát? Lízni si. Pokud líznutá karta sedí, můžeš ji hned zahrát.</li>
           <li>Kdo se první zbaví všech karet, vyhrává.</li>
         </ul>
+        )}
       </details>
     </main>
   );

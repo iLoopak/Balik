@@ -1,7 +1,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
 import { WebSocket } from 'ws';
 import {
-  chooseBotAction,
+  chooseBotAction, chooseSedmaBotFromView, type AnyRoomView,
   createRound,
   legalMoves,
   legalMovesFromView,
@@ -26,6 +26,7 @@ class StubConn implements Conn {
   get last(): RoomView {
     const s = this.states.at(-1);
     if (!s) throw new Error('no state yet');
+    if (s.room.gameId !== 'prsi') throw new Error('Expected Prší');
     return s.room;
   }
   get lastError() {
@@ -61,6 +62,59 @@ function playOut(rooms: RoomManager, conns: StubConn[]) {
   }
   throw new Error('round did not finish');
 }
+
+describe('Sedma RoomManager', () => {
+  for (const count of [2, 4]) it(`plays a complete ${count}-seat multiplayer game, reconnect and rematch`, () => {
+    const rooms = new RoomManager({ rng: mulberry32(8) });
+    class Seat implements Conn {
+      messages: ServerMessage[] = [];
+      send(msg: ServerMessage) { this.messages.push(structuredClone(msg)); }
+      get room(): AnyRoomView { return this.messages.filter((m) => m.t === 'state').at(-1)!.room; }
+    }
+    const seats = Array.from({ length: count }, () => new Seat());
+    rooms.handle(seats[0]!, { t: 'create', token: tok(0), name: 'Host', gameId: 'sedma' });
+    const code = seats[0]!.room.code;
+    for (let i = 1; i < count; i++) rooms.handle(seats[i]!, { t: 'join', code, token: tok(i), name: `P${i}` });
+    rooms.handle(seats[0]!, { t: 'start' });
+    for (let step = 0; step < 70; step++) {
+      const view = seats[0]!.room;
+      if (view.status === 'finished') break;
+      const index = seats.findIndex((seat) => seat.room.you === view.game!.currentPlayerId);
+      let seat = seats[index]!;
+      if (step === 1) {
+        const before = seat.room.game; rooms.disconnect(seat); seat = new Seat(); seats[index] = seat;
+        rooms.handle(seat, { t: 'join', code, token: tok(index), name: `P${index}` });
+        expect(seat.room.game).toEqual(before); expect(seat.messages[0]).toMatchObject({ reset: true, events: [] });
+      }
+      const room = seat.room;
+      if (room.gameId !== 'sedma' || !room.game) throw new Error('Expected Sedma');
+      const action = chooseSedmaBotFromView(room.game, room.you);
+      rooms.handle(seat, { t: 'act', baseSeq: room.seq, action });
+      expect(seat.messages.at(-1)!.t).toBe('state');
+      rooms.handle(seat, { t: 'act', baseSeq: room.seq, action });
+      expect(seat.messages.at(-1)).toMatchObject({ t: 'error', code: seat.room.status === 'finished' ? 'illegal' : 'stale' });
+    }
+    const final = seats[0]!.room;
+    expect(final.status).toBe('finished');
+    if (final.gameId !== 'sedma') throw new Error('Expected Sedma');
+    expect(final.game!.scores.reduce((a, b) => a + b)).toBe(90);
+    expect(final.players.map((p) => p.wins)).toEqual(final.players.map((p) => final.game!.result!.winnerIds.includes(p.id) ? 1 : 0));
+    rooms.handle(seats[0]!, { t: 'rematch' }); expect(seats[0]!.room.round).toBe(2);
+    expect(seats[0]!.room.players.map((p) => p.wins)).toEqual(final.players.map((p) => p.wins));
+  });
+  it('does not start three players or accept a Prší action in Sedma', () => {
+    const rooms = new RoomManager(); const seats = [new StubConn(), new StubConn(), new StubConn()];
+    rooms.handle(seats[0]!, { t: 'create', token: tok(0), name: 'Host', gameId: 'sedma' });
+    const state = seats[0]!.states.at(-1)!.room;
+    for (let i = 1; i < 3; i++) rooms.handle(seats[i]!, { t: 'join', code: state.code, token: tok(i), name: 'P' });
+    rooms.handle(seats[0]!, { t: 'start' }); expect(seats[0]!.lastError).toMatchObject({ code: 'not-enough-players' });
+    rooms.handle(seats[2]!, { t: 'leave' }); rooms.handle(seats[0]!, { t: 'start' });
+    const room = seats[0]!.states.at(-1)!.room;
+    rooms.handle(seats[0]!, { t: 'act', baseSeq: room.seq, action: { type: 'draw' } });
+    expect(seats[0]!.lastError).toMatchObject({ code: 'illegal' });
+    rooms.handle(seats[1]!, { t: 'leave' }); expect(seats[0]!.states.at(-1)!.room.game).toMatchObject({ result: { reason: 'forfeit', winnerTeam: 0 } });
+  });
+});
 
 describe('RoomManager', () => {
   it('validates reactions, delivers them to every player and retains cooldown across reconnect', () => {
@@ -137,6 +191,7 @@ describe('RoomManager', () => {
     // then check nobody else ever received those ids while they were hidden.
     for (const [i, conn] of conns.entries()) {
       for (const msg of conn.states) {
+        if (msg.room.gameId !== 'prsi') throw new Error('Expected Prší');
         const game = msg.room.game;
         if (!game) continue;
         for (const [j, other] of conns.entries()) {

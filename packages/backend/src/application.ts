@@ -1,4 +1,4 @@
-import { ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '@balik/shared';
+import { canStartGame, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '@balik/shared';
 import { execute, frameFor, GameError, newRoom, refreshPresence, scheduleBot, stamp,
   type Environment, type Reply, type Request } from './model';
 import type { RoomRepository } from './ports';
@@ -14,6 +14,9 @@ export class RoomApplication {
     if (receipt) return receipt;
     const creating = request.message.t === 'create';
     const joining = request.message.t === 'join';
+    if (request.message.t === 'create' && request.message.bots && !canStartGame(request.message.gameId ?? 'prsi', request.message.bots + 1)) {
+      return { message: { t: 'error', code: 'not-enough-players', message: 'Sedma potřebuje přesně 2 nebo 4 hráče.' } };
+    }
     const membership = await this.repository.membership(userId);
     const targetCode = request.message.t === 'join' ? request.message.code : request.code ?? membership;
     // Switching rooms is an explicit persisted leave, so the old room keeps functioning.
@@ -29,7 +32,7 @@ export class RoomApplication {
       const original = creating ? null : await this.repository.load(code);
       if (!creating && !original) return { message: { t: 'error', code: 'room-not-found', message: 'Místnost s tímto kódem neexistuje.' } };
       const room = creating && request.message.t === 'create'
-        ? newRoom(code, userId, request.message.name, env) : structuredClone(original!);
+        ? newRoom(code, userId, request.message.name, env, request.message.gameId, request.message.sedmaBonus) : structuredClone(original!);
       // Merely knowing the room code does not authorize reads, heartbeats or bot execution.
       if (!creating && !joining && !room.players.some((p) => p.userId === userId)) {
         return { message: { t: 'error', code: 'not-in-room', message: 'Nejsi v této místnosti.' } };

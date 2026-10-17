@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { RoomView } from '@balik/shared';
+import type { RoomView, SeqEvent } from '@balik/shared';
 import { getLastStateMessage, onStateMessage, type StateMessage } from '../net/client';
 import { cuesFor, emptyDisplay, reconcile, type CueStep, type Display, type FxItem } from './display';
 import { effectLifetime } from '../effects/effectPresets';
@@ -145,7 +145,7 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
   const receive = useCallback(
     (msg: StateMessage) => {
       const state = r.current;
-      if (msg.room.you !== me) return;
+      if (msg.room.you !== me || msg.room.gameId !== 'prsi') return;
       // A hidden tab can't run animations; just track the truth and show it on return.
       if (msg.reset || document.hidden) return hardReset(msg.room);
       const fresh = msg.events.filter((e) => e.seq > state.lastSeq);
@@ -162,7 +162,7 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
         order: msg.room.game?.players.map((p) => p.id) ?? [],
         name: (id: string) => names.get(id) ?? 'Hráč',
       };
-      for (const ev of fresh) state.queue.push(...cuesFor(ev, ctx));
+      for (const ev of fresh) state.queue.push(...cuesFor(ev as SeqEvent, ctx));
       state.lastSeq = fresh.at(-1)!.seq;
       void run();
     },

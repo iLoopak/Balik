@@ -2,7 +2,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createClient } from '@supabase/supabase-js';
-import type { ClientMessage, RoomView, ServerMessage } from '@balik/shared';
+import { chooseSedmaBotFromView, type ClientMessage, type AnyRoomView, type ServerMessage } from '@balik/shared';
 import { SupabaseTransport } from '../packages/web/src/net/transports/supabase';
 
 const status = JSON.parse(readFileSync(process.env.SUPABASE_STATUS_FILE ?? '/tmp/balik-supabase-status.json', 'utf8'));
@@ -37,7 +37,7 @@ function client(tab = crypto.randomUUID()) {
     tab, transport, messages,
     connected: () => wait(() => { if (failure) throw new Error(failure); return opened; }, 'Realtime subscription'),
     send: (message: ClientMessage) => assert.equal(transport.send(message), true),
-    state: (predicate: (room: RoomView) => boolean = () => true) => wait(() => messages.filter((m) => m.t === 'state').reverse().find((m) => m.t === 'state' && predicate(m.room)) as Extract<ServerMessage, { t: 'state' }> | undefined, 'game state'),
+    state: (predicate: (room: AnyRoomView) => boolean = () => true) => wait(() => messages.filter((m) => m.t === 'state').reverse().find((m) => m.t === 'state' && predicate(m.room)) as Extract<ServerMessage, { t: 'state' }> | undefined, 'game state'),
   };
 }
 
@@ -107,7 +107,52 @@ try {
   assert.ok(botMove.events.length > 0);
   resumed.send({ t: 'leave' });
   await wait(() => resumed.messages.filter((m) => m.t === 'left').length >= 2, 'final leave acknowledgment');
-  console.log('PASS: Supabase Auth, Edge JWT, idempotent move, two-player Realtime, emotes/cooldown/no replay, hidden data/RLS, reload reconnect, leave and scheduled bot.');
+  // Entire Sedma games through the actual frontend adapter, Auth, Edge and recipient journal.
+  for (const count of [2, 4]) {
+    const seats = Array.from({ length: count }, () => client());
+    await Promise.all(seats.map((seat) => seat.connected()));
+    seats[0]!.send({ t: 'create', name: 'Sedma host', token: 'qa-sedma-token-123456', gameId: 'sedma', sedmaBonus: count === 2 ? 0 : 10 });
+    const created = await seats[0]!.state((r) => r.gameId === 'sedma');
+    const sedmaCode = created.room.code;
+    for (const seat of seats.slice(1)) seat.send({ t: 'join', code: sedmaCode, name: 'Sedma player', token: 'qa-sedma-token-123456' });
+    await seats[0]!.state((r) => r.players.length === count);
+    seats[0]!.send({ t: 'start' });
+    let snapshots = await Promise.all(seats.map((seat) => seat.state((r) => r.status === 'playing')));
+    const viewerIds = snapshots.map((frame) => frame.room.you);
+    let reconnected = false;
+    for (let step = 0; step < 70 && snapshots[0]!.room.status === 'playing'; step++) {
+      const index = viewerIds.indexOf(snapshots[0]!.room.game!.currentPlayerId);
+      let seat = seats[index]!;
+      if (step === 1) {
+        const before = snapshots[index]!; seat.transport.close();
+        seat = client(seat.tab); seats[index] = seat; await seat.connected();
+        seat.send({ t: 'join', code: sedmaCode, name: 'Sedma resumed', token: 'qa-sedma-token-123456' });
+        const restored = await seat.state();
+        assert.equal(restored.reset, true); assert.deepEqual(restored.events, []);
+        assert.deepEqual(restored.room.game, before.room.game); reconnected = true;
+      }
+      const room = snapshots[index]!.room;
+      assert.equal(room.gameId, 'sedma'); if (room.gameId !== 'sedma') throw new Error('Expected Sedma');
+      const action = chooseSedmaBotFromView(room.game!, room.you);
+      seat.send({ t: 'act', baseSeq: room.seq, action });
+      snapshots = await Promise.all(seats.map((p) => p.state((r) => r.seq > room.seq)));
+      for (const [i, snapshot] of snapshots.entries()) {
+        assert.ok(!('drawPile' in snapshot.room.game!));
+        for (const other of snapshots.filter((_, j) => j !== i)) for (const card of other.room.game!.myHand!) {
+          assert.ok(!JSON.stringify(snapshot).includes(`"${card.id}"`), 'Sedma opponent hand stays private');
+        }
+      }
+    }
+    assert.ok(reconnected); const final = snapshots[0]!.room;
+    assert.equal(final.status, 'finished'); if (final.gameId !== 'sedma') throw new Error('Expected Sedma');
+    assert.equal(final.game!.scores.reduce((a,b) => a+b), count === 2 ? 80 : 90);
+    assert.deepEqual(final.players.map((p) => p.wins), final.players.map((p) => final.game!.result!.winnerIds.includes(p.id) ? 1 : 0));
+    seats[0]!.send({ t: 'rematch' });
+    await Promise.all(seats.map((p) => p.state((r) => r.round === 2 && r.status === 'playing')));
+    for (const seat of seats) seat.send({ t: 'leave' });
+    await Promise.all(seats.map((p) => wait(() => p.messages.find((m) => m.t === 'left'), 'Sedma leave')));
+  }
+  console.log('PASS: Supabase Auth, JWT, idempotency, RLS, emotes, reconnect, bots; complete Sedma 1v1 and 2v2 with private hands, reconnect mid-trick, scores and rematches.');
 } finally {
   transports.forEach((transport) => transport.close());
   await anon.removeAllChannels(); anon.auth.stopAutoRefresh();

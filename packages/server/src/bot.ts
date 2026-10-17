@@ -5,7 +5,7 @@
  */
 import { randomBytes } from 'node:crypto';
 import { WebSocket } from 'ws';
-import { SUITS, legalMovesFromView, type ClientMessage, type RoomView, type ServerMessage, type Suit } from '@balik/shared';
+import { SUITS, legalMovesFromView, chooseSedmaBotFromView, type ClientMessage, type AnyRoomView, type ServerMessage, type Suit } from '@balik/shared';
 
 const code = (process.argv[2] ?? '').toUpperCase();
 const count = Number(process.argv[3] ?? 1);
@@ -41,7 +41,9 @@ function runBot(name: string) {
   });
   ws.on('close', () => console.log(`[${name}] odpojen`));
 
-  function act(room: RoomView) {
+  function act(room: AnyRoomView) {
+    if (room.gameId === 'sedma' && room.game) { send({ t: 'act', baseSeq: room.seq, action: chooseSedmaBotFromView(room.game, room.you) }); return; }
+    if (room.gameId !== 'prsi') return;
     const view = room.game!;
     const moves = legalMovesFromView(view, room.you);
     const hand = view.myHand ?? [];
