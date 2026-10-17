@@ -4,6 +4,7 @@ import {
   ROOM_CODE_ALPHABET,
   ROOM_CODE_LENGTH,
   MAX_BOTS,
+  createEvening, ensureRoomEvening, eveningView, applyEveningCommand, beginEveningMatch, finishEveningMatch, EveningError, type EveningState, type EveningCommand,
   emoteAllowed, EMOTE_TTL_MS, type EmoteId,
   applyGameAction as applyAction,
   canStartGame, gameWinnerIds, type GameId,
@@ -46,9 +47,12 @@ interface Player {
 interface Room {
   code: string;
   players: Player[];
+  /** Reconnect credentials remain private while the room lives, including after a leave. */
+  departed: Player[];
   hostId: string;
   status: RoomStatus;
   gameId: GameId;
+  evening?: EveningState;
   sedmaBonus: 0 | 10;
   game: GameState | null;
   seq: number;
@@ -165,13 +169,17 @@ export class RoomManager {
 
   handle(conn: Conn, msg: ClientMessage): void {
     switch (msg.t) {
+      case 'vote': case 'evening': return this.eveningCommand(conn, msg);
       case 'emote': return this.emote(conn, msg.emote);
       case 'lobby': {
         const ctx = this.context(conn); if (!ctx) return;
         if (ctx.room.hostId !== ctx.player.id) return this.error(conn, 'not-host');
+        if (msg.round !== undefined && msg.round !== ctx.room.round) return this.error(conn, 'stale');
+        if (ctx.room.evening!.phase === 'closed') return this.error(conn, 'illegal', 'Herní večer už skončil.');
         if (ctx.room.status === 'playing') return this.error(conn, 'game-in-progress');
         if (ctx.room.botTimer) clearTimeout(ctx.room.botTimer);
         ctx.room.botTimer = null; ctx.room.game = null; ctx.room.status = 'lobby';
+        ctx.room.evening!.phase = ctx.room.evening!.completedMatches ? 'between' : 'ready'; ctx.room.evening!.votes = {}; ctx.room.evening!.revision++;
         this.broadcast(ctx.room, []); return;
       }
       case 'ping':
@@ -180,14 +188,14 @@ export class RoomManager {
       case 'create':
         return this.create(conn, msg.token, msg.name, msg.bots ?? 0, msg.gameId ?? 'prsi', msg.sedmaBonus ?? 10);
       case 'addBot':
-        return this.addBot(conn);
+        return this.addBot(conn, msg.round);
       case 'removeBot':
-        return this.removeBot(conn, msg.playerId);
+        return this.removeBot(conn, msg.playerId, msg.round);
       case 'join':
         return this.join(conn, msg.code, msg.token, msg.name);
       case 'start':
       case 'rematch':
-        return this.start(conn);
+        return this.start(conn, msg.round);
       case 'act':
         return this.act(conn, msg.baseSeq, msg.action);
       case 'leave':
@@ -241,8 +249,8 @@ export class RoomManager {
     const code = this.newCode();
     const player = this.newPlayer(token, name, conn);
     const room: Room = {
-      code, gameId, sedmaBonus,
-      players: [player],
+      code, gameId, sedmaBonus, evening: createEvening(this.now()),
+      players: [player], departed: [],
       hostId: player.id,
       status: 'lobby',
       game: null,
@@ -260,22 +268,26 @@ export class RoomManager {
     if (bots > 0) this.start(conn);
   }
 
-  private addBot(conn: Conn): void {
+  private addBot(conn: Conn, round?: number): void {
     const ctx = this.context(conn);
     if (!ctx) return;
     const { room, player } = ctx;
     if (room.hostId !== player.id) return this.error(conn, 'not-host');
+    if (round !== undefined && round !== room.round) return this.error(conn, 'stale');
+    if (room.evening?.phase === 'closed') return this.error(conn, 'illegal', 'Herní večer už skončil.');
     if (room.status === 'playing') return this.error(conn, 'game-in-progress');
     if (room.players.length >= ROOM_MAX_PLAYERS) return this.error(conn, 'room-full');
     room.players.push(this.newBot(room));
     this.broadcast(room, []);
   }
 
-  private removeBot(conn: Conn, botId: string): void {
+  private removeBot(conn: Conn, botId: string, round?: number): void {
     const ctx = this.context(conn);
     if (!ctx) return;
     const { room, player } = ctx;
     if (room.hostId !== player.id) return this.error(conn, 'not-host');
+    if (round !== undefined && round !== room.round) return this.error(conn, 'stale');
+    if (room.evening?.phase === 'closed') return this.error(conn, 'illegal', 'Herní večer už skončil.');
     if (room.status === 'playing') return this.error(conn, 'game-in-progress');
     if (!room.players.some((p) => p.id === botId && p.bot)) return;
     this.removeFromRoom(room, botId);
@@ -301,10 +313,13 @@ export class RoomManager {
       this.scheduleBot(room, []);
       return;
     }
+    if (room.evening?.phase === 'closed') return this.error(conn, 'game-in-progress', 'Herní večer už skončil.');
     if (room.status === 'playing') return this.error(conn, 'game-in-progress');
     if (room.players.length >= ROOM_MAX_PLAYERS) return this.error(conn, 'room-full');
     this.detach(conn);
-    const player = this.newPlayer(token, name, conn);
+    const retired = room.departed.find((p) => p.token === token);
+    const player = retired ? { ...retired, name, conn, disconnectedAt: null } : this.newPlayer(token, name, conn);
+    room.departed = room.departed.filter((p) => p.token !== token);
     room.players.push(player);
     room.emptySince = null;
     this.seats.set(conn, { code, playerId: player.id });
@@ -312,15 +327,15 @@ export class RoomManager {
     this.broadcast(room, [], player.id);
   }
 
-  private start(conn: Conn): void {
+  private start(conn: Conn, round?: number): void {
     const ctx = this.context(conn);
     if (!ctx) return;
     const { room, player } = ctx;
     if (room.hostId !== player.id) return this.error(conn, 'not-host');
+    if (round !== undefined && round !== room.round) return this.error(conn, 'stale');
     if (room.status === 'playing') return;
-    // Seats of players who are gone are freed when a new round starts.
-    for (const p of [...room.players]) if (!p.conn && !p.bot) this.removeFromRoom(room, p.id, false);
-    if (!this.rooms.has(room.code)) return;
+    if (room.evening!.phase === 'closed' || room.evening!.phase === 'voting') return this.error(conn, 'illegal', 'Nejdřív dokončete volbu hry.');
+    if (room.players.some((p) => !p.bot && !p.conn)) return this.error(conn, 'not-enough-players', 'Čekáme na návrat nebo uvolnění odpojeného místa.');
     if (!canStartGame(room.gameId, room.players.length)) {
       this.broadcast(room, []);
       return this.error(conn, 'not-enough-players', room.gameId === 'sedma' ? 'Sedma potřebuje přesně 2 nebo 4 hráče.' : undefined);
@@ -335,6 +350,7 @@ export class RoomManager {
     );
     room.game = state;
     room.status = 'playing';
+    beginEveningMatch(room.evening!, room.round, room.gameId, state, this.eveningPeople(room), this.now());
     this.log(`room ${room.code} round ${room.round} started (${room.players.length} players)`);
     this.commitEvents(room, events);
   }
@@ -397,9 +413,11 @@ export class RoomManager {
   }
 
   private removeFromRoom(room: Room, playerId: string, notify = true): void {
+    this.ensureEvening(room);
     const index = room.players.findIndex((p) => p.id === playerId);
     if (index < 0) return;
     const [player] = room.players.splice(index, 1);
+    if (player && !player.bot) room.departed.push({ ...player, conn: null, disconnectedAt: this.now() });
     if (player!.conn) this.seats.delete(player!.conn);
     if (!room.players.some((p) => !p.bot)) {
       this.closeRoom(room);
@@ -412,7 +430,7 @@ export class RoomManager {
     if (room.status === 'playing' && room.game) {
       const result = removePlayer(room.game, playerId, this.rng);
       room.game = result.state;
-      this.afterGameChange(room);
+      this.afterGameChange(room, 'forfeit');
       events = this.stamp(room, result.events);
       if (notify) this.broadcast(room, events);
       this.scheduleBot(room, result.events);
@@ -427,10 +445,12 @@ export class RoomManager {
     this.log(`room ${room.code} closed`);
   }
 
-  private afterGameChange(room: Room): void {
+  private afterGameChange(room: Room, reason: 'cards' | 'forfeit' = 'cards'): void {
     const game = room.game!;
-    if (game.phase === 'finished') {
+    if (game.phase === 'finished' && room.status !== 'finished') {
+      const evening = this.ensureEvening(room);
       room.status = 'finished';
+      if (!finishEveningMatch(evening, game, this.now(), reason)) return;
       for (const id of gameWinnerIds(game)) { const winner = room.players.find((p) => p.id === id); if (winner) winner.wins += 1; }
     }
   }
@@ -440,6 +460,7 @@ export class RoomManager {
   }
 
   private broadcast(room: Room, events: SeqEngineEvent[], exceptId?: string): void {
+    this.ensureEvening(room);
     for (const p of room.players) if (p.conn && p.id !== exceptId) this.sendState(room, p, events, false);
   }
 
@@ -453,7 +474,9 @@ export class RoomManager {
   }
 
   private roomView(room: Room, viewerId: string): AnyRoomView {
+    const evening = this.ensureEvening(room);
     return {
+      evening: eveningView(evening),
       code: room.code,
       gameId: room.gameId, sedmaBonus: room.sedmaBonus,
       you: viewerId,
@@ -474,7 +497,30 @@ export class RoomManager {
       this.error(conn, 'not-in-room');
       return null;
     }
+    this.ensureEvening(room);
     return { room, player };
+  }
+
+  private eveningPeople(room: Room) {
+    return room.players.map((p) => ({ id: p.id, name: p.name, bot: p.bot, connected: p.bot || !!p.conn }));
+  }
+  private ensureEvening(room: Room) { return ensureRoomEvening(room, this.eveningPeople(room), this.now()); }
+  private eveningCommand(conn: Conn, command: EveningCommand): void {
+    const ctx = this.context(conn); if (!ctx) return;
+    const { room, player } = ctx;
+    try {
+      const result = applyEveningCommand(room.evening!, this.eveningPeople(room), room.hostId, player.id, command, this.now());
+      if (result.directive !== 'none') {
+        if (room.botTimer) clearTimeout(room.botTimer);
+        room.botTimer = null; room.game = null; room.status = 'lobby';
+      }
+      if (result.directive === 'start') { room.gameId = result.gameId!; this.start(conn, room.round); }
+      else this.broadcast(room, []);
+    } catch (error) {
+      if (!(error instanceof EveningError)) throw error;
+      this.error(conn, error.code, error.message);
+      if (error.code === 'stale') this.sendState(room, player, [], true);
+    }
   }
 
   /** A connection switching rooms behaves like a disconnect from the old one. */

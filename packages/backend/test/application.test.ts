@@ -247,7 +247,107 @@ describe('Sedma persisted rooms', () => {
   });
 });
 
+describe('Herní večer across persisted workers', () => {
+  async function playRound(s: ReturnType<typeof setup>, code: string) {
+    for(let i=0;i<3000;i++) {
+      const room=(await s.repository.load(code))!; if(room.status==='finished')return room;
+      const user=room.game!.players[room.game!.currentIndex]!.id;
+      const id=crypto.randomUUID(), message={t:'act' as const,baseSeq:room.seq,action:chooseGameBotAction(room.game!,mulberry32(i+8))};
+      const replies=await Promise.all([s.send(user,message,code,id),s.send(user,message,code,id)]); expect(replies[0]).toEqual(replies[1]);
+    }
+    throw new Error('Round failed to finish');
+  }
+  async function action(s:ReturnType<typeof setup>,code:string,type:'openVote'|'confirm'|'close'|'between',gameId?:'prsi'|'sedma',user='a') {
+    return s.send(user,{t:'evening',action:type,baseRevision:s.last(user).message.room.evening!.revision,gameId},code);
+  }
+  it('plays Prší → Sedma → Prší, votes concurrently, reconnects, preserves identities and closes with exact history',async()=>{
+    const s=setup(),code=await s.create(); await s.join(code); const identities=s.last().message.room.players.map(p=>p.id);
+    await s.send('a',{t:'start',round:0},code); const firstSeq=s.last().message.room.seq;
+    await playRound(s,code);
+    expect(s.last().message.room.evening!.completedMatches).toBe(1);
+    await action(s,code,'openVote',undefined,'b'); expect(s.last().message.room.game).toBeNull();
+    let ballot=s.last().message.room.evening!.ballotId;
+    await Promise.all(['a','b'].map(user=>s.send(user,{t:'vote',ballotId:ballot,gameId:'sedma'},code)));
+    expect(s.last().message.room.evening!.votes).toEqual({a:'sedma',b:'sedma'});
+    s.restart(); const snapshot=await s.join(code);expect(snapshot.frame!.message.events).toEqual([]);expect(snapshot.frame!.message.room.evening!.votes).toEqual({a:'sedma',b:'sedma'});
+    const oldRevision=s.last().message.room.evening!.revision;
+    await action(s,code,'confirm','sedma');expect(s.last().message.room).toMatchObject({gameId:'sedma',round:2,code});
+    const afterConfirm=s.last().message.room.seq;
+    expect((await s.send('a',{t:'evening',baseRevision:oldRevision,action:'confirm',gameId:'sedma'},code)).message).toMatchObject({code:'game-in-progress'});
+    expect((await s.repository.load(code))!.seq).toBe(afterConfirm);
+    expect((await s.send('a',{t:'act',baseSeq:firstSeq,action:{type:'draw'}},code)).message).toMatchObject({code:'stale'});
+    await playRound(s,code);await action(s,code,'openVote');
+    const previousBallot=ballot; ballot=s.last().message.room.evening!.ballotId;
+    expect((await s.send('b',{t:'vote',ballotId:previousBallot,gameId:'prsi'},code)).message).toMatchObject({code:'stale'});
+    await s.send('a',{t:'vote',ballotId:ballot,gameId:'prsi'},code);await s.send('b',{t:'vote',ballotId:ballot,gameId:'sedma'},code);
+    await action(s,code,'confirm','prsi');await playRound(s,code);
+    let final=s.last().message.room;
+    expect(final.code).toBe(code);expect(final.players.map(p=>p.id)).toEqual(identities);
+    expect(final.evening!.history.map(m=>m.gameId)).toEqual(['prsi','sedma','prsi']);expect(final.evening!.completedMatches).toBe(3);
+    expect(Object.values(final.evening!.stats).map(p=>p.played)).toEqual([3,3]);
+    expect(final.evening).not.toHaveProperty('active');expect(JSON.stringify(final.evening)).not.toContain('hand');
+    const before=structuredClone(final.evening);
+    expect((await s.send('a',{t:'rematch',round:1},code)).message).toMatchObject({code:'stale'});
+    await action(s,code,'close');final=s.last().message.room;expect(final.game).toBeNull();expect(final.evening!.phase).toBe('closed');
+    expect(final.evening!.stats).toEqual(before!.stats);
+    expect((await s.send('a',{t:'rematch',round:3},code)).message).toMatchObject({code:'illegal'});
+    expect((await s.join(code,'new')).message).toMatchObject({code:'game-in-progress'});
+    s.restart();const rejoined=await s.join(code,'a');expect(rejoined.frame!.message.room.evening!.phase).toBe('closed');
+  });
+  it('transfers host during a ballot, discards departed votes, preserves historical scores and blocks three-seat Sedma',async()=>{
+    const s=setup(),code=await s.create();await s.join(code);await s.join(code,'c');await s.join(code,'d');
+    await s.send('a',{t:'start'},code);await s.send('c',{t:'leave'},code); // Prší continues, participant remains in active ledger.
+    await playRound(s,code);expect(s.last().message.room.evening!.stats.c!.played).toBe(1);
+    await action(s,code,'openVote');const ballot=s.last().message.room.evening!.ballotId;
+    expect((await s.send('a',{t:'vote',ballotId:ballot,gameId:'sedma'},code)).message).toMatchObject({code:'not-enough-players'});
+    await s.send('a',{t:'vote',ballotId:ballot,gameId:'prsi'},code);await s.send('a',{t:'leave'},code);
+    const room=s.last('b').message.room;expect(room.hostId).toBe('b');expect(room.evening!.votes.a).toBeUndefined();expect(room.evening!.stats.a).toBeDefined();
+    await s.join(code,'new');expect(s.last('new').message.room.evening!.stats.new).toBeUndefined();
+    await s.send('b',{t:'addBot'},code);const added=s.last('b').message.room;
+    expect(added.players).toHaveLength(4);
+    await Promise.all(['b','d','new'].map(user=>s.send(user,{t:'vote',ballotId:ballot,gameId:'sedma'},code)));
+    await action(s,code,'confirm','sedma','b');const started=(await s.repository.load(code))!;expect(started.gameId).toBe('sedma');
+    expect(started.players.find(p=>p.id==='new')!.wins).toBe(0);
+    await s.send('new',{t:'leave'},code); // team forfeit still counts every initial participant exactly once.
+    const ended=s.last('b').message.room.evening!;expect(ended.completedMatches).toBe(2);expect(ended.stats.new!.played).toBe(1);
+    expect(ended.history.at(-1)!.reason).toBe('forfeit');
+  });
+  it('restores an explicit returning identity and starts a new identity at zero',async()=>{
+    const s=setup(),code=await s.create();await s.join(code);await s.send('a',{t:'start'},code);await playRound(s,code);
+    const before=s.last().message.room.evening!.stats.a;
+    await s.send('a',{t:'leave'},code);await s.join(code,'a');
+    expect(s.last('a').message.room.evening!.stats.a).toEqual({...before,name:'a'});expect(s.last('a').message.room.evening!.history[0]!.players[0]!.name).toBe('Ada');expect(s.last('a').message.room.you).toBe('a');expect(s.last('a').message.room.hostId).toBe('b');
+    await s.join(code,'new');expect(s.last('new').message.room.evening!.stats.new).toBeUndefined();expect(s.last('new').message.room.players.find(p=>p.id==='new')!.wins).toBe(0);
+  });
+  it('cancels the durable bot deadline across result/vote/close and rejects stale epoch starts',async()=>{
+    const s=setup(),code=await s.create(1);let raw=(await s.repository.load(code))!;
+    await s.send('a',{t:'act',baseSeq:raw.seq,action:chooseGameBotAction(raw.game!,mulberry32(3))},code);
+    // Finish via normal player departure is covered separately. Drive both bot and human through authoritative actions.
+    for(let i=0;i<3000;i++){
+      raw=(await s.repository.load(code))!;if(raw.status==='finished')break;
+      const id=raw.game!.players[raw.game!.currentIndex]!.id;
+      if(id==='a')await s.send('a',{t:'act',baseSeq:raw.seq,action:chooseGameBotAction(raw.game!,mulberry32(i+30))},code);
+      else{s.advance(15000);await s.send('a',{t:'tick'},code);}
+    }
+    expect((await s.repository.load(code))!.status).toBe('finished');
+    await action(s,code,'openVote');expect((await s.repository.load(code))!.botDueAt).toBeNull();
+    const revision=s.last().message.room.evening!.revision;await s.send('a',{t:'tick'},code);expect(s.last().message.room.evening!.revision).toBe(revision);
+    await action(s,code,'close');s.advance(30000);await s.send('a',{t:'tick'},code);
+    expect((await s.repository.load(code))!.evening!.phase).toBe('closed');expect((await s.repository.load(code))!.botDueAt).toBeNull();
+  });
+});
+
 describe('HTTP authentication boundary', () => {
+  it('accepts durable bot UUIDs for removal through the validated HTTP boundary',async()=>{
+    const s=setup(),code=await s.create();await s.send('a',{t:'addBot'},code);
+    const bot=(await s.repository.load(code))!.players.find(p=>p.bot)!;expect(bot.id).toHaveLength(36);
+    const app=new RoomApplication(s.repository,()=>({now:1000001,rng:mulberry32(1),id:()=>crypto.randomUUID()}));
+    const handler=gameHttpHandler({app,origins:[],authenticate:async()=> 'a',allowRequest:async()=>true});
+    const response=await handler(new Request('https://api.example/game',{method:'POST',body:JSON.stringify({id:crypto.randomUUID(),connectionId:'c0439cb3-b6fb-4f5a-b69b-dac08e5eb31a',code,message:{t:'join',name:'Ada',token:'token-123456789012',code}})}));
+    expect(response.status).toBe(200);
+    const removed=await handler(new Request('https://api.example/game',{method:'POST',body:JSON.stringify({id:crypto.randomUUID(),connectionId:'c0439cb3-b6fb-4f5a-b69b-dac08e5eb31a',code,message:{t:'removeBot',round:0,playerId:bot.id}})}));
+    expect(removed.status).toBe(200);expect((await removed.json()).message).toBeUndefined();expect((await s.repository.load(code))!.players).toHaveLength(1);
+  });
   it('requires verified identity, validates payloads, CORS and server-side rate limiting', async () => {
     const s = setup(); const app = new RoomApplication(s.repository, () => ({ now: 1, rng: mulberry32(1), id: () => crypto.randomUUID() }));
     let identity: string | null = null; let allowed = true;

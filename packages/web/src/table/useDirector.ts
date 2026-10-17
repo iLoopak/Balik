@@ -151,6 +151,7 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
       const fresh = msg.events.filter((e) => e.seq > state.lastSeq);
       if (fresh.length && fresh[0]!.seq !== state.lastSeq + 1) return hardReset(msg.room);
       if (!fresh.length && msg.room.seq > state.lastSeq) return hardReset(msg.room);
+      if (msg.room.round !== state.target.round) { setFx([]); brandAudio.cancel(); }
       state.target = msg.room;
       if (!fresh.length) {
         if (!state.running) commit(reconcile(state.display, msg.room.game, me));

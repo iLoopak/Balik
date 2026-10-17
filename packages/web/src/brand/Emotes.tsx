@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { EMOTES, EMOTE_IDS, EMOTE_COOLDOWN_MS, type EmoteId, type EmoteMessage } from '@balik/shared';
+import { EMOTES, EMOTE_IDS, EMOTE_COOLDOWN_MS, type EmoteId, type EmoteMessage, type AnyRoomView } from '@balik/shared';
 import { onEmote, sendEmote } from '../net/client';
 import { useMotionPref } from '../lib/motionPref';
 import { brandAudio } from './audio';
@@ -58,4 +58,9 @@ export function EmotePicker({ send = sendEmote }: { send?: (id: EmoteId) => bool
       <small aria-live="polite">{cooldown ? 'Další reakce za chvíli…' : 'Krátce a s citem.'}</small>
     </div>
   </details>;
+}
+
+/** The modal owns a visible recipient rail; table-seat bubbles may be covered by its backdrop. */
+export function ResultReactions({room,messages}:{room:AnyRoomView;messages:EmoteMessage[]}) {
+  return <div className="result-reactions"><EmotePicker/><div className="result-reaction-rail">{messages.map((message)=><div key={message.id}><b>{room.players.find(p=>p.id===message.playerId)?.name ?? 'Hráč'}</b><EmoteBubble message={message} author={room.players.find(p=>p.id===message.playerId)?.name ?? 'Hráč'}/></div>)}</div></div>;
 }

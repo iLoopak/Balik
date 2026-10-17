@@ -5,7 +5,7 @@ import type { CardFx } from '../cards/Card';
 import { CardBack } from '../cards/Card';
 import { SuitIcon } from '../cards/SuitIcon';
 import { SUIT_TONE } from '../cards/skin';
-import { leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
+import { eveningAction, leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import { avatarColor, cardsWord } from '../lib/format';
 import { useElementSize } from '../lib/useElementSize';
@@ -23,7 +23,7 @@ import { GameTableTheme } from './GameTableTheme';
 import './table.css';
 import { BrandMascot } from '../brand/BrandMascot';
 import { BrandResults } from '../brand/BrandResults';
-import { EmoteBubble, useEmotes } from '../brand/Emotes';
+import { EmoteBubble, ResultReactions, useEmotes } from '../brand/Emotes';
 import { useBrandPreferences } from '../brand/preferences';
 import { brandAudio } from '../brand/audio';
 
@@ -247,7 +247,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
               animate={{ y: 0, scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.1 }}
             >
-              <BrandResults room={room} winnerId={display.winnerId} pending={pending} reduced={reducedMotion} onRematch={rematch} onLobby={returnToLobby} onLeave={leaveRoom} />
+              <BrandResults onChangeGame={()=>eveningAction('openVote')} onCloseEvening={()=>eveningAction('close')} reactions={<ResultReactions room={room} messages={emotes}/>} room={room} winnerId={display.winnerId} pending={pending} reduced={reducedMotion} onRematch={rematch} onLobby={returnToLobby} onLeave={leaveRoom} />
             </motion.div>
           </motion.div>
         )}

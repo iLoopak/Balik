@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { ROOM_MAX_PLAYERS, canStartGame, gameName, type AnyRoomView } from '@balik/shared';
 import { avatarColor } from '../lib/format';
-import { addBot, leaveRoom, removeBot, startGame } from '../net/client';
+import { addBot, eveningAction, leaveRoom, removeBot, startGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import './screens.css';
 import { BrandMascot } from '../brand/BrandMascot';
@@ -103,9 +103,10 @@ export function Lobby({ room }: { room: AnyRoomView }) {
           </AnimatePresence>
         </ul>
 
+        {room.evening && <button className="btn btn-secondary wide" onClick={()=>eveningAction('openVote')} disabled={pending}>Vybrat jinou hru společně</button>}
         <div className="lobby-emotes">{emotes.map((message) => <div className="lobby-emote" key={message.id}><b>{room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'}</b><EmoteBubble message={message} author={room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'} /></div>)}</div>
         {isHost ? (
-          <button className="btn btn-primary wide" onClick={startGame} disabled={pending || !canStartGame(room.gameId, connected)}>
+          <button className="btn btn-primary wide" onClick={startGame} disabled={pending || !canStartGame(room.gameId, connected) || room.players.some((p)=>!p.connected)}>
             {!canStartGame(room.gameId, connected) ? (room.gameId === 'sedma' ? 'Sedma potřebuje 2 nebo 4 hráče' : 'Čekáme na dalšího hráče…') : `Rozdat karty (${connected} hráči)`}
           </button>
         ) : (

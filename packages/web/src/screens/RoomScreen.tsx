@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState, lazy, Suspense, type FormEvent } from 'react';
 import { MAX_NAME_LENGTH } from '@balik/shared';
 import { getName, hasJoinedRoom } from '../lib/identity';
 import { joinRoom } from '../net/client';
@@ -7,6 +7,8 @@ import { GameScreen } from './GameScreen';
 import { Lobby } from './Lobby';
 import './screens.css';
 import { BrandMascot } from '../brand/BrandMascot';
+
+const EveningScreen = lazy(() => import('../evening/EveningScreen').then((module) => ({ default: module.EveningScreen })));
 
 /** Everything under /r/CODE: ask for a name, connect, then lobby or table. */
 export function RoomScreen({ code }: { code: string }) {
@@ -94,6 +96,7 @@ export function RoomScreen({ code }: { code: string }) {
     );
   }
 
+  if (room.evening && !room.game && (room.evening.phase === 'voting' || room.evening.phase === 'between' || room.evening.phase === 'closed')) return <Suspense fallback={<div className="loading"><BrandMascot state="thinking" size={64}/><p>Chystám společný stůl…</p></div>}><EveningScreen room={room} /></Suspense>;
   if (room.status === 'lobby' || !room.game) return <Lobby room={room} />;
   return <GameScreen room={room} />;
 }

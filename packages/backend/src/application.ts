@@ -1,4 +1,4 @@
-import { canStartGame, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '@balik/shared';
+import { EveningError, canStartGame, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '@balik/shared';
 import { execute, frameFor, GameError, newRoom, refreshPresence, scheduleBot, stamp,
   type Environment, type Reply, type Request } from './model';
 import type { RoomRepository } from './ports';
@@ -62,7 +62,7 @@ export class RoomApplication {
         const committed = await this.repository.commit({ userId, requestId: request.id, expectedVersion: original?.version ?? null, room, deliveries, reply });
         if (committed.status !== 'conflict') return committed.reply ?? reply;
       } catch (error) {
-        if (!(error instanceof GameError)) throw error;
+        if (!(error instanceof GameError) && !(error instanceof EveningError)) throw error;
         return {
           message: { t: 'error', code: error.code, message: error.message },
           ...(error.code === 'stale' && original ? { frame: frameFor(original, userId, [], true) } : {}),
