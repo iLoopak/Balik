@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect } from 'react';
-import { SUITS, SUIT_NAME_CS, type Suit } from '@balik/shared';
+import { SUITS, type Suit } from '@balik/shared';
 import { SuitIcon } from '../cards/SuitIcon';
-import { SUIT_TONE } from '../cards/skin';
+import { SUIT_TONE, suitColor, suitName } from '../cards/skin';
 
 /**
  * Suit choice for a Q. The play is only sent after a suit is picked, so the
@@ -58,8 +58,8 @@ export function SuitPicker({ open, onPick, onCancel }: { open: boolean; onPick: 
                   whileTap={{ scale: 0.94 }}
                   autoFocus={i === 0}
                 >
-                  <SuitIcon suit={suit} className="picker-icon" />
-                  <span>{SUIT_NAME_CS[suit]}</span>
+                  <SuitIcon suit={suit} className="picker-icon" style={{ color: suitColor(suit) }} />
+                  <span>{suitName(suit)}</span>
                 </motion.button>
               ))}
             </div>

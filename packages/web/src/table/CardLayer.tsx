@@ -5,6 +5,8 @@ import type { CardEntity } from './display';
 import type { Geometry, PlacedCard, Placement } from './layout';
 import { placeSpawn } from './layout';
 import { HOVER, flipTransition, moveTransition } from './transitions';
+import { cardAccent, MOTION_PRIMITIVES, primitiveTransition } from '../effects/effectPresets';
+import { EFFECT_TIMING } from '../effects/effectTokens';
 
 interface CardLayerProps {
   placed: PlacedCard[];
@@ -37,6 +39,7 @@ export function CardLayer({ placed, geo, stamp, speed, reduced, fxFor, hoverKey,
             active={active}
             hoverSpring={isHoverChange}
             speed={speed}
+            reduced={reduced}
             fx={fxFor(p)}
             interactive={interactive(p)}
             onHover={onHover}
@@ -61,6 +64,7 @@ interface CardSlotProps {
   active: boolean;
   hoverSpring: boolean;
   speed: number;
+  reduced: boolean;
   fx: CardFx | undefined;
   interactive: boolean;
   onHover: (key: string | null) => void;
@@ -77,6 +81,7 @@ const CardSlot = memo(function CardSlot({
   active,
   hoverSpring,
   speed,
+  reduced,
   fx,
   interactive,
   onHover,
@@ -89,18 +94,19 @@ const CardSlot = memo(function CardSlot({
   // Landing accent, independent of the positional animation so re-renders never restart it.
   useEffect(() => {
     const el = scope.current;
-    if (!el || !active) return;
-    if (entity.move === 'play' || entity.move === 'flipStart') {
-      void animate(
-        el,
-        { scale: [1, 1.13, 0.93, 1.02, 1], rotate: [0, 0, -1.5, 0.5, 0] },
-        { duration: 0.62 * speed, times: [0, 0.5, 0.74, 0.88, 1], ease: 'easeOut', delay: entity.delay * speed },
-      );
-    } else if (entity.move === 'penalty') {
-      void animate(el, { scale: [1, 1.18, 0.96, 1] }, { duration: 0.6 * speed, times: [0, 0.4, 0.75, 1], delay: entity.delay * speed });
-    }
+    if (!el || !active || reduced) return;
+    const accent = cardAccent(entity.move === 'play' || entity.move === 'flipStart' || entity.move === 'penalty' ? entity.move : null);
+    const controls = accent ? animate(el, accent.keyframes, primitiveTransition(accent.duration * speed, entity.delay * speed)) : null;
+    const sticker = el.querySelector<HTMLElement>('[data-layer="sticker"] img');
+    const pop = sticker && (entity.move === 'play' || entity.move === 'flipStart')
+      ? animate(sticker, MOTION_PRIMITIVES.pop, primitiveTransition(EFFECT_TIMING.sticker * speed, (EFFECT_TIMING.flight + entity.delay) * speed)) : null;
+    return () => {
+      controls?.stop(); pop?.stop();
+      el.style.removeProperty('transform');
+      sticker?.style.removeProperty('transform');
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- run once per move
-  }, [entity.moveStamp, entity.move]);
+  }, [entity.moveStamp, entity.move, reduced]);
 
   const target = {
     x: place.x - cardW / 2,
@@ -129,7 +135,7 @@ const CardSlot = memo(function CardSlot({
       style={{ width: cardW, height: cardH, zIndex: active && entity.move && FLYING.has(entity.move) ? place.z + 600 : place.z }}
       initial={initial}
       animate={target}
-      transition={fade ? { ...transition, opacity: { duration: 0.25 } } : transition}
+      transition={reduced ? { duration: 0 } : fade ? { ...transition, opacity: { duration: 0.25 } } : transition}
       {...handlers}
     >
       <div ref={scope} className="card-pop">
@@ -137,7 +143,7 @@ const CardSlot = memo(function CardSlot({
           card={entity.card}
           faceUp={place.faceUp}
           initialFaceUp={spawn ? spawn.faceUp : place.faceUp}
-          flipTransition={flipTransition(move, speed, entity.delay)}
+          flipTransition={reduced ? { duration: 0 } : flipTransition(move, speed, entity.delay)}
           fx={entity.flash ? { ...fx, flash: entity.flash } : fx}
         />
       </div>

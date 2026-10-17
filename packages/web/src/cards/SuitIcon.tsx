@@ -1,5 +1,7 @@
 import type { Suit } from '@balik/shared';
 import type { CSSProperties } from 'react';
+import { ACTIVE_DECK, SUIT_FACTION, type DeckId } from './skin';
+import { FactionIcon } from '../decks/stormpunk/FactionIcon';
 
 const circle = (cx: number, cy: number, r: number) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0Z`;
 
@@ -19,12 +21,15 @@ export function SuitIcon({
   className,
   style,
   title,
+  deck = ACTIVE_DECK,
 }: {
   suit: Suit;
   className?: string;
   style?: CSSProperties;
   title?: string;
+  deck?: DeckId;
 }) {
+  if (deck === 'stormpunk') return <FactionIcon faction={SUIT_FACTION[suit]} className={className} style={style} title={title} />;
   return (
     <svg
       viewBox="0 0 100 100"

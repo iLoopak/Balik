@@ -1,0 +1,226 @@
+[
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/7.webp",
+    "width": 737,
+    "height": 768,
+    "bytes": 144932,
+    "transparent_fraction": 0.405
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/8.webp",
+    "width": 545,
+    "height": 768,
+    "bytes": 114440,
+    "transparent_fraction": 0.256
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/9.webp",
+    "width": 768,
+    "height": 641,
+    "bytes": 103226,
+    "transparent_fraction": 0.542
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/10.webp",
+    "width": 768,
+    "height": 718,
+    "bytes": 134292,
+    "transparent_fraction": 0.351
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/j.webp",
+    "width": 466,
+    "height": 768,
+    "bytes": 92040,
+    "transparent_fraction": 0.461
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/q.webp",
+    "width": 517,
+    "height": 768,
+    "bytes": 106692,
+    "transparent_fraction": 0.446
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/k.webp",
+    "width": 496,
+    "height": 768,
+    "bytes": 104492,
+    "transparent_fraction": 0.381
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/vyhen/a.webp",
+    "width": 605,
+    "height": 768,
+    "bytes": 114268,
+    "transparent_fraction": 0.394
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/7.webp",
+    "width": 768,
+    "height": 701,
+    "bytes": 160630,
+    "transparent_fraction": 0.349
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/8.webp",
+    "width": 768,
+    "height": 629,
+    "bytes": 96160,
+    "transparent_fraction": 0.409
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/9.webp",
+    "width": 768,
+    "height": 749,
+    "bytes": 125790,
+    "transparent_fraction": 0.42
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/10.webp",
+    "width": 768,
+    "height": 597,
+    "bytes": 112176,
+    "transparent_fraction": 0.523
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/j.webp",
+    "width": 736,
+    "height": 768,
+    "bytes": 144504,
+    "transparent_fraction": 0.44
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/q.webp",
+    "width": 454,
+    "height": 768,
+    "bytes": 96774,
+    "transparent_fraction": 0.506
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/k.webp",
+    "width": 440,
+    "height": 768,
+    "bytes": 96386,
+    "transparent_fraction": 0.454
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/pohyb/a.webp",
+    "width": 768,
+    "height": 421,
+    "bytes": 70674,
+    "transparent_fraction": 0.495
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/7.webp",
+    "width": 768,
+    "height": 727,
+    "bytes": 142888,
+    "transparent_fraction": 0.511
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/8.webp",
+    "width": 768,
+    "height": 702,
+    "bytes": 139852,
+    "transparent_fraction": 0.373
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/9.webp",
+    "width": 615,
+    "height": 768,
+    "bytes": 94904,
+    "transparent_fraction": 0.406
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/10.webp",
+    "width": 491,
+    "height": 768,
+    "bytes": 101380,
+    "transparent_fraction": 0.445
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/j.webp",
+    "width": 457,
+    "height": 768,
+    "bytes": 88792,
+    "transparent_fraction": 0.459
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/q.webp",
+    "width": 483,
+    "height": 768,
+    "bytes": 129472,
+    "transparent_fraction": 0.356
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/k.webp",
+    "width": 512,
+    "height": 768,
+    "bytes": 111968,
+    "transparent_fraction": 0.417
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/podrost/a.webp",
+    "width": 562,
+    "height": 768,
+    "bytes": 96220,
+    "transparent_fraction": 0.499
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/7.webp",
+    "width": 768,
+    "height": 723,
+    "bytes": 132752,
+    "transparent_fraction": 0.548
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/8.webp",
+    "width": 768,
+    "height": 693,
+    "bytes": 126644,
+    "transparent_fraction": 0.406
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/9.webp",
+    "width": 736,
+    "height": 768,
+    "bytes": 156588,
+    "transparent_fraction": 0.371
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/10.webp",
+    "width": 485,
+    "height": 768,
+    "bytes": 92426,
+    "transparent_fraction": 0.465
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/j.webp",
+    "width": 526,
+    "height": 768,
+    "bytes": 107114,
+    "transparent_fraction": 0.482
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/q.webp",
+    "width": 508,
+    "height": 768,
+    "bytes": 107704,
+    "transparent_fraction": 0.447
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/k.webp",
+    "width": 520,
+    "height": 768,
+    "bytes": 124228,
+    "transparent_fraction": 0.377
+  },
+  {
+    "asset": "packages/web/public/decks/stormpunk/stickers/boure/a.webp",
+    "width": 768,
+    "height": 716,
+    "bytes": 71902,
+    "transparent_fraction": 0.564
+  }
+]

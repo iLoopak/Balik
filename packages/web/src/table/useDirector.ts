@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { RoomView } from '@balik/shared';
 import { getLastStateMessage, onStateMessage, type StateMessage } from '../net/client';
 import { cuesFor, emptyDisplay, reconcile, type CueStep, type Display, type FxItem } from './display';
+import { effectLifetime } from '../effects/effectPresets';
 
 /**
  * Turns server messages into a paced sequence of display changes.
@@ -95,8 +96,14 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
       const step = state.queue.shift()!;
       const scale = timeScale();
       setSpeed(scale);
-      if (step.apply) commit(step.apply(state.display));
-      if (step.fx?.length) addFx(step.fx, scale);
+      const before = state.display;
+      if (step.apply) commit(step.apply(before));
+      const effects = step.effects?.(before, state.display) ?? [];
+      const specs: NonNullable<CueStep['fx']> = [
+        ...(step.fx ?? []),
+        ...effects.map((event) => ({ kind: 'effect' as const, event, ttl: effectLifetime(event), scale })),
+      ];
+      if (specs.length) addFx(specs, scale);
       const wait = typeof step.wait === 'function' ? step.wait(state.display) : step.wait;
       if (wait > 0) await sleep(wait * scale);
       if (gen !== state.gen) return;
@@ -167,9 +174,10 @@ export function useDirector(initialRoom: RoomView, opts: { reducedMotion: boolea
       hardReset(initialRoom);
     }
     const off = onStateMessage(receive);
-    // Coming back to the tab: skip whatever was still queued instead of replaying stale moves.
+    // Clear transient FX on both edges, including effects that outlive an already-idle queue.
+    // Returning to the tab always shows the latest snapshot without a stale burst or badge.
     const onVisible = () => {
-      if (document.visibilityState === 'visible' && (state.running || state.queue.length)) hardReset(state.target);
+      hardReset(state.target);
     };
     document.addEventListener('visibilitychange', onVisible);
     return () => {

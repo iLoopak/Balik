@@ -1,8 +1,9 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo } from 'react';
-import { SUIT_NAME_CS, type Suit } from '@balik/shared';
+import { type Suit } from '@balik/shared';
 import { SuitIcon } from '../cards/SuitIcon';
 import { SUIT_TONE } from '../cards/skin';
+export { suitName } from '../cards/skin';
 import type { FxItem, FxTone } from './display';
 import type { Pt } from './layout';
 
@@ -150,8 +151,4 @@ export function Confetti({ count }: { count: number }) {
       ))}
     </div>
   );
-}
-
-export function suitName(s: Suit) {
-  return SUIT_NAME_CS[s];
 }

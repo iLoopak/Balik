@@ -3,6 +3,8 @@ import { useMotionPref } from './lib/motionPref';
 import { roomCodeFromPath, useApp } from './net/store';
 import { Home } from './screens/Home';
 import { RoomScreen } from './screens/RoomScreen';
+import { DeckGallery } from './decks/DeckGallery';
+import { GameFeelPlayground } from './effects/GameFeelPlayground';
 
 export function App() {
   const path = useApp((s) => s.path);
@@ -12,7 +14,7 @@ export function App() {
 
   return (
     <MotionConfig reducedMotion={pref === 'reduced' ? 'always' : 'user'}>
-      {code ? <RoomScreen key={code} code={code} /> : <Home />}
+      {path.replace(/\/$/, '') === '/dev/deck-stormpunk' ? <DeckGallery /> : path.replace(/\/$/, '') === '/dev/game-feel' ? <GameFeelPlayground /> : code ? <RoomScreen key={code} code={code} /> : <Home />}
       <div className="toast-host" aria-live="polite">
         <AnimatePresence>
           {toast && (

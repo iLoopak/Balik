@@ -1,4 +1,6 @@
-import { SUIT_SYMBOL, cardLabel, type Card, type PrsiView, type SeqEvent, type Suit } from '@balik/shared';
+import { type Card, type PrsiView, type SeqEvent, type Suit } from '@balik/shared';
+import { suitName } from '../cards/skin';
+import { effectsForGameEvent, type EffectEvent, type EffectInstance } from '../effects/effectEvents';
 
 // The display state is what the table currently *shows*. It trails the server snapshot:
 // every server event becomes a few cue steps that move the display one visual beat at a time,
@@ -40,6 +42,8 @@ export interface Display {
   drawnCardId: string | null;
   phase: 'idle' | 'playing' | 'finished';
   winnerId: string | null;
+  /** Presentation attribution for chained penalties; never sent to the engine. */
+  lastPlayedBy: string | null;
   /** During dealing my cards stay stacked face-down; then the fan opens. */
   handCollapsed: boolean;
 }
@@ -47,6 +51,7 @@ export interface Display {
 export type FxTone = 'neutral' | 'penalty' | 'skip' | 'suit' | 'win';
 
 export type FxItem =
+  | EffectInstance
   | { kind: 'label'; id: number; text: string; tone: FxTone; ttl: number }
   | { kind: 'impact'; id: number; tone: FxTone; delay: number; ttl: number }
   | { kind: 'skip'; id: number; playerId: string; ttl: number }
@@ -61,6 +66,7 @@ export interface CueStep {
   /** Milliseconds before the next step starts (scaled by the director); may depend on the applied display. */
   wait: number | ((d: Display) => number);
   fx?: FxSpec[];
+  effects?: (before: Display, after: Display) => EffectEvent[];
 }
 
 const DISCARD_KEEP = 8;
@@ -83,6 +89,7 @@ export function emptyDisplay(me: string): Display {
     drawnCardId: null,
     phase: 'idle',
     winnerId: null,
+    lastPlayedBy: null,
     handCollapsed: false,
   };
 }
@@ -156,9 +163,20 @@ export interface CueContext {
 }
 
 const bump = (d: Display): Display => ({ ...d, stamp: d.stamp + 1 });
-const suitText = (s: Suit) => `${SUIT_SYMBOL[s]}`;
+const suitText = (s: Suit) => suitName(s);
 
 export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
+  const steps = movementCuesFor(ev, ctx);
+  const index = ev.type === 'roundWon' ? 1 : 0;
+  const step = steps[index];
+  if (step) step.effects = (before, after) => effectsForGameEvent(ev, before, after, ctx);
+  if (ev.type !== 'roundStarted') {
+    for (const cue of steps) cue.fx = cue.fx?.filter((f) => f.kind !== 'impact' && f.kind !== 'suit');
+  }
+  return steps;
+}
+
+function movementCuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
   const isMe = (id: string) => id === ctx.me;
 
   switch (ev.type) {
@@ -178,6 +196,7 @@ export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
               drawCount: 32,
               phase: 'playing',
               winnerId: null,
+              lastPlayedBy: null,
               pendingDraw: 0,
               drawnCardId: null,
               currentPlayerId: null,
@@ -230,7 +249,8 @@ export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
 
     case 'cardPlayed': {
       const { card, playerId } = ev;
-      const label = isMe(playerId) ? `Hraješ ${cardLabel(card)}` : `${ctx.name(playerId)} hraje ${cardLabel(card)}`;
+      const cardText = `${card.rank} ${suitName(card.suit)}`;
+      const label = isMe(playerId) ? `Hraješ ${cardText}` : `${ctx.name(playerId)} hraje ${cardText}`;
       const special = card.rank === '7' || card.rank === 'A' || card.rank === 'Q';
       return [
         {
@@ -259,6 +279,7 @@ export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
               discard,
               activeSuit: card.rank === 'Q' ? d.activeSuit : card.suit,
               drawnCardId: null,
+              lastPlayedBy: playerId,
             };
           },
           wait: special ? 480 : 560,
@@ -366,7 +387,7 @@ export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
     case 'turnSkipped':
       return [
         {
-          wait: 900,
+          wait: 660,
           fx: [
             { kind: 'skip', playerId: ev.playerId, ttl: 1150 },
             { kind: 'impact', tone: 'skip', delay: 0, ttl: 900 },
@@ -411,10 +432,10 @@ export function cuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
     case 'roundWon':
       return [
         // Short hold so the last card lands before the celebration.
-        { wait: 520 },
+        { wait: 160 },
         {
           apply: (d) => ({ ...bump(d), phase: 'finished', winnerId: ev.playerId, currentPlayerId: null, pendingDraw: 0 }),
-          wait: 400,
+          wait: 600,
           fx: [{ kind: 'label', text: isMe(ev.playerId) ? 'Vyhráváš!' : `${ctx.name(ev.playerId)} vyhrává`, tone: 'win', ttl: 2200 }],
         },
       ];

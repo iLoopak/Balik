@@ -102,9 +102,21 @@ Všechny karty žijí v jedné absolutně pozicované vrstvě (`layout.ts` poč�
 
 `prefers-reduced-motion` nebo přepínač v menu: bez přeletů, s rychlejší frontou; text a barevný feedback zůstávají. Při nízkém výkonu (medián snímku > 28 ms) se zapne odlehčený režim: kratší cue a méně částic.
 
-## Karty a budoucí stickery
+## Karty a balíček Stormpunk
 
-`CardView` = `CardBase` → `CardIndices` → střed → `CardStickerLayer` → `CardFxLayer` + `CardBack`. Sticker vrstva je samostatný transformovatelný layer (`motion.div`) s průhledným assetem. Mapování `game + suit + rank → { src, scale, offset, rotation }` je v `web/src/cards/skin.ts` (nejkonkrétnější klíč vyhrává). Náhled umístění zobrazíš přes `?stickers=demo`. Frakce **Výheň / Pohyb / Podrost / Bouře** jsou připravené v datech skinu a zatím se na klasický balíček neaplikují.
+**Stormpunk** je výchozí vizuální balíček: 32 samostatných transparentních WebP ilustrací,
+čtyři frakce **Výheň / Pohyb / Podrost / Bouře**, jednotné SVG ikony a čistý světlý líc.
+Pravidla a herní data dál používají původní barvy a hodnoty; mapování je pouze prezentační.
+
+- Galerie: <http://localhost:5173/dev/deck-stormpunk> — 32 karet, filtr frakcí, detail,
+  mobilní velikost a překryv ruky, světlý/tmavý stůl, rub, srovnání s klasikou a samostatná animace stickeru.
+- Klasický balíček: <http://localhost:5173/?deck=classic> nebo `<CardView deck="classic" … />`.
+- Manifest: `web/src/decks/stormpunk/manifest.ts`; assety: `web/public/decks/stormpunk/stickers/`.
+- Sticker je samostatná vrstva `[data-layer="sticker"]`, nezávislá na podkladu, indexech i herních animacích.
+  Při chybě načtení assetu se karta zobrazí v klasickém vzhledu.
+
+Přesné integrační API, původ a prompty všech ilustrací, export a stav QA:
+[Stormpunk dokumentace](packages/web/src/decks/stormpunk/README.md).
 
 ## Známé limity (MVP)
 
@@ -112,3 +124,17 @@ Všechny karty žijí v jedné absolutně pozicované vrstvě (`layout.ts` poč�
 - Bez účtů, chatu, zvuků a nastavení variant pravidel.
 - Boti jsou jednoduchá heuristika, ne silný soupeř.
 - Sólo hra potřebuje server. Engine je ale čistý TS, takže offline režim (Capacitor/Steam) půjde spustit přímo v klientovi.
+
+## Herní efekty / Game feel lab
+
+Interní playground: <http://localhost:5173/dev/game-feel> (bez serveru).
+Přehrává zahrání, dobrání, změnu barvy, eso/STOP, demo změny směru, +2,
+poslední kartu, výhru a řetězec +2 → +4 → +6. Obsahuje přepínání frakcí,
+mobilního stolu, tempa, reduced motion a slabšího zařízení; zkratky 1–9.
+
+Modul `web/src/effects/` přidává presety, frakční trail/impact primitiva,
+typované události a `EffectOrchestrator`, napojené na existující cue director.
+Herní pravidla, síťový protokol i přesuny karet dál zůstávají v původních vrstvách.
+Změna směru je pouze demo/API pro budoucí hry; Prší toto pravidlo nemá.
+Architektura, hotové efekty, výkon a limity ověření:
+[Game feel dokumentace](packages/web/src/effects/README.md).
