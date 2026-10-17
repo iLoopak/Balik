@@ -6,6 +6,7 @@ import { navigate, useApp } from '../net/store';
 import { GameScreen } from './GameScreen';
 import { Lobby } from './Lobby';
 import './screens.css';
+import { BrandMascot } from '../brand/BrandMascot';
 
 /** Everything under /r/CODE: ask for a name, connect, then lobby or table. */
 export function RoomScreen({ code }: { code: string }) {
@@ -85,6 +86,7 @@ export function RoomScreen({ code }: { code: string }) {
     return (
       <main className="screen">
         <div className="loading">
+          <BrandMascot state="thinking" size={72} />
           <div className="spinner" />
           <p>{status === 'reconnecting' ? 'Obnovuji spojení…' : 'Připojuji ke stolu…'}</p>
         </div>

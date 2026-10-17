@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { SUITS } from './cards';
+import { EMOTE_IDS } from './social';
 import { MAX_BOTS, MAX_NAME_LENGTH, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from './protocol';
 
 // Runtime validation of client messages. Server-only entry point (`@balik/shared/schema`)
@@ -21,6 +22,8 @@ export const prsiActionSchema = z.discriminatedUnion('type', [
 ]);
 
 export const clientMessageSchema = z.discriminatedUnion('t', [
+  z.object({ t: z.literal('emote'), emote: z.enum(EMOTE_IDS) }),
+  z.object({ t: z.literal('lobby') }),
   /** `bots` > 0 = single player: the room gets computer opponents and starts right away. */
   z.object({ t: z.literal('create'), token, name, bots: z.number().int().min(0).max(MAX_BOTS).optional() }),
   z.object({ t: z.literal('addBot') }),

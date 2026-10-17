@@ -1,4 +1,5 @@
 import type { PrsiClientEvent, PrsiView } from './prsi/types';
+import type { EmoteMessage } from './social';
 
 // ---- Room / transport layer. Game specifics are confined to `game` + `events`. ----
 
@@ -35,6 +36,7 @@ export interface RoomView {
 export type SeqEvent = PrsiClientEvent & { seq: number };
 
 export type ServerMessage =
+  | EmoteMessage
   | {
       t: 'state';
       room: RoomView;
@@ -49,6 +51,7 @@ export type ServerMessage =
   | { t: 'pong' };
 
 export type ErrorCode =
+  | 'rate-limited'
   | 'bad-message'
   | 'room-not-found'
   | 'room-full'

@@ -5,6 +5,7 @@ import {
   ROOM_CODE_ALPHABET,
   ROOM_CODE_LENGTH,
   MAX_BOTS,
+  emoteAllowed, EMOTE_TTL_MS, type EmoteId,
   applyAction,
   chooseBotAction,
   createRound,
@@ -29,6 +30,7 @@ export interface Conn {
 }
 
 interface Player {
+  lastEmoteAt: number | null;
   /** Public id, visible to everyone. */
   id: string;
   /** Secret reconnect token, never sent to other players. */
@@ -109,6 +111,7 @@ function animationMs(events: PrsiEvent[]): number {
 }
 
 const ERROR_TEXT: Record<ErrorCode, string> = {
+  'rate-limited': 'Další reakci můžeš poslat za chvíli.',
   'bad-message': 'Neplatná zpráva.',
   'room-not-found': 'Místnost s tímto kódem neexistuje.',
   'room-full': 'Místnost je plná.',
@@ -156,6 +159,15 @@ export class RoomManager {
 
   handle(conn: Conn, msg: ClientMessage): void {
     switch (msg.t) {
+      case 'emote': return this.emote(conn, msg.emote);
+      case 'lobby': {
+        const ctx = this.context(conn); if (!ctx) return;
+        if (ctx.room.hostId !== ctx.player.id) return this.error(conn, 'not-host');
+        if (ctx.room.status === 'playing') return this.error(conn, 'game-in-progress');
+        if (ctx.room.botTimer) clearTimeout(ctx.room.botTimer);
+        ctx.room.botTimer = null; ctx.room.game = null; ctx.room.status = 'lobby';
+        this.broadcast(ctx.room, []); return;
+      }
       case 'ping':
         conn.send({ t: 'pong' });
         return;
@@ -175,6 +187,17 @@ export class RoomManager {
       case 'leave':
         return this.leave(conn);
     }
+  }
+
+  /** Social signals are ephemeral and never advance the game sequence. */
+  private emote(conn: Conn, emote: EmoteId): void {
+    const ctx = this.context(conn); if (!ctx) return;
+    const now = this.now();
+    if (!emoteAllowed(ctx.player.lastEmoteAt, now)) return this.error(conn, 'rate-limited');
+    ctx.player.lastEmoteAt = now;
+    const message = { t: 'emote' as const, id: randomBytes(12).toString('base64url'), code: ctx.room.code,
+      playerId: ctx.player.id, emote, at: now, expiresAt: now + EMOTE_TTL_MS };
+    for (const player of ctx.room.players) player.conn?.send(message);
   }
 
   /** Socket closed — keep the seat for reconnecting. */
@@ -457,13 +480,13 @@ export class RoomManager {
   }
 
   private newPlayer(token: string, name: string, conn: Conn): Player {
-    return { id: randomBytes(6).toString('base64url'), token, name, conn, disconnectedAt: null, wins: 0, bot: false };
+    return { id: randomBytes(6).toString('base64url'), token, name, conn, disconnectedAt: null, wins: 0, bot: false, lastEmoteAt: null };
   }
 
   private newBot(room: Room): Player {
     const used = new Set(room.players.map((p) => p.name));
     const name = BOT_NAMES.find((n) => !used.has(n)) ?? `Bot ${room.players.length}`;
-    return { id: randomBytes(6).toString('base64url'), token: randomBytes(16).toString('base64url'), name, conn: null, disconnectedAt: null, wins: 0, bot: true };
+    return { id: randomBytes(6).toString('base64url'), token: randomBytes(16).toString('base64url'), name, conn: null, disconnectedAt: null, wins: 0, bot: true, lastEmoteAt: null };
   }
 
   private newCode(): string {

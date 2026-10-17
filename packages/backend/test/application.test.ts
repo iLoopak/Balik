@@ -38,6 +38,33 @@ function setup() {
 }
 
 describe('portable persisted multiplayer', () => {
+  it('stores reaction cooldown across workers but does not replay reactions in a reconnect snapshot', async () => {
+    const s = setup(); const code = await s.create(); await s.join(code);
+    const seq = s.last().message.room.seq;
+    await s.send('a', { t: 'emote', emote: 'nice' }, code);
+    expect(s.last('b').signals?.[0]).toMatchObject({ t: 'emote', emote: 'nice', playerId: 'a' });
+    expect(s.last().message.room.seq).toBe(seq);
+    s.restart(); expect((await s.send('a', { t: 'emote', emote: 'gg' }, code)).message).toMatchObject({ code: 'rate-limited' });
+    const joined = await s.join(code, 'a'); expect(joined.frame?.signals).toBeUndefined();
+    s.advance(2500); expect((await s.send('a', { t: 'emote', emote: 'gg' }, code)).message).toBeUndefined();
+  });
+
+  it('returns to lobby only after completion and preserves the authoritative winner score', async () => {
+    const s = setup(); const code = await s.create(); await s.join(code); await s.send('a', { t: 'start' }, code);
+    expect((await s.send('a', { t: 'lobby' }, code)).message).toMatchObject({ code: 'game-in-progress' });
+    for (let i = 0; i < 3000; i++) {
+      const room = (await s.repository.load(code))!;
+      if (room.status === 'finished') break;
+      const user = room.game!.players[room.game!.currentIndex]!.id;
+      await s.send(user, { t: 'act', baseSeq: room.seq, action: chooseBotAction(room.game!, mulberry32(i + 5)) }, code);
+    }
+    const before = (await s.repository.load(code))!; expect(before.status).toBe('finished');
+    expect((await s.send('b', { t: 'lobby' }, code)).message).toMatchObject({ code: 'not-host' });
+    await s.send('a', { t: 'lobby' }, code);
+    const after = (await s.repository.load(code))!;
+    expect(after.status).toBe('lobby'); expect(after.game).toBeNull();
+    expect(after.players.map((p) => p.wins)).toEqual(before.players.map((p) => p.wins));
+  });
   it('creates, joins, restricts host actions and survives an application restart', async () => {
     const s = setup(); const code = await s.create();
     await s.join(code);

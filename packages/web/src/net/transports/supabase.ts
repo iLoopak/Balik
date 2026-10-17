@@ -120,6 +120,9 @@ export class SupabaseTransport implements GameTransport {
     const message = this.cursor.accept(frame, snapshot);
     if (!message) return;
     this.events?.message(message); this.armWake(frame.wakeAt);
+    if (!snapshot && !message.reset) for (const signal of frame.signals ?? []) {
+      if (signal.expiresAt > Date.now()) this.events?.message(signal);
+    }
   }
   private armWake(at: number | null) {
     clearTimeout(this.wakeTimer);

@@ -3,6 +3,7 @@ import type { Suit } from '@balik/shared';
 import type { CueStep, FxItem } from '../table/display';
 import { effectLifetime } from './effectPresets';
 import { previewDisplay, previewScenario, type PreviewAction } from './previewScenarios';
+import { brandAudio } from '../brand/audio';
 
 /** Local-only clock for the playground. The live game continues to use useDirector. */
 export function usePreviewDirector() {
@@ -15,6 +16,7 @@ export function usePreviewDirector() {
 
   const cancel = useCallback(() => {
     state.current.gen++;
+    brandAudio.cancel();
     for (const [id, resolve] of state.current.timers) { window.clearTimeout(id); resolve(); }
     state.current.timers.clear();
   }, []);
@@ -39,6 +41,7 @@ export function usePreviewDirector() {
       if (gen !== state.current.gen) return;
       const before = shown;
       if (step.apply) { shown = step.apply(shown); setDisplay(shown); }
+      if (step.feedback) brandAudio.play(step.feedback.kind, step.feedback.delay * scale);
       const effects = step.effects?.(before, shown) ?? [];
       const specs: NonNullable<CueStep['fx']> = [
         ...(step.fx ?? []), ...effects.map((event) => ({ kind: 'effect' as const, event, ttl: effectLifetime(event), scale })),

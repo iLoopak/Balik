@@ -5,7 +5,7 @@ import type { CardFx } from '../cards/Card';
 import { CardBack } from '../cards/Card';
 import { SuitIcon } from '../cards/SuitIcon';
 import { SUIT_TONE } from '../cards/skin';
-import { leaveRoom, rematch, sendAction } from '../net/client';
+import { leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import { avatarColor, cardsWord } from '../lib/format';
 import { useElementSize } from '../lib/useElementSize';
@@ -21,10 +21,16 @@ import { useDirector } from './useDirector';
 import { usePerfLite } from './usePerfLite';
 import { GameTableTheme } from './GameTableTheme';
 import './table.css';
+import { BrandMascot } from '../brand/BrandMascot';
+import { BrandResults } from '../brand/BrandResults';
+import { EmoteBubble, useEmotes } from '../brand/Emotes';
+import { useBrandPreferences } from '../brand/preferences';
+import { brandAudio } from '../brand/audio';
 
 const CAN_HOVER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
 export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: boolean }) {
+  const emotes = useEmotes(room.code);
   const [busy, setBusy] = useState(false);
   const lite = usePerfLite(busy);
   const { display, fx, idle, speed, target } = useDirector(room, { reducedMotion, lite });
@@ -94,10 +100,12 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
       }
       // Touch: first tap lifts the card, second tap plays it.
       if (!CAN_HOVER && selected !== key) {
+        brandAudio.play('select');
         setSelected(key);
         return;
       }
       if (key.endsWith('-Q')) {
+        brandAudio.play('select');
         setPicking(key);
         return;
       }
@@ -134,7 +142,6 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
   };
 
   const labels = fx.filter((f): f is Extract<FxItem, { kind: 'label' }> => f.kind === 'label');
-  const winner = display.winnerId ? names.get(display.winnerId) : undefined;
   const showWin = display.phase === 'finished' && idle;
 
   return (
@@ -207,10 +214,19 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
         onDraw={draw}
         onPass={pass}
         hit={fx.some((f) => f.kind === 'hit' && f.playerId === me)}
-        reduced={reducedMotion}
+        reduced={reducedMotion || lite}
         wins={names.get(me)?.wins ?? 0}
         myName={nameOf(me)}
       />
+
+      {emotes.map((message) => {
+        const mine = message.playerId === me;
+        const seat = geo.seats[message.playerId];
+        if (!mine && !seat) return null;
+        const x = mine ? Math.max(70, geo.w / 2 - Math.min(geo.w - 24, 620) / 2 + 30) : seat!.x;
+        const y = mine ? geo.controlY - 8 : seat!.y + geo.cardH * geo.oppScale * (seat!.side === 'top' ? .5 : .9) + 56;
+        return <div className={`emote-anchor${mine ? ' is-mine' : ''}`} style={{ left: x, top: y }} key={message.id}><EmoteBubble message={message} mine={mine} author={nameOf(message.playerId)} /></div>;
+      })}
 
       <SuitPicker
         open={!!picking}
@@ -231,34 +247,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
               animate={{ y: 0, scale: 1, opacity: 1 }}
               transition={{ type: 'spring', stiffness: 260, damping: 22, delay: 0.1 }}
             >
-              <div className="win-kicker">Konec partie · kolo {room.round}</div>
-              <h2 className="win-title brand-word">{display.winnerId === me ? 'Vyhráváš!' : `${winner?.name ?? 'Hráč'} vyhrává`}</h2>
-              <ul className="scoreboard">
-                {[...room.players]
-                  .sort((a, b) => b.wins - a.wins)
-                  .map((p) => (
-                    <li key={p.id} className={p.id === display.winnerId ? 'is-winner' : ''}>
-                      <span className="avatar sm" style={{ background: avatarColor(p.id) }}>
-                        {p.name.slice(0, 1).toUpperCase()}
-                      </span>
-                      <span className="sb-name">
-                        {p.name}
-                        {p.id === me && <em> (ty)</em>}
-                      </span>
-                      <span className="sb-wins">{p.wins}×</span>
-                    </li>
-                  ))}
-              </ul>
-              {room.hostId === me ? (
-                <button className="btn btn-primary win-cta" onClick={rematch} disabled={pending || room.players.filter((p) => p.connected).length < 2}>
-                  Hrát znovu
-                </button>
-              ) : (
-                <p className="win-wait">Čeká se, až hostitel spustí odvetu…</p>
-              )}
-              <button className="btn btn-ghost" onClick={leaveRoom}>
-                Odejít ze hry
-              </button>
+              <BrandResults room={room} winnerId={display.winnerId} pending={pending} reduced={reducedMotion} onRematch={rematch} onLobby={returnToLobby} onLeave={leaveRoom} />
             </motion.div>
           </motion.div>
         )}
@@ -455,6 +444,7 @@ function StatusBar({
   myName: string;
 }) {
   const current = display.currentPlayerId;
+  const mascot = useBrandPreferences((p) => p.mascot);
   const mine = current === me;
   let text = '';
   if (display.phase === 'finished') text = 'Partie skončila';
@@ -473,9 +463,9 @@ function StatusBar({
       transition={primitiveTransition(.42)}
       onClick={(e) => e.stopPropagation()}
     >
-      <span className="avatar sm" style={{ background: avatarColor(me) }} title={myName}>
+      {mascot && (!mine || display.handCollapsed) ? <BrandMascot state={!current || display.handCollapsed ? 'deal' : display.pendingDraw > 0 ? 'surprised' : 'thinking'} size={28} reduced={reduced} /> : <span className="avatar sm" style={{ background: avatarColor(me) }} title={myName}>
         {myName.slice(0, 1).toUpperCase()}
-      </span>
+      </span>}
       <motion.span
         key={`${current}-${display.pendingDraw}-${canPass}`}
         className="status-text"

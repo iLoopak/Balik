@@ -158,3 +158,12 @@ na aktivní frakci a respektuje reduced motion i lite režim. Sizing tokeny v
 místo pro střed, ovládání a zvednuté karty. Dlouhá ruka přechází do dvou řad.
 Geometrické testy kontrolují 8 rozměrů včetně mobilu na šířku a až 31 karet;
 živá vizuální kontrola v prohlížeči zatím nebyla provedena.
+
+## BALÍK personality · vlna 1
+
+Platformová značka je nezávislá na edici karet: BLIK (pohyblivé SVG pouzdro),
+originální krátké syntetické SFX, mute/hlasitost a šest síťových reakcí se
+serverovým cooldownem. Výsledky používají skutečné skóre a hostitel může přejít
+na odvetu nebo zpět do stejné lobby. Nový dev-only playground je `/dev/brand`.
+Audit, API, rozdělení vrstev a limity ověření:
+[Brand & feel](docs/brand/BALIK_BRAND_AND_FEEL.md).
