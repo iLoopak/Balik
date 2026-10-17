@@ -205,3 +205,21 @@ Architektura, přechody, souběh a ověření: [Herní večer](docs/HERNI_VECER_
 V prostředí s povoleným prohlížečem lze spustit `npm run qa:evening`, případně
 `REDUCED=1 npm run qa:evening`; PNG jsou v `output/playwright/evening`.
 Po merge znovu nasaď frontend i funkci `game`. SQL a env se nemění.
+
+
+## Vizuální edice · vlna 4
+
+Tlačítko **Vzhled** na úvodu, v lobby, během hry i mezi partiemi nabízí Stormpunk,
+Retro Arcade (32 původních SVG stickerů) a jednoduchou Klasiku. Karty a prostředí
+stolu volíš odděleně. Volba je lokální, uložená v `balik.appearance`; můžeš ji měnit
+během partie. Ostatní hráči si ponechají vlastní vzhled. Prší, Sedma, BLIK, emotes,
+pravidla a výsledky se tím nemění.
+
+- [Architektura, fallbacky a QA](docs/visual/DECK_THEMES.md)
+- [Všech 32 motivů](docs/visual/RETRO_ARCADE_CARD_MAPPING.md)
+- Dev-only Deck Lab: `/dev/decks` (`npm run dev`); v produkci se jeho kód nebalí.
+- `npm run art:retro`: reprodukce původních vektorových assetů a manifestu.
+- `npm run qa:themes`: prohlížečová QA obou edic na desktopu/mobilu a v obou hrách; vyžaduje běžící web/server a povolený Chrome.
+- `SHARP_MODULE=/cesta/k/sharp npm run qa:assets`: volitelný raster audit a přehledy do `qa-output/themes` (Sharp je pouze QA nástroj, není závislost hry).
+
+W4 nasazuje pouze frontend na Vercelu. **Supabase funkce, SQL ani proměnné prostředí se kvůli W4 nemění.**

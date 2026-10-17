@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Zkratník",
+    "meaning": "Přetížený bateriový bot s vyraženou pojistkou.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-7.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Nárazová rukavice",
+    "meaning": "Pancéřová rukavice zachytí náraz stroje.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-8.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Topík",
+    "meaning": "Malý robot na pružných nohách hlídá zásobu energie.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-9.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Kabinet plamenů",
+    "meaning": "Samostatný arkádový automat se šikmým ovládáním.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-10.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Jiskřič na boardu",
+    "meaning": "Mladý opravář veze energetický článek na prkně.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-j.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Velitelka panelu",
+    "meaning": "Kapitánka směny se štítem ovládací konzole.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-q.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Pecní kolos",
+    "meaning": "Těžký boss s kotlem místo trupu a dvěma písty.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-k.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Prizmatické jádro",
+    "meaning": "Tři záměrně posunuté plošky čisté energie.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/retro-arcade/stickers/hearts-a.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Zubatý náboj",
+    "meaning": "Zaseknuté závodní kolo s nepravidelným ozubením.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-7.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Aeropřilba",
+    "meaning": "Závodní přilba chrání i při glitchi trati.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-8.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Rolík",
+    "meaning": "Jednokolový pošťák s ušima z pružin.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-9.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Cílová brána",
+    "meaning": "Izolovaný časoměrný oblouk s jediným startovním pruhem.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-10.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Sprint s balíčkem",
+    "meaning": "Kurýr na kolečkových botách překládá zatáčku.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-j.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Maršálka okruhu",
+    "meaning": "Velitelka trati s vlajkou a rozhodným postojem.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-q.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Turboboss",
+    "meaning": "Boss na široké nápravě se dvěma turbínami.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-k.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Orbitální turbo",
+    "meaning": "Skládaná rychlostní kapsle prochází zkoseným orbitálem.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/retro-arcade/stickers/diamonds-a.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Past z kazety",
+    "meaning": "Otevřená zubatá kazeta s klikatým kabelem.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-7.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Pružinový deštník",
+    "meaning": "Skládací štít z listových panelů odráží shora.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-8.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Žabák na pérku",
+    "meaning": "Hranatý obojživelník se dvěma pružinovými nohami.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-9.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Lovec kapslí",
+    "meaning": "Průhledný automat s kleštěmi a dvěma semennými kapslemi.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-10.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Pogo průzkumník",
+    "meaning": "Zvědavý průzkumník na skákací tyči veze sadbu.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-j.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Správkyně skleníku",
+    "meaning": "Kapitánka s velkým ramenem pro mechanickou sazenici.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-q.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Klepetový zahradník",
+    "meaning": "Zavalitý mechanický krab nese růstovou nádrž.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-k.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Semínko života",
+    "meaning": "Otevřený obal s geometrickým klíčkem a orbitou.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/retro-arcade/stickers/clubs-a.svg"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Datový červ",
+    "meaning": "Zubatý kabelový tvor prochází rozpojenými konektory.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-7.svg"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Bublinový vysílač",
+    "meaning": "Kapesní rádio obklopuje pevný ochranný prstenec.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-8.svg"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Sova na příjmu",
+    "meaning": "Malý anténový pták s širokými křídly a hranatýma očima.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-9.svg"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Signální observatoř",
+    "meaning": "Velká nakloněná parabola na členitém podstavci.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-10.svg"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Kapesní mixér",
+    "meaning": "Mladý hráč drží handheld se dvěma ovladači.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-j.svg"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Dirigentka vln",
+    "meaning": "Velitelka signálu propojuje dvě vysílací tyče.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-q.svg"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "Král rozbočovačů",
+    "meaning": "Tříoký serverový boss stojí na čtyřech kabelových nohách.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-k.svg"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Nosná frekvence",
+    "meaning": "Čistý pulz v kulovém krystalu mezi vysílacími rameny.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/retro-arcade/stickers/spades-a.svg"
+  }
+]

@@ -1,3 +1,5 @@
+import { DECK_THEMES, type DeckId } from '../themes/registry';
+import { useAppearance } from '../themes/preferences';
 import type { Suit } from '@balik/shared';
 import { FACTIONS, SUIT_FACTION, type FactionId } from '../decks/stormpunk/tokens';
 
@@ -16,8 +18,9 @@ export const FACTION_EFFECTS: Record<FactionId, { color: string; secondary: stri
   boure: { color: FACTIONS.boure.color, secondary: '#C7EBFF', shape: 'bolt', rotation: -22 },
 };
 
-export function effectTheme(suit?: Suit) {
-  return FACTION_EFFECTS[SUIT_FACTION[suit ?? 'spades']];
+export function effectTheme(suit: Suit = 'spades', deck: DeckId = useAppearance.getState().deck) {
+  const base = FACTION_EFFECTS[SUIT_FACTION[suit]];
+  return { ...base, ...DECK_THEMES[deck].fx, color: DECK_THEMES[deck].suits[suit].color };
 }
 
 export function effectQuality(reduced: boolean, lite: boolean, compact: boolean): EffectQuality {

@@ -1,0 +1,358 @@
+{
+  "method": "Sharp SVG rasterization at 256 and 48 px; alpha bounds threshold 8/255; not live browser QA",
+  "totalBytes": 37757,
+  "assets": [
+    {
+      "id": "hearts-7",
+      "bytes": 1225,
+      "bounds": [
+        24,
+        34,
+        232,
+        226
+      ],
+      "coverage": 0.423
+    },
+    {
+      "id": "hearts-8",
+      "bytes": 991,
+      "bounds": [
+        46,
+        37,
+        200,
+        225
+      ],
+      "coverage": 0.368
+    },
+    {
+      "id": "hearts-9",
+      "bytes": 1317,
+      "bounds": [
+        33,
+        38,
+        227,
+        231
+      ],
+      "coverage": 0.436
+    },
+    {
+      "id": "hearts-10",
+      "bytes": 1142,
+      "bounds": [
+        51,
+        29,
+        198,
+        224
+      ],
+      "coverage": 0.403
+    },
+    {
+      "id": "hearts-J",
+      "bytes": 1255,
+      "bounds": [
+        48,
+        33,
+        208,
+        234
+      ],
+      "coverage": 0.345
+    },
+    {
+      "id": "hearts-Q",
+      "bytes": 1354,
+      "bounds": [
+        48,
+        39,
+        206,
+        227
+      ],
+      "coverage": 0.328
+    },
+    {
+      "id": "hearts-K",
+      "bytes": 1334,
+      "bounds": [
+        25,
+        24,
+        235,
+        227
+      ],
+      "coverage": 0.474
+    },
+    {
+      "id": "hearts-A",
+      "bytes": 966,
+      "bounds": [
+        26,
+        28,
+        221,
+        232
+      ],
+      "coverage": 0.37
+    },
+    {
+      "id": "diamonds-7",
+      "bytes": 991,
+      "bounds": [
+        47,
+        27,
+        218,
+        210
+      ],
+      "coverage": 0.339
+    },
+    {
+      "id": "diamonds-8",
+      "bytes": 981,
+      "bounds": [
+        45,
+        36,
+        219,
+        213
+      ],
+      "coverage": 0.389
+    },
+    {
+      "id": "diamonds-9",
+      "bytes": 1220,
+      "bounds": [
+        42,
+        30,
+        218,
+        228
+      ],
+      "coverage": 0.362
+    },
+    {
+      "id": "diamonds-10",
+      "bytes": 1221,
+      "bounds": [
+        34,
+        43,
+        226,
+        223
+      ],
+      "coverage": 0.403
+    },
+    {
+      "id": "diamonds-J",
+      "bytes": 1454,
+      "bounds": [
+        51,
+        26,
+        216,
+        219
+      ],
+      "coverage": 0.324
+    },
+    {
+      "id": "diamonds-Q",
+      "bytes": 1308,
+      "bounds": [
+        55,
+        30,
+        229,
+        227
+      ],
+      "coverage": 0.357
+    },
+    {
+      "id": "diamonds-K",
+      "bytes": 1198,
+      "bounds": [
+        25,
+        38,
+        235,
+        220
+      ],
+      "coverage": 0.424
+    },
+    {
+      "id": "diamonds-A",
+      "bytes": 979,
+      "bounds": [
+        34,
+        33,
+        224,
+        220
+      ],
+      "coverage": 0.366
+    },
+    {
+      "id": "clubs-7",
+      "bytes": 1078,
+      "bounds": [
+        44,
+        71,
+        214,
+        230
+      ],
+      "coverage": 0.361
+    },
+    {
+      "id": "clubs-8",
+      "bytes": 912,
+      "bounds": [
+        31,
+        27,
+        229,
+        218
+      ],
+      "coverage": 0.275
+    },
+    {
+      "id": "clubs-9",
+      "bytes": 1246,
+      "bounds": [
+        52,
+        54,
+        208,
+        228
+      ],
+      "coverage": 0.378
+    },
+    {
+      "id": "clubs-10",
+      "bytes": 1156,
+      "bounds": [
+        54,
+        34,
+        203,
+        225
+      ],
+      "coverage": 0.437
+    },
+    {
+      "id": "clubs-J",
+      "bytes": 1243,
+      "bounds": [
+        37,
+        24,
+        207,
+        227
+      ],
+      "coverage": 0.345
+    },
+    {
+      "id": "clubs-Q",
+      "bytes": 1423,
+      "bounds": [
+        52,
+        36,
+        233,
+        227
+      ],
+      "coverage": 0.397
+    },
+    {
+      "id": "clubs-K",
+      "bytes": 1207,
+      "bounds": [
+        35,
+        37,
+        223,
+        217
+      ],
+      "coverage": 0.392
+    },
+    {
+      "id": "clubs-A",
+      "bytes": 971,
+      "bounds": [
+        43,
+        26,
+        222,
+        220
+      ],
+      "coverage": 0.345
+    },
+    {
+      "id": "spades-7",
+      "bytes": 1085,
+      "bounds": [
+        39,
+        24,
+        218,
+        222
+      ],
+      "coverage": 0.357
+    },
+    {
+      "id": "spades-8",
+      "bytes": 1027,
+      "bounds": [
+        36,
+        33,
+        224,
+        222
+      ],
+      "coverage": 0.445
+    },
+    {
+      "id": "spades-9",
+      "bytes": 1223,
+      "bounds": [
+        29,
+        31,
+        230,
+        215
+      ],
+      "coverage": 0.372
+    },
+    {
+      "id": "spades-10",
+      "bytes": 1136,
+      "bounds": [
+        51,
+        12,
+        213,
+        226
+      ],
+      "coverage": 0.398
+    },
+    {
+      "id": "spades-J",
+      "bytes": 1425,
+      "bounds": [
+        67,
+        42,
+        190,
+        227
+      ],
+      "coverage": 0.319
+    },
+    {
+      "id": "spades-Q",
+      "bytes": 1344,
+      "bounds": [
+        40,
+        29,
+        216,
+        227
+      ],
+      "coverage": 0.388
+    },
+    {
+      "id": "spades-K",
+      "bytes": 1397,
+      "bounds": [
+        28,
+        29,
+        232,
+        231
+      ],
+      "coverage": 0.435
+    },
+    {
+      "id": "spades-A",
+      "bytes": 948,
+      "bounds": [
+        25,
+        38,
+        235,
+        214
+      ],
+      "coverage": 0.402
+    }
+  ]
+}

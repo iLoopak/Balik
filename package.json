@@ -17,7 +17,10 @@
     "bot": "npm run bot -w @balik/server --",
     "qa:e2e": "node scripts/e2e-play.mjs",
     "qa:sedma": "node scripts/e2e-sedma.mjs",
-    "qa:evening": "node scripts/e2e-evening.mjs"
+    "qa:evening": "node scripts/e2e-evening.mjs",
+    "qa:themes": "node scripts/e2e-themes.mjs",
+    "qa:assets": "node scripts/audit-deck-assets.mjs",
+    "art:retro": "node scripts/create-retro-arcade.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

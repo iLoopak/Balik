@@ -1,0 +1,26 @@
+.deck-lab { padding: clamp(14px, 4vw, 48px); background: #101827; color: #f8f2e8; min-height: 100vh; }
+.deck-lab header { display: flex; align-items: center; justify-content: space-between; }
+.deck-lab h1, .deck-lab h2 { font-family: var(--font-brand); }
+.lab-controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding-block: 20px; }
+.lab-controls label { display: flex; align-items: center; gap: 6px; }
+.lab-controls button, .lab-controls select { font: inherit; color: inherit; background: #ffffff12; border: 1px solid #a3b2c455; padding: 10px; border-radius: 8px; }
+.lab-controls option { color: #202338; }
+.lab-grid { display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 18px; }
+.lab-grid figure, .lab-comparison figure { margin: 0; min-width: 0; }
+.lab-card { width: 100%; aspect-ratio: 5/7; }
+.lab-grid figcaption, .lab-comparison figcaption { font: 11px/1.4 monospace; margin-top: 9px; overflow-wrap: anywhere; }
+.lab-grid.lab-small { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+.lab-small .lab-card { max-width: 72px; }
+.lab-light { background: #e4dfd4; color: #202338; }
+.lab-grid figure:hover .card-sticker img, .lab-grid figure:focus-visible .card-sticker img, .lab-playing .card-sticker img { animation: sticker-hop 700ms ease-out; }
+.lab-reduced *, .lab-reduced *::before { animation: none !important; transition: none !important; }
+.lab-comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 180px)); gap: 26px; align-items: center; }
+.lab-isolated-sticker { width: 100%; background: repeating-conic-gradient(#8882 0% 25%, transparent 0% 50%) 50%/20px 20px; }
+.lab-table-scroll { overflow: auto; max-width: 100%; }
+.lab-table { position: relative; overflow: hidden; border-radius: 16px; isolation: isolate; }
+.lab-table-card { position: absolute; translate: -50% -50%; }
+.lab-emote { position: absolute; top: 15px; left: 16px; }
+@media (max-width: 900px) { .lab-grid { grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; } }
+@media (max-width: 420px) { .lab-grid { gap: 7px; } .lab-grid figcaption { font-size: 9px; } .lab-comparison { gap: 12px; } }
+
+@media (prefers-reduced-motion: reduce) { .deck-lab *, .deck-lab *::before { animation: none !important; transition: none !important; } }

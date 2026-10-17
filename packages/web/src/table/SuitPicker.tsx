@@ -1,14 +1,16 @@
+import { useAppearance } from '../themes/preferences';
 import { AnimatePresence, motion } from 'motion/react';
 import { useEffect } from 'react';
 import { SUITS, type Suit } from '@balik/shared';
 import { SuitIcon } from '../cards/SuitIcon';
-import { SUIT_TONE, suitColor, suitName } from '../cards/skin';
+import { suitTone, suitColor, suitName } from '../cards/skin';
 
 /**
  * Suit choice for a Q. The play is only sent after a suit is picked, so the
  * action reaching the server is always complete (no half-played Q, no race).
  */
 export function SuitPicker({ open, onPick, onCancel }: { open: boolean; onPick: (s: Suit) => void; onCancel: () => void }) {
+  useAppearance(p => p.deck);
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -50,7 +52,7 @@ export function SuitPicker({ open, onPick, onCancel }: { open: boolean; onPick: 
                 <motion.button
                   key={suit}
                   className="picker-option"
-                  style={{ ['--suit-tone' as string]: SUIT_TONE[suit] }}
+                  style={{ ['--suit-tone' as string]: suitTone(suit) }}
                   onClick={() => onPick(suit)}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}

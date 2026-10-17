@@ -66,11 +66,12 @@ describe('responsive arena layout', () => {
     }
   });
 
-  it('exposes the chosen faction and disables ambient motion for reduced and lite modes', () => {
+  it('exposes the chosen theme and suit and disables ambient motion for reduced and lite modes', () => {
     const geo = computeGeometry(1280, 720, order, 'me', 5);
-    for (const [suit, faction] of [['hearts', 'vyhen'], ['diamonds', 'pohyb'], ['clubs', 'podrost'], ['spades', 'boure']] as const) {
+    for (const suit of ['hearts', 'diamonds', 'clubs', 'spades'] as const) {
       const html = renderToStaticMarkup(createElement(GameTableTheme, { geo, suit, reduced: false, lite: false, myTurn: true }));
-      expect(html).toContain(`data-faction="${faction}"`);
+      expect(html).toContain(`data-suit="${suit}"`);
+      expect(html).toContain('data-table-theme="stormpunk"');
       expect(html).toContain('aria-hidden="true"');
       expect(html).toContain('data-ambient="full"');
     }

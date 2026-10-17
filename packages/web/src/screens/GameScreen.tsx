@@ -7,7 +7,8 @@ import { useMotionPref } from '../lib/motionPref';
 import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
 import './screens.css';
-import { BrandOptions, BrandSettings } from '../brand/BrandSettings';
+import { BrandOptions } from '../brand/BrandSettings';
+import { AppSettings } from '../themes/AppearancePicker';
 import { GameTransition } from '../evening/GameTransition';
 import { EmotePicker } from '../brand/Emotes';
 
@@ -30,7 +31,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
             </motion.span>
           )}
         </AnimatePresence>
-        <EmotePicker /><BrandSettings compact />
+        <EmotePicker /><AppSettings compact />
         <button className="btn btn-ghost topbar-menu" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label="Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
             <path fill="currentColor" d="M4 7h16v2H4zm0 4h16v2H4zm0 4h16v2H4z" />

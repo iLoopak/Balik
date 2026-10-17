@@ -1,4 +1,4 @@
-import type { GameId } from '@balik/shared';
+import { SUIT_NAME_CS, type GameId } from '@balik/shared';
 import { motion, useAnimate } from 'motion/react';
 import { memo, useEffect, type KeyboardEvent, type PointerEvent } from 'react';
 import { CardView, type CardFx } from '../cards/Card';
@@ -8,7 +8,6 @@ import { placeSpawn } from './layout';
 import { HOVER, flipTransition, moveTransition } from './transitions';
 import { cardAccent, MOTION_PRIMITIVES, primitiveTransition } from '../effects/effectPresets';
 import { EFFECT_TIMING } from '../effects/effectTokens';
-import { suitName } from '../cards/skin';
 
 interface CardLayerProps {
   game?: GameId;
@@ -148,7 +147,7 @@ const CardSlot = memo(function CardSlot({
       className={`card-slot${interactive ? ' is-interactive' : ''}`}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : undefined}
-      aria-label={interactive && entity.card ? `${entity.card.rank} ${suitName(entity.card.suit)}` : undefined}
+      aria-label={interactive && entity.card ? `${entity.card.rank} ${SUIT_NAME_CS[entity.card.suit]}` : undefined}
       style={{ width: cardW, height: cardH, zIndex: active && entity.move && FLYING.has(entity.move) ? place.z + 600 : place.z }}
       initial={initial}
       animate={target}

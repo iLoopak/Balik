@@ -8,7 +8,7 @@ import { navigate, useApp } from '../net/store';
 import './screens.css';
 import '../sedma/sedma.css';
 import { BrandMascot } from '../brand/BrandMascot';
-import { BrandSettings } from '../brand/BrandSettings';
+import { AppSettings } from '../themes/AppearancePicker';
 
 const HERO: Card[] = [
   { id: 'hearts-Q', suit: 'hearts', rank: 'Q' },
@@ -40,7 +40,7 @@ export function Home() {
 
   return (
     <main className="screen home">
-      <BrandSettings />
+      <AppSettings />
       <div className="hero">
         <div className="hero-cards" aria-hidden>
           {HERO.map((card, i) => (

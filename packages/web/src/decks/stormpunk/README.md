@@ -27,11 +27,12 @@ work without changes. A caller can choose a skin explicitly:
 <CardView card={engineCard} faceUp deck="classic" />
 ```
 
-`skin.ts` exports `DeckId`, `ACTIVE_DECK`, `stickerFor`, `suitName`, and
-`suitColor`. `?deck=classic` selects the classic presentation when the app loads;
-that selection lasts for the current SPA session. To keep it after refreshing a
-room URL, include `?deck=classic` on that URL as well. This is a local visual
-preference; different players can use different skins in the same room.
+`skin.ts` exports `DeckId`, `stickerFor`, `suitName`, `suitColor` and `suitTone`.
+The shared `themes/registry.ts` resolves editions; `useAppearance` subscribes to
+validated local preferences. Players can choose cards and table independently
+under **Vzhled**, including during a match. `?deck=classic` (or `retro-arcade`)
+is an initial preview override; choosing manually removes that override and
+persists the new selection. No room or protocol state contains these preferences.
 
 `stormpunkFor(card)` resolves any existing engine card to its manifest record.
 The mapping is hearts → Výheň, diamonds → Pohyb, clubs → Podrost,
@@ -48,7 +49,7 @@ that card displays a complete classic face rather than a broken image.
 ## Layers and sizing
 
 `CardView` retains `CardBase`, `CardIndices`, `CardStickerLayer`, `CardFxLayer`,
-and the shared existing BALÍK back. The off-white base and all index glyphs are
+and an edition-specific BALÍK back (with the neutral CSS back as an image-error fallback). The off-white base and all index glyphs are
 DOM/SVG. Primary indices occupy the top-left/bottom-right and faction icons the
 top-right/bottom-left. At widths up to 110px, a small duplicate faction glyph
 beside the left index remains visible in an overlapping hand. Faction accent

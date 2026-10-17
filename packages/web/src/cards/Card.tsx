@@ -1,10 +1,12 @@
 import { motion, type Transition } from 'motion/react';
 import { memo, useState } from 'react';
-import { type Card } from '@balik/shared';
-import { ACTIVE_DECK, RANK_HINT, STICKER_DEMO, suitColor, suitName, stickerFor, type DeckId, type GameId } from './skin';
+import { SUIT_NAME_CS, type Card } from '@balik/shared';
+import { RANK_HINT, suitColor, suitName, stickerFor, type DeckId, type GameId } from './skin';
 import { SuitIcon } from './SuitIcon';
 import { CardEffectLayer } from '../effects/CardEffectLayer';
 import './cards.css';
+import { DECK_THEMES } from '../themes/registry';
+import { useAppearance } from '../themes/preferences';
 
 export interface CardFx {
   current?: boolean;
@@ -41,13 +43,15 @@ export const CardView = memo(function CardView({
   flipTransition = DEFAULT_FLIP,
   fx,
   game = 'prsi',
-  deck = ACTIVE_DECK,
+  deck: override,
 }: CardViewProps) {
+  const selected = useAppearance(p => p.deck);
+  const deck = override ?? selected;
   const [failedAsset, setFailedAsset] = useState<string | null>(null);
-  const asset = card ? stickerFor(game, card, deck) : null;
-  const visibleDeck = asset && asset.src === failedAsset ? 'classic' : deck;
   const showFace = !!card && faceUp;
-  const label = card ? `${card.rank} ${suitName(card.suit, visibleDeck)}` : 'rub karty';
+  const asset = showFace ? stickerFor(game, card, deck) : null;
+  const visibleDeck = showFace && deck !== 'classic' && (!asset || asset.src === failedAsset) ? 'classic' : deck;
+  const label = card ? `${card.rank} ${SUIT_NAME_CS[card.suit]}${visibleDeck === 'classic' ? '' : ` · ${suitName(card.suit, visibleDeck)}`}` : 'rub karty';
   return (
     <div className={`card card-deck-${visibleDeck}`} data-deck={visibleDeck} role="img" aria-label={showFace ? label : 'rub karty'}>
       <motion.div
@@ -56,18 +60,18 @@ export const CardView = memo(function CardView({
         animate={{ rotateY: showFace ? 0 : 180 }}
         transition={flipTransition}
       >
-        {card && (
+        {showFace && (
           <div className="card-face card-front" style={{ color: suitColor(card.suit, visibleDeck) }}>
             <CardBase />
             {visibleDeck === 'classic' && <CardCenter card={card} game={game} />}
             <CardIndices card={card} deck={visibleDeck} />
             <CardStickerLayer card={card} game={game} deck={visibleDeck} onError={() => asset && setFailedAsset(asset.src)} />
-            <CardEffectLayer current={fx?.current} suit={card.suit} />
+            <CardEffectLayer current={fx?.current} suit={card.suit} deck={visibleDeck} />
             <CardFxLayer fx={fx} />
           </div>
         )}
         <div className="card-face card-back-face">
-          <CardBack />
+          <CardBack deck={deck} />
           {!showFace && <CardFxLayer fx={fx} />}
         </div>
       </motion.div>
@@ -79,8 +83,8 @@ export function CardBase() {
   return <div className="card-base" />;
 }
 
-export function CardIndices({ card, deck = ACTIVE_DECK }: { card: Card; deck?: DeckId }) {
-  if (deck === 'stormpunk') return <>
+export function CardIndices({ card, deck = useAppearance.getState().deck }: { card: Card; deck?: DeckId }) {
+  if (DECK_THEMES[deck].indices === 'four-corners') return <>
     <div className="card-index card-index-tl"><span className="card-rank">{card.rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
     <div className="card-index card-index-tr"><SuitIcon suit={card.suit} deck={deck} className="card-index-suit" /></div>
     <div className="card-index card-index-br"><span className="card-rank">{card.rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
@@ -122,9 +126,9 @@ function CardCenter({ card, game }: { card: Card; game: GameId }) {
  * Separate, individually transformable layer for future transparent sticker art.
  * Never baked into the card face.
  */
-export function CardStickerLayer({ card, game, deck = ACTIVE_DECK, onError }: { card: Card; game: GameId; deck?: DeckId; onError?: () => void }) {
+export function CardStickerLayer({ card, game, deck = useAppearance.getState().deck, onError }: { card: Card; game: GameId; deck?: DeckId; onError?: () => void }) {
   const sticker = stickerFor(game, card, deck);
-  if (!sticker && !STICKER_DEMO) return null;
+  if (!sticker) return null;
   const [ox, oy] = sticker?.offset ?? [0, 0];
   return (
     <motion.div
@@ -137,7 +141,7 @@ export function CardStickerLayer({ card, game, deck = ACTIVE_DECK, onError }: { 
         scale: sticker?.scale ?? 1,
       }}
     >
-      {sticker ? <img src={sticker.src} alt="" draggable={false} onError={onError} decoding="async" /> : <div className="card-sticker-demo">sticker</div>}
+      <img src={sticker.src} alt="" draggable={false} onError={onError} decoding="async" />
     </motion.div>
   );
 }
@@ -168,7 +172,11 @@ export function CardFxLayer({ fx }: { fx?: CardFx }) {
   );
 }
 
-export function CardBack() {
+export function CardBack({ deck: override }: { deck?: DeckId } = {}) {
+  const selected = useAppearance(p => p.deck);
+  const src = DECK_THEMES[override ?? selected].back;
+  const [failed, setFailed] = useState<string | null>(null);
+  if (src && src !== failed) return <img className="card-back-art" src={src} alt="" draggable={false} onError={() => setFailed(src)} />;
   return (
     <div className="card-back">
       <div className="card-back-inner">
