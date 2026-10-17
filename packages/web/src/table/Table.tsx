@@ -1,14 +1,14 @@
 import { useAppearance } from '../themes/preferences';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { legalMovesFromView, type RoomView, type Suit } from '@balik/shared';
+import { legalMovesFromView, type AvatarId, type RoomView, type Suit } from '@balik/shared';
 import type { CardFx } from '../cards/Card';
 import { CardBack } from '../cards/Card';
 import { SuitIcon } from '../cards/SuitIcon';
 import { suitTone } from '../cards/skin';
 import { eveningAction, leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
 import { showToast, useApp } from '../net/store';
-import { avatarColor, cardsWord } from '../lib/format';
+import { cardsWord } from '../lib/format';
 import { useElementSize } from '../lib/useElementSize';
 import { CardLayer } from './CardLayer';
 import type { Display, FxItem } from './display';
@@ -22,10 +22,10 @@ import { useDirector } from './useDirector';
 import { usePerfLite } from './usePerfLite';
 import { GameTableTheme } from './GameTableTheme';
 import './table.css';
-import { BrandMascot } from '../brand/BrandMascot';
+import { Avatar, AvatarTurnLabel } from '../avatars/Avatar';
+import { avatarTurn, type AvatarTurn } from '../avatars/status';
 import { BrandResults } from '../brand/BrandResults';
 import { EmoteBubble, ResultReactions, useEmotes } from '../brand/Emotes';
-import { useBrandPreferences } from '../brand/preferences';
 import { brandAudio } from '../brand/audio';
 
 const CAN_HOVER = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -184,6 +184,8 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
             geo={geo}
             id={id}
             name={nameOf(id)}
+            avatarId={names.get(id)?.avatarId}
+            turn={avatarTurn(room, id, status === 'open')}
             connected={names.get(id)?.connected ?? false}
             bot={names.get(id)?.bot ?? false}
             count={display.hands[id]?.length ?? 0}
@@ -204,6 +206,8 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
       <ActionLabel item={labels.at(-1)} at={{ x: geo.w / 2, y: geo.labelY }} />
 
       <StatusBar
+        room={room}
+        online={status === 'open'}
         geo={geo}
         display={display}
         me={me}
@@ -286,6 +290,8 @@ function DeckStack({ geo, count, canDraw, penalty, onDraw }: { geo: Geometry; co
 }
 
 function Seat({
+  avatarId,
+  turn,
   geo,
   id,
   name,
@@ -300,6 +306,8 @@ function Seat({
   geo: Geometry;
   id: string;
   name: string;
+  avatarId?: AvatarId;
+  turn: AvatarTurn;
   connected: boolean;
   bot: boolean;
   count: number;
@@ -328,14 +336,13 @@ function Seat({
         animate={{ scale: 1 }}
         transition={{ type: 'spring', stiffness: 400, damping: 15 }}
       >
-        <span className="avatar" style={{ background: avatarColor(id) }}>
-          {name.slice(0, 1).toUpperCase()}
-        </span>
+        <Avatar player={{ id, name, avatarId, bot, connected }} size={geo.short ? 28 : 40} turn={turn} danger={count === 1} reduced={reduced} />
         <span className="seat-meta">
           <span className="seat-name">
             {name}
             {bot && <span className="seat-bot">bot</span>}
           </span>
+          <AvatarTurnLabel turn={turn} />
           <span className="seat-count">
             {connected ? `${count} ${cardsWord(count)}` : 'bez spojení…'}
           </span>
@@ -415,6 +422,8 @@ function CenterHud({ display, geo, me, nameOf }: { display: Display; geo: Geomet
 }
 
 function StatusBar({
+  room,
+  online,
   geo,
   display,
   me,
@@ -444,9 +453,10 @@ function StatusBar({
   reduced: boolean;
   wins: number;
   myName: string;
+  room: RoomView;
+  online: boolean;
 }) {
   const current = display.currentPlayerId;
-  const mascot = useBrandPreferences((p) => p.mascot);
   const mine = current === me;
   let text = '';
   if (display.phase === 'finished') text = 'Partie skončila';
@@ -454,7 +464,7 @@ function StatusBar({
   else if (mine) {
     if (display.pendingDraw > 0) text = hasPlayable ? `Přilož sedmičku, nebo ber ${display.pendingDraw}` : `Ber ${display.pendingDraw} ${cardsWord(display.pendingDraw)}`;
     else if (canPass) text = hasPlayable ? 'Zahraj líznutou kartu, nebo nehraj' : 'Nehraješ';
-    else text = hasPlayable || !canAct ? 'Hraješ ty' : 'Hraješ ty — lízni si';
+    else text = hasPlayable || !canAct ? 'Jsi na tahu' : 'Jsi na tahu — lízni si';
   } else text = display.pendingDraw > 0 ? `${nameOf(current)}: sedmička, nebo +${display.pendingDraw}` : `Na tahu: ${nameOf(current)}`;
 
   return (
@@ -465,9 +475,7 @@ function StatusBar({
       transition={primitiveTransition(.42)}
       onClick={(e) => e.stopPropagation()}
     >
-      {mascot && (!mine || display.handCollapsed) ? <BrandMascot state={!current || display.handCollapsed ? 'deal' : display.pendingDraw > 0 ? 'surprised' : 'thinking'} size={28} reduced={reduced} /> : <span className="avatar sm" style={{ background: avatarColor(me) }} title={myName}>
-        {myName.slice(0, 1).toUpperCase()}
-      </span>}
+      <Avatar player={room.players.find(p => p.id === me) ?? { id: me, name: myName }} size={28} turn={avatarTurn(room, me, online)} danger={room.game?.myHand?.length === 1} reduced={reduced} />
       <motion.span
         key={`${current}-${display.pendingDraw}-${canPass}`}
         className="status-text"

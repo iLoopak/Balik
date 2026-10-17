@@ -4,6 +4,7 @@ import type { GameId } from './games';
 import type { SedmaClientEvent, SedmaView } from './sedma/types';
 import type { PrsiClientEvent, PrsiView } from './prsi/types';
 import type { EmoteMessage } from './social';
+import type { AvatarId } from './avatars';
 
 // ---- Room / transport layer. Game specifics are confined to `game` + `events`. ----
 
@@ -21,6 +22,7 @@ export interface RoomPlayerView {
   connected: boolean;
   wins: number;
   bot: boolean;
+  avatarId?: AvatarId;
 }
 
 export interface RoomView<G extends GameId = 'prsi'> {

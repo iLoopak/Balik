@@ -140,6 +140,8 @@ export function Home() {
       </motion.div>
       <p className="home-foot">Máš odkaz od kamaráda? Stačí ho otevřít.</p>
       <a className="btn btn-ghost" href="/dev/deck-stormpunk">Prohlédnout balíček Stormpunk ↗</a>
+      <a className="btn btn-ghost" href="/decks/retro-arcade">Prohlédnout balíček Retro Arcade ↗</a>
+      {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/avatars">Postavy · avatar playground ↗</a>}
       {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/brand">BLIK · brand & game feel lab ↗</a>}
     </main>
   );

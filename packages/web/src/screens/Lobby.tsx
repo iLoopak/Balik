@@ -1,6 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { ROOM_MAX_PLAYERS, canStartGame, gameName, type AnyRoomView } from '@balik/shared';
-import { avatarColor } from '../lib/format';
+import { Avatar } from '../avatars/Avatar';
 import { addBot, eveningAction, leaveRoom, removeBot, startGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import './screens.css';
@@ -71,9 +71,7 @@ export function Lobby({ room }: { room: AnyRoomView }) {
                 transition={{ type: 'spring', stiffness: 420, damping: 32 }}
                 className={p.connected ? '' : 'is-offline'}
               >
-                <span className="avatar" style={{ background: avatarColor(p.id) }}>
-                  {p.name.slice(0, 1).toUpperCase()}
-                </span>
+                <Avatar player={p} size={44} ready={p.connected} />
                 <span className="seat-list-name">
                   {p.name}
                   {p.id === room.you && <em> (ty)</em>}

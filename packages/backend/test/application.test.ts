@@ -38,6 +38,48 @@ function setup() {
 }
 
 describe('portable persisted multiplayer', () => {
+  it.each(['prsi', 'sedma', 'lhar'] as const)('persists self-only avatars in %s without changing cards, sequence, votes or bot deadlines', async (gameId) => {
+    const s = setup();
+    const code = (await s.send('a', { t: 'create', name: 'Ada', token: 'token-123456789012', gameId, avatarId: 'vega', bots: 1 })).code!;
+    let before = (await s.repository.load(code))!;
+    for (let step = 0; step < 20 && before.botDueAt === null; step++) {
+      await s.send('a', { t: 'act', baseSeq: before.seq, action: chooseGameBotAction(before.game!, mulberry32(step + 10)) }, code);
+      before = (await s.repository.load(code))!;
+    }
+    expect(before.botDueAt).not.toBeNull();
+    const bot = before.players.find(p => p.bot)!;
+    expect(bot.avatarId).toMatch(/^bot-/);
+    await s.send('a', { t: 'profile', avatarId: 'sova' }, code);
+    const after = (await s.repository.load(code))!;
+    expect(after.players.find(p => p.id === 'a')?.avatarId).toBe('sova');
+    expect(after.players.find(p => p.bot)).toEqual(bot);
+    expect(after.game).toEqual(before.game);
+    expect(after.seq).toBe(before.seq);
+    expect(after.botDueAt).toBe(before.botDueAt);
+    expect(after.evening).toEqual(before.evening);
+    expect(s.last().message).toMatchObject({ events: [], reset: false });
+    const hidden = after.game!.players.find(p => p.id === bot.id)!.hand;
+    for (const card of hidden) expect(JSON.stringify(s.last())).not.toContain(`\"${card.id}\"`);
+    expect((await s.send('outsider', { t: 'profile', avatarId: 'kocour' }, code)).message).toMatchObject({ code: 'not-in-room' });
+    s.restart();
+    const rejoined = await s.join(code, 'a');
+    expect(rejoined.frame!.message.room.players.find(p => p.id === 'a')?.avatarId).toBe('sova');
+    const preference = await s.send('a', { t: 'join', code, token: 'token-123456789012', name: 'Ada', avatarId: 'mina' });
+    expect(preference.frame!.message.room.players.find(p => p.id === 'a')?.avatarId).toBe('mina');
+  });
+
+  it('broadcasts a profile to the other person while keeping an open ballot valid', async () => {
+    const s = setup(); const code = await s.create(); await s.join(code);
+    const revision = s.last().message.room.evening!.revision;
+    await s.send('a', { t: 'evening', baseRevision: revision, action: 'openVote' }, code);
+    const ballotId = s.last().message.room.evening!.ballotId;
+    await s.send('b', { t: 'vote', ballotId, gameId: 'prsi' }, code);
+    const before = s.last('b').message.room.evening;
+    await s.send('b', { t: 'profile', avatarId: 'gambit' }, code);
+    expect(s.last('a').message.room.players.find(p => p.id === 'b')?.avatarId).toBe('gambit');
+    expect(s.last('a').message.room.evening).toEqual(before);
+  });
+
   it('stores reaction cooldown across workers but does not replay reactions in a reconnect snapshot', async () => {
     const s = setup(); const code = await s.create(); await s.join(code);
     const seq = s.last().message.room.seq;

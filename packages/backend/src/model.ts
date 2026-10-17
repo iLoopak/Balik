@@ -1,6 +1,6 @@
 import {
   applyGameAction as applyAction, chooseGameBotAction as chooseBotAction, createGameRound as createRound, filterGameEventFor as filterEventFor, removeGamePlayer as removePlayer, gameViewFor as viewFor, canStartGame, gameWinnerIds,
-  MAX_BOTS, ROOM_MAX_PLAYERS,
+  MAX_BOTS, ROOM_MAX_PLAYERS, BOT_AVATAR_IDS, defaultAvatarId, type AvatarId,
   createEvening, ensureRoomEvening, reconcileEvening, eveningView, applyEveningCommand, beginEveningMatch, finishEveningMatch, type EveningState,
   emoteAllowed, EMOTE_TTL_MS, type EmoteMessage,
   type ClientMessage, type ErrorCode, type GameEvent, type GameState, type GameId, type Rng,
@@ -17,6 +17,7 @@ export interface Player {
   connected: boolean;
   connectionId: string;
   lastEmoteAt?: number | null;
+  avatarId?: AvatarId;
 }
 
 /** Plain data only: no SDK, socket, timer or process-local references. */
@@ -67,12 +68,12 @@ export function newRoom(code: string, userId: string, name: string, env: Environ
   };
 }
 function human(userId: string, name: string, now: number, connectionId: string): Player {
-  return { id: userId, userId, name, bot: false, wins: 0, lastSeen: now, connected: true, connectionId };
+  return { id: userId, userId, name, avatarId: defaultAvatarId(userId), bot: false, wins: 0, lastSeen: now, connected: true, connectionId };
 }
 function addBot(room: Room, env: Environment) {
   if (room.players.length >= ROOM_MAX_PLAYERS) fail('room-full', 'Místnost je plná.');
   const name = BOT_NAMES.find((n) => !room.players.some((p) => p.name === n)) ?? 'Bot';
-  room.players.push({ id: env.id(), userId: null, name, bot: true, wins: 0, lastSeen: env.now, connected: true, connectionId: '' });
+  room.players.push({ id: env.id(), userId: null, name, avatarId: BOT_AVATAR_IDS[BOT_NAMES.indexOf(name)] ?? BOT_AVATAR_IDS[0], bot: true, wins: 0, lastSeen: env.now, connected: true, connectionId: '' });
 }
 function afterGameChange(room: Room, now: number, reason: 'cards' | 'forfeit' = 'cards') {
   if (room.game?.phase !== 'finished' || room.status === 'finished') return;
@@ -127,6 +128,7 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
       if (room.players.length >= ROOM_MAX_PLAYERS) fail('room-full', 'Místnost je plná.');
       player = human(userId, command.name, env.now, env.connectionId ?? userId); player.wins = evening.stats[userId]?.wins ?? 0; room.players.push(player);
     }
+    if (command.avatarId) player!.avatarId = command.avatarId;
     reconcileEvening(evening, room.players);
     return { events: [], changed: true };
   }
@@ -134,6 +136,11 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
   const host = () => { if (room.hostId !== player!.id) fail('not-host', 'Tohle může jen hostitel.'); };
   if ((command.t === 'start' || command.t === 'rematch' || command.t === 'lobby' || command.t === 'addBot' || command.t === 'removeBot') && command.round !== undefined && command.round !== room.round) fail('stale', 'Tato partie už není aktuální.');
   switch (command.t) {
+    case 'profile': {
+      if (player!.avatarId === command.avatarId) return { events: [], changed: false };
+      player!.avatarId = command.avatarId;
+      return { events: [], changed: true };
+    }
     case 'vote': case 'evening': {
       const result = applyEveningCommand(evening, room.players, room.hostId, player!.id, command, env.now);
       if (result.directive !== 'none') { room.game = null; room.status = 'lobby'; room.botDueAt = null; }
@@ -158,6 +165,7 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
       return { events: [], changed: true };
     }
     case 'create': {
+      if (command.avatarId) player!.avatarId = command.avatarId;
       for (let i = 0; i < Math.min(command.bots ?? 0, MAX_BOTS); i++) addBot(room, env);
       if (!command.bots) return { events: [], changed: true };
       return execute(room, userId, { t: 'start' }, env);
@@ -233,7 +241,7 @@ export function frameFor(room: Room, userId: string, events: EngineEvent[], rese
     code: room.code, gameId: room.gameId ?? 'prsi', sedmaBonus: room.sedmaBonus, you: viewer.id, hostId: room.hostId,
     ...(room.evening ? { evening: eveningView(room.evening) } : {}),
     status: room.status, round: room.round, seq: room.seq,
-    players: room.players.map((p) => ({ id: p.id, name: p.name, bot: p.bot, wins: p.wins, connected: p.connected })),
+    players: room.players.map((p) => ({ id: p.id, name: p.name, bot: p.bot, wins: p.wins, connected: p.connected, avatarId: p.avatarId ?? defaultAvatarId(p.id, p.bot) })),
     game: room.game ? viewFor(room.game, viewer.id) : null,
   } as AnyRoomView;
   return { revision: room.version, wakeAt: room.botDueAt, connectionId: viewer.connectionId, message: {

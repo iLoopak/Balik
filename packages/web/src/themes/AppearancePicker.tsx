@@ -4,10 +4,11 @@ import { BrandSettings } from '../brand/BrandSettings';
 import { DECK_THEMES, EDITIONS, TABLE_THEMES } from './registry';
 import { setAppearance, useAppearance } from './preferences';
 import './appearance.css';
+import { AvatarPicker } from '../avatars/AvatarPicker';
 
 /** Composition belongs to settings, keeping brand components edition-independent. */
 export function AppSettings({ compact = false }: { compact?: boolean }) {
-  return <div className="app-settings"><BrandSettings compact={compact} /><AppearancePicker compact={compact} /></div>;
+  return <div className="app-settings"><AvatarPicker compact={compact} /><BrandSettings compact={compact} /><AppearancePicker compact={compact} /></div>;
 }
 export function AppearancePicker({ compact = false }: { compact?: boolean }) {
   const pref = useAppearance();
