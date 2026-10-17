@@ -1,0 +1,19 @@
+{
+  "name": "@balik/server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/main.ts --dev",
+    "build": "esbuild src/main.ts --bundle --platform=node --format=esm --target=node20 --outfile=dist/server.js --external:ws",
+    "start": "node dist/server.js",
+    "bot": "tsx src/bot.ts"
+  },
+  "dependencies": {
+    "@balik/shared": "^0.1.0",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.2"
+  }
+}
