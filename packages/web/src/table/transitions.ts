@@ -1,5 +1,6 @@
 import type { Transition } from 'motion/react';
 import type { MoveKind } from './display';
+import { EFFECT_TIMING } from '../effects/effectTokens';
 
 // Central motion vocabulary. Durations are base values in seconds; `speed` < 1 shortens them
 // (backlog catch-up, low-power mode).
@@ -24,13 +25,13 @@ export function moveTransition(kind: MoveKind | null, speed: number, delay: numb
     case 'play':
       // Different x/y easing curves give the flight a slight arc.
       return {
-        x: tween(d(0.46), [0.35, 0.7, 0.4, 1], dl),
-        y: tween(d(0.46), [0.12, 0.85, 0.3, 1], dl),
+        x: tween(d(EFFECT_TIMING.flight), [0.35, 0.7, 0.4, 1], dl),
+        y: tween(d(EFFECT_TIMING.flight), [0.12, 0.85, 0.3, 1], dl),
         rotate: tween(d(0.5), [0.3, 0.9, 0.35, 1.12], dl),
-        scale: tween(d(0.46), [0.2, 0.8, 0.3, 1], dl),
+        scale: tween(d(EFFECT_TIMING.flight), [0.2, 0.8, 0.3, 1], dl),
       };
     case 'draw':
-      return tween(d(0.44), [0.22, 0.85, 0.3, 1], dl);
+      return tween(d(EFFECT_TIMING.drawFlight), [0.22, 0.85, 0.3, 1], dl);
     case 'penalty':
       return {
         x: { type: 'spring', stiffness: 190, damping: 19, delay: dl },

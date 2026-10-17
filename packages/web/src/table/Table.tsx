@@ -11,7 +11,10 @@ import { avatarColor, cardsWord } from '../lib/format';
 import { useElementSize } from '../lib/useElementSize';
 import { CardLayer } from './CardLayer';
 import type { Display, FxItem } from './display';
-import { ActionLabel, Confetti, Impact, LockIcon, SkipStamp, SuitSplash, suitName } from './Effects';
+import { ActionLabel, Impact, LockIcon, suitName } from './Effects';
+import { EffectOrchestrator } from '../effects/EffectOrchestrator';
+import type { EffectInstance } from '../effects/effectEvents';
+import { MOTION_PRIMITIVES, primitiveTransition } from '../effects/effectPresets';
 import { computeGeometry, placeAll, type Geometry, type HandUi, type PlacedCard } from './layout';
 import { SuitPicker } from './SuitPicker';
 import { useDirector } from './useDirector';
@@ -119,6 +122,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
   const placed = placeAll(display, geo, ui);
 
   const fxFor = (p: PlacedCard): CardFx | undefined => {
+    if (p.zone === 'discard' && p.entity.key === display.discard.at(-1)?.key) return { current: true };
     if (p.zone !== 'mine') return undefined;
     return {
       playable: canAct && playable.has(p.entity.key),
@@ -185,20 +189,9 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
 
       {fx.map((f) => {
         if (f.kind === 'impact') return <Impact key={f.id} at={geo.discard} tone={f.tone} delay={f.delay * speed} lite={lite || reducedMotion} cardW={geo.cardW} />;
-        if (f.kind === 'suit') return <SuitSplash key={f.id} at={geo.discard} suit={f.suit} cardW={geo.cardW} />;
         return null;
       })}
-      <AnimatePresence>
-        {fx
-          .filter((f): f is Extract<FxItem, { kind: 'skip' }> => f.kind === 'skip')
-          .map((f) => (
-            <SkipStamp
-              key={f.id}
-              mine={f.playerId === me}
-              at={f.playerId === me ? { x: geo.w / 2, y: geo.handY - geo.cardH * 0.2 } : (geo.seats[f.playerId] ?? geo.discard)}
-            />
-          ))}
-      </AnimatePresence>
+      <EffectOrchestrator items={fx.filter((f): f is EffectInstance => f.kind === 'effect')} geo={geo} me={me} reduced={reducedMotion} lite={lite} />
       <ActionLabel item={labels.at(-1)} at={{ x: geo.w / 2, y: geo.labelY }} />
 
       <StatusBar
@@ -231,7 +224,6 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
       <AnimatePresence>
         {showWin && (
           <motion.div className="win-backdrop" key="win" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            {!reducedMotion && <Confetti count={lite ? 36 : display.winnerId === me ? 110 : 70} />}
             <motion.div
               className="win-panel"
               initial={{ y: 40, scale: 0.9, opacity: 0 }}
@@ -333,10 +325,10 @@ function Seat({
   const skipped = fx.some((f) => f.kind === 'skip' && f.playerId === id);
   return (
     <motion.div
-      className={`seat${active ? ' is-active' : ''}${connected ? '' : ' is-offline'}${skipped ? ' is-skipped' : ''}`}
+      className={`seat${active ? ' is-active' : ''}${connected ? '' : ' is-offline'}${skipped ? ' is-skipped' : ''}${count === 1 ? ' is-danger' : ''}`}
       style={{ left: seat.x, top }}
-      animate={hit && !reduced ? { x: [0, -7, 7, -5, 5, 0] } : { x: 0 }}
-      transition={{ duration: 0.45 }}
+      animate={hit && !reduced ? MOTION_PRIMITIVES.shake : { x: 0 }}
+      transition={primitiveTransition(.42)}
     >
       <motion.div
         key={active ? 'on' : 'off'}
@@ -476,8 +468,8 @@ function StatusBar({
     <motion.div
       className={`status-bar${mine && display.phase === 'playing' ? ' is-mine' : ''}`}
       style={{ top: geo.handTop - 62, width: Math.min(geo.w - 16, 640) }}
-      animate={hit && !reduced ? { x: [0, -6, 6, -4, 4, 0] } : { x: 0 }}
-      transition={{ duration: 0.45 }}
+      animate={hit && !reduced ? MOTION_PRIMITIVES.shake : { x: 0 }}
+      transition={primitiveTransition(.42)}
       onClick={(e) => e.stopPropagation()}
     >
       <span className="avatar sm" style={{ background: avatarColor(me) }} title={myName}>
@@ -492,6 +484,7 @@ function StatusBar({
       >
         {text}
       </motion.span>
+      {display.phase === 'playing' && display.hands[me]?.length === 1 && <span className="last-card-badge">POSLEDNÍ KARTA</span>}
       {wins > 0 && <span className="status-wins" title="Tvoje výhry">{wins}×</span>}
       <span className="status-actions">
         {canAct && canPass && (

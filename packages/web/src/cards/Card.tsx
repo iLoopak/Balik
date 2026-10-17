@@ -1,11 +1,13 @@
 import { motion, type Transition } from 'motion/react';
-import { memo } from 'react';
-import { SUIT_NAME_CS, type Card } from '@balik/shared';
-import { RANK_HINT, STICKER_DEMO, SUIT_COLOR, stickerFor, type GameId } from './skin';
+import { memo, useState } from 'react';
+import { type Card } from '@balik/shared';
+import { ACTIVE_DECK, RANK_HINT, STICKER_DEMO, suitColor, suitName, stickerFor, type DeckId, type GameId } from './skin';
 import { SuitIcon } from './SuitIcon';
+import { CardEffectLayer } from '../effects/CardEffectLayer';
 import './cards.css';
 
 export interface CardFx {
+  current?: boolean;
   playable?: boolean;
   dimmed?: boolean;
   selected?: boolean;
@@ -22,6 +24,7 @@ interface CardViewProps {
   flipTransition?: Transition;
   fx?: CardFx;
   game?: GameId;
+  deck?: DeckId;
 }
 
 const DEFAULT_FLIP: Transition = { type: 'spring', stiffness: 260, damping: 26 };
@@ -38,11 +41,15 @@ export const CardView = memo(function CardView({
   flipTransition = DEFAULT_FLIP,
   fx,
   game = 'prsi',
+  deck = ACTIVE_DECK,
 }: CardViewProps) {
+  const [failedAsset, setFailedAsset] = useState<string | null>(null);
+  const asset = card ? stickerFor(game, card, deck) : null;
+  const visibleDeck = asset && asset.src === failedAsset ? 'classic' : deck;
   const showFace = !!card && faceUp;
-  const label = card ? `${card.rank} ${SUIT_NAME_CS[card.suit]}` : 'rub karty';
+  const label = card ? `${card.rank} ${suitName(card.suit, visibleDeck)}` : 'rub karty';
   return (
-    <div className="card" role="img" aria-label={showFace ? label : 'rub karty'}>
+    <div className={`card card-deck-${visibleDeck}`} data-deck={visibleDeck} role="img" aria-label={showFace ? label : 'rub karty'}>
       <motion.div
         className="card-flipper"
         initial={{ rotateY: (initialFaceUp ?? faceUp) && card ? 0 : 180 }}
@@ -50,11 +57,12 @@ export const CardView = memo(function CardView({
         transition={flipTransition}
       >
         {card && (
-          <div className="card-face card-front" style={{ color: SUIT_COLOR[card.suit] }}>
+          <div className="card-face card-front" style={{ color: suitColor(card.suit, visibleDeck) }}>
             <CardBase />
-            <CardCenter card={card} />
-            <CardIndices card={card} />
-            <CardStickerLayer card={card} game={game} />
+            {visibleDeck === 'classic' && <CardCenter card={card} />}
+            <CardIndices card={card} deck={visibleDeck} />
+            <CardStickerLayer card={card} game={game} deck={visibleDeck} onError={() => asset && setFailedAsset(asset.src)} />
+            <CardEffectLayer current={fx?.current} suit={card.suit} />
             <CardFxLayer fx={fx} />
           </div>
         )}
@@ -71,11 +79,17 @@ export function CardBase() {
   return <div className="card-base" />;
 }
 
-export function CardIndices({ card }: { card: Card }) {
+export function CardIndices({ card, deck = ACTIVE_DECK }: { card: Card; deck?: DeckId }) {
+  if (deck === 'stormpunk') return <>
+    <div className="card-index card-index-tl"><span className="card-rank">{card.rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
+    <div className="card-index card-index-tr"><SuitIcon suit={card.suit} deck={deck} className="card-index-suit" /></div>
+    <div className="card-index card-index-br"><span className="card-rank">{card.rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
+    <div className="card-index card-index-bl"><SuitIcon suit={card.suit} deck={deck} className="card-index-suit" /></div>
+  </>;
   const index = (
     <>
       <span className="card-rank">{card.rank}</span>
-      <SuitIcon suit={card.suit} className="card-index-suit" />
+      <SuitIcon suit={card.suit} deck={deck} className="card-index-suit" />
     </>
   );
   return (
@@ -94,10 +108,10 @@ function CardCenter({ card }: { card: Card }) {
       {isFace ? (
         <div className="card-court">
           <span className="card-court-rank">{card.rank}</span>
-          <SuitIcon suit={card.suit} className="card-court-suit" />
+          <SuitIcon suit={card.suit} deck="classic" className="card-court-suit" />
         </div>
       ) : (
-        <SuitIcon suit={card.suit} className={card.rank === 'A' ? 'card-pip card-pip-ace' : 'card-pip'} />
+        <SuitIcon suit={card.suit} deck="classic" className={card.rank === 'A' ? 'card-pip card-pip-ace' : 'card-pip'} />
       )}
       {hint && <span className="card-hint">{hint}</span>}
     </div>
@@ -108,8 +122,8 @@ function CardCenter({ card }: { card: Card }) {
  * Separate, individually transformable layer for future transparent sticker art.
  * Never baked into the card face.
  */
-export function CardStickerLayer({ card, game }: { card: Card; game: GameId }) {
-  const sticker = stickerFor(game, card);
+export function CardStickerLayer({ card, game, deck = ACTIVE_DECK, onError }: { card: Card; game: GameId; deck?: DeckId; onError?: () => void }) {
+  const sticker = stickerFor(game, card, deck);
   if (!sticker && !STICKER_DEMO) return null;
   const [ox, oy] = sticker?.offset ?? [0, 0];
   return (
@@ -123,7 +137,7 @@ export function CardStickerLayer({ card, game }: { card: Card; game: GameId }) {
         scale: sticker?.scale ?? 1,
       }}
     >
-      {sticker ? <img src={sticker.src} alt="" draggable={false} /> : <div className="card-sticker-demo">sticker</div>}
+      {sticker ? <img src={sticker.src} alt="" draggable={false} onError={onError} decoding="async" /> : <div className="card-sticker-demo">sticker</div>}
     </motion.div>
   );
 }

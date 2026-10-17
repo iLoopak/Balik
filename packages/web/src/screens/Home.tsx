@@ -128,6 +128,7 @@ export function Home() {
         )}
       </motion.div>
       <p className="home-foot">Máš odkaz od kamaráda? Stačí ho otevřít.</p>
+      <a className="btn btn-ghost" href="/dev/deck-stormpunk">Prohlédnout balíček Stormpunk ↗</a>
     </main>
   );
 }

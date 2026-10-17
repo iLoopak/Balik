@@ -266,3 +266,35 @@
   color: var(--back);
   line-height: 1;
 }
+
+/* Stormpunk uses the same card geometry and independent layers as the classic skin. */
+.card-deck-stormpunk .card-base {
+  background: #fffdf7;
+  box-shadow: inset 0 0 0 0.65cqw #e6e0d2, inset 0 -1cqw 0 #eee9df;
+}
+.card-deck-stormpunk .card-rank { font-size: 25cqw; color: #202831; }
+.card-deck-stormpunk .card-index-tl { top: 7cqw; left: 5cqw; width: 24cqw; }
+.card-deck-stormpunk .card-index-br { bottom: 7cqw; right: 5cqw; width: 24cqw; }
+.card-index-tr { top: 7cqw; right: 7cqw; width: 20cqw; }
+.card-index-bl { bottom: 7cqw; left: 7cqw; width: 20cqw; transform: rotate(180deg); }
+.card-deck-stormpunk .card-index-suit { width: 19cqw; height: 19cqw; margin: 1cqw 0 0; }
+.card-hand-suit { display: none; }
+/* The small echoed glyph stays exposed when the next card covers the right corner. */
+@container (max-width: 110px) {
+  .card-hand-suit { display: block; position: absolute; left: 25cqw; top: 7cqw; width: 12cqw; height: 12cqw; }
+}
+.card-deck-stormpunk .card-sticker { inset: 23% 12%; }
+.card-deck-stormpunk .card-sticker img { width: 100%; height: 100%; object-fit: contain; }
+.card-sticker { will-change: auto; }
+
+/* Only this inner layer moves in the gallery demonstration. */
+.sticker-demo-active .card-sticker img { animation: sticker-hop 700ms ease-out; }
+@keyframes sticker-hop {
+  0%, 100% { transform: translateY(0) rotate(0) scale(1); }
+  32% { transform: translateY(-12%) rotate(-8deg) scale(1.08); }
+  62% { transform: translateY(2%) rotate(4deg) scale(.97); }
+  80% { transform: translateY(-3%) rotate(-2deg) scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sticker-demo-active .card-sticker img { animation: none; filter: drop-shadow(0 0 4px #f4c430); }
+}
