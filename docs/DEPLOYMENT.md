@@ -1,4 +1,7 @@
-# Nasazení BALÍK: Vercel web + jedna Node instance
+# Alternativní nasazení: Vercel web + jedna Node instance
+
+Výchozí hostovaná varianta je nyní [Supabase](SUPABASE.md). Tato stránka popisuje
+zachovaný samostatný Node/WebSocket adaptér pro lokální vývoj a jiný hosting.
 
 Web běží na Vercelu, autoritativní multiplayer na samostatné dlouhodobě běžící
 Node službě. Pro aktuální MVP je to nejmenší spolehlivé nasazení: místnosti,

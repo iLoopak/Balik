@@ -141,13 +141,14 @@ Architektura, hotové efekty, výkon a limity ověření:
 
 ## Provoz a nasazení
 
-Doporučené MVP: Vercel pro web, jedna dlouhodobě běžící Node instance pro
-multiplayer. Kořenový `vercel.json` nastavuje Vite build, výstup a SPA routy;
-`Dockerfile` připravuje backend s `/health` a `/ws`. Na Vercelu vyber **Vite**,
-root `./`, a nastav `VITE_WS_URL` na veřejnou `wss://…/ws` adresu backendu.
-Podrobný postup a důvod oddělení backendu: [Nasazení](docs/DEPLOYMENT.md).
-Web i backend lze přesunout jinam; `VITE_WS_URL` je volitelná adresa a bez ní
-funguje dosavadní společná doména s `/ws`.
+Doporučené hostované MVP: Vercel pro web a Supabase pro trvalé místnosti,
+ověřování tahů a doručování hráčům. Nastavení účtu, migrace, funkce a přesné
+proměnné Vercelu: [Supabase](docs/SUPABASE.md).
+
+Frontend komunikuje přes `GameTransport`, přenositelný backend přes `RoomRepository`.
+Lokální `npm run dev` dál používá původní Node/WebSocket adaptér. Samostatný
+Node server nebo Docker zůstává alternativou pro jiný hosting:
+[Nasazení Node backendu](docs/DEPLOYMENT.md). `vercel.json` nasazuje pouze Vite web.
 
 ## Stormpunk command arena
 

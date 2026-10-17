@@ -6,3 +6,6 @@ qa-output
 .env
 .env.*
 !.env.example
+supabase/functions/game/bundle.js
+supabase/.temp
+supabase/.branches

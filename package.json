@@ -10,7 +10,9 @@
     "build": "npm run build -w @balik/web && npm run build -w @balik/server",
     "start": "npm run start -w @balik/server",
     "test": "vitest run",
-    "typecheck": "tsc -p packages/shared --noEmit && tsc -p packages/server --noEmit && tsc -p packages/web --noEmit",
+    "typecheck": "tsc -p packages/shared --noEmit && tsc -p packages/backend --noEmit && tsc -p packages/server --noEmit && tsc -p packages/web --noEmit",
+    "build:supabase": "node scripts/build-supabase.mjs",
+    "qa:supabase": "node --import tsx scripts/qa-supabase.mts",
     "bot": "npm run bot -w @balik/server --",
     "qa:e2e": "node scripts/e2e-play.mjs"
   },

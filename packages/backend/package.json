@@ -1,0 +1,8 @@
+{
+  "name": "@balik/backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": { ".": "./src/application.ts" },
+  "dependencies": { "@balik/shared": "^0.1.0", "zod": "^4.6.7" }
+}

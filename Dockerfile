@@ -6,6 +6,7 @@ COPY tsconfig.base.json ./
 COPY packages/shared/package.json packages/shared/package.json
 COPY packages/server/package.json packages/server/package.json
 COPY packages/web/package.json packages/web/package.json
+COPY packages/backend/package.json packages/backend/package.json
 RUN npm ci
 COPY packages/shared packages/shared
 COPY packages/server packages/server

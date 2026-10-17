@@ -1,0 +1,34 @@
+project_id = "balik"
+
+[api]
+enabled = true
+port = 58321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 58322
+shadow_port = 58320
+major_version = 17
+
+[auth]
+enabled = true
+site_url = "http://localhost:5173"
+enable_anonymous_sign_ins = true
+
+[studio]
+enabled = false
+
+[inbucket]
+enabled = false
+port = 58324
+
+[storage]
+enabled = false
+
+[analytics]
+enabled = false
+
+[functions.game]
+verify_jwt = true
