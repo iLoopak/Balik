@@ -1,3 +1,4 @@
+import type { EveningView } from './evening';
 import type { GameId } from './games';
 import type { SedmaClientEvent, SedmaView } from './sedma/types';
 import type { PrsiClientEvent, PrsiView } from './prsi/types';
@@ -25,6 +26,7 @@ export interface RoomView<G extends GameId = 'prsi'> {
   code: string;
   gameId: G;
   sedmaBonus?: 0 | 10;
+  evening?: EveningView;
   /** Public id of the receiving player. */
   you: string;
   hostId: string;

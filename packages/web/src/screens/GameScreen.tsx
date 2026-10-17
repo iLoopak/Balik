@@ -8,6 +8,7 @@ import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
 import './screens.css';
 import { BrandOptions, BrandSettings } from '../brand/BrandSettings';
+import { GameTransition } from '../evening/GameTransition';
 import { EmotePicker } from '../brand/Emotes';
 
 export function GameScreen({ room }: { room: AnyRoomView }) {
@@ -57,6 +58,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
         </AnimatePresence>
       </header>
       {room.gameId === 'sedma' ? <SedmaTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />}
+      <GameTransition room={room} reduced={reduced} />
     </main>
   );
 }

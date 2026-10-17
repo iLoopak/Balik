@@ -23,17 +23,21 @@ export const prsiActionSchema = z.discriminatedUnion('type', [
 
 export const gameActionSchema = z.union([prsiActionSchema, z.object({ type: z.literal('collect') })]);
 
+const round = z.number().int().nonnegative().optional();
+
 export const clientMessageSchema = z.discriminatedUnion('t', [
+  z.object({ t: z.literal('vote'), ballotId: z.number().int().nonnegative(), gameId: z.enum(['prsi','sedma']) }),
+  z.object({ t: z.literal('evening'), baseRevision: z.number().int().nonnegative(), action: z.enum(['between','openVote','close','confirm']), gameId: z.enum(['prsi','sedma']).optional() }).refine((m) => m.action !== 'confirm' || !!m.gameId),
   z.object({ t: z.literal('emote'), emote: z.enum(EMOTE_IDS) }),
-  z.object({ t: z.literal('lobby') }),
+  z.object({ t: z.literal('lobby'), round }),
   /** `bots` > 0 = single player: the room gets computer opponents and starts right away. */
   z.object({ t: z.literal('create'), token, name, gameId: z.enum(['prsi', 'sedma']).optional(), sedmaBonus: z.union([z.literal(0), z.literal(10)]).optional(), bots: z.number().int().min(0).max(MAX_BOTS).optional() }),
-  z.object({ t: z.literal('addBot') }),
-  z.object({ t: z.literal('removeBot'), playerId: z.string().max(32) }),
+  z.object({ t: z.literal('addBot'), round }),
+  z.object({ t: z.literal('removeBot'), round, playerId: z.string().min(1).max(64) }),
   z.object({ t: z.literal('join'), token, name, code }),
-  z.object({ t: z.literal('start') }),
+  z.object({ t: z.literal('start'), round }),
   z.object({ t: z.literal('act'), baseSeq: z.number().int().nonnegative(), action: gameActionSchema }),
-  z.object({ t: z.literal('rematch') }),
+  z.object({ t: z.literal('rematch'), round }),
   z.object({ t: z.literal('leave') }),
   z.object({ t: z.literal('ping') }),
 ]);

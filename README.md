@@ -181,3 +181,27 @@ Tři hráči nemohou rozehrát Sedmu. Odveta zachová hru, variantu a výhry.
   výsledkový shell, CardLayer, pohybové tokeny a vrstvené karty/stickery.
 - Pro publikaci W2 sestav a nasaď funkci `game` i frontend. Nová SQL migrace
   ani změna proměnných prostředí není potřeba. Viz [Supabase](docs/SUPABASE.md).
+
+## Herní večer · vlna 3
+
+Po dohrání zůstáváte u stejného kódu. **Odveta** pokračuje stejnou hrou,
+**Změnit hru** otevře společné hlasování, **Přehled večera** ukáže celkové
+výhry, odehrané partie a historii. **Konec večera** uloží závěrečný souhrn;
+každý z něj může odejít na úvod.
+
+Hlasy patří připojeným lidem, boti nehlasují. Nadpoloviční většina určí hru;
+bez ní čekáme na všechny hlasy a při shodě vybírá hostitel z vedoucích her.
+Hostitel vždy potvrdí rozdání. Sedma se třemi připojenými nejde vybrat a
+odpojené obsazené místo čeká na návrat nebo původní ochrannou lhůtu.
+
+Výhry a odehrané partie jsou společné. Body Sedmy patří jen do detailu hry.
+Odchozí zůstává ve výsledcích, stejná identita se může vrátit, nová začíná od
+nuly. Souhrn a agregáty zahrnují celý večer; timeline ukazuje posledních 100
+partií. Node nepřežije restart, Supabase používá stávající trvalý room JSON a
+jeho úklid opuštěných místností. Starší výsledky se nevymýšlejí při aktualizaci.
+
+Architektura, přechody, souběh a ověření: [Herní večer](docs/HERNI_VECER_FLOW.md).
+`npm run qa:supabase` testuje i celý střídající se večer přes skutečný transport.
+V prostředí s povoleným prohlížečem lze spustit `npm run qa:evening`, případně
+`REDUCED=1 npm run qa:evening`; PNG jsou v `output/playwright/evening`.
+Po merge znovu nasaď frontend i funkci `game`. SQL a env se nemění.

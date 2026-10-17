@@ -4,12 +4,12 @@ import { sedmaLegalFromView, type RoomView } from '@balik/shared';
 import { CardBack } from '../cards/Card';
 import { BrandMascot } from '../brand/BrandMascot';
 import { BrandResults } from '../brand/BrandResults';
-import { EmoteBubble, useEmotes } from '../brand/Emotes';
+import { EmoteBubble, ResultReactions, useEmotes } from '../brand/Emotes';
 import { brandAudio } from '../brand/audio';
 import { avatarColor } from '../lib/format';
 import { useElementSize } from '../lib/useElementSize';
 import { useApp } from '../net/store';
-import { leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
+import { eveningAction, leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
 import { CardLayer } from '../table/CardLayer';
 import { computeGeometry, type Geometry } from '../table/layout';
 import { GameTableTheme } from '../table/GameTableTheme';
@@ -104,7 +104,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
         {emotes.filter((m) => m.playerId === me).map((m) => <EmoteBubble key={m.id} message={m} author={name(me)} mine />)}
       </div>
       {tip !== null && view.phase !== 'finished' && <aside className="sedma-tip" aria-label="Rychlé vysvětlení Sedmy"><strong>{tip + 1}/3 · {TIPS[tip]![0]}</strong><p>{TIPS[tip]![1]}</p><div><button className="btn btn-secondary" onClick={() => tip < 2 ? setTip(tip + 1) : closeTip()}>{tip < 2 ? 'Dál' : 'Jdeme hrát'}</button><button className="btn btn-ghost" onClick={closeTip}>Zavřít</button></div></aside>}
-      {view.phase === 'finished' && idle && <div className="sedma-results-wrap"><div className="win-panel"><BrandResults room={room} winnerId={view.winnerId} pending={pending} reduced={quiet} onRematch={rematch} onLobby={returnToLobby} onLeave={leaveRoom} /></div></div>}
+      {view.phase === 'finished' && idle && <div className="sedma-results-wrap"><div className="win-panel"><BrandResults onChangeGame={()=>eveningAction('openVote')} onCloseEvening={()=>eveningAction('close')} reactions={<ResultReactions room={room} messages={emotes}/>} room={room} winnerId={view.winnerId} pending={pending} reduced={quiet} onRematch={rematch} onLobby={returnToLobby} onLeave={leaveRoom} /></div></div>}
     </div>
   </section>;
 }

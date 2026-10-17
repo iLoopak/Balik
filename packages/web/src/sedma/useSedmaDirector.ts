@@ -40,6 +40,7 @@ export function useSedmaDirector(room: RoomView<'sedma'>, quiet: boolean) {
       if (msg.reset || document.hidden) return reset(target);
       const fresh = msg.events.filter((e) => e.seq > s.seq);
       if ((fresh.length && fresh[0]!.seq !== s.seq + 1) || (!fresh.length && target.seq > s.seq)) return reset(target);
+      if (target.round !== s.target.round) brandAudio.cancel();
       s.target = target;
       if (!fresh.length) { if (!s.running) commit(reconcileSedma(target.game!, room.you, s.display)); return; }
       for (const event of fresh) sedmaSteps(event as SedmaClientEvent, room.you, target.game!).forEach((step, i) => s.queue.push({ step, key: `${room.code}:${room.you}:${target.round}:sedma:${event.seq}:${i}` }));

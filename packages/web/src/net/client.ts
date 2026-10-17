@@ -15,7 +15,7 @@ const listeners = new Set<(msg: StateMessage) => void>();
 const socialListeners = new Set<(msg: EmoteMessage) => void>();
 export function onEmote(listener: (msg: EmoteMessage) => void) { socialListeners.add(listener); return () => { socialListeners.delete(listener); }; }
 export function sendEmote(emote: EmoteId) { return send({ t: 'emote', emote }); }
-export function returnToLobby() { sendGuarded({ t: 'lobby' }); }
+export function returnToLobby() { sendGuarded({ t: 'lobby', round: useApp.getState().room?.round }); }
 let transport: GameTransport | null = null;
 let connecting = false;
 let intent: Intent | null = null;
@@ -63,19 +63,30 @@ export function leaveRoom() {
 }
 
 export function startGame() {
-  sendGuarded({ t: 'start' });
+  sendGuarded({ t: 'start', round: useApp.getState().room?.round });
 }
 
 export function addBot() {
-  sendGuarded({ t: 'addBot' });
+  sendGuarded({ t: 'addBot', round: useApp.getState().room?.round });
 }
 
 export function removeBot(playerId: string) {
-  sendGuarded({ t: 'removeBot', playerId });
+  sendGuarded({ t: 'removeBot', playerId, round: useApp.getState().room?.round });
 }
 
 export function rematch() {
-  sendGuarded({ t: 'rematch' });
+  sendGuarded({ t: 'rematch', round: useApp.getState().room?.round });
+}
+
+export function eveningAction(action: 'between' | 'openVote' | 'close' | 'confirm', gameId?: GameId) {
+  const room = useApp.getState().room;
+  if (!room?.evening) return false;
+  return sendGuarded({ t: 'evening', baseRevision: room.evening.revision, action, ...(gameId ? { gameId } : {}) });
+}
+export function voteGame(gameId: GameId) {
+  const room = useApp.getState().room;
+  if (!room?.evening) return false;
+  return sendGuarded({ t: 'vote', ballotId: room.evening.ballotId, gameId });
 }
 
 export function sendAction(action: GameAction): boolean {
