@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chooseGameBotAction, mulberry32, type ClientMessage } from '@balik/shared';
+import { chooseGameBotAction, isLhar, mulberry32, type ClientMessage } from '@balik/shared';
 import { RoomApplication, type Commit, type Frame, type Reply, type Room, type RoomRepository } from '../src/application';
 import { gameHttpHandler } from '../src/adapters/http';
 
@@ -364,5 +364,58 @@ describe('HTTP authentication boundary', () => {
     expect(response.status).toBe(200);
     expect((await response.json()).frame.message.room.you).toBe('a');
     expect(response.headers.get('access-control-allow-origin')).toBe('https://balik.example');
+  });
+});
+
+describe('Lhář across persisted workers',()=>{
+  async function started(n=2){const s=setup();const code=(await s.send('a',{t:'create',token:'lhar-http-host-12345',name:'Ada',gameId:'lhar'})).code!;for(const id of ['b','c'].slice(0,n-1))await s.join(code,id);await s.send('a',{t:'start'},code);return {...s,code};}
+  it('commits a duplicate play once, races challenge against play with CAS, and reconnects without hidden cards',async()=>{
+    const s=await started(),raw=(await s.repository.load(s.code))!;
+    if(!raw.game||!isLhar(raw.game))throw Error('Expected Lhar');
+    const card=raw.game.players[0]!.hand.find(c=>c.rank!=='7')!,request=crypto.randomUUID();
+    const command={t:'act' as const,baseSeq:raw.seq,action:{type:'lharPlay' as const,cardIds:[card.id],declaredRank:'7' as const}};
+    const replies=await Promise.all([s.send('a',command,s.code,request),s.send('a',command,s.code,request)]);expect(replies[0]).toEqual(replies[1]);
+    const before=s.last('b').message.room;if(before.gameId!=='lhar')throw Error();
+    expect(before.game!.pileCount).toBe(1);expect(before.game!.lastClaim).not.toHaveProperty('cards');expect(JSON.stringify(s.last('b'))).not.toContain(card.id);
+    const actor=s.last('a').message.room;if(actor.gameId!=='lhar')throw Error();expect(actor.game!.myHand).toHaveLength(15);
+    const play={t:'act' as const,baseSeq:before.seq,action:{type:'lharPlay' as const,declaredRank:before.game!.requiredRank,cardIds:[before.game!.myHand![0]!.id]}};
+    const challenge={t:'act' as const,baseSeq:before.seq,action:{type:'lharChallenge' as const,claimId:before.game!.lastClaim!.id}};
+    const raced=await Promise.all([s.send('b',challenge,s.code),s.send('b',play,s.code)]);
+    expect(raced.filter(r=>r.message?.t==='error'&&r.message.code==='stale')).toHaveLength(1);
+    const after=(await s.repository.load(s.code))!;if(!after.game||!isLhar(after.game))throw Error();
+    expect(after.game.history[0]!.outcome).toBe('lie');expect(after.game.pile).toEqual([]);
+    const batch=s.last('b').message.events;expect(batch.filter(e=>e.type==='lharResolved')).toHaveLength(1);
+    s.restart();const resumed=await s.join(s.code,'b');expect(resumed.frame!.message.reset).toBe(true);expect(resumed.frame!.message.events).toEqual([]);
+    const view=resumed.frame!.message.room.game!;expect(view).not.toHaveProperty('pile');expect(view.players[0]).not.toHaveProperty('hand');
+    const secret=after.game.players[0]!.hand.find(c=>c.id!==card.id)!;expect(JSON.stringify(resumed.frame)).not.toContain(secret.id);
+  });
+  it('finishes three-player Lhář, counts one verified winner, rematches and votes into another game',async()=>{
+    const s=await started(3);
+    for(let turn=0;turn<2000;turn++){
+      const raw=(await s.repository.load(s.code))!;if(raw.status==='finished')break;
+      const id=raw.game!.players[raw.game!.currentIndex]!.id;
+      const reply=await s.send(id,{t:'act',baseSeq:raw.seq,action:chooseGameBotAction(raw.game!,mulberry32(turn+23))},s.code);expect(reply.message).toBeUndefined();
+    }
+    let room=(await s.repository.load(s.code))!;expect(room.status).toBe('finished');expect(room.evening!.gameCounts.lhar).toBe(1);expect(room.evening!.history[0]!.gameId).toBe('lhar');
+    expect(room.players.reduce((n,p)=>n+p.wins,0)).toBe(1);expect(room.evening!.history[0]).not.toHaveProperty('scores');
+    await s.send('a',{t:'rematch',round:room.round},s.code);room=(await s.repository.load(s.code))!;
+    expect(room.status).toBe('playing');expect(room.round).toBe(2);if(!room.game||!isLhar(room.game))throw Error();expect(room.game.lastClaim).toBeNull();expect(room.game.lastResolution).toBeNull();expect(room.game.history).toEqual([]);
+    // A deliberate departure ends a 3-seat game without inventing a winner.
+    await s.send('c',{t:'leave'},s.code);room=(await s.repository.load(s.code))!;expect(room.status).toBe('finished');expect(room.evening!.history.at(-1)).toMatchObject({reason:'forfeit',winnerIds:[]});
+    await s.send('a',{t:'evening',baseRevision:room.evening!.revision,action:'openVote'},s.code);room=(await s.repository.load(s.code))!;
+    const ballot=room.evening!.ballotId;await s.send('a',{t:'vote',ballotId:ballot,gameId:'sedma'},s.code);await s.send('b',{t:'vote',ballotId:ballot,gameId:'sedma'},s.code);
+    room=(await s.repository.load(s.code))!;await s.send('a',{t:'evening',baseRevision:room.evening!.revision,action:'confirm',gameId:'sedma'},s.code);
+    expect((await s.repository.load(s.code))!).toMatchObject({gameId:'sedma',status:'playing',round:3});
+  });
+  it('runs the existing durable bot scheduler with a Lhář bot',async()=>{
+    const s=setup();const code=(await s.send('a',{t:'create',token:'lhar-with-bot-12345',name:'Ada',gameId:'lhar',bots:1})).code!;
+    for(let turn=0;turn<2000;turn++){
+      const raw=(await s.repository.load(code))!;if(raw.status==='finished')break;
+      const p=raw.game!.players[raw.game!.currentIndex]!,member=raw.players.find(m=>m.id===p.id)!;
+      if(member.bot){s.advance(100_000); // Keep the human alive before ticking a delayed bot.
+        await s.send('a',{t:'ping'},code);await s.send('a',{t:'tick'},code);
+      }else await s.send('a',{t:'act',baseSeq:raw.seq,action:chooseGameBotAction(raw.game!,mulberry32(turn+12))},code);
+    }
+    expect((await s.repository.load(code))!.status).toBe('finished');
   });
 });

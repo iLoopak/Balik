@@ -105,7 +105,7 @@ export function CardIndices({ card, deck = useAppearance.getState().deck }: { ca
 }
 
 function CardCenter({ card, game }: { card: Card; game: GameId }) {
-  const hint = game === 'sedma' ? (card.rank === 'A' || card.rank === '10' ? '10 bodů' : card.rank === '7' ? 'bere' : undefined) : RANK_HINT[card.rank];
+  const hint = game === 'sedma' ? (card.rank === 'A' || card.rank === '10' ? '10 bodů' : card.rank === '7' ? 'bere' : undefined) : game === 'prsi' ? RANK_HINT[card.rank] : undefined;
   const isFace = card.rank === 'J' || card.rank === 'Q' || card.rank === 'K';
   return (
     <div className="card-center">

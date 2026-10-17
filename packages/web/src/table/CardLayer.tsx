@@ -32,6 +32,7 @@ export function CardLayer({ game = 'prsi', placed, geo, stamp, speed, reduced, f
         return (
           <CardSlot
             game={game}
+            zone={p.zone}
             key={p.entity.key}
             entity={p.entity}
             place={p.place}
@@ -58,6 +59,7 @@ export function CardLayer({ game = 'prsi', placed, geo, stamp, speed, reduced, f
 const FLYING = new Set(['play', 'draw', 'penalty', 'deal', 'flipStart']);
 
 interface CardSlotProps {
+  zone: PlacedCard['zone'];
   game: GameId;
   entity: CardEntity;
   place: Placement;
@@ -76,6 +78,7 @@ interface CardSlotProps {
 }
 
 const CardSlot = memo(function CardSlot({
+  zone,
   game,
   entity,
   place,
@@ -145,6 +148,8 @@ const CardSlot = memo(function CardSlot({
   return (
     <motion.div
       className={`card-slot${interactive ? ' is-interactive' : ''}`}
+      data-zone={zone}
+      aria-pressed={interactive ? !!fx?.selected : undefined}
       role={interactive ? 'button' : undefined}
       tabIndex={interactive ? 0 : undefined}
       aria-label={interactive && entity.card ? `${entity.card.rank} ${SUIT_NAME_CS[entity.card.suit]}` : undefined}

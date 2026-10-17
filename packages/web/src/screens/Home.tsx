@@ -1,6 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { useState, type FormEvent } from 'react';
-import { MAX_NAME_LENGTH, ROOM_CODE_LENGTH, type Card, type GameId } from '@balik/shared';
+import { GAME_IDS, gameName, MAX_NAME_LENGTH, ROOM_CODE_LENGTH, type Card, type GameId } from '@balik/shared';
 import { CardView } from '../cards/Card';
 import { getName } from '../lib/identity';
 import { createRoom } from '../net/client';
@@ -73,10 +73,10 @@ export function Home() {
         transition={{ delay: 0.45, duration: 0.4 }}
       >
         <div className="game-tag">
-          <span className="game-dot" /> {gameId === 'sedma' ? 'Sedma · 2 nebo 4 hráči' : 'Prší · 2–4 hráči'}
+          <span className="game-dot" /> {gameName(gameId)} · {gameId === 'sedma' ? '2 nebo 4 hráči' : '2–4 hráči'}
         </div>
         <div className="segmented game-choice" role="radiogroup" aria-label="Hra">
-          {(['prsi', 'sedma'] as const).map((id) => <button type="button" key={id} role="radio" aria-checked={gameId === id} className={gameId === id ? 'is-on' : ''} onClick={() => { setGameId(id); if (id === 'sedma' && bots === 2) setBots(1); }}>{id === 'prsi' ? 'Prší' : 'Sedma'}</button>)}
+          {GAME_IDS.map((id) => <button type="button" key={id} role="radio" aria-checked={gameId === id} className={gameId === id ? 'is-on' : ''} onClick={() => { setGameId(id); if (id === 'sedma' && bots === 2) setBots(1); }}>{gameName(id)}</button>)}
         </div>
         {gameId === 'sedma' && <label className="sedma-variant"><input type="checkbox" checked={bonus === 10} onChange={(e) => setBonus(e.target.checked ? 10 : 0)} /> Poslední štych +10 bodů (výchozí)</label>}
         <form onSubmit={onCreate}>

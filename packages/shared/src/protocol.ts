@@ -1,3 +1,4 @@
+import type { LharClientEvent, LharView } from './lhar/types';
 import type { EveningView } from './evening';
 import type { GameId } from './games';
 import type { SedmaClientEvent, SedmaView } from './sedma/types';
@@ -36,11 +37,11 @@ export interface RoomView<G extends GameId = 'prsi'> {
   round: number;
   /** Sequence number of the last game event; actions must reference it. */
   seq: number;
-  game: (G extends 'sedma' ? SedmaView : PrsiView) | null;
+  game: (G extends 'sedma' ? SedmaView : G extends 'lhar' ? LharView : PrsiView) | null;
 }
 
-export type AnyRoomView = RoomView<'prsi'> | RoomView<'sedma'>;
-export type GameSeqEvent = SeqEvent | (SedmaClientEvent & { seq: number });
+export type AnyRoomView = RoomView<'prsi'> | RoomView<'sedma'> | RoomView<'lhar'>;
+export type GameSeqEvent = (LharClientEvent & { seq: number }) | SeqEvent | (SedmaClientEvent & { seq: number });
 export type SeqEvent = PrsiClientEvent & { seq: number };
 
 export type ServerMessage =

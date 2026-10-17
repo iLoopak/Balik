@@ -4,6 +4,8 @@ import type { AnyRoomView } from '@balik/shared';
 import { leaveRoom } from '../net/client';
 import { useApp } from '../net/store';
 import { useMotionPref } from '../lib/motionPref';
+import { gameName } from '@balik/shared';
+import { LharTable } from '../lhar/LharTable';
 import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
 import './screens.css';
@@ -22,7 +24,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
       <header className="topbar">
         <span className="brand-word topbar-brand">BALÍK</span>
         <span className="topbar-room">
-          {room.gameId === 'sedma' ? 'Sedma' : 'Prší'} · <b>{room.code}</b>
+          {gameName(room.gameId)} · <b>{room.code}</b>
         </span>
         <AnimatePresence>
           {status !== 'open' && (
@@ -58,7 +60,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
           )}
         </AnimatePresence>
       </header>
-      {room.gameId === 'sedma' ? <SedmaTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />}
+      {room.gameId === 'lhar' ? <LharTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : room.gameId === 'sedma' ? <SedmaTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />}
       <GameTransition room={room} reduced={reduced} />
     </main>
   );

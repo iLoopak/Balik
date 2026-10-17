@@ -30,7 +30,7 @@ export default function DeckLab() {
     <h1>Dva světy. Stejné karty.</h1><p>32 identit po hodnotách. Lokální náhled; bez připojení do místnosti.</p>
     <div className="lab-controls"><label>Edice <select value={deck} onChange={e => setDeck(e.target.value as DeckId)}>{Object.values(DECK_THEMES).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
       <label>Stůl <select value={table} onChange={e => setTable(e.target.value as TableId)}>{Object.values(TABLE_THEMES).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
-      <label>Hra <select value={game} onChange={e=>setGame(e.target.value as GameId)}><option value="prsi">Prší</option><option value="sedma">Sedma</option></select></label>
+      <label>Hra <select value={game} onChange={e=>setGame(e.target.value as GameId)}><option value="prsi">Prší</option><option value="sedma">Sedma</option><option value="lhar">Lhář</option></select></label>
       {([['Malé karty',small,setSmall],['Světlá deska',light,setLight],['Rub',back,setBack],['Mobilní stůl',mobile,setMobile],['Omezit pohyb',reduced,setReduced]] as const).map(([label,on,set]) => <label key={label}><input type="checkbox" checked={on} onChange={e=>set(e.target.checked)}/>{label}</label>)}
       <button disabled={playing} onClick={()=>{setDemo(n=>n+1);setPlaying(true);}}>Přehrát sticker</button>
     </div>
