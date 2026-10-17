@@ -54,7 +54,7 @@ export function RoomScreen({ code }: { code: string }) {
       <main className="screen">
         <form className="panel" onSubmit={submit}>
           <div className="game-tag">
-            <span className="game-dot" /> Pozvánka do hry Prší
+            <span className="game-dot" /> Pozvánka ke stolu BALÍK
           </div>
           <h1 className="brand-word join-title">
             Místnost <span className="code-inline">{code}</span>

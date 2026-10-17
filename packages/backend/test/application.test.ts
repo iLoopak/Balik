@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { chooseBotAction, mulberry32, type ClientMessage } from '@balik/shared';
+import { chooseGameBotAction, mulberry32, type ClientMessage } from '@balik/shared';
 import { RoomApplication, type Commit, type Frame, type Reply, type Room, type RoomRepository } from '../src/application';
 import { gameHttpHandler } from '../src/adapters/http';
 
@@ -56,7 +56,7 @@ describe('portable persisted multiplayer', () => {
       const room = (await s.repository.load(code))!;
       if (room.status === 'finished') break;
       const user = room.game!.players[room.game!.currentIndex]!.id;
-      await s.send(user, { t: 'act', baseSeq: room.seq, action: chooseBotAction(room.game!, mulberry32(i + 5)) }, code);
+      await s.send(user, { t: 'act', baseSeq: room.seq, action: chooseGameBotAction(room.game!, mulberry32(i + 5)) }, code);
     }
     const before = (await s.repository.load(code))!; expect(before.status).toBe('finished');
     expect((await s.send('b', { t: 'lobby' }, code)).message).toMatchObject({ code: 'not-host' });
@@ -127,7 +127,7 @@ describe('portable persisted multiplayer', () => {
   it('persists bot deadlines and allows only one bot move across simultaneous wakeups', async () => {
     const s = setup(); const code = await s.create(3);
     const initial = (await s.repository.load(code))!;
-    const action = chooseBotAction(initial.game!, mulberry32(5));
+    const action = chooseGameBotAction(initial.game!, mulberry32(5));
     await s.send('a', { t: 'act', baseSeq: initial.seq, action }, code);
     const before = (await s.repository.load(code))!;
     expect(before.botDueAt).not.toBeNull();
@@ -152,6 +152,98 @@ describe('portable persisted multiplayer', () => {
     expect(room.game!.players.map((p) => p.id)).toEqual(['b']);
     await s.send('b', { t: 'leave' }, code);
     expect(await s.repository.load(code)).toBeNull();
+  });
+});
+
+describe('Sedma persisted rooms', () => {
+  for (const count of [2, 4]) it(`plays ${count} seats across worker restarts, reconnects, idempotent moves and a rematch`, async () => {
+    const s = setup();
+    const code = (await s.send('a', { t: 'create', token: 'token-123456789012', name: 'Ada', gameId: 'sedma', sedmaBonus: 0 })).code!;
+    const users = ['a','b','c','d'].slice(0, count);
+    for (const user of users.slice(1)) await s.join(code, user);
+    if (count === 4) { const room = (await s.repository.load(code))!; expect(room.gameId).toBe('sedma'); }
+    await s.send('a', { t: 'start' }, code);
+    let reconnected = false;
+    for (let i = 0; i < 70; i++) {
+      const raw = (await s.repository.load(code))!;
+      if (raw.status === 'finished') break;
+      const id = raw.game!.players[raw.game!.currentIndex]!.id;
+      if (!reconnected && i === 1) {
+        const before = s.last(id); s.restart();
+        const joined = await s.join(code, id);
+        expect(joined.frame!.message.reset).toBe(true);
+        expect(joined.frame!.message.events).toEqual([]);
+        expect(joined.frame!.message.room.game).toEqual(before.message.room.game); reconnected = true;
+      }
+      const action = chooseGameBotAction(raw.game!, mulberry32(i));
+      const requestId = crypto.randomUUID();
+      const replies = await Promise.all([s.send(id, { t: 'act', baseSeq: raw.seq, action }, code, requestId), s.send(id, { t: 'act', baseSeq: raw.seq, action }, code, requestId)]);
+      expect(replies[0]).toEqual(replies[1]);
+      for (const viewer of users) {
+        const frame = s.last(viewer);
+        expect(frame.message.room.gameId).toBe('sedma');
+        expect(frame.message.room.game).not.toHaveProperty('drawPile');
+        for (const e of frame.message.events) expect(e).not.toHaveProperty('hands');
+        const latest = (await s.repository.load(code))!;
+        for (const opponent of latest.game!.players.filter((p) => p.id !== viewer)) for (const card of opponent.hand) expect(JSON.stringify(frame)).not.toContain(`"${card.id}"`);
+      }
+    }
+    const final = (await s.repository.load(code))!;
+    expect(final.status).toBe('finished');
+    if (!final.game || !('result' in final.game)) throw new Error('Expected Sedma');
+    const winners = final.game.result!.winnerIds;
+    expect(final.players.map((p) => p.wins)).toEqual(final.players.map((p) => winners.includes(p.id) ? 1 : 0));
+    await s.send('a', { t: 'rematch' }, code);
+    const next = (await s.repository.load(code))!;
+    expect(next.round).toBe(2); expect(next.gameId).toBe('sedma'); expect(next.status).toBe('playing');
+    expect(next.players.map((p) => p.wins)).toEqual(final.players.map((p) => p.wins));
+  });
+  it('refuses three seats, invalid Prší actions, and resolves departure as a team forfeit', async () => {
+    const s = setup();
+    const code = (await s.send('a', { t: 'create', token: 'token-123456789012', name: 'Ada', gameId: 'sedma' })).code!;
+    const invalid = await s.send('a', { t: 'create', token: 'token-123456789012', name: 'Ada', gameId: 'sedma', bots: 2 });
+    expect(invalid.message).toMatchObject({ code: 'not-enough-players' });
+    expect(await s.repository.membership('a')).toBe(code);
+    await s.join(code); await s.join(code, 'c');
+    expect((await s.send('a', { t: 'start' }, code)).message).toMatchObject({ code: 'not-enough-players' });
+    await s.join(code, 'd'); await s.send('a', { t: 'start' }, code);
+    const seq = s.last().message.room.seq;
+    expect((await s.send('a', { t: 'act', baseSeq: seq, action: { type: 'draw' } }, code)).message).toMatchObject({ code: 'illegal' });
+    await s.send('c', { t: 'leave' }, code);
+    const room = s.last('b').message.room;
+    expect(room.status).toBe('finished');
+    expect(room.game).toMatchObject({ result: { reason: 'forfeit', winnerIds: ['b','d'] } });
+  });
+  for (const bots of [1, 3]) it(`runs a full Sedma game with ${bots} durable scheduled bots`, async () => {
+    const s = setup();
+    const code = (await s.send('a', { t: 'create', token: 'token-123456789012', name: 'Ada', gameId: 'sedma', bots })).code!;
+    for (let i = 0; i < 80; i++) {
+      const raw = (await s.repository.load(code))!;
+      if (raw.status === 'finished') break;
+      const id = raw.game!.players[raw.game!.currentIndex]!.id;
+      if (id === 'a') await s.send('a', { t: 'act', baseSeq: raw.seq, action: chooseGameBotAction(raw.game!, mulberry32(i)) }, code);
+      else {
+        expect(raw.botDueAt).not.toBeNull();
+        s.advance(15000); s.restart();
+        await s.send('a', { t: 'tick' }, code);
+      }
+    }
+    expect((await s.repository.load(code))!.status).toBe('finished');
+  });
+  it('preserves a Sedma seat while disconnected and forfeits after the original grace', async () => {
+    const s = setup();
+    const code = (await s.send('a', { t: 'create', token: 'token-123456789012', name: 'Ada', gameId: 'sedma' })).code!;
+    await s.join(code); await s.send('a', { t: 'start' }, code);
+    s.advance(50000); await s.send('a', { t: 'ping' }, code);
+    expect((await s.repository.load(code))!.status).toBe('playing');
+    s.advance(116000); await s.send('a', { t: 'ping' }, code);
+    expect(s.last('a').message.room.game).toMatchObject({ result: { reason: 'forfeit', winnerIds: ['a'] } });
+  });
+  it('reads pre-W2 stored rooms with no game id as Prší', async () => {
+    const s = setup(); const code = await s.create(); await s.join(code);
+    const raw = (await s.repository.load(code))!; delete raw.gameId; delete raw.sedmaBonus; s.repository.rooms.set(code, raw);
+    await s.send('a', { t: 'start' }, code); expect(s.last().message.room.gameId).toBe('prsi');
+    expect(s.last().message.room.game).toHaveProperty('discardTop');
   });
 });
 

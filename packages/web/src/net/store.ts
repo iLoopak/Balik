@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { ErrorCode, RoomView } from '@balik/shared';
+import type { ErrorCode, AnyRoomView } from '@balik/shared';
 
 export type ConnStatus = 'idle' | 'connecting' | 'open' | 'reconnecting' | 'replaced';
 
@@ -12,7 +12,7 @@ export interface Toast {
 interface AppState {
   path: string;
   status: ConnStatus;
-  room: RoomView | null;
+  room: AnyRoomView | null;
   /** Fatal problem with joining the current room (room gone, full, …). */
   joinError: { code: ErrorCode; message: string } | null;
   toast: Toast | null;

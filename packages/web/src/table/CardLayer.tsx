@@ -1,3 +1,4 @@
+import type { GameId } from '@balik/shared';
 import { motion, useAnimate } from 'motion/react';
 import { memo, useEffect, type KeyboardEvent, type PointerEvent } from 'react';
 import { CardView, type CardFx } from '../cards/Card';
@@ -10,6 +11,7 @@ import { EFFECT_TIMING } from '../effects/effectTokens';
 import { suitName } from '../cards/skin';
 
 interface CardLayerProps {
+  game?: GameId;
   placed: PlacedCard[];
   geo: Geometry;
   stamp: number;
@@ -22,7 +24,7 @@ interface CardLayerProps {
   onActivate: (key: string) => void;
 }
 
-export function CardLayer({ placed, geo, stamp, speed, reduced, fxFor, hoverKey, interactive, onHover, onActivate }: CardLayerProps) {
+export function CardLayer({ game = 'prsi', placed, geo, stamp, speed, reduced, fxFor, hoverKey, interactive, onHover, onActivate }: CardLayerProps) {
   return (
     <div className="card-layer" style={{ ['--card-w' as string]: `${geo.cardW}px`, ['--card-h' as string]: `${geo.cardH}px` }}>
       {placed.map((p) => {
@@ -30,6 +32,7 @@ export function CardLayer({ placed, geo, stamp, speed, reduced, fxFor, hoverKey,
         const isHoverChange = p.zone === 'mine' && !active && p.entity.key === hoverKey;
         return (
           <CardSlot
+            game={game}
             key={p.entity.key}
             entity={p.entity}
             place={p.place}
@@ -56,6 +59,7 @@ export function CardLayer({ placed, geo, stamp, speed, reduced, fxFor, hoverKey,
 const FLYING = new Set(['play', 'draw', 'penalty', 'deal', 'flipStart']);
 
 interface CardSlotProps {
+  game: GameId;
   entity: CardEntity;
   place: Placement;
   spawn: Placement | null;
@@ -73,6 +77,7 @@ interface CardSlotProps {
 }
 
 const CardSlot = memo(function CardSlot({
+  game,
   entity,
   place,
   spawn,
@@ -152,6 +157,7 @@ const CardSlot = memo(function CardSlot({
     >
       <div ref={scope} className="card-pop">
         <CardView
+          game={game}
           card={entity.card}
           faceUp={place.faceUp}
           initialFaceUp={spawn ? spawn.faceUp : place.faceUp}

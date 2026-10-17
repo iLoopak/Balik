@@ -1,26 +1,26 @@
 import { randomBytes, randomInt } from 'node:crypto';
 import {
-  PRSI_MAX_PLAYERS,
-  PRSI_MIN_PLAYERS,
+  ROOM_MAX_PLAYERS,
   ROOM_CODE_ALPHABET,
   ROOM_CODE_LENGTH,
   MAX_BOTS,
   emoteAllowed, EMOTE_TTL_MS, type EmoteId,
-  applyAction,
-  chooseBotAction,
-  createRound,
-  filterEventFor,
-  removePlayer,
-  viewFor,
+  applyGameAction as applyAction,
+  canStartGame, gameWinnerIds, type GameId,
+  chooseGameBotAction as chooseBotAction,
+  createGameRound as createRound,
+  filterGameEventFor as filterEventFor,
+  removeGamePlayer as removePlayer,
+  gameViewFor as viewFor,
   type ClientMessage,
   type ErrorCode,
-  type PrsiAction,
+  type GameAction,
   type PrsiError,
-  type PrsiEvent,
-  type PrsiState,
+  type GameEvent,
+  type GameState,
   type Rng,
   type RoomStatus,
-  type RoomView,
+  type AnyRoomView,
   type ServerMessage,
 } from '@balik/shared';
 
@@ -48,7 +48,9 @@ interface Room {
   players: Player[];
   hostId: string;
   status: RoomStatus;
-  game: PrsiState | null;
+  gameId: GameId;
+  sedmaBonus: 0 | 10;
+  game: GameState | null;
   seq: number;
   round: number;
   startIndex: number;
@@ -56,7 +58,7 @@ interface Room {
   botTimer: ReturnType<typeof setTimeout> | null;
 }
 
-type SeqEngineEvent = PrsiEvent & { seq: number };
+type SeqEngineEvent = GameEvent & { seq: number };
 
 export interface RoomManagerOptions {
   rng?: Rng;
@@ -75,10 +77,11 @@ export interface RoomManagerOptions {
 const BOT_NAMES = ['Robo Rudla', 'Bot Božka', 'Čip Čeněk', 'Kyber Květa'];
 
 /** Rough length of the client-side cue sequence for a batch of events (see web/table/display.ts). */
-function animationMs(events: PrsiEvent[]): number {
+function animationMs(events: GameEvent[]): number {
   let ms = 0;
   for (const e of events) {
     switch (e.type) {
+      case 'sedmaStarted':
       case 'roundStarted':
         ms += 1900 + e.dealOrder.length * 85;
         break;
@@ -91,6 +94,7 @@ function animationMs(events: PrsiEvent[]): number {
       case 'drawPenalty':
         ms += 560;
         break;
+      case 'sedmaDrawn':
       case 'cardsDrawn':
         ms += 600 + Math.max(0, e.cards.length - 1) * 150;
         break;
@@ -100,6 +104,8 @@ function animationMs(events: PrsiEvent[]): number {
       case 'turnSkipped':
         ms += 900;
         break;
+      case 'trickResolved':
+      case 'sedmaEnded':
       case 'roundWon':
         ms += 900;
         break;
@@ -172,7 +178,7 @@ export class RoomManager {
         conn.send({ t: 'pong' });
         return;
       case 'create':
-        return this.create(conn, msg.token, msg.name, msg.bots ?? 0);
+        return this.create(conn, msg.token, msg.name, msg.bots ?? 0, msg.gameId ?? 'prsi', msg.sedmaBonus ?? 10);
       case 'addBot':
         return this.addBot(conn);
       case 'removeBot':
@@ -229,12 +235,13 @@ export class RoomManager {
     }
   }
 
-  private create(conn: Conn, token: string, name: string, bots: number): void {
+  private create(conn: Conn, token: string, name: string, bots: number, gameId: GameId, sedmaBonus: 0 | 10): void {
+    if (bots && !canStartGame(gameId, bots + 1)) return this.error(conn, 'not-enough-players', 'Sedma potřebuje přesně 2 nebo 4 hráče.');
     this.detach(conn);
     const code = this.newCode();
     const player = this.newPlayer(token, name, conn);
     const room: Room = {
-      code,
+      code, gameId, sedmaBonus,
       players: [player],
       hostId: player.id,
       status: 'lobby',
@@ -259,7 +266,7 @@ export class RoomManager {
     const { room, player } = ctx;
     if (room.hostId !== player.id) return this.error(conn, 'not-host');
     if (room.status === 'playing') return this.error(conn, 'game-in-progress');
-    if (room.players.length >= PRSI_MAX_PLAYERS) return this.error(conn, 'room-full');
+    if (room.players.length >= ROOM_MAX_PLAYERS) return this.error(conn, 'room-full');
     room.players.push(this.newBot(room));
     this.broadcast(room, []);
   }
@@ -295,7 +302,7 @@ export class RoomManager {
       return;
     }
     if (room.status === 'playing') return this.error(conn, 'game-in-progress');
-    if (room.players.length >= PRSI_MAX_PLAYERS) return this.error(conn, 'room-full');
+    if (room.players.length >= ROOM_MAX_PLAYERS) return this.error(conn, 'room-full');
     this.detach(conn);
     const player = this.newPlayer(token, name, conn);
     room.players.push(player);
@@ -314,16 +321,17 @@ export class RoomManager {
     // Seats of players who are gone are freed when a new round starts.
     for (const p of [...room.players]) if (!p.conn && !p.bot) this.removeFromRoom(room, p.id, false);
     if (!this.rooms.has(room.code)) return;
-    if (room.players.length < PRSI_MIN_PLAYERS) {
+    if (!canStartGame(room.gameId, room.players.length)) {
       this.broadcast(room, []);
-      return this.error(conn, 'not-enough-players');
+      return this.error(conn, 'not-enough-players', room.gameId === 'sedma' ? 'Sedma potřebuje přesně 2 nebo 4 hráče.' : undefined);
     }
     room.round += 1;
     room.startIndex = (room.startIndex + 1) % room.players.length;
     const { state, events } = createRound(
+      room.gameId,
       room.players.map((p) => p.id),
       room.startIndex,
-      this.rng,
+      this.rng, room.sedmaBonus,
     );
     room.game = state;
     room.status = 'playing';
@@ -331,20 +339,20 @@ export class RoomManager {
     this.commitEvents(room, events);
   }
 
-  private act(conn: Conn, baseSeq: number, action: PrsiAction): void {
+  private act(conn: Conn, baseSeq: number, action: GameAction): void {
     const ctx = this.context(conn);
     if (!ctx) return;
     const { room, player } = ctx;
     if (room.status !== 'playing' || !room.game) return this.error(conn, 'illegal');
     if (baseSeq !== room.seq) return this.error(conn, 'stale');
     const result = applyAction(room.game, player.id, action, this.rng);
-    if (!result.ok) return this.error(conn, 'illegal', ILLEGAL_TEXT[result.error]);
+    if (!result.ok) return this.error(conn, 'illegal', ILLEGAL_TEXT[result.error as PrsiError]);
     room.game = result.state;
     this.afterGameChange(room);
     this.commitEvents(room, result.events);
   }
 
-  private commitEvents(room: Room, events: PrsiEvent[]): void {
+  private commitEvents(room: Room, events: GameEvent[]): void {
     this.broadcast(room, this.stamp(room, events));
     this.scheduleBot(room, events);
   }
@@ -354,7 +362,7 @@ export class RoomManager {
    * events just sent plus a little "thinking", so bots never outrun what humans see.
    * Bots pause while no human is connected.
    */
-  private scheduleBot(room: Room, events: PrsiEvent[]): void {
+  private scheduleBot(room: Room, events: GameEvent[]): void {
     if (room.botTimer) clearTimeout(room.botTimer);
     room.botTimer = null;
     const game = room.game;
@@ -423,12 +431,11 @@ export class RoomManager {
     const game = room.game!;
     if (game.phase === 'finished') {
       room.status = 'finished';
-      const winner = room.players.find((p) => p.id === game.winnerId);
-      if (winner) winner.wins += 1;
+      for (const id of gameWinnerIds(game)) { const winner = room.players.find((p) => p.id === id); if (winner) winner.wins += 1; }
     }
   }
 
-  private stamp(room: Room, events: PrsiEvent[]): SeqEngineEvent[] {
+  private stamp(room: Room, events: GameEvent[]): SeqEngineEvent[] {
     return events.map((e) => ({ ...e, seq: ++room.seq }));
   }
 
@@ -445,10 +452,10 @@ export class RoomManager {
     });
   }
 
-  private roomView(room: Room, viewerId: string): RoomView {
+  private roomView(room: Room, viewerId: string): AnyRoomView {
     return {
       code: room.code,
-      gameId: 'prsi',
+      gameId: room.gameId, sedmaBonus: room.sedmaBonus,
       you: viewerId,
       hostId: room.hostId,
       status: room.status,
@@ -456,7 +463,7 @@ export class RoomManager {
       round: room.round,
       seq: room.seq,
       game: room.game ? viewFor(room.game, viewerId) : null,
-    };
+    } as AnyRoomView;
   }
 
   private context(conn: Conn): { room: Room; player: Player } | null {

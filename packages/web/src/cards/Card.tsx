@@ -59,7 +59,7 @@ export const CardView = memo(function CardView({
         {card && (
           <div className="card-face card-front" style={{ color: suitColor(card.suit, visibleDeck) }}>
             <CardBase />
-            {visibleDeck === 'classic' && <CardCenter card={card} />}
+            {visibleDeck === 'classic' && <CardCenter card={card} game={game} />}
             <CardIndices card={card} deck={visibleDeck} />
             <CardStickerLayer card={card} game={game} deck={visibleDeck} onError={() => asset && setFailedAsset(asset.src)} />
             <CardEffectLayer current={fx?.current} suit={card.suit} />
@@ -100,8 +100,8 @@ export function CardIndices({ card, deck = ACTIVE_DECK }: { card: Card; deck?: D
   );
 }
 
-function CardCenter({ card }: { card: Card }) {
-  const hint = RANK_HINT[card.rank];
+function CardCenter({ card, game }: { card: Card; game: GameId }) {
+  const hint = game === 'sedma' ? (card.rank === 'A' || card.rank === '10' ? '10 bodů' : card.rank === '7' ? 'bere' : undefined) : RANK_HINT[card.rank];
   const isFace = card.rank === 'J' || card.rank === 'Q' || card.rank === 'K';
   return (
     <div className="card-center">

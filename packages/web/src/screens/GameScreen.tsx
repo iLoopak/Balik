@@ -1,15 +1,16 @@
 import { AnimatePresence, motion } from 'motion/react';
 import { useState } from 'react';
-import type { RoomView } from '@balik/shared';
+import type { AnyRoomView } from '@balik/shared';
 import { leaveRoom } from '../net/client';
 import { useApp } from '../net/store';
 import { useMotionPref } from '../lib/motionPref';
+import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
 import './screens.css';
 import { BrandOptions, BrandSettings } from '../brand/BrandSettings';
 import { EmotePicker } from '../brand/Emotes';
 
-export function GameScreen({ room }: { room: RoomView }) {
+export function GameScreen({ room }: { room: AnyRoomView }) {
   const status = useApp((s) => s.status);
   const [menu, setMenu] = useState(false);
   const { pref, setPref, reduced } = useMotionPref();
@@ -19,7 +20,7 @@ export function GameScreen({ room }: { room: RoomView }) {
       <header className="topbar">
         <span className="brand-word topbar-brand">BALÍK</span>
         <span className="topbar-room">
-          Prší · <b>{room.code}</b>
+          {room.gameId === 'sedma' ? 'Sedma' : 'Prší'} · <b>{room.code}</b>
         </span>
         <AnimatePresence>
           {status !== 'open' && (
@@ -55,7 +56,7 @@ export function GameScreen({ room }: { room: RoomView }) {
           )}
         </AnimatePresence>
       </header>
-      <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />
+      {room.gameId === 'sedma' ? <SedmaTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />}
     </main>
   );
 }
