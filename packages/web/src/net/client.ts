@@ -1,20 +1,19 @@
 import type { ClientMessage, PrsiAction, ServerMessage } from '@balik/shared';
 import { forgetRoom, getToken, rememberRoom, saveName } from '../lib/identity';
 import { navigate, showToast, useApp } from './store';
+import { createGameTransport } from './transports/factory';
+import type { GameTransport } from './transports/types';
 
 export type StateMessage = Extract<ServerMessage, { t: 'state' }>;
 type Intent = { kind: 'create'; name: string; bots: number } | { kind: 'join'; code: string; name: string };
-
-const WS_URL =
-  (import.meta.env.VITE_WS_URL as string | undefined)?.trim() ||
-  `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}/ws`;
 
 const PING_MS = 15_000;
 const SILENCE_MS = 40_000;
 const PENDING_TIMEOUT_MS = 5_000;
 
 const listeners = new Set<(msg: StateMessage) => void>();
-let ws: WebSocket | null = null;
+let transport: GameTransport | null = null;
+let connecting = false;
 let intent: Intent | null = null;
 let attempt = 0;
 let retryTimer: number | undefined;
@@ -95,13 +94,12 @@ function sendGuarded(msg: ClientMessage): boolean {
 }
 
 function send(msg: ClientMessage): boolean {
-  if (ws?.readyState !== WebSocket.OPEN) return false;
-  ws.send(JSON.stringify(msg));
-  return true;
+  return transport?.send(msg) ?? false;
 }
 
 function sendIntentOrConnect() {
-  if (ws?.readyState === WebSocket.OPEN) sendIntent();
+  lastMessageAt = Date.now();
+  if (transport?.ready) sendIntent();
   else connect();
 }
 
@@ -112,37 +110,47 @@ function sendIntent() {
   else send({ t: 'join', token, name: intent.name, code: intent.code });
 }
 
-function connect() {
-  if (ws && (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING)) return;
+async function connect() {
+  if (transport || connecting) return;
+  connecting = true;
   window.clearTimeout(retryTimer);
   useApp.setState({ status: attempt > 0 || useApp.getState().room ? 'reconnecting' : 'connecting' });
-  const socket = new WebSocket(WS_URL);
-  ws = socket;
-
-  socket.onopen = () => {
-    attempt = 0;
-    lastMessageAt = Date.now();
-    useApp.setState({ status: 'open' });
-    sendIntent();
-    window.clearInterval(pingTimer);
-    pingTimer = window.setInterval(() => {
-      if (Date.now() - lastMessageAt > SILENCE_MS) socket.close();
-      else send({ t: 'ping' });
-    }, PING_MS);
-  };
-  socket.onmessage = (e) => {
-    lastMessageAt = Date.now();
-    let msg: ServerMessage;
-    try {
-      msg = JSON.parse(e.data as string) as ServerMessage;
-    } catch {
-      return;
-    }
-    handle(msg);
-  };
-  socket.onclose = () => {
-    if (ws !== socket) return;
-    ws = null;
+  let connection: GameTransport;
+  try { connection = await createGameTransport(); }
+  catch (error) {
+    connecting = false;
+    useApp.setState({ status: 'idle' });
+    showToast(error instanceof Error ? error.message : 'Chybí nastavení připojení.', 'error');
+    return;
+  }
+  transport = connection;
+  connecting = false;
+  connection.connect({
+    open() {
+      attempt = 0;
+      lastMessageAt = Date.now();
+      useApp.setState({ status: 'open' });
+      sendIntent();
+      window.clearInterval(pingTimer);
+      pingTimer = window.setInterval(() => {
+        if (!intent) return;
+        if (Date.now() - lastMessageAt > SILENCE_MS) {
+          connection.close();
+          closed();
+        }
+        else send({ t: 'ping' });
+      }, PING_MS);
+    },
+    message(msg) {
+      lastMessageAt = Date.now();
+      handle(msg);
+    },
+    close: closed,
+    error(message) { showToast(message, 'error'); },
+  });
+  function closed() {
+    if (transport !== connection) return;
+    transport = null;
     window.clearInterval(pingTimer);
     if (useApp.getState().status === 'replaced') return;
     if (!intent) {
@@ -153,12 +161,13 @@ function connect() {
     const delay = Math.min(500 * 2 ** attempt, 5000);
     attempt++;
     retryTimer = window.setTimeout(connect, delay);
-  };
+  }
 }
 
 function handle(msg: ServerMessage) {
   switch (msg.t) {
     case 'state': {
+      if (!intent) return; // Ignore delayed responses after an explicit leave.
       lastState = msg;
       const code = msg.room.code;
       rememberRoom(code);
@@ -192,7 +201,8 @@ function handle(msg: ServerMessage) {
     case 'replaced':
       intent = null;
       useApp.setState({ status: 'replaced', room: null });
-      ws?.close();
+      transport?.close();
+      transport = null;
       return;
     case 'pong':
       return;
@@ -201,7 +211,7 @@ function handle(msg: ServerMessage) {
 
 /** Reconnect immediately when the tab comes back or the network returns. */
 function wake() {
-  if (intent && !ws && useApp.getState().status !== 'replaced') {
+  if (intent && !transport && !connecting && useApp.getState().status !== 'replaced') {
     attempt = 0;
     connect();
   }
