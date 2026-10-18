@@ -88,8 +88,27 @@
   margin: -6px -8px 4px 0;
 }
 
-.lobby-head .game-tag {
-  margin: 0;
+.lobby-game {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.lobby-game-art {
+  flex: none;
+  width: 76px;
+  padding: 2px;
+}
+.lobby-game b {
+  display: block;
+  font-family: var(--font-brand);
+  font-weight: 850;
+  font-size: 22px;
+  line-height: 1.05;
+}
+.lobby-game small {
+  font-size: 12px;
+  color: var(--muted);
 }
 
 .code-block {
@@ -425,3 +444,12 @@
 
 .game-tag { display: flex; align-items: center; gap: 8px; }
 .game-tag .rules-open { margin-left: auto; min-height: 36px; padding: 4px 8px; }
+
+/* Phones: the game's name beats a rarely used control. The character stays in lobby and home. */
+.topbar-room { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 560px) {
+  .topbar { gap: 4px; padding-left: 12px; }
+  .topbar .avatar-picker-open { display: none; }
+  .topbar-brand { font-size: 16px; }
+  .topbar-room { flex: 1; }
+}

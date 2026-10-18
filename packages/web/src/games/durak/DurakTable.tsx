@@ -67,7 +67,7 @@ export function DurakTable({ room, reducedMotion }: { room: RoomView<'durak'>; r
       </>,
     }}
     outcome={result ? { winnerIds: result.winnerIds,
-      title: !result.loserId ? 'Nikdo nezůstal durakem.' : result.loserId === me ? 'Zůstal ti durak.' : `${name(result.loserId)} zůstává durakem.`,
+      title: !result.loserId ? 'Nikdo nezůstal durakem.' : result.loserId === me ? 'Zůstáváš durakem.' : `${name(result.loserId)} zůstává durakem.`,
       note: result.reason === 'forfeit' ? 'Kontumace po odchodu hráče.' : view.finishOrder.length ? `Pořadí: ${view.finishOrder.map(name).join(', ')}` : undefined } : null}
     finished={view.phase === 'finished'} idle={idle}>
     {view.talonCount > 0 && <div className="stock-pile" style={{ left: geo.deck.x, top: geo.deck.y, width: geo.deckW, height: geo.deckH }} aria-label={`Talon: ${view.talonCount} ${cardsWord(view.talonCount)}`}><CardBack /></div>}

@@ -84,7 +84,7 @@ const GUIDES: Guides = {
     const mine = mariasLegalFromView(view, me).length > 0;
     if (view.phase === 'choosingTrump') return mine
       ? { id: 'marias.trump', title: 'Jsi volič', text: 'Ze svých 7 karet vyber jednu. Její barva bude trumf. Pak dobereš zbytek karet a 2 odhodíš do talonu.' }
-      : { id: 'marias.trump.wait', title: `${name(view.declarerId)} volí trumf`, text: 'Hraješ v obraně se druhým soupeřem. Společně se snažíte, aby volič nevyhrál.' };
+      : { id: 'marias.trump.wait', title: `${name(view.declarerId)} volí trumf`, text: 'Hraješ v obraně se druhým soupeřem. Společně se snažíte, aby sázka voliče nevyšla.' };
     // The discard is a free choice of two cards, so the engine lists no single legal action here.
     if (view.phase === 'declaring' && view.currentPlayerId === me) return {
       id: 'marias.declare', title: 'Odhoď 2 karty a zvol hru',

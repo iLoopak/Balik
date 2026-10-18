@@ -13,14 +13,14 @@ try {
   for(const mobile of [false,true])for(const reduced of [false,true]){
     const context=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1440,height:1000},isMobile:mobile,hasTouch:mobile,reducedMotion:reduced?'reduce':'no-preference'});
     const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
-    await page.goto(base+'/dev/decks');
+    await page.goto(base+'/dev/decks');await page.locator('.lab-grid .card').nth(31).waitFor();
     assert.equal(await page.locator('.lab-grid .card').count(),32);
     await page.locator('.lab-grid .card').evaluateAll(els=>els.forEach((el,i)=>el.dataset.qaIdentity=String(i)));
     await page.getByLabel('Mobilní stůl',{exact:true}).setChecked(mobile);
     await page.getByLabel('Omezit pohyb',{exact:true}).setChecked(reduced);
     for(const deck of ['stormpunk','retro-arcade']){
-      await page.getByLabel('Edice',{exact:true}).selectOption(deck);
-      await page.getByLabel('Stůl',{exact:true}).selectOption(deck);
+      await page.locator('.lab-controls select').nth(0).selectOption(deck);
+      await page.locator('.lab-controls select').nth(1).selectOption(deck);
       await imageReady(page);
       assert.deepEqual(await page.locator('.lab-grid .card').evaluateAll(els=>els.map(el=>el.dataset.qaIdentity)),Array.from({length:32},(_,i)=>String(i)));
       assert.equal(await page.locator(`.lab-grid .card[data-deck="${deck}"]`).count(),32);

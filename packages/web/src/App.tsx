@@ -5,11 +5,13 @@ import { Home } from './screens/Home';
 import { RoomScreen } from './screens/RoomScreen';
 import { DeckGallery } from './decks/DeckGallery';
 import { GameFeelPlayground } from './effects/GameFeelPlayground';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { BrandInteraction } from './brand/BrandInteraction';
 import { preloadDeck, useAppearance } from './themes/preferences';
 import { galleryDeckFromPath } from './decks/editions';
-import { AppearanceDialog } from './themes/AppearanceDialog';
+import { useAppearanceDialog } from './themes/appearanceStore';
+// The showroom loads on first open; nobody has to download it to play.
+const AppearanceDialog = lazy(() => import('./themes/AppearanceDialog').then((m) => ({ default: m.AppearanceDialog })));
 const EditionGallery = lazy(() => import('./decks/EditionGallery'));
 const AvatarPlayground = import.meta.env.DEV ? lazy(() => import('./avatars/AvatarPlayground')) : null;
 const DeckLab = import.meta.env.DEV ? lazy(() => import('./dev/DeckLab')) : null;
@@ -26,6 +28,10 @@ export function App() {
       : deck;
   useEffect(() => preloadDeck(assetDeck), [assetDeck]);
   const toast = useApp((s) => s.toast);
+  // Mounted on first open and kept, so closing it later still runs the dialog's own close.
+  const appearanceOpen = useAppearanceDialog((s) => s.open);
+  const [appearanceUsed, setAppearanceUsed] = useState(false);
+  useEffect(() => { if (appearanceOpen) setAppearanceUsed(true); }, [appearanceOpen]);
   const { pref } = useMotionPref();
   const code = roomCodeFromPath(path);
 
@@ -57,7 +63,7 @@ export function App() {
       ) : (
         <Home />
       )}
-      <AppearanceDialog />
+      {appearanceUsed && <Suspense fallback={null}><AppearanceDialog /></Suspense>}
       <div className="toast-host" aria-live="polite">
         <AnimatePresence>
           {toast && (

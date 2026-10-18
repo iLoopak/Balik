@@ -8,6 +8,8 @@ import './screens.css';
 import { BrandMascot } from '../brand/BrandMascot';
 import { AppSettings } from '../themes/AppearancePicker';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
+import { GameMotif } from '../library/GameMotif';
+import '../library/library.css';
 
 export function Lobby({ room }: { room: AnyRoomView }) {
   const emotes = useEmotes(room.code);
@@ -34,8 +36,9 @@ export function Lobby({ room }: { room: AnyRoomView }) {
     <main className="screen lobby">
       <div className="panel">
         <div className="lobby-head">
-          <div className="game-tag">
-            <span className="game-dot" /> {gameName(room.gameId)} · lobby
+          <div className="lobby-game">
+            <span className={`lobby-game-art library-art is-${room.gameId}`} aria-hidden><GameMotif id={room.gameId} /></span>
+            <span><b>{gameName(room.gameId)}</b><small>{GAME_INFO[room.gameId].family} · {GAME_INFO[room.gameId].playersLabel} · lobby</small></span>
           </div>
           <button className="btn btn-ghost" onClick={leaveRoom}>
             Odejít

@@ -176,7 +176,7 @@ try {
   report('suit', 'saw Q suit change splash');
 
   // ---- Rematch + reconnect -------------------------------------------------
-  await a.getByRole('button', { name: 'Hrát znovu' }).click();
+  await a.getByRole('button', { name: 'Odveta', exact: true }).click();
   await b.locator('.win-panel').waitFor({ state: 'detached' });
   check('rematch started for both players', true);
   await sleep(5000);
