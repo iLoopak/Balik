@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import { lharCanAct, SUIT_NAME_CS, type RoomView } from '@balik/shared';
+import { lharCanAct, type RoomView } from '@balik/shared';
 import { BrandResults } from '../brand/BrandResults';
 import { EmoteBubble, ResultReactions, useEmotes } from '../brand/Emotes';
 import { brandAudio } from '../brand/audio';
@@ -11,6 +11,7 @@ import { consolePocket } from '../table/environment';
 import { SuitIcon } from '../cards/SuitIcon';
 import { suitColor } from '../cards/skin';
 import { useAppearance } from '../themes/preferences';
+import { cardText, rankLabel } from '../cards/skin';
 import { useElementSize } from '../lib/useElementSize';
 import { Avatar, AvatarTurnLabel } from '../avatars/Avatar';
 import { avatarTurn } from '../avatars/status';
@@ -157,7 +158,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
             <small>
               {truth.pendingWinnerId
                 ? `${name(truth.pendingWinnerId)} čeká na potvrzení výhry.`
-                : `Povinná hodnota: ${truth.requiredRank} · vyber 1–4 karty`}
+                : `Povinná hodnota: ${rankLabel(truth.requiredRank)} · vyber 1–4 karty`}
             </small>
           </div>
           <button
@@ -190,7 +191,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
                 onClick={() => (selected.length ? submit() : setModal('select'))}
               >
                 {selected.length
-                  ? `${truth.lastClaim ? 'Věřím · ' : ''}položit ${selected.length}× ${truth.requiredRank}`
+                  ? `${truth.lastClaim ? 'Věřím · ' : ''}položit ${selected.length}× ${rankLabel(truth.requiredRank)}`
                   : truth.lastClaim
                     ? 'Věřím · vybrat karty'
                     : 'Vybrat 1–4 karty'}
@@ -244,7 +245,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
         {/* The claim is the console's readout beside the TVRZENÍ slot, clear of the opponent seats. */}
         <div className="lhar-claim" style={claimReadout(geo)} aria-live="polite">
           <span>{claim ? name(claim.playerId) : 'Tajný střed'}</span>
-          <strong>{claim ? `Tvrdí: ${claim.count}× ${claim.rank}` : `Začínáme hodnotou ${view.requiredRank}`}</strong>
+          <strong>{claim ? `Tvrdí: ${claim.count}× ${rankLabel(claim.rank)}` : `Začínáme hodnotou ${rankLabel(view.requiredRank)}`}</strong>
           <small>{display.pile.length} karet ve středu</small>
         </div>
         <CardLayer
@@ -331,7 +332,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
               Tvrzení #{view.lastResolution.claim.id}: {view.lastResolution.truthful ? 'PRAVDA' : 'LHÁŘ'}
             </b>{' '}
             · odhaleno:{' '}
-            {view.lastResolution.revealed.map((c) => `${c.rank} ${SUIT_NAME_CS[c.suit]}`).join(', ')} ·{' '}
+            {view.lastResolution.revealed.map((c) => cardText(c)).join(', ')} ·{' '}
             {name(view.lastResolution.collectorId)} bere {view.lastResolution.pileCount} karet.
           </p>
         )}
@@ -363,7 +364,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
         <header>
           <h2 id="lhar-dialog-title">
             {modal === 'select'
-              ? `Tvoje tvrzení: ${truth.requiredRank}`
+              ? `Tvoje tvrzení: ${rankLabel(truth.requiredRank)}`
               : modal === 'challenge'
                 ? 'Co udělá výzva?'
                 : modal === 'intro'
@@ -382,11 +383,11 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
                 <button
                   key={c.id}
                   aria-pressed={selectedSet.has(c.id)}
-                  aria-label={`${c.rank} ${SUIT_NAME_CS[c.suit]}`}
+                  aria-label={cardText(c)}
                   disabled={!selectedSet.has(c.id) && selected.length === 4}
                   onClick={() => toggle(c.id)}
                 >
-                  <b>{c.rank}</b>
+                  <b>{rankLabel(c.rank)}</b>
                   <SuitIcon suit={c.suit} style={{ color: suitColor(c.suit) }} />
                 </button>
               ))}
@@ -394,7 +395,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
             <footer>
               <span aria-live="polite">{selected.length}/4 vybráno</span>
               <button className="btn btn-primary" disabled={!canAct || !selected.length} onClick={submit}>
-                Položit {selected.length}× {truth.requiredRank} rubem
+                Položit {selected.length}× {rankLabel(truth.requiredRank)} rubem
               </button>
             </footer>
           </>

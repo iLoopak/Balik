@@ -1,5 +1,5 @@
 import { type Card, type PrsiView, type SeqEvent, type Suit } from '@balik/shared';
-import { suitName } from '../cards/skin';
+import { rankLabel, suitName } from '../cards/skin';
 import { effectsForGameEvent, type EffectEvent, type EffectInstance } from '../effects/effectEvents';
 import type { SoundCue } from '../brand/feedback';
 import { soundForEvent } from './feedback';
@@ -256,7 +256,7 @@ function movementCuesFor(ev: SeqEvent, ctx: CueContext): CueStep[] {
 
     case 'cardPlayed': {
       const { card, playerId } = ev;
-      const cardText = `${card.rank} ${suitName(card.suit)}`;
+      const cardText = `${rankLabel(card.rank)} ${suitName(card.suit)}`;
       const label = isMe(playerId) ? `Hraješ ${cardText}` : `${ctx.name(playerId)} hraje ${cardText}`;
       const special = card.rank === '7' || card.rank === 'A' || card.rank === 'Q';
       return [
