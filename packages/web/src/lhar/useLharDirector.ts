@@ -1,3 +1,4 @@
+import { useEnvironmentSignals } from '../table/useEnvironmentSignals';
 import { useEffect, useRef, useState } from 'react';
 import type { RoomView, LharClientEvent } from '@balik/shared';
 import { getLastStateMessage, onStateMessage, type StateMessage } from '../net/client';
@@ -10,6 +11,7 @@ import { reconcileLhar, lharSteps, type LharDisplay, type LharStep } from './dis
 export function useLharDirector(room: RoomView<'lhar'>, quiet: boolean) {
   const [display, setDisplay] = useState(() => reconcileLhar(room.game!, room.you));
   const [idle, setIdle] = useState(true);
+  const { pulses:environment, emitEnvironment, clearEnvironment } = useEnvironmentSignals();
   const state = useRef({
     display,
     target: room,
@@ -35,6 +37,7 @@ export function useLharDirector(room: RoomView<'lhar'>, quiet: boolean) {
       s.queue = [];
       s.running = false;
       brandAudio.cancel();
+      clearEnvironment();
       s.target = target;
       s.seq = target.seq;
       if (target.game) commit(reconcileLhar(target.game, target.you, s.display));
@@ -48,7 +51,9 @@ export function useLharDirector(room: RoomView<'lhar'>, quiet: boolean) {
       while (s.queue.length) {
         const { step, key } = s.queue.shift()!;
         const scale = quietRef.current ? 0.15 : s.queue.length > 14 ? 0.35 : s.queue.length > 7 ? 0.6 : 1;
-        commit(step.apply(s.display));
+        const before = s.display, next = step.apply(before);
+        commit(next);
+        if (next !== before && step.environment && !document.hidden) emitEnvironment({ ...step.environment, scale });
         if (step.sound && !document.hidden) feedbackGate.once(key, () => brandAudio.play(step.sound!));
         const duration = quietRef.current ? (step.quietWait ?? step.wait * 0.15) : step.wait * scale;
         if (duration)
@@ -114,8 +119,9 @@ export function useLharDirector(room: RoomView<'lhar'>, quiet: boolean) {
       s.queue = [];
       s.running = false;
       brandAudio.cancel();
+      clearEnvironment(false);
       document.removeEventListener('visibilitychange', visibility);
     };
-  }, [room.code, room.you]);
-  return { display, idle };
+  }, [room.code, room.you, emitEnvironment, clearEnvironment]);
+  return { display, idle, environment };
 }

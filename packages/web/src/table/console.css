@@ -1,0 +1,493 @@
+/* BALÍK apparatus: packet notch, amber tabs and receiving pockets across every edition. */
+.game-table-theme.console-table {
+  --console-gold: #e8ae51;
+  --console-shell: #182435;
+  --console-shell-edge: #65809c66;
+  --console-pocket: #07111ce0;
+  --console-pocket-edge: #8ca4bf42;
+  --console-caption: #bcc8d6;
+  --console-lip: #8fa4bb44;
+  position: absolute;
+  z-index: 0;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 42%, #35466355, transparent 66%),
+    linear-gradient(155deg, #09101b, var(--arena-background));
+}
+.console-table .arena-grid {
+  opacity: 0.12;
+  background-size: 96px 96px;
+}
+.console-table .arena-edge-light {
+  border-radius: 14px;
+  border-color: #9c835326;
+}
+.console-table .arena-stage-underlight {
+  opacity: 0.45;
+  animation: none;
+  background: radial-gradient(ellipse, #d69c3317, transparent 70%);
+}
+.console-shell {
+  fill: var(--console-shell);
+  stroke: var(--console-shell-edge);
+  stroke-width: 1;
+}
+.console-cast-shadow {
+  fill: #02060d66;
+}
+.console-table .arena-surface {
+  fill-opacity: 1;
+}
+.console-table .arena-rail-outer {
+  stroke: var(--console-shell-edge);
+  stroke-width: 1.4;
+}
+.console-table .arena-rail-inner {
+  stroke: var(--console-lip);
+  stroke-width: 1.3;
+}
+.console-packet-seal {
+  fill: none;
+  stroke: var(--console-gold);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+.console-corner-tabs {
+  fill: none;
+  stroke: var(--console-gold);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  opacity: 0.8;
+}
+.console-dealer-plate {
+  position: absolute;
+  bottom: 2%;
+  left: 9%;
+  height: 38px;
+  padding: 3px 12px 3px 5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--console-shell-edge);
+  border-bottom: 2px solid var(--console-gold);
+  border-radius: 8px 8px 12px 12px;
+  background: var(--console-shell);
+  box-shadow: 0 4px 6px #0003;
+}
+.console-dealer-plate > span {
+  display: grid;
+  gap: 1px;
+}
+.console-dealer-plate b {
+  color: var(--console-gold);
+  font: 850 13px/1 var(--font-brand);
+  letter-spacing: -0.03em;
+}
+.console-dealer-plate small {
+  color: var(--console-caption);
+  font: 550 5px/1.3 var(--font-ui);
+  white-space: nowrap;
+  letter-spacing: 0.12em;
+}
+.console-dealer-plate > i {
+  width: 5px;
+  height: 5px;
+  border-radius: 1px;
+  background: #806739;
+  margin-left: 4px;
+  box-shadow: inset 0 1px #fff2;
+}
+.console-dealer-plate > i.is-active {
+  background: var(--console-gold);
+  box-shadow:
+    0 0 0 3px #e8ae5115,
+    0 0 10px #e8ae5140;
+}
+.console-energy-meter {
+  position: absolute;
+  bottom: 12%;
+  right: 10%;
+  width: 86px;
+  color: var(--arena-faction);
+}
+.console-energy-meter > span {
+  font: 550 5px var(--font-ui);
+  letter-spacing: 0.14em;
+  color: var(--console-caption);
+  opacity: 0.7;
+}
+.console-ambient {
+  display: block;
+  width: 100%;
+  height: 15px;
+  overflow: visible;
+}
+.console-ambient path {
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+.console-table[data-suit='hearts']:not(.arena-is-quiet) .console-ambient {
+  animation: console-heat 6s ease-in-out infinite;
+}
+.console-table[data-suit='diamonds']:not(.arena-is-quiet) .console-ambient {
+  animation: console-flow 7s ease-in-out infinite;
+}
+.console-table[data-suit='clubs']:not(.arena-is-quiet) .console-ambient {
+  animation: console-grow 8s ease-in-out infinite;
+  transform-origin: center;
+}
+.console-table[data-suit='spades']:not(.arena-is-quiet) .console-ambient {
+  animation: console-charge 8s ease-in-out infinite;
+}
+.console-slot {
+  border-radius: 10%;
+  border: 1px solid var(--console-pocket-edge);
+  background: linear-gradient(
+    160deg,
+    var(--console-pocket),
+    color-mix(in srgb, var(--console-pocket) 65%, transparent)
+  );
+  box-shadow:
+    inset 0 3px 8px #0005,
+    0 1px 0 var(--console-lip);
+}
+.console-slot::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--console-pocket-edge);
+  border-radius: 7%;
+  opacity: 0.55;
+}
+.console-slot-play {
+  border-color: color-mix(in srgb, var(--console-gold) 60%, transparent);
+}
+.console-slot-name {
+  position: absolute;
+  left: 50%;
+  top: -17px;
+  translate: -50% 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--console-caption);
+  font: 650 9px/1.2 var(--font-ui);
+  letter-spacing: 0.09em;
+  white-space: nowrap;
+}
+.console-slot-name i {
+  display: block;
+  width: 4px;
+  height: 4px;
+  background: var(--console-gold);
+  border-radius: 1px;
+}
+.console-slot[data-empty='true'] .console-slot-name i {
+  opacity: 0.35;
+}
+.console-slot-teeth {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 2px;
+  right: 2px;
+  border-left: 2px dashed var(--console-pocket-edge);
+  border-right: 2px dashed var(--console-pocket-edge);
+  border-radius: 6px;
+}
+.console-slot-lip {
+  position: absolute;
+  bottom: 4px;
+  left: 28%;
+  right: 28%;
+  height: 2px;
+  background: var(--console-gold);
+  box-shadow: 0 3px 0 #0003;
+  opacity: 0.65;
+}
+.console-slot-play .console-slot-lip {
+  left: 36%;
+  right: 36%;
+  height: 3px;
+}
+.console-table .arena-seat-dock {
+  display: block;
+  border: 1px solid #8ea7c014;
+  background: #0a14221a;
+  border-radius: 14px;
+}
+.console-reactions,
+.console-reaction,
+.console-route-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.console-reactions {
+  z-index: 2;
+}
+.console-reaction {
+  --console-event-color: var(--arena-faction);
+}
+.console-reaction-penalty {
+  --console-event-color: var(--penalty);
+}
+.console-reaction-skip {
+  --console-event-color: var(--skip);
+}
+.console-reaction-win,
+.console-reaction-challenge,
+.console-reaction-deal {
+  --console-event-color: var(--console-gold);
+}
+.console-guide-bed {
+  fill: none;
+  stroke: var(--console-event-color);
+  stroke-opacity: 0.12;
+  stroke-width: 3;
+  animation: console-path-fade calc(0.9s * var(--console-pace, 1)) ease-out both;
+}
+.console-guide-charge {
+  fill: none;
+  stroke: var(--console-event-color);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-dasharray: 12 88;
+  animation: console-transit calc(0.6s * var(--console-pace, 1)) ease-out both;
+}
+.console-slot-receive {
+  position: absolute;
+  translate: -50% -50%;
+  border: 2px solid var(--console-event-color);
+  border-radius: 10%;
+  box-shadow:
+    inset 0 0 16px color-mix(in srgb, var(--console-event-color) 22%, transparent),
+    0 0 12px color-mix(in srgb, var(--console-event-color) 20%, transparent);
+  animation: console-receive calc(0.8s * var(--console-pace, 1)) ease-out both;
+}
+.console-reaction-play .console-slot-receive {
+  animation-delay: calc(0.32s * var(--console-pace, 1));
+  animation-duration: calc(0.65s * var(--console-pace, 1));
+}
+.console-reaction-collect .console-guide-charge {
+  stroke-dasharray: 7 93;
+}
+.console-reaction-challenge .console-slot-receive {
+  border-style: dashed;
+}
+.console-reaction-reveal .console-slot-receive {
+  border-width: 3px;
+}
+.console-celebration {
+  position: absolute;
+  translate: -50% -50%;
+  border: 1px solid var(--console-gold);
+  border-radius: 12%;
+  box-shadow: 0 0 28px -10px var(--console-gold);
+  animation: console-receive calc(1s * var(--console-pace, 1)) ease-out both;
+}
+.console-reactions-quiet .console-guide-bed,
+.console-reactions-quiet .console-guide-charge,
+.console-reactions-quiet .console-slot-receive,
+.console-reactions-quiet .console-celebration {
+  animation: none;
+  opacity: 0.6;
+}
+.console-reactions-quiet .console-guide-charge {
+  stroke-dasharray: none;
+  opacity: 0.25;
+}
+.console-table.arena-is-quiet .console-ambient {
+  animation: none;
+  opacity: 0.65;
+}
+@keyframes console-receive {
+  0% {
+    opacity: 0;
+  }
+  18% {
+    opacity: 0.8;
+  }
+  75% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes console-path-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  20%,
+  70% {
+    opacity: 1;
+  }
+}
+@keyframes console-transit {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 0;
+  }
+  15%,
+  65% {
+    opacity: 0.8;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes console-heat {
+  0%,
+  100% {
+    opacity: 0.35;
+    translate: 0 1px;
+  }
+  50% {
+    opacity: 0.8;
+    translate: 0 -1px;
+  }
+}
+@keyframes console-flow {
+  0%,
+  100% {
+    opacity: 0.35;
+    translate: -2px 0;
+  }
+  50% {
+    opacity: 0.8;
+    translate: 2px 0;
+  }
+}
+@keyframes console-grow {
+  0%,
+  100% {
+    opacity: 0.4;
+    scale: 0.97;
+  }
+  50% {
+    opacity: 0.8;
+    scale: 1.03;
+  }
+}
+@keyframes console-charge {
+  0%,
+  62%,
+  100% {
+    opacity: 0.4;
+  }
+  72%,
+  85% {
+    opacity: 0.8;
+  }
+}
+.game-table-theme.console-table[data-color-mode='light'] {
+  --console-gold: #986222;
+  --console-shell: #d2bfa1;
+  --console-shell-edge: #8d744b70;
+  --console-pocket: #ae957738;
+  --console-pocket-edge: #80674366;
+  --console-caption: #62523c;
+  --console-lip: #fff6e7b3;
+  background:
+    radial-gradient(ellipse at 50% 20%, #fff9ebcc, transparent 70%),
+    repeating-linear-gradient(91deg, #7c67440a 0 1px, transparent 1px 5px), var(--arena-background);
+}
+.console-table[data-color-mode='light'] .console-cast-shadow {
+  fill: #6d4d2e38;
+}
+.console-table[data-color-mode='light'] .console-dealer-plate {
+  background: #f2e4cf;
+  box-shadow:
+    0 4px 7px #71542e30,
+    inset 0 1px #fff8eb;
+}
+.console-table[data-color-mode='light'] .console-slot {
+  box-shadow:
+    inset 0 3px 6px #72542f33,
+    0 1px #fff9eb;
+}
+.console-table[data-color-mode='light'] .console-slot-receive {
+  box-shadow:
+    inset 0 0 0 1px #fffaf2,
+    0 2px 6px #71542e25;
+}
+.console-table[data-color-mode='light'] .arena-seat-dock {
+  background: #fffaf233;
+  border-color: #90755129;
+}
+.console-table[data-color-mode='light'] .console-celebration {
+  box-shadow: 0 3px 14px #9862224d;
+}
+.console-table[data-color-mode='light'] .console-dealer-plate > i.is-active {
+  box-shadow: 0 0 0 2px #fff0c6;
+}
+@media (max-width: 699px) {
+  .console-dealer-plate {
+    bottom: 0;
+    height: 30px;
+    gap: 4px;
+    padding-right: 7px;
+  }
+  .console-dealer-plate .brand-mascot {
+    width: 21px !important;
+    height: 25px !important;
+  }
+  .console-dealer-plate b {
+    font-size: 11px;
+  }
+  .console-dealer-plate small {
+    font-size: 4.5px;
+  }
+  .console-slot-name {
+    font-size: 8px;
+    top: -14px;
+  }
+  .console-energy-meter {
+    width: 60px;
+    right: 11%;
+    bottom: 12%;
+  }
+  .console-energy-meter > span {
+    font-size: 4.5px;
+  }
+}
+@media (max-height: 479px) {
+  .console-dealer-plate {
+    height: 24px;
+    bottom: -8px;
+  }
+  .console-dealer-plate .brand-mascot,
+  .console-energy-meter > span {
+    display: none;
+  }
+  .console-slot-name {
+    font-size: 7px;
+    top: -12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .console-table *,
+  .console-table *::before,
+  .console-table *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .console-guide-bed {
+    opacity: 0.15;
+  }
+  .console-guide-charge {
+    opacity: 0.25;
+    stroke-dasharray: none;
+  }
+  .console-slot-receive,
+  .console-celebration {
+    opacity: 0.6;
+  }
+}
