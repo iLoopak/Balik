@@ -50,8 +50,8 @@ export const CardView = memo(function CardView({
   const [failedAsset, setFailedAsset] = useState<string | null>(null);
   const showFace = !!card && faceUp;
   const asset = showFace ? stickerFor(game, card, deck) : null;
-  const visibleDeck = showFace && deck !== 'classic' && (!asset || asset.src === failedAsset) ? 'classic' : deck;
-  const label = card ? (DECK_THEMES[visibleDeck].ranks ? `${rankName(card.rank, visibleDeck)} · ${suitName(card.suit, visibleDeck)}` : `${card.rank} ${SUIT_NAME_CS[card.suit]}${visibleDeck === 'classic' ? '' : ` · ${suitName(card.suit, visibleDeck)}`}`) : 'rub karty';
+  const visibleDeck = showFace && DECK_THEMES[deck].center !== 'symbols' && (!asset || asset.src === failedAsset) ? 'classic' : deck;
+  const label = card ? (DECK_THEMES[visibleDeck].ranks ? `${rankName(card.rank, visibleDeck)} · ${suitName(card.suit, visibleDeck)}` : `${card.rank} ${SUIT_NAME_CS[card.suit]}${suitName(card.suit, visibleDeck).toLowerCase() === SUIT_NAME_CS[card.suit] ? '' : ` · ${suitName(card.suit, visibleDeck)}`}`) : 'rub karty';
   return (
     <div className={`card card-deck-${visibleDeck}`} data-deck={visibleDeck} role="img" aria-label={showFace ? label : 'rub karty'}>
       <motion.div
@@ -63,7 +63,7 @@ export const CardView = memo(function CardView({
         {showFace && (
           <div className="card-face card-front" style={{ color: suitColor(card.suit, visibleDeck) }}>
             <CardBase />
-            {visibleDeck === 'classic' && <CardCenter card={card} game={game} />}
+            {DECK_THEMES[visibleDeck].center === 'symbols' && <CardCenter card={card} game={game} deck={visibleDeck} />}
             <CardIndices card={card} deck={visibleDeck} />
             <CardStickerLayer card={card} game={game} deck={visibleDeck} onError={() => asset && setFailedAsset(asset.src)} />
             <CardEffectLayer current={fx?.current} suit={card.suit} deck={visibleDeck} />
@@ -105,7 +105,7 @@ export function CardIndices({ card, deck = useAppearance.getState().deck }: { ca
   );
 }
 
-function CardCenter({ card, game }: { card: Card; game: GameId }) {
+function CardCenter({ card, game, deck }: { card: Card; game: GameId; deck: DeckId }) {
   const hint = game === 'sedma' ? (card.rank === 'A' || card.rank === '10' ? '10 bodů' : card.rank === '7' ? 'bere' : undefined) : game === 'prsi' ? RANK_HINT[card.rank] : undefined;
   const isFace = card.rank === 'J' || card.rank === 'Q' || card.rank === 'K';
   return (
@@ -113,10 +113,10 @@ function CardCenter({ card, game }: { card: Card; game: GameId }) {
       {isFace ? (
         <div className="card-court">
           <span className="card-court-rank">{card.rank}</span>
-          <SuitIcon suit={card.suit} deck="classic" className="card-court-suit" />
+          <SuitIcon suit={card.suit} deck={deck} className="card-court-suit" />
         </div>
       ) : (
-        <SuitIcon suit={card.suit} deck="classic" className={card.rank === 'A' ? 'card-pip card-pip-ace' : 'card-pip'} />
+        <SuitIcon suit={card.suit} deck={deck} className={card.rank === 'A' ? 'card-pip card-pip-ace' : 'card-pip'} />
       )}
       {hint && <span className="card-hint">{hint}</span>}
     </div>

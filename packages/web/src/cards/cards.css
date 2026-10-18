@@ -324,3 +324,27 @@
 @container (max-width: 110px) {
   .card-deck-mariasky .card-hand-suit { left: 50%; top: 22cqw; translate: -50% 0; width: 11cqw; height: 11cqw; }
 }
+
+/* Strašidla: warm paper, ink-violet indices, the creature sits a little larger. */
+.card-deck-strasidla .card-base { background: #fff8ec; box-shadow: inset 0 0 0 .9cqw #e9dcc6, inset 0 -1.3cqw 0 #f1e6d2; }
+.card-deck-strasidla .card-rank { font-size: 25cqw; font-weight: 850; }
+.card-deck-strasidla .card-index-tl { top: 7cqw; left: 5cqw; width: 24cqw; }
+.card-deck-strasidla .card-index-br { bottom: 7cqw; right: 5cqw; width: 24cqw; }
+.card-deck-strasidla .card-index-suit { width: 18cqw; height: 18cqw; margin: 1cqw 0 0; }
+.card-deck-strasidla .card-sticker { inset: 19% 9%; }
+.card-deck-strasidla .card-sticker img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Kontrast: pure white, a solid ink border, oversized indices and solid role hints.
+   Every suit is told apart by shape, colour (colour-blind safe) and pattern. */
+.card-deck-kontrast .card-base { background: #fff; box-shadow: inset 0 0 0 1.8cqw #141414; }
+.card-deck-kontrast .card-index { width: 26cqw; }
+.card-deck-kontrast .card-index-tl { top: 6cqw; left: 5cqw; }
+.card-deck-kontrast .card-index-br { bottom: 6cqw; right: 5cqw; }
+.card-deck-kontrast .card-rank { font-size: 30cqw; font-weight: 900; letter-spacing: -0.05em; }
+.card-deck-kontrast .card-index-suit { width: 19cqw; height: 19cqw; margin-top: 1cqw; }
+.card-deck-kontrast .card-pip { width: 50cqw; height: 50cqw; filter: none; }
+.card-deck-kontrast .card-pip-ace { width: 62cqw; height: 62cqw; }
+.card-deck-kontrast .card-court { background: none; box-shadow: inset 0 0 0 1.4cqw currentColor; }
+.card-deck-kontrast .card-court-rank { font-weight: 900; }
+/* The pill takes the suit ink (currentColor from the face); its text is painted white. */
+.card-deck-kontrast .card-hint { background: currentColor; -webkit-text-fill-color: #fff; box-shadow: none; font-size: 12cqw; font-weight: 800; }
