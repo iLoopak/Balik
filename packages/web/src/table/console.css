@@ -86,9 +86,10 @@
 }
 .console-dealer-plate small {
   color: var(--console-caption);
-  font: 550 5px/1.3 var(--font-ui);
+  font: 500 5px/1.3 var(--font-machine);
+  font-stretch: 75%;
   white-space: nowrap;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;
 }
 .console-dealer-plate > i {
   width: 5px;
@@ -112,8 +113,9 @@
   color: var(--arena-faction);
 }
 .console-energy-meter > span {
-  font: 550 5px var(--font-ui);
-  letter-spacing: 0.14em;
+  font: 500 5px var(--font-machine);
+  font-stretch: 75%;
+  letter-spacing: 0.06em;
   color: var(--console-caption);
   opacity: 0.7;
 }
@@ -173,8 +175,9 @@
   align-items: center;
   gap: 4px;
   color: var(--console-caption);
-  font: 650 9px/1.2 var(--font-ui);
-  letter-spacing: 0.09em;
+  font: 550 8px/1.2 var(--font-machine);
+  font-stretch: 87.5%;
+  letter-spacing: 0.03em;
   white-space: nowrap;
 }
 .console-slot-name i {
@@ -512,7 +515,7 @@
 .console-table.arena-is-quiet .console-wiring * { transition: none; }
 @keyframes console-signal { to { stroke-dashoffset: -20; } }
 @media (prefers-reduced-motion: reduce) { .console-lane-signal { animation: none !important; stroke-dasharray: none; } }
-.console-slot-count { margin-left: 3px; padding: 1px 5px; border-radius: 4px; color: var(--console-gold); background: color-mix(in srgb, var(--console-gold) 12%, transparent); font: 750 10px/1.2 var(--font-brand); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.console-slot-count { margin-left: 3px; padding: 1px 5px; border-radius: 4px; color: var(--console-gold); background: color-mix(in srgb, var(--console-gold) 12%, transparent); font: 650 9px/1.2 var(--font-machine); font-stretch: 87.5%; letter-spacing: 0; font-variant-numeric: tabular-nums; }
 /* The front tray owns the hand zone now; the hand light keeps only its glow. */
 .game-table-theme.console-table[data-color-mode='light'] .arena-hand-light { border-top-color: transparent; }
 /* A slot hugging the table edge (Sedma's stock) anchors its name to the slot instead of centring. */

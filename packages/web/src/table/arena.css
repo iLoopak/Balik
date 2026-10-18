@@ -18,7 +18,7 @@
 .arena-circuits { fill: none; stroke: #7896ba30; stroke-width: 1; }
 .arena-ticks { fill: none; stroke: #ffcc7b66; stroke-width: 1; }
 .arena-wordmark { position: absolute; left: 50%; top: 49%; translate: -50% -50%; font: 800 clamp(36px, 5vw, 78px)/1 var(--font-brand); letter-spacing: -.045em; color: #b6c9dc0a; text-align: center; }
-.arena-wordmark > span { display: block; margin-top: 12px; font: 550 7px var(--font-ui); letter-spacing: .38em; white-space: nowrap; }
+.arena-wordmark > span { display: block; margin-top: 12px; font: 500 7px var(--font-machine); letter-spacing: .24em; white-space: nowrap; }
 .arena-pile-dock { position: absolute; translate: -50% -50%; border-radius: 16%; }
 .arena-deck-dock { border: 1px dashed #95a9c426; background: #090f1b33; }
 .arena-discard-dock { border: 1px solid color-mix(in srgb, var(--arena-faction) 24%, transparent); background: color-mix(in srgb, var(--arena-faction) 3%, #0c172380); box-shadow: 0 0 48px -20px color-mix(in srgb, var(--arena-faction) 30%, transparent); transition: border-color 700ms ease, background-color 700ms ease, box-shadow 700ms ease; }

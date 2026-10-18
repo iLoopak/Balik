@@ -51,7 +51,7 @@
 .lobby-emote { display: flex; align-items: center; gap: 8px; padding: 5px 0; font-size: 11px; }
 .lobby-emote > b { max-width: 100px; overflow: hidden; text-overflow: ellipsis; }
 .brand-results { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; }
-.brand-result-signature { display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 9px; letter-spacing: .13em; }
+.brand-result-signature { font-family: var(--font-machine); font-stretch: 87.5%; display: flex; align-items: center; gap: 9px; color: var(--muted); font-size: 9px; letter-spacing: .13em; }
 .brand-result-signature i { width: 22px; height: 2px; background: var(--accent); }
 .brand-result-note { font-size: 13px; color: var(--muted); margin: 0; }
 .brand-scoreboard { list-style: none; padding: 0; margin: 10px 0; width: 100%; }

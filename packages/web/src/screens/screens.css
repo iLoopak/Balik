@@ -69,10 +69,10 @@
 
 .code-field {
   text-transform: uppercase;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.24em;
   text-align: center;
-  font-family: var(--font-brand);
-  font-weight: 750;
+  font-family: var(--font-machine);
+  font-weight: 650;
   font-size: 20px;
 }
 
@@ -101,7 +101,8 @@
 
 .code-inline {
   color: var(--accent-text);
-  letter-spacing: 0.08em;
+  font-family: var(--font-machine);
+  letter-spacing: 0.04em;
 }
 
 .loading {
@@ -164,6 +165,8 @@
   line-height: 1;
   color: var(--accent-text);
   user-select: all;
+  font-family: var(--font-machine);
+  font-stretch: 87.5%;
 }
 
 .code-big span {
@@ -323,6 +326,8 @@
 .topbar-room b {
   color: var(--ink);
   letter-spacing: 0.06em;
+  font-family: var(--font-machine);
+  font-stretch: 87.5%;
 }
 
 .topbar-menu {
