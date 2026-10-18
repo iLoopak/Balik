@@ -1,0 +1,1437 @@
+{
+  "method": "Sharp decoding normalized to 256 and 48px; alpha threshold 8/255; technical check, not an artistic quality score",
+  "editions": [
+    {
+      "edition": "biopunk",
+      "totalBytes": 6526680,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 211710,
+          "bounds": [
+            19,
+            10,
+            235,
+            245
+          ],
+          "coverage": 0.546
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 170838,
+          "bounds": [
+            20,
+            10,
+            234,
+            245
+          ],
+          "coverage": 0.481
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 212948,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.542
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 227910,
+          "bounds": [
+            14,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.559
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 209956,
+          "bounds": [
+            10,
+            12,
+            245,
+            243
+          ],
+          "coverage": 0.497
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 215182,
+          "bounds": [
+            16,
+            10,
+            239,
+            244
+          ],
+          "coverage": 0.52
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 211432,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.573
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 196126,
+          "bounds": [
+            27,
+            10,
+            227,
+            245
+          ],
+          "coverage": 0.513
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 165224,
+          "bounds": [
+            15,
+            10,
+            239,
+            245
+          ],
+          "coverage": 0.469
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 193930,
+          "bounds": [
+            16,
+            11,
+            238,
+            245
+          ],
+          "coverage": 0.526
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 215820,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.58
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 208222,
+          "bounds": [
+            13,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.522
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 211958,
+          "bounds": [
+            11,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.505
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 226014,
+          "bounds": [
+            10,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.498
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 237408,
+          "bounds": [
+            10,
+            10,
+            245,
+            245
+          ],
+          "coverage": 0.585
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 223678,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.578
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 184614,
+          "bounds": [
+            10,
+            13,
+            245,
+            241
+          ],
+          "coverage": 0.5
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 190388,
+          "bounds": [
+            10,
+            14,
+            245,
+            241
+          ],
+          "coverage": 0.564
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 200480,
+          "bounds": [
+            10,
+            17,
+            245,
+            237
+          ],
+          "coverage": 0.496
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 203690,
+          "bounds": [
+            22,
+            10,
+            233,
+            245
+          ],
+          "coverage": 0.546
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 193646,
+          "bounds": [
+            11,
+            10,
+            244,
+            245
+          ],
+          "coverage": 0.411
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 209428,
+          "bounds": [
+            10,
+            13,
+            245,
+            241
+          ],
+          "coverage": 0.512
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 193054,
+          "bounds": [
+            10,
+            11,
+            232,
+            231
+          ],
+          "coverage": 0.461
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 212198,
+          "bounds": [
+            10,
+            13,
+            244,
+            241
+          ],
+          "coverage": 0.59
+        },
+        {
+          "card": "spades-7",
+          "bytes": 187332,
+          "bounds": [
+            13,
+            10,
+            242,
+            245
+          ],
+          "coverage": 0.446
+        },
+        {
+          "card": "spades-8",
+          "bytes": 200816,
+          "bounds": [
+            12,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.564
+        },
+        {
+          "card": "spades-9",
+          "bytes": 213050,
+          "bounds": [
+            11,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.578
+        },
+        {
+          "card": "spades-10",
+          "bytes": 217996,
+          "bounds": [
+            15,
+            10,
+            239,
+            245
+          ],
+          "coverage": 0.564
+        },
+        {
+          "card": "spades-J",
+          "bytes": 201666,
+          "bounds": [
+            14,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.494
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 187242,
+          "bounds": [
+            10,
+            11,
+            244,
+            243
+          ],
+          "coverage": 0.466
+        },
+        {
+          "card": "spades-K",
+          "bytes": 231654,
+          "bounds": [
+            10,
+            10,
+            245,
+            245
+          ],
+          "coverage": 0.602
+        },
+        {
+          "card": "spades-A",
+          "bytes": 161070,
+          "bounds": [
+            47,
+            10,
+            208,
+            245
+          ],
+          "coverage": 0.432
+        }
+      ]
+    },
+    {
+      "edition": "panelak-3000",
+      "totalBytes": 5946922,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 163594,
+          "bounds": [
+            15,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.453
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 164218,
+          "bounds": [
+            24,
+            10,
+            231,
+            245
+          ],
+          "coverage": 0.525
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 158068,
+          "bounds": [
+            10,
+            15,
+            245,
+            240
+          ],
+          "coverage": 0.456
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 206528,
+          "bounds": [
+            11,
+            13,
+            244,
+            243
+          ],
+          "coverage": 0.56
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 164962,
+          "bounds": [
+            17,
+            10,
+            238,
+            245
+          ],
+          "coverage": 0.388
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 191610,
+          "bounds": [
+            10,
+            12,
+            244,
+            242
+          ],
+          "coverage": 0.508
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 198274,
+          "bounds": [
+            10,
+            18,
+            245,
+            237
+          ],
+          "coverage": 0.547
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 169492,
+          "bounds": [
+            14,
+            11,
+            241,
+            245
+          ],
+          "coverage": 0.492
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 181776,
+          "bounds": [
+            11,
+            18,
+            244,
+            237
+          ],
+          "coverage": 0.399
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 169962,
+          "bounds": [
+            11,
+            10,
+            244,
+            245
+          ],
+          "coverage": 0.559
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 171940,
+          "bounds": [
+            23,
+            10,
+            232,
+            245
+          ],
+          "coverage": 0.471
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 215518,
+          "bounds": [
+            17,
+            10,
+            237,
+            245
+          ],
+          "coverage": 0.563
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 174338,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.456
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 229142,
+          "bounds": [
+            11,
+            13,
+            244,
+            241
+          ],
+          "coverage": 0.503
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 202116,
+          "bounds": [
+            35,
+            11,
+            219,
+            244
+          ],
+          "coverage": 0.429
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 190136,
+          "bounds": [
+            15,
+            11,
+            239,
+            245
+          ],
+          "coverage": 0.539
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 189586,
+          "bounds": [
+            11,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.466
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 197846,
+          "bounds": [
+            14,
+            11,
+            239,
+            244
+          ],
+          "coverage": 0.553
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 219180,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.613
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 160800,
+          "bounds": [
+            39,
+            10,
+            215,
+            245
+          ],
+          "coverage": 0.513
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 177754,
+          "bounds": [
+            10,
+            15,
+            245,
+            239
+          ],
+          "coverage": 0.426
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 172494,
+          "bounds": [
+            20,
+            10,
+            235,
+            245
+          ],
+          "coverage": 0.441
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 202648,
+          "bounds": [
+            16,
+            11,
+            238,
+            244
+          ],
+          "coverage": 0.538
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 177862,
+          "bounds": [
+            10,
+            13,
+            245,
+            242
+          ],
+          "coverage": 0.46
+        },
+        {
+          "card": "spades-7",
+          "bytes": 140932,
+          "bounds": [
+            11,
+            10,
+            244,
+            245
+          ],
+          "coverage": 0.318
+        },
+        {
+          "card": "spades-8",
+          "bytes": 181078,
+          "bounds": [
+            19,
+            10,
+            236,
+            245
+          ],
+          "coverage": 0.533
+        },
+        {
+          "card": "spades-9",
+          "bytes": 201594,
+          "bounds": [
+            10,
+            11,
+            244,
+            245
+          ],
+          "coverage": 0.498
+        },
+        {
+          "card": "spades-10",
+          "bytes": 206246,
+          "bounds": [
+            21,
+            10,
+            233,
+            245
+          ],
+          "coverage": 0.584
+        },
+        {
+          "card": "spades-J",
+          "bytes": 192846,
+          "bounds": [
+            10,
+            19,
+            245,
+            236
+          ],
+          "coverage": 0.511
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 210114,
+          "bounds": [
+            10,
+            10,
+            245,
+            244
+          ],
+          "coverage": 0.526
+        },
+        {
+          "card": "spades-K",
+          "bytes": 222402,
+          "bounds": [
+            12,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.568
+        },
+        {
+          "card": "spades-A",
+          "bytes": 141866,
+          "bounds": [
+            46,
+            10,
+            209,
+            244
+          ],
+          "coverage": 0.372
+        }
+      ]
+    },
+    {
+      "edition": "chalupa",
+      "totalBytes": 6823958,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 220602,
+          "bounds": [
+            10,
+            11,
+            245,
+            244
+          ],
+          "coverage": 0.526
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 202894,
+          "bounds": [
+            14,
+            10,
+            241,
+            244
+          ],
+          "coverage": 0.492
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 191498,
+          "bounds": [
+            11,
+            24,
+            244,
+            230
+          ],
+          "coverage": 0.443
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 190964,
+          "bounds": [
+            14,
+            10,
+            240,
+            245
+          ],
+          "coverage": 0.46
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 191532,
+          "bounds": [
+            10,
+            26,
+            245,
+            229
+          ],
+          "coverage": 0.454
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 202248,
+          "bounds": [
+            10,
+            19,
+            245,
+            235
+          ],
+          "coverage": 0.497
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 207082,
+          "bounds": [
+            26,
+            10,
+            229,
+            245
+          ],
+          "coverage": 0.491
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 206102,
+          "bounds": [
+            19,
+            10,
+            236,
+            245
+          ],
+          "coverage": 0.498
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 209850,
+          "bounds": [
+            11,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.535
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 211056,
+          "bounds": [
+            14,
+            11,
+            241,
+            244
+          ],
+          "coverage": 0.456
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 217426,
+          "bounds": [
+            17,
+            10,
+            237,
+            245
+          ],
+          "coverage": 0.536
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 225002,
+          "bounds": [
+            23,
+            11,
+            231,
+            244
+          ],
+          "coverage": 0.522
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 226320,
+          "bounds": [
+            10,
+            18,
+            245,
+            236
+          ],
+          "coverage": 0.548
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 220218,
+          "bounds": [
+            12,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.533
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 230748,
+          "bounds": [
+            11,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.529
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 250092,
+          "bounds": [
+            10,
+            15,
+            245,
+            240
+          ],
+          "coverage": 0.613
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 175140,
+          "bounds": [
+            10,
+            15,
+            245,
+            240
+          ],
+          "coverage": 0.487
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 207922,
+          "bounds": [
+            10,
+            11,
+            244,
+            244
+          ],
+          "coverage": 0.543
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 204528,
+          "bounds": [
+            10,
+            10,
+            245,
+            244
+          ],
+          "coverage": 0.492
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 238344,
+          "bounds": [
+            11,
+            11,
+            244,
+            244
+          ],
+          "coverage": 0.582
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 238016,
+          "bounds": [
+            11,
+            10,
+            244,
+            245
+          ],
+          "coverage": 0.555
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 186328,
+          "bounds": [
+            38,
+            11,
+            217,
+            245
+          ],
+          "coverage": 0.424
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 220186,
+          "bounds": [
+            11,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.525
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 272210,
+          "bounds": [
+            10,
+            16,
+            244,
+            238
+          ],
+          "coverage": 0.624
+        },
+        {
+          "card": "spades-7",
+          "bytes": 182944,
+          "bounds": [
+            10,
+            26,
+            245,
+            228
+          ],
+          "coverage": 0.475
+        },
+        {
+          "card": "spades-8",
+          "bytes": 201810,
+          "bounds": [
+            10,
+            10,
+            245,
+            245
+          ],
+          "coverage": 0.539
+        },
+        {
+          "card": "spades-9",
+          "bytes": 203634,
+          "bounds": [
+            10,
+            14,
+            244,
+            240
+          ],
+          "coverage": 0.529
+        },
+        {
+          "card": "spades-10",
+          "bytes": 191310,
+          "bounds": [
+            10,
+            32,
+            244,
+            224
+          ],
+          "coverage": 0.525
+        },
+        {
+          "card": "spades-J",
+          "bytes": 194324,
+          "bounds": [
+            10,
+            15,
+            245,
+            240
+          ],
+          "coverage": 0.425
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 218834,
+          "bounds": [
+            10,
+            15,
+            245,
+            240
+          ],
+          "coverage": 0.568
+        },
+        {
+          "card": "spades-K",
+          "bytes": 262378,
+          "bounds": [
+            12,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.619
+        },
+        {
+          "card": "spades-A",
+          "bytes": 222416,
+          "bounds": [
+            10,
+            12,
+            245,
+            242
+          ],
+          "coverage": 0.581
+        }
+      ]
+    },
+    {
+      "edition": "papirovy-cirkus",
+      "totalBytes": 4963270,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 170704,
+          "bounds": [
+            15,
+            10,
+            240,
+            245
+          ],
+          "coverage": 0.534
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 142960,
+          "bounds": [
+            16,
+            10,
+            239,
+            245
+          ],
+          "coverage": 0.522
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 157928,
+          "bounds": [
+            17,
+            10,
+            238,
+            245
+          ],
+          "coverage": 0.462
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 182742,
+          "bounds": [
+            12,
+            10,
+            242,
+            245
+          ],
+          "coverage": 0.633
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 157096,
+          "bounds": [
+            16,
+            10,
+            238,
+            245
+          ],
+          "coverage": 0.379
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 175402,
+          "bounds": [
+            18,
+            11,
+            236,
+            245
+          ],
+          "coverage": 0.481
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 155756,
+          "bounds": [
+            15,
+            10,
+            239,
+            245
+          ],
+          "coverage": 0.479
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 137676,
+          "bounds": [
+            34,
+            10,
+            221,
+            245
+          ],
+          "coverage": 0.422
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 144550,
+          "bounds": [
+            40,
+            10,
+            215,
+            245
+          ],
+          "coverage": 0.345
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 166300,
+          "bounds": [
+            11,
+            13,
+            245,
+            243
+          ],
+          "coverage": 0.62
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 137078,
+          "bounds": [
+            28,
+            10,
+            227,
+            245
+          ],
+          "coverage": 0.393
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 191522,
+          "bounds": [
+            16,
+            10,
+            237,
+            245
+          ],
+          "coverage": 0.557
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 152892,
+          "bounds": [
+            16,
+            10,
+            239,
+            244
+          ],
+          "coverage": 0.431
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 167440,
+          "bounds": [
+            12,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.444
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 170504,
+          "bounds": [
+            19,
+            10,
+            235,
+            245
+          ],
+          "coverage": 0.498
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 120446,
+          "bounds": [
+            18,
+            10,
+            236,
+            245
+          ],
+          "coverage": 0.322
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 144656,
+          "bounds": [
+            12,
+            10,
+            243,
+            245
+          ],
+          "coverage": 0.385
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 155566,
+          "bounds": [
+            14,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.552
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 175588,
+          "bounds": [
+            11,
+            10,
+            245,
+            244
+          ],
+          "coverage": 0.5
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 147958,
+          "bounds": [
+            14,
+            11,
+            240,
+            245
+          ],
+          "coverage": 0.388
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 176284,
+          "bounds": [
+            10,
+            18,
+            245,
+            236
+          ],
+          "coverage": 0.517
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 135364,
+          "bounds": [
+            18,
+            10,
+            236,
+            244
+          ],
+          "coverage": 0.311
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 166020,
+          "bounds": [
+            12,
+            11,
+            242,
+            245
+          ],
+          "coverage": 0.502
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 152418,
+          "bounds": [
+            10,
+            29,
+            244,
+            226
+          ],
+          "coverage": 0.421
+        },
+        {
+          "card": "spades-7",
+          "bytes": 153304,
+          "bounds": [
+            23,
+            10,
+            232,
+            245
+          ],
+          "coverage": 0.451
+        },
+        {
+          "card": "spades-8",
+          "bytes": 157850,
+          "bounds": [
+            19,
+            10,
+            235,
+            245
+          ],
+          "coverage": 0.48
+        },
+        {
+          "card": "spades-9",
+          "bytes": 130544,
+          "bounds": [
+            23,
+            11,
+            231,
+            244
+          ],
+          "coverage": 0.418
+        },
+        {
+          "card": "spades-10",
+          "bytes": 169570,
+          "bounds": [
+            14,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.493
+        },
+        {
+          "card": "spades-J",
+          "bytes": 139696,
+          "bounds": [
+            14,
+            10,
+            241,
+            245
+          ],
+          "coverage": 0.363
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 139804,
+          "bounds": [
+            16,
+            10,
+            239,
+            245
+          ],
+          "coverage": 0.385
+        },
+        {
+          "card": "spades-K",
+          "bytes": 152158,
+          "bounds": [
+            10,
+            10,
+            244,
+            245
+          ],
+          "coverage": 0.461
+        },
+        {
+          "card": "spades-A",
+          "bytes": 135494,
+          "bounds": [
+            10,
+            12,
+            245,
+            242
+          ],
+          "coverage": 0.416
+        }
+      ]
+    }
+  ]
+}

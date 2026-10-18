@@ -15,6 +15,8 @@ const AppearanceDialog = lazy(() => import('./themes/AppearanceDialog').then((m)
 const EditionGallery = lazy(() => import('./decks/EditionGallery'));
 const AvatarPlayground = import.meta.env.DEV ? lazy(() => import('./avatars/AvatarPlayground')) : null;
 const DeckLab = import.meta.env.DEV ? lazy(() => import('./dev/DeckLab')) : null;
+const ArtProofs = import.meta.env.DEV ? lazy(() => import('./dev/ArtProofs')) : null;
+const ArtBackProofs = import.meta.env.DEV ? lazy(() => import('./dev/ArtBackProofs')) : null;
 const BrandPlayground = import.meta.env.DEV ? lazy(() => import('./dev/BrandPlayground')) : null;
 
 export function App() {
@@ -46,6 +48,10 @@ export function App() {
         <Suspense fallback={<p>Načítám sbírku…</p>}>
           <EditionGallery key={galleryDeck} deck={galleryDeck} />
         </Suspense>
+      ) : ArtBackProofs && path.replace(/\/$/, '') === '/dev/art-backs' ? (
+        <Suspense fallback={<p>Načítám návrhy rubů…</p>}><ArtBackProofs /></Suspense>
+      ) : ArtProofs && path.replace(/\/$/, '') === '/dev/art-poc' ? (
+        <Suspense fallback={<p>Načítám výtvarné koncepty…</p>}><ArtProofs /></Suspense>
       ) : DeckLab && path.replace(/\/$/, '') === '/dev/decks' ? (
         <Suspense fallback={<p>Načítám edice…</p>}>
           <DeckLab />

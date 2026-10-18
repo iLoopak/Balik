@@ -10,6 +10,6 @@ export function SuitIcon({ suit, className, style, title, deck: override }: {
   const glyph = DECK_THEMES[override ?? selected].suits[suit];
   return <svg viewBox={glyph.viewBox} className={className} style={style} aria-hidden={title ? undefined : true} role={title ? 'img' : undefined}>
     {title && <title>{title}</title>}
-    {glyph.paths.map((d, i) => <path key={i} d={d} fill={glyph.filled ? 'currentColor' : 'none'} stroke={glyph.viewBox === '0 0 24 24' ? 'currentColor' : undefined} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />)}
+    {glyph.paths.map((d, i) => <path key={i} d={d} fill={glyph.filled ? 'currentColor' : 'none'} fillRule={glyph.fillRule} stroke={glyph.viewBox === '0 0 24 24' ? 'currentColor' : undefined} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />)}
   </svg>;
 }

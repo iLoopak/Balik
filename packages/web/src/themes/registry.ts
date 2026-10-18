@@ -6,6 +6,7 @@ import { CLASSIC_PATHS } from './decks/classic';
 import { RETRO_ARCADE_CARDS } from './decks/retro-arcade/manifest';
 import { MARIASKY_CARDS } from './decks/mariasky/manifest';
 import { STRASIDLA_CARDS } from './decks/strasidla/manifest';
+import { COLLECTION_DECKS, COLLECTION_TABLES } from './decks/collections.generated';
 import type { DeckId, DeckTheme, TableId, TableTheme, SuitStyle } from './types';
 export type { DeckId, DeckTheme, TableId, TableTheme, StickerAsset } from './types';
 const mapSuits = <T,>(fn: (suit: Suit) => T) => Object.fromEntries(SUITS.map(s => [s, fn(s)])) as Record<Suit, T>;
@@ -41,6 +42,7 @@ const retroPaths: Record<Suit, string[]> = {
   spades: ['m50 6 40 40v24H64v12h12v12H24V82h12V70H10V46Z'],
 };
 export const DECK_THEMES: Record<DeckId, DeckTheme> = {
+  ...COLLECTION_DECKS,
   classic: {
     id: 'classic', name: 'Klasika', center: 'symbols', description: 'Čisté hodnoty a tradiční francouzské symboly.', indices: 'paired', back: null,
     suits: mapSuits(s => ({ name: SUIT_NAME_CS[s], ink: s === 'hearts' || s === 'diamonds' ? '#BC3044' : '#27323D', color: colors[s], paths: CLASSIC_PATHS[s], viewBox: '0 0 100 100', filled: true })),
@@ -85,7 +87,8 @@ export const TABLE_THEMES: Record<TableId, TableTheme> = {
   'retro-arcade': { id: 'retro-arcade', name: 'Noční herna', geometry: 'cabinet', background: '#18152D', surface: '#241E3C', rail: '#E597F263', grid: '#9D69CB20', colors, secondary: '#F5C544',
     light: { background: '#eee4d9', surface: '#ded0c9', rail: '#88658285', grid: '#916b8b24', secondary: '#885b83' },
     ambient: { hearts: 'M160 260h12v-12h12v12h12v12h-12v12h-12v-12h-12Z', diamonds: 'm160 260 14 12-14 12m24-24 14 12-14 12', clubs: 'M164 248h12v12h12v12h-12v12h-12v-12h-12v-12h12Z', spades: 'M790 144v-12h12v12m-24 0v-24h36v24m-48 0v-36h60v36' } },
+  ...COLLECTION_TABLES,
 };
-export const EDITIONS = [DECK_THEMES.stormpunk, DECK_THEMES['retro-arcade'], DECK_THEMES.mariasky, DECK_THEMES.strasidla, DECK_THEMES.kontrast] as const;
+export const EDITIONS = [DECK_THEMES.stormpunk, DECK_THEMES['retro-arcade'], DECK_THEMES.mariasky, DECK_THEMES.strasidla, DECK_THEMES.kontrast, ...Object.values(COLLECTION_DECKS)] as const;
 export function isDeckId(id: unknown): id is DeckId { return typeof id === 'string' && Object.hasOwn(DECK_THEMES, id); }
 export function isTableId(id: unknown): id is TableId { return typeof id === 'string' && Object.hasOwn(TABLE_THEMES, id); }

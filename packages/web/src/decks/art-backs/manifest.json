@@ -1,0 +1,37 @@
+[
+  {
+    "deck": "biopunk",
+    "name": "BIO//PUNK",
+    "direction": "Živý zámek",
+    "asset": "/decks/art-backs/biopunk.webp",
+    "bytes": 237616
+  },
+  {
+    "deck": "panelak-3000",
+    "name": "PANELÁK 3000",
+    "direction": "Noční vchod",
+    "asset": "/decks/art-backs/panelak-3000.webp",
+    "bytes": 268500
+  },
+  {
+    "deck": "chalupa",
+    "name": "CHALUPA!",
+    "direction": "Víkendový talisman",
+    "asset": "/decks/art-backs/chalupa.webp",
+    "bytes": 291578
+  },
+  {
+    "deck": "papirovy-cirkus",
+    "name": "PAPÍROVÝ CIRKUS",
+    "direction": "Divadlo za kartou",
+    "asset": "/decks/art-backs/papirovy-cirkus.webp",
+    "bytes": 248472
+  },
+  {
+    "deck": "stormpunk",
+    "name": "Stormpunk",
+    "direction": "Srdce živého města",
+    "asset": "/decks/art-backs/stormpunk.webp",
+    "bytes": 237622
+  }
+]

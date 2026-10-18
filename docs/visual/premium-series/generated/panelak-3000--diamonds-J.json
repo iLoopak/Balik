@@ -1,0 +1,37 @@
+{
+  "id": "panelak-3000:diamonds-J",
+  "deck": "panelak-3000",
+  "card": {
+    "id": "diamonds-J",
+    "suit": "diamonds",
+    "rank": "J"
+  },
+  "name": "Balkonový převozník",
+  "meaning": "Zručný soused dopravuje sazenice mezi patry na laně.",
+  "archetype": "Kurýr",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PANELÁK 3000. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A wiry elderly balcony gardener art-toy riding a little pulley seat on a taut diagonal cable, leaning far backward to counterbalance an oversized seedling crate. Long nose, wind-tugged cap, striped undershirt, thin limbs and a delighted grin. Green canvas harness, wood crate and chrome pulley, unlike the caretaker. World: Balkony. Primary accent #A4C970; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon. Card role: Kurýr; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-a39289d6-566f-41bc-8c7e-523d06873c7e.png",
+  "attempt": 2,
+  "stickerAsset": "/decks/panelak-3000/stickers/diamonds-j.webp",
+  "width": 768,
+  "height": 763,
+  "bytes": 174338,
+  "sourceBounds": [
+    88,
+    78,
+    1180,
+    1162
+  ],
+  "sourceEdgePixels": 0,
+  "revisions": [
+    {
+      "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-9687e9c9-45f0-4e20-8543-f1d5bee8bb26.png",
+      "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PANELÁK 3000. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A wiry elderly balcony gardener art-toy riding a little pulley seat on a taut diagonal cable, leaning far backward to counterbalance an oversized seedling crate. Long nose, wind-tugged cap, striped undershirt, thin limbs and a delighted grin. Green canvas harness, wood crate and chrome pulley, unlike the caretaker. World: Balkony. Primary accent #A4C970; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon. Card role: Kurýr; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+      "reason": "Cable met source edges; imagegen repair makes both finite endpoints visible."
+    }
+  ],
+  "revisionPrompt": "Edit this exact original PANELÁK 3000 balcony courier sticker. Preserve the elderly gardener's face, pose, anatomy, seedling crate, toy materials, colors, lighting and rendering quality. Correct only framing and the cable: show the entire sticker at a slightly smaller scale, fully inside the square with at least 10% genuinely transparent safety margin on all sides. Replace the infinitely extending cable that currently runs into the top/right/left image edges with a finite short diagonal chrome cable/rail segment above the pulley, with clearly rounded end stops visible at both ends; no detached background scenery. The whole rail, all die-cut edges, boots, foliage and props must be visible with transparent air around them. Narrow warm ivory die-cut border following the irregular silhouette. No lettering, numerals, card frame or background. Preserve real alpha transparency.",
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

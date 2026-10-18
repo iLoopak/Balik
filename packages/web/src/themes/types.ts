@@ -1,10 +1,11 @@
 import type { Card, Rank, Suit } from '@balik/shared';
-export type DeckId = 'classic' | 'stormpunk' | 'retro-arcade' | 'mariasky' | 'strasidla' | 'kontrast';
-export type TableId = 'stormpunk' | 'retro-arcade';
+export type DeckId = 'classic' | 'stormpunk' | 'retro-arcade' | 'mariasky' | 'strasidla' | 'kontrast' | 'biopunk' | 'panelak-3000' | 'chalupa' | 'papirovy-cirkus';
+export type TableId = 'stormpunk' | 'retro-arcade' | 'biopunk' | 'panelak-3000' | 'chalupa' | 'papirovy-cirkus';
 export interface StickerAsset { src: string; scale?: number; offset?: [number, number]; rotation?: number }
-export interface SuitStyle { name: string; ink: string; color: string; paths: readonly string[]; viewBox: string; filled: boolean }
+export interface SuitStyle { name: string; ink: string; color: string; paths: readonly string[]; viewBox: string; filled: boolean; fillRule?: 'evenodd' | 'nonzero' }
 export interface DeckTheme {
   id: DeckId; name: string; description: string; indices: 'paired' | 'four-corners';
+  artStatus?: 'study';
   fx?: { shape: 'spark' | 'dash' | 'leaf' | 'bolt' | 'pixel' | 'tulip'; secondary: string };
   /** `symbols` draws pips, court letters and role hints instead of sticker art (Klasika, Kontrast). */
   center?: 'sticker' | 'symbols';

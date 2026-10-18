@@ -1,0 +1,17 @@
+{
+  "deck": "panelak-3000",
+  "name": "PANELÁK 3000",
+  "reference": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "direction": "Noční vchod",
+  "prompt": "Use case: stylized-concept. Asset type: ONE finished portrait playing-card BACK ARTWORK for BALÍK. Portrait 5:7 composition, height 1.4 times width, straight-on flat view; artwork fills the entire rectangular canvas, no scene outside it and no perspective mockup. Input image is STYLE/MATERIAL reference only, not a character to reproduce. Create a new original ornamental composition. Keep the important inner frame at least 10 percent inside every edge so a small production crop cannot cut it. Dense enough to feel premium but organised into large clear masses readable on a 76px-wide card. Balanced opposed upper/lower ornaments around one strong central brand plaque. EXACTLY ONE text element: BALÍK, uppercase, with the acute accent on Í, in confident heavy sculptural serif letters. Make this short word sharply legible with excellent contrast. No other words, numbers, ranks, labels, corner indices, suit glyphs, logos, watermark or accidental lettering. No pasted face-card image, no UI icon pack, no stock clipart. Full-bleed OPAQUE background; no transparency and no outer paper/desk/photographic environment. Art direction: absurdist retrofuturistic collectible clay/vinyl-toy relief. A carefully built sculptural apartment-building ornament, not a city landscape. A deep blue midnight enamel back field surrounds an inset cream-and-brass central lift-door plaque bearing BALÍK. Above and below it sit two opposed rounded miniature tower facades with chunky glowing warm windows and one curved balcony each. Peach, moss green and dusty lavender enamel panels, brushed chrome antenna fins, a couple of soft laundry ribbons and a heavy rounded copper pipe form an integrated four-sided border. Real relief depth, weathered concrete pores, satin enamel, brass and woven fabric with sophisticated warm/cool studio light and contact shadows. Local domestic futuristic humor conveyed by construction; no people, apartment numbers or signs.",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-9ec45143-013a-40e8-ab21-723b78508d5d.png",
+  "status": "generated-proposal",
+  "export": {
+    "asset": "/decks/art-backs/panelak-3000.webp",
+    "width": 640,
+    "height": 896,
+    "bytes": 268500,
+    "isOpaque": true,
+    "method": "Sharp resize/encode only; no drawing or text compositing"
+  }
+}

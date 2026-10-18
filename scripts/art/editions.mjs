@@ -1,0 +1,68 @@
+// Visual metadata only. French suits and rank identities remain engine-owned.
+const suit=(name,color,ink,paths,character)=>({name,color,ink,paths:[paths],viewBox:'0 0 100 100',filled:true,fillRule:'evenodd',character});
+export default [
+  {
+    id:'biopunk', name:'BIO//PUNK', number:'006',
+    description:'Příroda pohltila stroje. Trny, podhoubí, chitin a živé obvody.',
+    direction:'Prémiový biomechanický komiks podle zjednodušené BIO v2: velké anatomické plochy, výrazný černý obrys, tři světelné skupiny a selektivní materiálové odlesky. Elektronika a organismus tvoří jedno tělo; žádný gore, fotorealismus ani fantasy les.',
+    principle:'Ostré listy / klobouky / segmenty / membrány rozlišují světy i bez barvy. Každá ilustrace má jeden hlavní objem a nanejvýš dva vedlejší motivy.',
+    bg:'#132A27', surface:'#193632', lightBg:'#E6EBDD', lightSurface:'#D7DFCF', accent:'#ADE34B', secondary:'#63D7D1',
+    fx:{shape:'leaf',secondary:'#ADE34B'},
+    suits:{
+      hearts:suit('Trnové sady','#ADE34B','#446316','M50 6 60 28 82 20 75 43 95 53 72 65 77 87 55 79 50 98 43 77 21 87 27 63 5 53 28 42 20 20 42 28Z','Zubaté listy, masožravé květy, kořenové kabely; agresivní růst.'),
+      diamonds:suit('Mykosíť','#B29AE8','#654592','M6 53Q12 7 50 7T94 53H61V76Q61 91 77 86V96Q41 106 40 77V53ZM20 40h60v-6H20Z','Houbové klobouky, světlé hyfy, spórové uzly; sdílená paměť.'),
+      clubs:suit('Chitin','#F48A69','#9B3D2B','M31 14 17 2 12 11 29 31 14 40 3 29 0 40 15 53 8 74 20 81 28 66 37 87 50 99 63 87 72 66 80 81 92 74 85 53 100 40 97 29 86 40 71 31 88 11 83 2 69 14 60 28H40ZM46 40h8v43h-8Z','Krovky, kusadla, jantarové klouby; divoké živé stroje.'),
+      spades:suit('Genové lázně','#63D7D1','#19646B','M25 2Q83 24 25 50T25 98H40Q98 76 40 50T40 2ZM62 2Q4 24 62 50T62 98H77Q19 76 77 50T77 2Z','Oblé kapsle, membrány a šroubovice; chladná evoluční symbióza.'),
+    },
+    gallery:{title:['Život si','najde obvod.'],intro:['BIO//PUNK. Čtyři frakce po konci záruky.','Divoká evoluce v třiceti dvou podobách.'],suitsLabel:'FRAKCE',collectionTitle:'Celý živý obvod',artNote:['KOŘENY V KABELECH.','ŽIVOT VE HŘE.']},
+    tableName:'Živý obvod', geometry:'oval',
+  },
+  {
+    id:'panelak-3000', name:'PANELÁK 3000', number:'007',
+    description:'Sídliště budoucnosti. Papuče, portály a signál z devátého patra.',
+    direction:'Absurdní retrofuturistické collectible toy art: modelovaný smalt, mosaz, měkká látka a beton. Sofistikované světlo a vlastní proporce postav. Teplá domácnost, zelené balkony, fialové podzemí a modré střechy.',
+    principle:'Humor je čitelný ze siluety a situace. Žádné nápisy ani interní vtipy potřebné k pochopení. Postavy jsou sousedé a správci svého konkrétního patra.',
+    bg:'#222B3A', surface:'#2C3647', lightBg:'#EAE5DE', lightSurface:'#DBD7D0', accent:'#F5A16E', secondary:'#74B9E6',
+    fx:{shape:'dash',secondary:'#F5A16E'},
+    suits:{
+      hearts:suit('Byty','#F5A16E','#974824','M19 5h62v91H19ZM30 16v69h40V16ZM57 49h8v12h-8Z','Kulaté spotřebiče, pantofle a domácí roboti; teplá každodenní absurdita.'),
+      diamonds:suit('Balkony','#A4C970','#476326','M7 51h86v12H7ZM7 67h10v18h15V67h11v18h14V67h11v18h15V67h10v29H7ZM46 45V26Q22 27 24 8 46 8 46 26 53 4 76 7 77 29 57 32v13Z','Zábradlí, květináče, prádlo a soukromé džungle; domácí beztíže.'),
+      clubs:suit('Podzemí','#AF98D2','#624780','M8 59h84v24H8ZM39 42h22v17H39ZM50 2a24 24 0 1 1 0 48 24 24 0 1 1 0-48Zm-4 8v11H35v9h11v11h9V30h11v-9H55V10Z','Ventily, kočárkárny a portálové výtahy; klidný servis reality.'),
+      spades:suit('Střechy','#74B9E6','#285D87','M45 12h10v81H45ZM8 28h84v10H8ZM18 8h9v49h-9ZM73 8h9v49h-9ZM22 83h56v11H22Z','Paraboly, antény, kočky a meteorologie; vítr a daleký příjem.'),
+    },
+    gallery:{title:['Budoucnost','v papučích.'],intro:['PANELÁK 3000. Čtyři světy za jedním vchodem.','Od hlavního uzávěru až po poslední anténu.'],suitsLabel:'SVĚTY',collectionTitle:'Celé sídliště v ruce',artNote:['DEVĚT PATER.','NEKONEČNO MOŽNOSTÍ.']},
+    tableName:'Noční sídliště', geometry:'cabinet',
+  },
+  {
+    id:'chalupa', name:'CHALUPA!', number:'008',
+    description:'Víkend je stav mysli. Záhony, houby, koupání a malé katastrofy.',
+    direction:'Prémiový český letní komiks: expresivní dospělé postavy, pohyb, materiály a skutečné stínování. Rajčatová zahrada, mechový les, tyrkysový rybník a slunečné plátno výprav.',
+    principle:'Silueta před drobností, dospělý hravý humor před nostalgií. Každý svět má předmět, tvora i obyvatele; nejde jen o sbírku veselých rekvizit.',
+    bg:'#20352F', surface:'#2A4238', lightBg:'#EDE7D7', lightSurface:'#DFD8C3', accent:'#F2C75B', secondary:'#58BFC8',
+    fx:{shape:'leaf',secondary:'#F2C75B'},
+    suits:{
+      hearts:suit('Zahrada','#F07859','#A23E29','M44 97V61Q8 65 8 28 44 26 49 56 50 9 91 7 96 48 57 56v41Z','Červený smalt, listy, nářadí a zahradníci; úroda a improvizace.'),
+      diamonds:suit('Les','#94B765','#47602D','M6 51Q9 5 50 5T94 51H61v34h16v11H23V85h16V51ZM28 25a7 7 0 1 0 14 0 7 7 0 1 0-14 0Zm29-5a9 9 0 1 0 18 0 9 9 0 1 0-18 0Z','Mech, výrazné hřiby, košíky a houbaři; objevování pod kloboukem.'),
+      clubs:suit('Voda','#58BFC8','#1B6872','M50 3Q85 40 85 63 85 96 50 96T15 63Q15 40 50 3ZM25 58v11q13-10 25 0t25 0V58q-13 10-25 0t-25 0Z','Nafukovací objemy, vlny a rákosí; důstojný odpočinek v mělčině.'),
+      spades:suit('Výpravy','#F2C75B','#795919','M50 3a47 47 0 1 1 0 94 47 47 0 1 1 0-94Zm0 10a37 37 0 1 0 0 74 37 37 0 1 0 0-74Zm0 9 14 28-14 28-14-28Z','Žluté plátno, mapy, stany a karavany; cestování za nejbližší kopec.'),
+    },
+    gallery:{title:['V pátek','mizíme.'],intro:['CHALUPA! Čtyři světy jednoho dlouhého víkendu.','Zahrada, les, voda a poslední buřt na cestu.'],suitsLabel:'SVĚTY',collectionTitle:'Celý víkend v jednom balíku',artNote:['MALÉ KATASTROFY.','VELKÉ LÉTO.']},
+    tableName:'Letní večer', geometry:'oval',
+  },
+  {
+    id:'papirovy-cirkus', name:'PAPÍROVÝ CIRKUS', number:'009',
+    description:'Masky, loutky, šelmy a iluze. Svět vystřižený pro jednu další partii.',
+    direction:'Fyzicky působící ručně vrstvené papírové divadlo: korál, okr, modř a švestka. Tloušťka papíru, vlákna, nepravidelné řezy, přiznané klouby a kontaktní stíny. Poetická surrealistická scénografie.',
+    principle:'Ploché vrstvy a negativní prostor mají přednost před texturou. Postavy nesou rekvizitu svého světa. Masky jsou úhlové, loutky kloubové, šelmy skládají hřívy, iluze pracují s otvorem a hvězdou.',
+    bg:'#302A3A', surface:'#3B3343', lightBg:'#ECE1D5', lightSurface:'#DFD2C5', accent:'#DAB863', secondary:'#B28AB9',
+    fx:{shape:'spark',secondary:'#DAB863'},
+    suits:{
+      hearts:suit('Masky','#DF7868','#963E35','M12 14 50 3 88 14 80 67 50 97 20 67ZM24 32l18-4 2 12-19 5Zm34-4 18 4-1 13-19-5ZM34 65l16-8 16 8-16 15Z','Korálové tváře, vějíře a opony; proměnlivé divadelní nálady.'),
+      diamonds:suit('Loutky','#DAB863','#7A5B21','M5 17h90v13H56v24H44V30H5ZM44 3h12v14H44ZM18 37h8v45h-8Zm56 0h8v45h-8ZM9 82h26v15H9Zm56 0h26v15H65Z','Okrové dřevo, přiznané provázky a klouby; mechanická poezie.'),
+      clubs:suit('Šelmy','#729ACD','#365E91','M50 2 68 17 91 16 88 41 100 58 80 73 72 96 50 88 28 96 20 73 0 58 12 41 9 16 32 17ZM30 32l20-9 20 9-5 34-15 17-15-17Z','Modré hřívy, obruče a lomené zvířecí siluety; tichá jevištní hrdost.'),
+      spades:suit('Iluze','#B28AB9','#724979','M50 2 63 25 89 16 81 42 100 61 74 67 69 95 50 77 31 95 26 67 0 61 19 42 11 16 37 25ZM18 51q32-33 64 0-32 33-64 0Zm32-14a14 14 0 1 0 0 28 14 14 0 1 0 0-28Z','Švestkové hvězdy, zrcadla a prázdné rámy; nemožné mechanismy.'),
+    },
+    gallery:{title:['Ještě jeden','nemožný trik.'],intro:['PAPÍROVÝ CIRKUS. Čtyři světy za jednou oponou.','Třicet dva vystřižených důvodů zůstat.'],suitsLabel:'SVĚTY',collectionTitle:'Celá scéna před tebou',artNote:['OSTRÉ STŘIHY.','LEHKÉ KOUZLO.']},
+    tableName:'Za oponou', geometry:'oval',
+  },
+];

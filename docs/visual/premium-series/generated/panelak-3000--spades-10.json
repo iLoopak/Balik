@@ -1,0 +1,28 @@
+{
+  "id": "panelak-3000:spades-10",
+  "deck": "panelak-3000",
+  "card": {
+    "id": "spades-10",
+    "suit": "spades",
+    "rank": "10"
+  },
+  "name": "Střešní observatoř",
+  "meaning": "Větrací věž s vlastním dalekohledem a otočnou střechou.",
+  "archetype": "Dominanta",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PANELÁK 3000. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A chunky miniature rooftop observatory assembled from a blue concrete ventilation tower with a huge cream telescope on a rotating rounded dome. One tiny dish and a single red windsock complete the silhouette. Concrete pores, painted steel, glass lens and canvas, no whole city or square base. World: Střechy. Primary accent #74B9E6; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon. Card role: Dominanta; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-4132111e-7b84-4ee1-95f6-04b1ce5826a6.png",
+  "stickerAsset": "/decks/panelak-3000/stickers/spades-10.webp",
+  "width": 700,
+  "height": 768,
+  "bytes": 206246,
+  "sourceBounds": [
+    79,
+    10,
+    1186,
+    1235
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

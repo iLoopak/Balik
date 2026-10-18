@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Toustový poplach",
+    "meaning": "Topinkovač vystřelil snídani rovnou na orbitu.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-7.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Dveře na tři západy",
+    "meaning": "Bezpečnostní dveře s okénkem do jiného obýváku.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-8.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Luxík",
+    "meaning": "Robotický vysavač si konečně našel vlastní pantofle.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-9.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Obývák na orbitě",
+    "meaning": "Celý panelákový obývák drží pohromadě na jediné platformě.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-10.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Poslíček v papučích",
+    "meaning": "Domácí robot doručuje balík přes jedinou chodbu.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-j.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Robotická domovnice",
+    "meaning": "Robotická domovnice v pantoflích drží hlavní klíče a úklid celého vchodu.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-q.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Předseda družstva",
+    "meaning": "Impozantní soused s klíči od všech společných prostor.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-k.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Svatý radiátor",
+    "meaning": "Žebrovaný zdroj domácího tepla dostal vlastní oběžnou dráhu.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/panelak-3000/stickers/hearts-a.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Uprchlý sušák",
+    "meaning": "Poryv větru proměnil prádlo v malou leteckou flotilu.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-7.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Sluneční markýza",
+    "meaning": "Pruhovaná obrana malého balkonu před velkým vedrem.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-8.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Holub na nabíječce",
+    "meaning": "Sídlištní pták obsadil květináč s bezdrátovým dobíjením.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-9.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Zavěšená džungle",
+    "meaning": "Samostatný balkon unese více zeleně než celý park.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-10.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Balkonový převozník",
+    "meaning": "Zručný soused dopravuje sazenice mezi patry na laně.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-j.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Královna pelargonií",
+    "meaning": "Zahradnice vládne závěsným květináčům i gravitaci.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-q.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Pán devátého patra",
+    "meaning": "Domácí mechanik s pancířem z truhlíků a satelitním kloboukem.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-k.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Balkonový vesmír",
+    "meaning": "Kulatá planeta s vlastním balkonem, sušákem a jednou kytkou.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/panelak-3000/stickers/diamonds-a.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Přetlak v potrubí",
+    "meaning": "Odpojené koleno vypouští bubliny z jiného patra reality.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-7.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Kočárkový tank",
+    "meaning": "Obrněný kočárek ochrání náklad před sklepením i schody.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-8.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Sklepní ježek",
+    "meaning": "Ježek s klíčovým hřbetem našel dokonalé bydlení mezi trubkami.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-9.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Výtah do mezipatra",
+    "meaning": "V kabině chybí patro. Místo něj se otvírá obloha.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-10.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Potrubní kurýr",
+    "meaning": "Sklepní údržbář vozí náhradní ventil na skládacím vozíku.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-j.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Strážkyně prádelny",
+    "meaning": "Paní podzemního provozu se žezlem z kartáče a pěnovým pláštěm.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-q.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Kotelník nultého patra",
+    "meaning": "Mohutný živý kotel má knír z trubek a nezměrné zásoby tepla.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-k.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Hlavní uzávěr reality",
+    "meaning": "Ikonický ventil drží všechna patra v jediném rozměru.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/panelak-3000/stickers/clubs-a.webp"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Přeladěná anténa",
+    "meaning": "Anténa chytila počasí, které do sídliště vůbec nepatří.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-7.webp"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Parabolický štít",
+    "meaning": "Satelitní talíř je dokonalý kryt před vesmírným krupobitím.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-8.webp"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Kočka s příjmem",
+    "meaning": "Střešní kočka přijímá signál ušima a vysílá ocasem.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-9.webp"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Střešní observatoř",
+    "meaning": "Větrací věž s vlastním dalekohledem a otočnou střechou.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-10.webp"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Anténní běžec",
+    "meaning": "Kurýr ve větru přenáší poslední analogový signál.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-j.webp"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Paní počasí",
+    "meaning": "Meteoroložka velí větru větrníkem a mrakům čajovou konvicí.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-q.webp"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "Král vysílačů",
+    "meaning": "Střešní obr má korunu z antén a plášť z izolační fólie.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-k.webp"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Signál nad sídlištěm",
+    "meaning": "Čtyři panelové bloky nesou jedinou společnou vysílací korunu.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/panelak-3000/stickers/spades-a.webp"
+  }
+]

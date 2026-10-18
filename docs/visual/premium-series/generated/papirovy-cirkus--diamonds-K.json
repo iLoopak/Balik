@@ -1,0 +1,28 @@
+{
+  "id": "papirovy-cirkus:diamonds-K",
+  "deck": "papirovy-cirkus",
+  "card": {
+    "id": "diamonds-K",
+    "suit": "diamonds",
+    "rank": "K"
+  },
+  "name": "Obr z rekvizit",
+  "meaning": "Loutkový král má ramena z beden a srdce z červeného papíru.",
+  "archetype": "Boss",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PAPÍROVÝ CIRKUS. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A massive nonhuman marionette giant assembled from a few ochre theatrical crates, broad hinged shoulders, an ivory box-like head tilted with a gentle tired expression, and one huge exposed folded burgundy heart suspended in its open chest. Kneeling on one thick jointed leg, one palm held protectively outward. Clearly physically built paperboard, not a robot icon. World: Loutky. Primary accent #DAB863; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Handcrafted layered theatrical papercut art, rendered as a photograph-like view of a physically built paper sculpture. Real visible paper thickness, raised stacked cutouts, curled folds, embossed fibers, matte rag paper, translucent mulberry tissue and restrained antique gold leaf. Precise deep CONTACT SHADOWS BETWEEN layers, tiny irregularities of hand cutting, dimensional sculptural faces and exposed paper-fastener joints for puppets. Warm raking theatrical side spotlight with cool fill. Not flat vector art, not smooth plastic, not an ordinary comic drawing. Card role: Boss; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/papirovy-cirkus-spades-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-e77f5607-3438-43b5-89da-2b769ce4ef30.png",
+  "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-k.webp",
+  "width": 711,
+  "height": 768,
+  "bytes": 170504,
+  "sourceBounds": [
+    99,
+    7,
+    1235,
+    1243
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

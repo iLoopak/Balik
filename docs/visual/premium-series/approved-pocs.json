@@ -1,0 +1,30 @@
+{
+  "biopunk": {
+    "suit": "hearts",
+    "rank": "K",
+    "name": "Fotosyntetický kolos",
+    "meaning": "Nehumanoidní fotosyntetický vládce střeží poslední světlo biomechanického světa.",
+    "style": "Premium biomechanical comic illustration following the simplified BIO v2 direction. Large designed anatomical planes, crisp varied black ink contours, three broad readable cel-shaded value groups and deep cool teal-black shadows. Strong head and concentrated eye area, coherent surprising NONHUMAN anatomy. Material separation: satin waxy leaves, broad matte bark facets, heavy chitin plates, translucent sap or membranes and restrained worn metal reflections. Selective fine craftsmanship at focal points, not a dense microtexture field. Few thick tendons and cables, only a few large teeth where relevant, controlled amber light. Fierce and evolutionary, never gore, generic fantasy treants, toys, cute humanoids, flat SVG icons or photorealism."
+  },
+  "panelak-3000": {
+    "suit": "hearts",
+    "rank": "Q",
+    "name": "Robotická domovnice",
+    "meaning": "Robotická domovnice v pantoflích drží hlavní klíče a úklid celého vchodu.",
+    "style": "Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon."
+  },
+  "chalupa": {
+    "suit": "hearts",
+    "rank": "J",
+    "name": "Sazenicový kurýr",
+    "meaning": "Chalupář zachraňuje přetížené kolečko se sazenicemi, zatímco mu hadice podrazila gumák.",
+    "style": "Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces."
+  },
+  "papirovy-cirkus": {
+    "suit": "spades",
+    "rank": "Q",
+    "name": "Kartografka snů",
+    "meaning": "Papírová loutka balancuje nad srpkem a rozvíjí schodiště z vlastního pláště jako mapu snů.",
+    "style": "Handcrafted layered theatrical papercut art, rendered as a photograph-like view of a physically built paper sculpture. Real visible paper thickness, raised stacked cutouts, curled folds, embossed fibers, matte rag paper, translucent mulberry tissue and restrained antique gold leaf. Precise deep CONTACT SHADOWS BETWEEN layers, tiny irregularities of hand cutting, dimensional sculptural faces and exposed paper-fastener joints for puppets. Warm raking theatrical side spotlight with cool fill. Not flat vector art, not smooth plastic, not an ordinary comic drawing."
+  }
+}

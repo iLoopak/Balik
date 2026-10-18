@@ -1,0 +1,29 @@
+{
+  "id": "panelak-3000:hearts-8",
+  "deck": "panelak-3000",
+  "card": {
+    "id": "hearts-8",
+    "suit": "hearts",
+    "rank": "8"
+  },
+  "name": "Dveře na tři západy",
+  "meaning": "Bezpečnostní dveře s okénkem do jiného obýváku.",
+  "archetype": "Obrana",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PANELÁK 3000. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A massive padded peach apartment security door shown at a strong three-quarter angle, three chunky mechanical bolt locks unfolding like defensive arms. Its round peephole contains an impossibly deep miniature blue living room. A tiny doormat clings to the threshold. No numbers or lettering. World: Byty. Primary accent #F5A16E; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon. Card role: Obrana; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-1e7ea50e-3b93-42cb-834f-0505b47fcb8f.png",
+  "attempt": 2,
+  "stickerAsset": "/decks/panelak-3000/stickers/hearts-8.webp",
+  "width": 685,
+  "height": 768,
+  "bytes": 164218,
+  "sourceBounds": [
+    118,
+    0,
+    1220,
+    1249
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

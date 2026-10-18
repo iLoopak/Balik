@@ -1,0 +1,1825 @@
+{
+  "method": "Decoded alpha, dimensions, transparent margins and 48px/174px contact sheets. Not an artistic quality score.",
+  "decks": [
+    {
+      "deck": "biopunk",
+      "count": 32,
+      "totalBytes": 6526680,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 211710,
+          "width": 711,
+          "height": 768,
+          "coverage": 0.583,
+          "bounds": [
+            32,
+            32,
+            678,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 170838,
+          "width": 704,
+          "height": 768,
+          "coverage": 0.517,
+          "bounds": [
+            32,
+            32,
+            671,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 212948,
+          "width": 768,
+          "height": 763,
+          "coverage": 0.536,
+          "bounds": [
+            32,
+            32,
+            735,
+            730
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 227910,
+          "width": 745,
+          "height": 768,
+          "coverage": 0.569,
+          "bounds": [
+            32,
+            32,
+            712,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 209956,
+          "width": 768,
+          "height": 757,
+          "coverage": 0.494,
+          "bounds": [
+            32,
+            32,
+            735,
+            724
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 215182,
+          "width": 732,
+          "height": 768,
+          "coverage": 0.537,
+          "bounds": [
+            32,
+            32,
+            699,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 211432,
+          "width": 768,
+          "height": 761,
+          "coverage": 0.568,
+          "bounds": [
+            32,
+            32,
+            735,
+            728
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 196126,
+          "width": 662,
+          "height": 768,
+          "coverage": 0.587,
+          "bounds": [
+            32,
+            32,
+            629,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 165224,
+          "width": 734,
+          "height": 768,
+          "coverage": 0.485,
+          "bounds": [
+            32,
+            32,
+            701,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 193930,
+          "width": 733,
+          "height": 768,
+          "coverage": 0.544,
+          "bounds": [
+            32,
+            32,
+            700,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 215820,
+          "width": 768,
+          "height": 763,
+          "coverage": 0.578,
+          "bounds": [
+            32,
+            32,
+            735,
+            730
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 208222,
+          "width": 748,
+          "height": 768,
+          "coverage": 0.53,
+          "bounds": [
+            32,
+            32,
+            715,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 211958,
+          "width": 759,
+          "height": 768,
+          "coverage": 0.503,
+          "bounds": [
+            32,
+            32,
+            726,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 226014,
+          "width": 765,
+          "height": 768,
+          "coverage": 0.491,
+          "bounds": [
+            32,
+            32,
+            732,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 237408,
+          "width": 767,
+          "height": 768,
+          "coverage": 0.579,
+          "bounds": [
+            32,
+            32,
+            734,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 223678,
+          "width": 768,
+          "height": 762,
+          "coverage": 0.575,
+          "bounds": [
+            32,
+            32,
+            735,
+            729
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 184614,
+          "width": 768,
+          "height": 747,
+          "coverage": 0.507,
+          "bounds": [
+            32,
+            32,
+            735,
+            714
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 190388,
+          "width": 768,
+          "height": 745,
+          "coverage": 0.576,
+          "bounds": [
+            32,
+            32,
+            735,
+            712
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 200480,
+          "width": 768,
+          "height": 722,
+          "coverage": 0.518,
+          "bounds": [
+            32,
+            32,
+            735,
+            689
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 203690,
+          "width": 696,
+          "height": 768,
+          "coverage": 0.597,
+          "bounds": [
+            32,
+            32,
+            663,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 193646,
+          "width": 763,
+          "height": 768,
+          "coverage": 0.404,
+          "bounds": [
+            32,
+            32,
+            730,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 209428,
+          "width": 768,
+          "height": 746,
+          "coverage": 0.517,
+          "bounds": [
+            32,
+            32,
+            735,
+            713
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 193054,
+          "width": 768,
+          "height": 758,
+          "coverage": 0.457,
+          "bounds": [
+            32,
+            32,
+            698,
+            689
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 212198,
+          "width": 768,
+          "height": 747,
+          "coverage": 0.599,
+          "bounds": [
+            32,
+            32,
+            735,
+            714
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-7",
+          "bytes": 187332,
+          "width": 750,
+          "height": 768,
+          "coverage": 0.45,
+          "bounds": [
+            32,
+            32,
+            717,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-8",
+          "bytes": 200816,
+          "width": 756,
+          "height": 768,
+          "coverage": 0.567,
+          "bounds": [
+            32,
+            32,
+            723,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-9",
+          "bytes": 213050,
+          "width": 759,
+          "height": 768,
+          "coverage": 0.578,
+          "bounds": [
+            32,
+            32,
+            726,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-10",
+          "bytes": 217996,
+          "width": 738,
+          "height": 768,
+          "coverage": 0.581,
+          "bounds": [
+            32,
+            32,
+            704,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-J",
+          "bytes": 201666,
+          "width": 745,
+          "height": 768,
+          "coverage": 0.502,
+          "bounds": [
+            32,
+            32,
+            712,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 187242,
+          "width": 768,
+          "height": 759,
+          "coverage": 0.465,
+          "bounds": [
+            32,
+            32,
+            734,
+            726
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-K",
+          "bytes": 231654,
+          "width": 768,
+          "height": 768,
+          "coverage": 0.596,
+          "bounds": [
+            32,
+            32,
+            735,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-A",
+          "bytes": 161070,
+          "width": 545,
+          "height": 768,
+          "coverage": 0.602,
+          "bounds": [
+            32,
+            32,
+            512,
+            735
+          ],
+          "sourceEdgePixels": 0
+        }
+      ]
+    },
+    {
+      "deck": "panelak-3000",
+      "count": 32,
+      "totalBytes": 5946922,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 163594,
+          "width": 743,
+          "height": 768,
+          "coverage": 0.46,
+          "bounds": [
+            32,
+            32,
+            710,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 164218,
+          "width": 685,
+          "height": 768,
+          "coverage": 0.584,
+          "bounds": [
+            32,
+            32,
+            652,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 158068,
+          "width": 768,
+          "height": 739,
+          "coverage": 0.469,
+          "bounds": [
+            32,
+            32,
+            735,
+            706
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 206528,
+          "width": 768,
+          "height": 757,
+          "coverage": 0.566,
+          "bounds": [
+            32,
+            32,
+            735,
+            724
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 164962,
+          "width": 727,
+          "height": 768,
+          "coverage": 0.403,
+          "bounds": [
+            32,
+            32,
+            694,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 191610,
+          "width": 768,
+          "height": 752,
+          "coverage": 0.51,
+          "bounds": [
+            32,
+            32,
+            735,
+            719
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 198274,
+          "width": 768,
+          "height": 719,
+          "coverage": 0.576,
+          "bounds": [
+            32,
+            32,
+            735,
+            686
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 169492,
+          "width": 747,
+          "height": 768,
+          "coverage": 0.5,
+          "bounds": [
+            33,
+            33,
+            714,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 181776,
+          "width": 768,
+          "height": 725,
+          "coverage": 0.42,
+          "bounds": [
+            32,
+            32,
+            735,
+            692
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 169962,
+          "width": 761,
+          "height": 768,
+          "coverage": 0.559,
+          "bounds": [
+            32,
+            32,
+            728,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 171940,
+          "width": 690,
+          "height": 768,
+          "coverage": 0.519,
+          "bounds": [
+            32,
+            32,
+            657,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 215518,
+          "width": 724,
+          "height": 768,
+          "coverage": 0.591,
+          "bounds": [
+            32,
+            32,
+            691,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 174338,
+          "width": 768,
+          "height": 763,
+          "coverage": 0.452,
+          "bounds": [
+            32,
+            32,
+            735,
+            730
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 229142,
+          "width": 768,
+          "height": 753,
+          "coverage": 0.511,
+          "bounds": [
+            32,
+            32,
+            735,
+            720
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 202116,
+          "width": 621,
+          "height": 768,
+          "coverage": 0.528,
+          "bounds": [
+            32,
+            32,
+            588,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 190136,
+          "width": 737,
+          "height": 768,
+          "coverage": 0.555,
+          "bounds": [
+            32,
+            33,
+            703,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 189586,
+          "width": 759,
+          "height": 768,
+          "coverage": 0.466,
+          "bounds": [
+            32,
+            32,
+            726,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 197846,
+          "width": 740,
+          "height": 768,
+          "coverage": 0.568,
+          "bounds": [
+            32,
+            32,
+            706,
+            734
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 219180,
+          "width": 768,
+          "height": 762,
+          "coverage": 0.613,
+          "bounds": [
+            32,
+            32,
+            735,
+            729
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 160800,
+          "width": 591,
+          "height": 768,
+          "coverage": 0.662,
+          "bounds": [
+            32,
+            32,
+            558,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 177754,
+          "width": 768,
+          "height": 735,
+          "coverage": 0.437,
+          "bounds": [
+            32,
+            32,
+            735,
+            702
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 172494,
+          "width": 707,
+          "height": 768,
+          "coverage": 0.471,
+          "bounds": [
+            32,
+            32,
+            674,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 202648,
+          "width": 729,
+          "height": 768,
+          "coverage": 0.562,
+          "bounds": [
+            32,
+            32,
+            696,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 177862,
+          "width": 768,
+          "height": 750,
+          "coverage": 0.466,
+          "bounds": [
+            32,
+            32,
+            735,
+            717
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-7",
+          "bytes": 140932,
+          "width": 762,
+          "height": 768,
+          "coverage": 0.314,
+          "bounds": [
+            32,
+            32,
+            729,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-8",
+          "bytes": 181078,
+          "width": 713,
+          "height": 768,
+          "coverage": 0.567,
+          "bounds": [
+            32,
+            32,
+            680,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-9",
+          "bytes": 201594,
+          "width": 767,
+          "height": 768,
+          "coverage": 0.487,
+          "bounds": [
+            32,
+            33,
+            733,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-10",
+          "bytes": 206246,
+          "width": 700,
+          "height": 768,
+          "coverage": 0.635,
+          "bounds": [
+            32,
+            32,
+            667,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-J",
+          "bytes": 192846,
+          "width": 768,
+          "height": 715,
+          "coverage": 0.542,
+          "bounds": [
+            32,
+            32,
+            735,
+            682
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 210114,
+          "width": 768,
+          "height": 765,
+          "coverage": 0.521,
+          "bounds": [
+            32,
+            32,
+            735,
+            732
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-K",
+          "bytes": 222402,
+          "width": 757,
+          "height": 768,
+          "coverage": 0.569,
+          "bounds": [
+            32,
+            32,
+            724,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-A",
+          "bytes": 141866,
+          "width": 552,
+          "height": 768,
+          "coverage": 0.51,
+          "bounds": [
+            32,
+            32,
+            519,
+            735
+          ],
+          "sourceEdgePixels": 0
+        }
+      ]
+    },
+    {
+      "deck": "chalupa",
+      "count": 32,
+      "totalBytes": 6823958,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 220602,
+          "width": 768,
+          "height": 764,
+          "coverage": 0.521,
+          "bounds": [
+            32,
+            32,
+            735,
+            731
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 202894,
+          "width": 744,
+          "height": 768,
+          "coverage": 0.503,
+          "bounds": [
+            32,
+            32,
+            711,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 191498,
+          "width": 768,
+          "height": 687,
+          "coverage": 0.493,
+          "bounds": [
+            32,
+            32,
+            735,
+            654
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 190964,
+          "width": 740,
+          "height": 768,
+          "coverage": 0.47,
+          "bounds": [
+            32,
+            32,
+            707,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 191532,
+          "width": 768,
+          "height": 672,
+          "coverage": 0.512,
+          "bounds": [
+            32,
+            32,
+            735,
+            639
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 202248,
+          "width": 768,
+          "height": 711,
+          "coverage": 0.53,
+          "bounds": [
+            32,
+            32,
+            735,
+            678
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 207082,
+          "width": 671,
+          "height": 768,
+          "coverage": 0.554,
+          "bounds": [
+            32,
+            32,
+            638,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 206102,
+          "width": 718,
+          "height": 768,
+          "coverage": 0.526,
+          "bounds": [
+            33,
+            32,
+            685,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 209850,
+          "width": 760,
+          "height": 768,
+          "coverage": 0.536,
+          "bounds": [
+            32,
+            32,
+            727,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 211056,
+          "width": 751,
+          "height": 768,
+          "coverage": 0.465,
+          "bounds": [
+            32,
+            32,
+            718,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 217426,
+          "width": 724,
+          "height": 768,
+          "coverage": 0.564,
+          "bounds": [
+            32,
+            32,
+            691,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 225002,
+          "width": 694,
+          "height": 768,
+          "coverage": 0.576,
+          "bounds": [
+            32,
+            32,
+            661,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 226320,
+          "width": 768,
+          "height": 718,
+          "coverage": 0.583,
+          "bounds": [
+            32,
+            32,
+            735,
+            685
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 220218,
+          "width": 757,
+          "height": 768,
+          "coverage": 0.536,
+          "bounds": [
+            32,
+            32,
+            724,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 230748,
+          "width": 760,
+          "height": 768,
+          "coverage": 0.531,
+          "bounds": [
+            32,
+            32,
+            727,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 250092,
+          "width": 768,
+          "height": 739,
+          "coverage": 0.634,
+          "bounds": [
+            32,
+            32,
+            735,
+            706
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 175140,
+          "width": 768,
+          "height": 737,
+          "coverage": 0.502,
+          "bounds": [
+            32,
+            32,
+            735,
+            704
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 207922,
+          "width": 768,
+          "height": 767,
+          "coverage": 0.541,
+          "bounds": [
+            32,
+            32,
+            735,
+            734
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 204528,
+          "width": 768,
+          "height": 766,
+          "coverage": 0.487,
+          "bounds": [
+            32,
+            32,
+            735,
+            733
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 238344,
+          "width": 765,
+          "height": 768,
+          "coverage": 0.581,
+          "bounds": [
+            32,
+            32,
+            732,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 238016,
+          "width": 763,
+          "height": 768,
+          "coverage": 0.554,
+          "bounds": [
+            32,
+            32,
+            730,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 186328,
+          "width": 600,
+          "height": 768,
+          "coverage": 0.534,
+          "bounds": [
+            32,
+            33,
+            567,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 220186,
+          "width": 759,
+          "height": 768,
+          "coverage": 0.525,
+          "bounds": [
+            32,
+            32,
+            726,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 272210,
+          "width": 768,
+          "height": 732,
+          "coverage": 0.651,
+          "bounds": [
+            32,
+            32,
+            735,
+            699
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-7",
+          "bytes": 182944,
+          "width": 768,
+          "height": 670,
+          "coverage": 0.537,
+          "bounds": [
+            32,
+            32,
+            735,
+            637
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-8",
+          "bytes": 201810,
+          "width": 768,
+          "height": 767,
+          "coverage": 0.534,
+          "bounds": [
+            32,
+            32,
+            735,
+            734
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-9",
+          "bytes": 203634,
+          "width": 768,
+          "height": 740,
+          "coverage": 0.544,
+          "bounds": [
+            32,
+            32,
+            735,
+            707
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-10",
+          "bytes": 191310,
+          "width": 768,
+          "height": 643,
+          "coverage": 0.625,
+          "bounds": [
+            32,
+            32,
+            735,
+            610
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-J",
+          "bytes": 194324,
+          "width": 768,
+          "height": 741,
+          "coverage": 0.434,
+          "bounds": [
+            32,
+            33,
+            735,
+            708
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 218834,
+          "width": 768,
+          "height": 738,
+          "coverage": 0.586,
+          "bounds": [
+            32,
+            32,
+            735,
+            705
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-K",
+          "bytes": 262378,
+          "width": 752,
+          "height": 768,
+          "coverage": 0.625,
+          "bounds": [
+            32,
+            32,
+            719,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-A",
+          "bytes": 222416,
+          "width": 768,
+          "height": 754,
+          "coverage": 0.589,
+          "bounds": [
+            32,
+            32,
+            735,
+            721
+          ],
+          "sourceEdgePixels": 0
+        }
+      ]
+    },
+    {
+      "deck": "papirovy-cirkus",
+      "count": 32,
+      "totalBytes": 4963270,
+      "assets": [
+        {
+          "card": "hearts-7",
+          "bytes": 170704,
+          "width": 738,
+          "height": 768,
+          "coverage": 0.548,
+          "bounds": [
+            32,
+            32,
+            705,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-8",
+          "bytes": 142960,
+          "width": 733,
+          "height": 768,
+          "coverage": 0.543,
+          "bounds": [
+            32,
+            32,
+            700,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-9",
+          "bytes": 157928,
+          "width": 727,
+          "height": 768,
+          "coverage": 0.48,
+          "bounds": [
+            32,
+            32,
+            694,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-10",
+          "bytes": 182742,
+          "width": 760,
+          "height": 768,
+          "coverage": 0.636,
+          "bounds": [
+            32,
+            32,
+            726,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-J",
+          "bytes": 157096,
+          "width": 729,
+          "height": 768,
+          "coverage": 0.389,
+          "bounds": [
+            32,
+            32,
+            696,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-Q",
+          "bytes": 175402,
+          "width": 717,
+          "height": 768,
+          "coverage": 0.507,
+          "bounds": [
+            32,
+            32,
+            684,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-K",
+          "bytes": 155756,
+          "width": 736,
+          "height": 768,
+          "coverage": 0.491,
+          "bounds": [
+            32,
+            32,
+            703,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "hearts-A",
+          "bytes": 137676,
+          "width": 624,
+          "height": 768,
+          "coverage": 0.512,
+          "bounds": [
+            32,
+            32,
+            591,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-7",
+          "bytes": 144550,
+          "width": 587,
+          "height": 768,
+          "coverage": 0.438,
+          "bounds": [
+            32,
+            32,
+            554,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-8",
+          "bytes": 166300,
+          "width": 768,
+          "height": 755,
+          "coverage": 0.625,
+          "bounds": [
+            33,
+            32,
+            735,
+            722
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-9",
+          "bytes": 137078,
+          "width": 659,
+          "height": 768,
+          "coverage": 0.448,
+          "bounds": [
+            32,
+            32,
+            626,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-10",
+          "bytes": 191522,
+          "width": 729,
+          "height": 768,
+          "coverage": 0.579,
+          "bounds": [
+            32,
+            32,
+            695,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-J",
+          "bytes": 152892,
+          "width": 731,
+          "height": 768,
+          "coverage": 0.443,
+          "bounds": [
+            32,
+            32,
+            698,
+            734
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-Q",
+          "bytes": 167440,
+          "width": 759,
+          "height": 768,
+          "coverage": 0.439,
+          "bounds": [
+            32,
+            32,
+            726,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-K",
+          "bytes": 170504,
+          "width": 711,
+          "height": 768,
+          "coverage": 0.532,
+          "bounds": [
+            32,
+            32,
+            678,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "diamonds-A",
+          "bytes": 120446,
+          "width": 722,
+          "height": 768,
+          "coverage": 0.334,
+          "bounds": [
+            33,
+            32,
+            688,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-7",
+          "bytes": 144656,
+          "width": 755,
+          "height": 768,
+          "coverage": 0.382,
+          "bounds": [
+            32,
+            32,
+            722,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-8",
+          "bytes": 155566,
+          "width": 743,
+          "height": 768,
+          "coverage": 0.565,
+          "bounds": [
+            32,
+            32,
+            710,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-9",
+          "bytes": 175588,
+          "width": 768,
+          "height": 765,
+          "coverage": 0.493,
+          "bounds": [
+            32,
+            32,
+            735,
+            732
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-10",
+          "bytes": 147958,
+          "width": 741,
+          "height": 768,
+          "coverage": 0.395,
+          "bounds": [
+            32,
+            33,
+            708,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-J",
+          "bytes": 176284,
+          "width": 768,
+          "height": 716,
+          "coverage": 0.546,
+          "bounds": [
+            32,
+            32,
+            735,
+            683
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-Q",
+          "bytes": 135364,
+          "width": 720,
+          "height": 768,
+          "coverage": 0.323,
+          "bounds": [
+            32,
+            32,
+            686,
+            734
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-K",
+          "bytes": 166020,
+          "width": 754,
+          "height": 768,
+          "coverage": 0.505,
+          "bounds": [
+            32,
+            33,
+            721,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "clubs-A",
+          "bytes": 152418,
+          "width": 768,
+          "height": 655,
+          "coverage": 0.486,
+          "bounds": [
+            32,
+            32,
+            734,
+            622
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-7",
+          "bytes": 153304,
+          "width": 689,
+          "height": 768,
+          "coverage": 0.494,
+          "bounds": [
+            32,
+            32,
+            656,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-8",
+          "bytes": 157850,
+          "width": 712,
+          "height": 768,
+          "coverage": 0.513,
+          "bounds": [
+            32,
+            32,
+            679,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-9",
+          "bytes": 130544,
+          "width": 692,
+          "height": 768,
+          "coverage": 0.459,
+          "bounds": [
+            33,
+            33,
+            659,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-10",
+          "bytes": 169570,
+          "width": 744,
+          "height": 768,
+          "coverage": 0.505,
+          "bounds": [
+            32,
+            32,
+            711,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-J",
+          "bytes": 139696,
+          "width": 744,
+          "height": 768,
+          "coverage": 0.367,
+          "bounds": [
+            32,
+            32,
+            711,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-Q",
+          "bytes": 139804,
+          "width": 731,
+          "height": 768,
+          "coverage": 0.396,
+          "bounds": [
+            32,
+            32,
+            698,
+            735
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-K",
+          "bytes": 152158,
+          "width": 768,
+          "height": 767,
+          "coverage": 0.452,
+          "bounds": [
+            32,
+            32,
+            734,
+            734
+          ],
+          "sourceEdgePixels": 0
+        },
+        {
+          "card": "spades-A",
+          "bytes": 135494,
+          "width": 768,
+          "height": 753,
+          "coverage": 0.42,
+          "bounds": [
+            32,
+            32,
+            735,
+            720
+          ],
+          "sourceEdgePixels": 0
+        }
+      ]
+    }
+  ]
+}

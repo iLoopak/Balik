@@ -1,0 +1,29 @@
+{
+  "id": "panelak-3000:hearts-Q",
+  "deck": "panelak-3000",
+  "card": {
+    "id": "hearts-Q",
+    "suit": "hearts",
+    "rank": "Q"
+  },
+  "name": "Robotická domovnice",
+  "meaning": "Robotická domovnice v pantoflích drží hlavní klíče a úklid celého vchodu.",
+  "archetype": "Kapitán",
+  "prompt": "Use case: stylized-concept. Asset type: ONE premium collectible card sticker for BALÍK, PANELÁK 3000 edition. Subject: an unforgettable robotic apartment-building caretaker, a stern but funny matriarch of a Czech retrofuturist housing estate. A broad pear-shaped enamel body with an integrated tiny lift door in its belly, oversized apron, a cable-coil perm under a translucent peach visor, narrow expressive mechanical eyes and a displeased tilted brow. Its three deliberately different arms form a lively readable composition: one short heavy arm jingles a comically large ring of master keys, one telescopic arm grips a worn broom at a confident diagonal, a small service claw tries to reel in a vacuum hose curled around an oversized purple house slipper. Two large mismatched slipper-covered rolling feet skid into a determined forward step. Clear local domestic humor with a single strong character and a few connected props, no generic robot holding a tablet. Style/medium: sophisticated absurdist designer vinyl-toy/clay collectible render, physically dimensional rounded sculpting, asymmetric silhouette and hand-shaped imperfections. Strong separation of satin apricot enamel, matte lavender rubber, worn brass keys, brushed metal telescopic joints, stitched canvas apron, broom bristles. Beautiful soft key light from upper left, warm bounce light, cool blue rim, deep contact shadows and restrained specular reflections. Not photorealistic human skin; an original stylized art-toy object with personality. Palette: apricot, warm ivory, muted lavender, tiny cyan status light and brass; limited coherent color groups. Composition: isolated complete three-quarter character, squat and broad with arms opening an asymmetric triangle, all limbs, broom, hose and keys inside the square canvas, about 80% coverage with transparent safety margins. A thin opaque ivory die-cut sticker border and subtle tight edge shadow. Genuinely transparent background, no floor plane, no scenery, no rectangular diorama base, no apartment background. No card design, indices, text, numbers, logos, suit icons or watermark. Avoid flat SVG icon pack aesthetics, simple dot-eyed humanoid template, generic cute robot, glossy generic plastic everywhere, photorealism, excessive props and microdetail. It must read as a premium small collectible sculptural illustration, not a UI pictogram.",
+  "reference": null,
+  "source": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "status": "accepted-for-integration",
+  "approvedPoc": true,
+  "stickerAsset": "/decks/panelak-3000/stickers/hearts-q.webp",
+  "width": 768,
+  "height": 752,
+  "bytes": 191610,
+  "sourceBounds": [
+    3,
+    16,
+    1252,
+    1236
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

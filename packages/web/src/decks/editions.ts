@@ -3,6 +3,7 @@ import { DECK_THEMES, type DeckId, type TableId } from '../themes/registry';
 import { RETRO_ARCADE_CARDS } from '../themes/decks/retro-arcade/manifest';
 import { MARIASKY_CARDS } from '../themes/decks/mariasky/manifest';
 import { STRASIDLA_CARDS } from '../themes/decks/strasidla/manifest';
+import { COLLECTION_GALLERIES, type CollectionDeckId } from '../themes/decks/collections.generated';
 
 export interface EditionCard { card: Card; name: string; meaning: string; archetype: string }
 export interface EditionCopy {
@@ -30,8 +31,9 @@ const KONTRAST_CARDS: EditionCard[] = SUITS.flatMap(suit => RANKS.map(rank => ({
 })));
 
 /** Public collections at /decks/<id>; Stormpunk keeps its own page. */
-export type GalleryDeckId = Extract<DeckId, 'retro-arcade' | 'mariasky' | 'strasidla' | 'kontrast'>;
+export type GalleryDeckId = Extract<DeckId, 'retro-arcade' | 'mariasky' | 'strasidla' | 'kontrast'> | CollectionDeckId;
 export const GALLERY_EDITIONS: Record<GalleryDeckId, EditionCopy> = {
+  ...COLLECTION_GALLERIES,
   'retro-arcade': {
     number: '002', title: ['Ještě jednu', 'partii.'], suitsLabel: 'BARVY', table: 'retro-arcade',
     intro: ['Retro Arcade. Čtyři barvy, třicet dva charakterů.', 'Od prvního glitchu až po posledního bosse.'],
@@ -55,7 +57,7 @@ export const GALLERY_EDITIONS: Record<GalleryDeckId, EditionCopy> = {
 };
 
 export function galleryDeckFromPath(path: string): GalleryDeckId | null {
-  const id = /^\/decks\/([a-z-]+)\/?$/.exec(path)?.[1];
+  const id = /^\/decks\/([a-z0-9-]+)\/?$/.exec(path)?.[1];
   return id && Object.hasOwn(GALLERY_EDITIONS, id) ? (id as GalleryDeckId) : null;
 }
 export const editionHref = (id: DeckId) => (Object.hasOwn(GALLERY_EDITIONS, id) ? `/decks/${id}` : id === 'stormpunk' ? '/dev/deck-stormpunk' : null);

@@ -1,0 +1,17 @@
+{
+  "deck": "papirovy-cirkus",
+  "name": "PAPÍROVÝ CIRKUS",
+  "reference": "docs/visual/premium-poc/sources/papirovy-cirkus-spades-q.png",
+  "direction": "Divadlo za kartou",
+  "prompt": "Use case: stylized-concept. Asset type: ONE finished portrait playing-card BACK ARTWORK for BALÍK. Portrait 5:7 composition, height 1.4 times width, straight-on flat view; artwork fills the entire rectangular canvas, no scene outside it and no perspective mockup. Input image is STYLE/MATERIAL reference only, not a character to reproduce. Create a new original ornamental composition. Keep the important inner frame at least 10 percent inside every edge so a small production crop cannot cut it. Dense enough to feel premium but organised into large clear masses readable on a 76px-wide card. Balanced opposed upper/lower ornaments around one strong central brand plaque. EXACTLY ONE text element: BALÍK, uppercase, with the acute accent on Í, in confident heavy sculptural serif letters. Make this short word sharply legible with excellent contrast. No other words, numbers, ranks, labels, corner indices, suit glyphs, logos, watermark or accidental lettering. No pasted face-card image, no UI icon pack, no stock clipart. Full-bleed OPAQUE background; no transparency and no outer paper/desk/photographic environment. Art direction: physically handcrafted layered theatrical papercut, a convincing front-facing paper relief with visible cut thickness, fibers, curled folds, tiny manual irregularities and deep precise contact shadows BETWEEN layers. Dark plum matte paper field. An ivory central folded banner bears BALÍK in raised antique-gold paper serif letters. Two opposed cut-paper theatre curtains and sculptural ivory masks frame it; a blue layered lion mane shape and a golden marionette cross integrate into the lower/upper ornament, while one broad folded star supplies the focus behind the banner. Dusty coral, muted gold, midnight blue, burgundy and ivory, with warm raking theatre light and cool fill. Spacious coherent stepped paper construction, not flat vector shapes, no conventional clown, no realistic circus or generic ornamental wallpaper.",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-be7ba4cc-01b3-46dc-9cac-c1ae915591dd.png",
+  "status": "generated-proposal",
+  "export": {
+    "asset": "/decks/art-backs/papirovy-cirkus.webp",
+    "width": 640,
+    "height": 896,
+    "bytes": 248472,
+    "isOpaque": true,
+    "method": "Sharp resize/encode only; no drawing or text compositing"
+  }
+}

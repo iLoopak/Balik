@@ -23,6 +23,11 @@
     "qa:experience": "node scripts/e2e-experience.mjs",
     "qa:assets": "node scripts/audit-deck-assets.mjs",
     "art:retro": "node scripts/create-retro-arcade.mjs",
+    "art:worlds": "node scripts/create-world-editions.mjs",
+    "qa:world-assets": "node scripts/audit-world-editions.mjs",
+    "art:premium-poc": "node scripts/prepare-premium-poc.mjs",
+    "art:premium-plan": "node scripts/plan-premium-series.mjs",
+    "qa:premium-assets": "node scripts/audit-premium-series.mjs",
     "qa:lhar": "node --import tsx scripts/e2e-lhar.mjs"
   },
   "devDependencies": {

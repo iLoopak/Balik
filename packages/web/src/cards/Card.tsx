@@ -5,7 +5,7 @@ import { RANK_HINT, rankLabel, rankName, suitColor, suitName, stickerFor, type D
 import { SuitIcon } from './SuitIcon';
 import { CardEffectLayer } from '../effects/CardEffectLayer';
 import './cards.css';
-import { DECK_THEMES } from '../themes/registry';
+import { DECK_THEMES, type StickerAsset } from '../themes/registry';
 import { useAppearance } from '../themes/preferences';
 
 export interface CardFx {
@@ -27,6 +27,8 @@ interface CardViewProps {
   fx?: CardFx;
   game?: GameId;
   deck?: DeckId;
+  /** Isolated art review; changes only the visible sticker, never a concealed card. */
+  stickerOverride?: StickerAsset;
 }
 
 const DEFAULT_FLIP: Transition = { type: 'spring', stiffness: 260, damping: 26 };
@@ -44,12 +46,13 @@ export const CardView = memo(function CardView({
   fx,
   game = 'prsi',
   deck: override,
+  stickerOverride,
 }: CardViewProps) {
   const selected = useAppearance(p => p.deck);
   const deck = override ?? selected;
   const [failedAsset, setFailedAsset] = useState<string | null>(null);
   const showFace = !!card && faceUp;
-  const asset = showFace ? stickerFor(game, card, deck) : null;
+  const asset = showFace ? (stickerOverride ?? stickerFor(game, card, deck)) : null;
   const visibleDeck = showFace && DECK_THEMES[deck].center !== 'symbols' && (!asset || asset.src === failedAsset) ? 'classic' : deck;
   const label = card ? (DECK_THEMES[visibleDeck].ranks ? `${rankName(card.rank, visibleDeck)} · ${suitName(card.suit, visibleDeck)}` : `${card.rank} ${SUIT_NAME_CS[card.suit]}${suitName(card.suit, visibleDeck).toLowerCase() === SUIT_NAME_CS[card.suit] ? '' : ` · ${suitName(card.suit, visibleDeck)}`}`) : 'rub karty';
   return (
@@ -65,7 +68,7 @@ export const CardView = memo(function CardView({
             <CardBase />
             {DECK_THEMES[visibleDeck].center === 'symbols' && <CardCenter card={card} game={game} deck={visibleDeck} />}
             <CardIndices card={card} deck={visibleDeck} />
-            <CardStickerLayer card={card} game={game} deck={visibleDeck} onError={() => asset && setFailedAsset(asset.src)} />
+            <CardStickerLayer card={card} game={game} deck={visibleDeck} asset={visibleDeck === 'classic' ? null : asset} onError={() => asset && setFailedAsset(asset.src)} />
             <CardEffectLayer current={fx?.current} suit={card.suit} deck={visibleDeck} />
             <CardFxLayer fx={fx} />
           </div>
@@ -127,8 +130,8 @@ function CardCenter({ card, game, deck }: { card: Card; game: GameId; deck: Deck
  * Separate, individually transformable layer for future transparent sticker art.
  * Never baked into the card face.
  */
-export function CardStickerLayer({ card, game, deck = useAppearance.getState().deck, onError }: { card: Card; game: GameId; deck?: DeckId; onError?: () => void }) {
-  const sticker = stickerFor(game, card, deck);
+export function CardStickerLayer({ card, game, deck = useAppearance.getState().deck, onError, asset }: { card: Card; game: GameId; deck?: DeckId; onError?: () => void; asset?: StickerAsset | null }) {
+  const sticker = asset === undefined ? stickerFor(game, card, deck) : asset;
   if (!sticker) return null;
   const [ox, oy] = sticker?.offset ?? [0, 0];
   return (

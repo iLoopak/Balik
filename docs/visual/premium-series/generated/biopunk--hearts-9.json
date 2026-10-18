@@ -1,0 +1,28 @@
+{
+  "id": "biopunk:hearts-9",
+  "deck": "biopunk",
+  "card": {
+    "id": "hearts-9",
+    "suit": "hearts",
+    "rank": "9"
+  },
+  "name": "Mucholapka na nožkách",
+  "meaning": "Zubatý květ se sám přemisťuje za teplem nabíječek.",
+  "archetype": "Maskot",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / BIO//PUNK. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A mobile flytrap creature balancing on three springy root legs, its oversized hinged plant jaws pitched forward inquisitively. Three large ivory teeth per jaw, a bright amber eye under one broad leafy brow, one rear root foot curling toward a warm salvaged charger. Low animal-like body and a huge expressive head, no humanoid anatomy. World: Trnové sady. Primary accent #ADE34B; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium biomechanical comic illustration following the simplified BIO v2 direction. Large designed anatomical planes, crisp varied black ink contours, three broad readable cel-shaded value groups and deep cool teal-black shadows. Strong head and concentrated eye area, coherent surprising NONHUMAN anatomy. Material separation: satin waxy leaves, broad matte bark facets, heavy chitin plates, translucent sap or membranes and restrained worn metal reflections. Selective fine craftsmanship at focal points, not a dense microtexture field. Few thick tendons and cables, only a few large teeth where relevant, controlled amber light. Fierce and evolutionary, never gore, generic fantasy treants, toys, cute humanoids, flat SVG icons or photorealism. Card role: Maskot; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/biopunk-hearts-k-v2.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-e384bcaa-14b3-4617-810e-59d8c94d802e.png",
+  "stickerAsset": "/decks/biopunk/stickers/hearts-9.webp",
+  "width": 768,
+  "height": 763,
+  "bytes": 212948,
+  "sourceBounds": [
+    23,
+    17,
+    1239,
+    1225
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

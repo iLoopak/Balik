@@ -2,7 +2,7 @@ import { useColorMode, setColorMode } from '../themes/colorMode';
 import { AppearancePicker } from '../themes/AppearancePicker';
 import { useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
-import { RANKS, SUITS, type Card, type GameId } from '@balik/shared';
+import { GAME_IDS, GAME_INFO, RANKS, SUITS, type Card, type GameId } from '@balik/shared';
 import { CardView } from '../cards/Card';
 import { GameTableTheme } from '../table/GameTableTheme';
 import { computeGeometry } from '../table/layout';
@@ -31,10 +31,10 @@ export default function DeckLab() {
   const art = DECK_THEMES[deck].stickerFor(sample);
   return <MotionConfig reducedMotion={reduced ? 'always' : 'user'}><main className={`deck-lab${light ? ' lab-light' : ''}${reduced ? ' lab-reduced' : ''}`}>
     <header><AppearancePicker compact/><a href="/" className="brand-word">BALÍK / DECK LAB</a><BrandMascot state="idle" size={48} reduced={reduced}/></header>
-    <h1>Dva světy. Stejné karty.</h1><p>32 identit po hodnotách. Lokální náhled; bez připojení do místnosti.</p>
+    <h1>Mnoho světů. Stejné karty.</h1><p>32 identit po hodnotách. Lokální náhled; bez připojení do místnosti.</p>
     <div className="lab-controls"><label>Edice <select value={deck} onChange={e => setDeck(e.target.value as DeckId)}>{Object.values(DECK_THEMES).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
       <label>Stůl <select value={table} onChange={e => setTable(e.target.value as TableId)}>{Object.values(TABLE_THEMES).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
-      <label>Hra <select value={game} onChange={e=>setGame(e.target.value as GameId)}><option value="prsi">Prší</option><option value="sedma">Sedma</option><option value="lhar">Lhář</option></select></label>
+      <label>Hra <select value={game} onChange={e=>setGame(e.target.value as GameId)}>{GAME_IDS.map(id => <option key={id} value={id}>{GAME_INFO[id].name}</option>)}</select></label>
       {([['Malé karty',small,setSmall],['Světlá deska',light,setLight],['Rub',back,setBack],['Mobilní stůl',mobile,setMobile],['Omezit pohyb',reduced,setReduced]] as const).map(([label,on,set]) => <label key={label}><input type="checkbox" checked={on} onChange={e=>set(e.target.checked)}/>{label}</label>)}
       <button disabled={playing} onClick={()=>{setDemo(n=>n+1);setPlaying(true);}}>Přehrát sticker</button>
     </div>

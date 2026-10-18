@@ -334,6 +334,20 @@
 .card-deck-strasidla .card-sticker { inset: 19% 9%; }
 .card-deck-strasidla .card-sticker img { width: 100%; height: 100%; object-fit: contain; }
 
+/* The four world collections share index geometry, while base material stays edition-specific. */
+:is(.card-deck-biopunk, .card-deck-panelak-3000, .card-deck-chalupa, .card-deck-papirovy-cirkus) .card-rank { font-size: 25cqw; font-weight: 850; }
+:is(.card-deck-biopunk, .card-deck-panelak-3000, .card-deck-chalupa, .card-deck-papirovy-cirkus) .card-index-tl { top: 7cqw; left: 5cqw; width: 24cqw; }
+:is(.card-deck-biopunk, .card-deck-panelak-3000, .card-deck-chalupa, .card-deck-papirovy-cirkus) .card-index-br { bottom: 7cqw; right: 5cqw; width: 24cqw; }
+:is(.card-deck-biopunk, .card-deck-panelak-3000, .card-deck-chalupa, .card-deck-papirovy-cirkus) .card-index-suit { width: 18cqw; height: 18cqw; margin: 1cqw 0 0; }
+:is(.card-deck-biopunk, .card-deck-panelak-3000, .card-deck-chalupa, .card-deck-papirovy-cirkus) .card-sticker { inset: 21% 12%; }
+:is(.card-deck-biopunk, .card-deck-panelak-3000, .card-deck-chalupa, .card-deck-papirovy-cirkus) .card-sticker img { width: 100%; height: 100%; object-fit: contain; }
+.card-deck-biopunk .card-base { background: #f5f8e9; box-shadow: inset 0 0 0 .9cqw #cdd7bf, inset 0 -1.3cqw 0 #e4ebd5; }
+.card-deck-panelak-3000 .card-base { background: #f8f4ee; box-shadow: inset 0 0 0 .9cqw #d4d4d6, inset 0 -1.3cqw 0 #e8e5e1; }
+.card-deck-panelak-3000 .card-sticker { inset: 22% 13%; }
+.card-deck-chalupa .card-base { background: #fff9e8; box-shadow: inset 0 0 0 .9cqw #e4d8b8, inset 0 -1.3cqw 0 #f3e9cb; }
+.card-deck-papirovy-cirkus .card-base { background: #f8efe2; box-shadow: inset 0 0 0 1cqw #d4c3b0, inset 0 0 0 2.5cqw #f8efe2, inset 0 0 0 2.9cqw #d4c3b0; }
+.card-deck-papirovy-cirkus .card-sticker img { filter: drop-shadow(1cqw 1.5cqw 0 #42334c16); }
+
 /* Kontrast: pure white, a solid ink border, oversized indices and solid role hints.
    Every suit is told apart by shape, colour (colour-blind safe) and pattern. */
 .card-deck-kontrast .card-base { background: #fff; box-shadow: inset 0 0 0 1.8cqw #141414; }

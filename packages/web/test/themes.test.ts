@@ -2,14 +2,17 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { readFileSync, statSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { applyGameAction, chooseGameBotAction, createDeck32, createGameRound, gameViewFor, mulberry32, type GameId, type GameState } from '@balik/shared';
+import { GAME_IDS, GAME_INFO, applyGameAction, chooseGameBotAction, createDeck32, createGameRound, gameViewFor, mulberry32, type GameState } from '@balik/shared';
 import { CardView } from '../src/cards/Card';
 import { DECK_THEMES, EDITIONS, TABLE_THEMES } from '../src/themes/registry';
 import { APPEARANCE_KEY, DEFAULT_APPEARANCE, deckAssetUrls, parseAppearance, preloadDeck, setAppearance, useAppearance } from '../src/themes/preferences';
 import { RETRO_ARCADE_CARDS } from '../src/themes/decks/retro-arcade/manifest';
 import { MARIASKY_CARDS } from '../src/themes/decks/mariasky/manifest';
 import { STRASIDLA_CARDS } from '../src/themes/decks/strasidla/manifest';
+import { COLLECTION_CARDS, COLLECTION_DECK_IDS } from '../src/themes/decks/collections.generated';
+import { editionHref, galleryDeckFromPath, GALLERY_EDITIONS } from '../src/decks/editions';
 import { cardText, rankLabel } from '../src/cards/skin';
 import { stickerFor } from '../src/cards/skin';
 import { BrandMascot } from '../src/brand/BrandMascot';
@@ -23,10 +26,60 @@ const root = fileURLToPath(new URL('../public', import.meta.url));
 afterEach(() => { useAppearance.setState(DEFAULT_APPEARANCE); vi.unstubAllGlobals(); });
 
 describe('interchangeable cosmetic editions', () => {
-  it('renders both complete decks with actual layered indices, distinct symbols and stickers in both games', () => {
+  it('isolates an art proof override to the face sticker, preserving indices and concealed identity', () => {
+    const proof={src:'/decks/art-poc/biopunk-hearts-k.webp'};
+    const card={id:'hearts-K',suit:'hearts',rank:'K'} as const;
+    const face=renderToStaticMarkup(createElement(CardView,{card,faceUp:true,deck:'biopunk',stickerOverride:proof}));
+    expect(face).toContain(proof.src); expect(face).toContain('>K</span>');
+    expect(face).toContain('data-layer="sticker"'); expect(face).toContain('data-deck="biopunk"');
+    expect(face).not.toContain('/decks/biopunk/stickers/hearts-k.svg');
+    const concealed=renderToStaticMarkup(createElement(CardView,{card:null,faceUp:false,deck:'biopunk'}));
+    for(const card of createDeck32())expect(renderToStaticMarkup(createElement(CardView,{card,faceUp:false,deck:'biopunk',stickerOverride:proof}))).toBe(concealed);
+    expect(concealed).not.toContain('/art-poc/');
+  });
+  it.each(COLLECTION_DECK_IDS)('ships %s as a complete selectable collection with separate art, a back and a public route', id => {
+    const theme = DECK_THEMES[id], entries = COLLECTION_CARDS[id];
+    expect(entries.map(entry => entry.card)).toEqual(createDeck32());
+    expect(new Set(entries.map(entry => entry.name)).size).toBe(32);
+    expect(EDITIONS).toContain(theme);
+    expect(deckAssetUrls(id)).toHaveLength(33);
+    expect(parseAppearance(JSON.stringify({deck:id,table:id}))).toEqual({deck:id,table:id});
+    expect(editionHref(id)).toBe(`/decks/${id}`);
+    expect(galleryDeckFromPath(`/decks/${id}`)).toBe(id);
+    expect(galleryDeckFromPath(`/decks/${id}/`)).toBe(id);
+    expect(galleryDeckFromPath(`/decks/${id}/stickers/hearts-7.svg`)).toBeNull();
+    expect(GALLERY_EDITIONS[id].cards).toBe(entries);
+    expect(new Set(Object.values(theme.suits).map(s => s.ink)).size).toBe(4);
+    const geometry = new Set<string>();
+    for (const entry of entries) {
+      expect(theme.stickerFor(entry.card)?.src).toBe(entry.stickerAsset);
+      const face = renderToStaticMarkup(createElement(CardView, {card:entry.card,faceUp:true,deck:id}));
+      expect(face).toContain('fill-rule="evenodd"');
+      const bytes=readFileSync(root + entry.stickerAsset);
+      if(entry.stickerAsset.endsWith('.webp')){
+        expect(bytes.toString('ascii',0,4)).toBe('RIFF');
+        expect(bytes.toString('ascii',8,12)).toBe('WEBP');
+        expect(bytes.toString('ascii',12,16)).toBe('VP8X');
+        expect(bytes[20]! & 0x10).toBe(0x10); // Extended WebP alpha flag.
+        expect(bytes.length).toBeGreaterThan(15_000); expect(bytes.length).toBeLessThan(700_000);
+        geometry.add(createHash('sha256').update(bytes).digest('hex'));
+      }else{
+        const svg=bytes.toString('utf8');
+        expect(svg).toContain('viewBox="0 0 256 256"');
+        expect(svg).not.toMatch(/<text|<script|<image|<foreignObject|https?:\/\/(?!www.w3.org)/);
+        expect(svg).toContain('feMorphology');
+        expect(svg).not.toMatch(/<rect[^>]*width="256"/);
+        expect(bytes.length).toBeLessThan(8000);
+        geometry.add(svg.replace(/#[a-f\d]{6}/gi, '#COLOR'));
+      }
+    }
+    expect(geometry.size).toBe(32);
+    expect(readFileSync(root + theme.back!, 'utf8')).toContain('BALÍK');
+  });
+  it('renders all editions with layered indices, distinct symbols and stickers across every supported game', () => {
     for (const theme of EDITIONS) {
       expect(new Set(Object.values(theme.suits).map(s => s.paths.join(' '))).size).toBe(4);
-      for (const game of ['prsi', 'sedma', 'lhar'] as const) for (const card of createDeck32()) {
+      for (const game of GAME_IDS) for (const card of createDeck32()) {
         const html = renderToStaticMarkup(createElement(CardView, { card, faceUp: true, deck: theme.id, game, fx: { current: true } }));
         expect(html).toContain(`>${theme.ranks?.[card.rank]?.index ?? card.rank}</span>`);
         expect(html).toContain(theme.suits[card.suit].paths[0]);
@@ -153,14 +206,15 @@ describe('interchangeable cosmetic editions', () => {
     expect(requested.every(s => s.startsWith('/decks/retro-arcade/'))).toBe(true);
     expect(deckAssetUrls('classic')).toEqual([]); stop();
   });
-  it.each(['prsi','sedma','lhar'] as GameId[])('finishes %s identically while switching appearance at every turn', (game) => {
+  it.each(GAME_IDS)('finishes %s identically while switching appearance at every turn', (game) => {
     function run(switching: boolean) {
       vi.stubGlobal('localStorage', {setItem() {}});
-      const rng = mulberry32(71); let state: GameState = createGameRound(game, ['a','b'], 0, rng).state;
+      const players = Array.from({length: Math.max(2, GAME_INFO[game].players[0]!)}, (_, i) => String.fromCharCode(97+i));
+      const rng = mulberry32(71); let state: GameState = createGameRound(game, players, 0, rng).state;
       const events: unknown[] = [];
       for (let turn = 0; turn < 2000 && state.phase !== 'finished'; turn++) {
         const before = JSON.stringify(state), view = gameViewFor(state, 'a');
-        if (switching) setAppearance({deck: turn % 2 ? 'stormpunk' : 'retro-arcade', table: turn % 3 ? 'retro-arcade' : 'stormpunk'});
+        if (switching) setAppearance({deck: EDITIONS[turn % EDITIONS.length]!.id, table: Object.values(TABLE_THEMES)[turn % Object.keys(TABLE_THEMES).length]!.id});
         expect(JSON.stringify(state)).toBe(before); expect(gameViewFor(state,'a')).toEqual(view);
         const action = chooseGameBotAction(state,rng), player = state.players[state.currentIndex]!.id;
         const result = applyGameAction(state,player,action,rng); if (!result.ok) throw new Error(result.error);

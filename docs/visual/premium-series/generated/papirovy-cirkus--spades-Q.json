@@ -1,0 +1,29 @@
+{
+  "id": "papirovy-cirkus:spades-Q",
+  "deck": "papirovy-cirkus",
+  "card": {
+    "id": "spades-Q",
+    "suit": "spades",
+    "rank": "Q"
+  },
+  "name": "Kartografka snů",
+  "meaning": "Papírová loutka balancuje nad srpkem a rozvíjí schodiště z vlastního pláště jako mapu snů.",
+  "archetype": "Kapitán",
+  "prompt": "Use case: stylized-concept. Asset type: ONE premium collectible theatrical papercut sticker for BALÍK, PAPÍROVÝ CIRKUS edition. Subject: the Cartographer of Dreams, an elegant surreal female marionette physically constructed from many hand-cut paper layers. A narrow ivory folded-paper mask with asymmetric sleepy eye cutouts and a long delicate nose; one curved plum paper hair fan sweeps backward. Long articulated limbs and exposed small paper-fastener joints form a dramatic off-balance dancer's pose: one leg balances on a little folded crescent step, the other extends sideways, one arm raises a gold folded star like a map, the other pulls a ribbon of miniature paper stairs that curls back into her layered cloak. A sculptural multi-layer burgundy and mulberry fan cloak creates depth, with uneven cut edges, stepped ivory lining, and sparse midnight-blue insets. One coherent compact self-contained theatrical composition, poetic and mysterious, not a generic standing queen. Style/medium: photograph-like rendering of an exquisitely handcrafted layered paper theatre sculpture, visibly real paper thickness, raised stacked cutouts, curled folds, embossed fibers, matte rag paper, translucent mulberry tissue, a few delicate brushed gold-leaf edges. Actual ambient occlusion and precise contact shadows BETWEEN the individual paper layers, visible irregular hand-cut edges and tiny paper grain, convincing physical construction. Strong warm theatrical side spotlight, cool soft fill, cast self-shadows; no glowing abstract vector shapes. Palette: plum, dusty burgundy, warm ivory, muted antique gold and small midnight blue accents. Composition: complete expressive marionette and its connected sculptural paper props, centered in a square with generous clean transparent margins, clear silhouette and big value groupings readable at 64px, intricate craftsmanship visible close up. Thin warm ivory die-cut edge follows the entire irregular silhouette, subtle tight sticker-edge shadow. Genuinely transparent background, no rectangular stage box, no outer backdrop, no floor plane, no scenery extending to the canvas edges. No playing-card rectangle, numbers, corner indices, suit glyphs, lettering, logos or watermark. Avoid flat vector iconography, SVG clipart, smooth plastic 3D, ordinary comic rendering, symmetrical standing doll, generic clown, busy circus clipart and tiny decorative confetti.",
+  "reference": null,
+  "source": "docs/visual/premium-poc/sources/papirovy-cirkus-spades-q.png",
+  "status": "accepted-for-integration",
+  "approvedPoc": true,
+  "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-q.webp",
+  "width": 731,
+  "height": 768,
+  "bytes": 139804,
+  "sourceBounds": [
+    62,
+    8,
+    1234,
+    1245
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}
