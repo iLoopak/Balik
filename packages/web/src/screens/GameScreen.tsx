@@ -8,11 +8,18 @@ import { gameName } from '@balik/shared';
 import { LharTable } from '../lhar/LharTable';
 import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
+import { SnapsTable } from '../games/snaps/SnapsTable';
+import { DurakTable } from '../games/durak/DurakTable';
+import { MariasTable } from '../games/marias/MariasTable';
+import { PetrTable } from '../games/petr/PetrTable';
+import { OkoTable } from '../games/oko/OkoTable';
+import { PexesoTable } from '../games/pexeso/PexesoTable';
 import './screens.css';
 import { BrandOptions } from '../brand/BrandSettings';
 import { AppSettings } from '../themes/AppearancePicker';
 import { GameTransition } from '../evening/GameTransition';
 import { EmotePicker } from '../brand/Emotes';
+import { RulesButton } from '../rules/RulesPanel';
 
 export function GameScreen({ room }: { room: AnyRoomView }) {
   const status = useApp((s) => s.status);
@@ -33,7 +40,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
             </motion.span>
           )}
         </AnimatePresence>
-        <EmotePicker /><AppSettings compact />
+        <EmotePicker /><RulesButton gameId={room.gameId} compact note={room.gameId === 'sedma' ? `V této místnosti má poslední štych +${room.sedmaBonus ?? 10} bodů.` : undefined} /><AppSettings compact />
         <button className="btn btn-ghost topbar-menu" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label="Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
             <path fill="currentColor" d="M4 7h16v2H4zm0 4h16v2H4zm0 4h16v2H4z" />
@@ -60,7 +67,20 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
           )}
         </AnimatePresence>
       </header>
-      {room.gameId === 'lhar' ? <LharTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : room.gameId === 'sedma' ? <SedmaTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />}
+      {(() => {
+        const key = `${room.code}:${room.you}`;
+        switch (room.gameId) {
+          case 'lhar': return <LharTable key={key} room={room} reducedMotion={reduced} />;
+          case 'sedma': return <SedmaTable key={key} room={room} reducedMotion={reduced} />;
+          case 'snaps': return <SnapsTable key={key} room={room} reducedMotion={reduced} />;
+          case 'durak': return <DurakTable key={key} room={room} reducedMotion={reduced} />;
+          case 'marias': return <MariasTable key={key} room={room} reducedMotion={reduced} />;
+          case 'petr': return <PetrTable key={key} room={room} reducedMotion={reduced} />;
+          case 'oko': return <OkoTable key={key} room={room} reducedMotion={reduced} />;
+          case 'pexeso': return <PexesoTable key={key} room={room} reducedMotion={reduced} />;
+          default: return <Table key={key} room={room} reducedMotion={reduced} />;
+        }
+      })()}
       <GameTransition room={room} reduced={reduced} />
     </main>
   );

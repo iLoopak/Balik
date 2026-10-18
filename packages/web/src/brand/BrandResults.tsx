@@ -3,15 +3,17 @@ import { canStartGame, type AnyRoomView } from '@balik/shared';
 import { BrandMascot } from './BrandMascot';
 import './brand.css';
 import { EveningScores } from '../evening/EveningScores';
-export function BrandResults({ room, winnerId, pending, onRematch, onLobby, onLeave, reduced, onChangeGame, onCloseEvening, reactions }: {
-  room: AnyRoomView; winnerId: string | null; pending: boolean;
+/** Generic outcome for games without a dedicated result layout. */
+export interface ResultOutcome { winnerIds: string[]; title?: string; note?: string }
+export function BrandResults({ room, winnerId, pending, onRematch, onLobby, onLeave, reduced, onChangeGame, onCloseEvening, reactions, outcome }: {
+  room: AnyRoomView; winnerId: string | null; pending: boolean; outcome?: ResultOutcome;
   onChangeGame?: () => void; onCloseEvening?: () => void; reactions?: ReactNode;
   onRematch: () => void; onLobby: () => void; onLeave: () => void; reduced: boolean;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const winner = room.players.find((p) => p.id === winnerId);
   const result = room.gameId === 'sedma' ? room.game?.result : null;
-  const winningIds = result?.winnerIds ?? (winnerId ? [winnerId] : []);
+  const winningIds = outcome?.winnerIds ?? result?.winnerIds ?? (winnerId ? [winnerId] : []);
   const draw = !!result && result.winnerTeam === null;
   const cancelled = room.gameId === 'lhar' && room.game?.result?.reason === 'forfeit' && !room.game.result.winnerIds.length;
   const forfeited = room.gameId === 'lhar' && room.game?.result?.reason === 'forfeit';
@@ -32,8 +34,8 @@ export function BrandResults({ room, winnerId, pending, onRematch, onLobby, onLe
     <div className="brand-result-signature"><span>BALÍK</span><i aria-hidden /><span>JEŠTĚ JEDNU?</span></div>
     <BrandMascot state={draw || cancelled ? 'idle' : won ? 'celebrate' : 'sad'} size={88} reduced={reduced} />
     <p className="win-kicker">Konec partie · kolo {room.round}</p>
-    <h2 id="brand-result-title" className="win-title brand-word">{cancelled ? 'Partie končí bez vítěze.' : draw ? 'Dělíte se o balík.' : result ? `Tým ${(result.winnerTeam ?? 0) + 1} bere výhru.` : won ? 'Tenhle balík je tvůj.' : `${winner?.name ?? 'Hráč'} bere výhru.`}</h2>
-    <p className="brand-result-note">{forfeited ? 'Kontumace po odchodu hráče.' : result ? (result.reason === 'forfeit' ? 'Kontumace po odchodu hráče.' : `Sedma · ${result.scores[0]} : ${result.scores[1]} bodů`) : won ? `${winner?.name ?? 'Ty'} vítězí. Dobrá ruka, dobré načasování.` : 'Další rozdání, nová šance.'}</p>
+    <h2 id="brand-result-title" className="win-title brand-word">{outcome?.title ?? (cancelled ? 'Partie končí bez vítěze.' : draw ? 'Dělíte se o balík.' : result ? `Tým ${(result.winnerTeam ?? 0) + 1} bere výhru.` : won ? 'Tenhle balík je tvůj.' : `${winner?.name ?? 'Hráč'} bere výhru.`)}</h2>
+    <p className="brand-result-note">{outcome?.note ?? (forfeited ? 'Kontumace po odchodu hráče.' : result ? (result.reason === 'forfeit' ? 'Kontumace po odchodu hráče.' : `Sedma · ${result.scores[0]} : ${result.scores[1]} bodů`) : won ? `${winner?.name ?? 'Ty'} vítězí. Dobrá ruka, dobré načasování.` : 'Další rozdání, nová šance.')}</p>
     {room.gameId === 'sedma' && result && <div className="sedma-result-teams">{([0, 1] as const).map((team) => <p key={team}><b>Tým {team + 1} · {result.scores[team]} bodů</b><span>{room.game?.players.filter((p) => p.team === team).map((p) => room.players.find((r) => r.id === p.id)?.name ?? 'Odpojený hráč').join(' + ')}</span></p>)}</div>}
     {room.evening && <EveningScores room={room} compact/>}
     {!room.evening && <ol className="brand-scoreboard">{[...room.players].sort((a, b) => b.wins - a.wins).map((player) => <li key={player.id} className={winningIds.includes(player.id) ? 'is-winner' : ''}><span>{player.name}{player.id === room.you ? ' (ty)' : ''}</span><b>{player.wins}×</b></li>)}</ol>}

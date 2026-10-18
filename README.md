@@ -305,3 +305,27 @@ který hru zastaví (kotel, půlnoční hodiny, pařez, hrnek s dušičkou). Gen
 karta, silný rámeček, velké indexy, barvy bezpečné pro barvoslepé (≥ 5,7:1 na
 bílé) a vzor na každé barvě: kára jsou pruhovaná, kříže mají okénka. Nápovědy
 rolí (+2, stop, barva, 10 bodů) jsou plné pilulky. Kontrast barev hlídá test.
+
+## Šest nových her · vlna 6
+
+Hry se zapojují přes registr `GAME_INFO` a `GameModule` v `packages/shared/src/games.ts`
+(počty hráčů, texty, engine, pohled hráče, bot, časování animací). Web je staví na
+společné kostře `GameShell` a režisérovi `useGameDirector` (`packages/web/src/games/`).
+
+| Hra | Hráči | Co je jinak |
+|---|---|---|
+| Šnaps (66) | 2 | 24 karet, otevřený/zavřený talon, výměna trumfové devítky, hlášky 20/40 |
+| Durak | 2–4 | útok, obrana a přihazování, dobírání do 6, poslední s kartami je durak |
+| Mariáš (volený) | 3 | volba trumfu ze 7 karet, odhoz do talonu, Hra / Kilo / Betl / Durch, sedma, flek až po kalhoty, hlášky |
+| Černý Petr | 2–4 | 29 karet, tah naslepo od souseda (server ruku zamíchá), dvojice se odkládají samy |
+| Oko bere | 2–4 | jen o body, střídá se bankéř, oko = dvě esa |
+| Pexeso | 1–4 | 32 karet, dvojice stejné hodnoty a barvy, sólo na počet tahů |
+
+**Pravidla všech devíti her** jsou kdykoli k přečtení: tlačítko „Pravidla“ v horní
+liště během hry, v lobby a na domovské obrazovce (`packages/web/src/rules/`).
+Texty popisují přesně variantu, kterou implementuje engine. Mariáš vyhodnocuje sázku
+jedné partie (hra 1, sedma 2, kilo 4, betl 5, durch 10, krát flek), ne vyúčtování večera.
+
+Testy: každá hra má v `packages/shared/test/` odehrání celých partií botů
+s kontrolou, že pohled ani události hráče neobsahují cizí skryté karty
+(`helpers/playthrough.ts`).

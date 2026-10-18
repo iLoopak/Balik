@@ -43,6 +43,8 @@ export interface Geometry {
   hudY: number;
   /** Centre of the action label, below the suit chip and above the status bar. */
   labelY: number;
+  /** Optional size of a wide central play area (Durak pairs, Oko hands); the console pocket follows it. */
+  stage?: { width: number; height: number };
 }
 
 export interface Placement {

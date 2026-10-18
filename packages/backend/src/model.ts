@@ -1,5 +1,5 @@
 import {
-  applyGameAction as applyAction, chooseGameBotAction as chooseBotAction, createGameRound as createRound, filterGameEventFor as filterEventFor, removeGamePlayer as removePlayer, gameViewFor as viewFor, canStartGame, gameWinnerIds,
+  applyGameAction as applyAction, chooseGameBotAction as chooseBotAction, createGameRound as createRound, filterGameEventFor as filterEventFor, removeGamePlayer as removePlayer, gameViewFor as viewFor, canStartGame, gameWinnerIds, gameEventMs, GAME_INFO,
   MAX_BOTS, ROOM_MAX_PLAYERS, BOT_AVATAR_IDS, defaultAvatarId, type AvatarId,
   createEvening, ensureRoomEvening, reconcileEvening, eveningView, applyEveningCommand, beginEveningMatch, finishEveningMatch, type EveningState,
   emoteAllowed, EMOTE_TTL_MS, type EmoteMessage,
@@ -175,7 +175,7 @@ export function execute(room: Room, userId: string, command: Command, env: Envir
       if (room.status === 'playing') return { events: [], changed: false };
       if (evening.phase === 'closed' || evening.phase === 'voting') fail('illegal', 'Nejdřív dokončete volbu hry.');
       if (room.players.some((p) => !p.bot && !p.connected)) fail('not-enough-players', 'Čekáme na návrat nebo uvolnění odpojeného místa.');
-      if (!canStartGame(room.gameId ?? 'prsi', room.players.length)) fail('not-enough-players', room.gameId === 'sedma' ? 'Sedma potřebuje přesně 2 nebo 4 hráče.' : 'Ke hře jsou potřeba aspoň 2 hráči.');
+      if (!canStartGame(room.gameId ?? 'prsi', room.players.length)) fail('not-enough-players', GAME_INFO[room.gameId ?? 'prsi'].needPlayers);
       room.round++;
       room.startIndex = (room.startIndex + 1) % room.players.length;
       const result = createRound(room.gameId ?? 'prsi', room.players.map((p) => p.id), room.startIndex, env.rng, room.sedmaBonus);
@@ -226,7 +226,7 @@ export function scheduleBot(room: Room, events: GameEvent[], env: Environment) {
     event.type === 'sedmaStarted' || event.type === 'roundStarted' ? 1900 + event.dealOrder.length * 85 :
     event.type === 'sedmaDrawn' || event.type === 'cardsDrawn' ? 600 + Math.max(0, event.cards.length - 1) * 150 :
     event.type === 'lharEnded' || event.type === 'trickResolved' || event.type === 'sedmaEnded' || event.type === 'turnSkipped' || event.type === 'roundWon' ? 900 :
-    event.type === 'suitChanged' ? 720 : event.type === 'turnChanged' ? 160 : 560
+    event.type === 'suitChanged' ? 720 : event.type === 'turnChanged' ? 160 : gameEventMs(event) ?? 560
   ), 0);
   room.botDueAt = env.now + animation + 500 + env.rng() * 600;
 }

@@ -1,6 +1,7 @@
 import { motion, useReducedMotion } from 'motion/react';
 import { useState, type FormEvent } from 'react';
-import { GAME_IDS, gameName, MAX_NAME_LENGTH, ROOM_CODE_LENGTH, type Card, type GameId } from '@balik/shared';
+import { GAME_IDS, GAME_INFO, gameName, MAX_NAME_LENGTH, ROOM_CODE_LENGTH, type Card, type GameId } from '@balik/shared';
+import { RulesButton } from '../rules/RulesPanel';
 import { CardView } from '../cards/Card';
 import { getName } from '../lib/identity';
 import { createRoom } from '../net/client';
@@ -73,11 +74,16 @@ export function Home() {
         transition={{ delay: 0.45, duration: 0.4 }}
       >
         <div className="game-tag">
-          <span className="game-dot" /> {gameName(gameId)} · {gameId === 'sedma' ? '2 nebo 4 hráči' : '2–4 hráči'}
+          <span className="game-dot" /> {gameName(gameId)} · {GAME_INFO[gameId].playersLabel}
+          <RulesButton gameId={gameId} />
         </div>
-        <div className="segmented game-choice" role="radiogroup" aria-label="Hra">
-          {GAME_IDS.map((id) => <button type="button" key={id} role="radio" aria-checked={gameId === id} className={gameId === id ? 'is-on' : ''} onClick={() => { setGameId(id); if (id === 'sedma' && bots === 2) setBots(1); }}>{gameName(id)}</button>)}
+        <div className="game-grid" role="radiogroup" aria-label="Hra">
+          {GAME_IDS.map((id) => <button type="button" key={id} role="radio" aria-checked={gameId === id} className={gameId === id ? 'is-on' : ''}
+            onClick={() => { setGameId(id); const counts = GAME_INFO[id].botCounts; if (!counts.includes(bots)) setBots(counts[0]!); }}>
+            <span className={`game-grid-mark is-${id}`} aria-hidden>{GAME_INFO[id].mark}</span><b>{gameName(id)}</b><small>{GAME_INFO[id].playersLabel}</small>
+          </button>)}
         </div>
+        <p className="game-grid-tagline">{GAME_INFO[gameId].tagline}</p>
         {gameId === 'sedma' && <label className="sedma-variant"><input type="checkbox" checked={bonus === 10} onChange={(e) => setBonus(e.target.checked ? 10 : 0)} /> Poslední štych +10 bodů (výchozí)</label>}
         <form onSubmit={onCreate}>
           <div className="brand-welcome"><BrandMascot state={busy ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>Celý stůl v jednom BALÍKu.</strong>Rozdej přátelům dobrý večer.</span></div>
@@ -102,7 +108,7 @@ export function Home() {
           <div className="solo-row">
             <span className="solo-label">Soupeři</span>
             <div className="segmented" role="radiogroup" aria-label="Počet počítačových soupeřů">
-              {(gameId === 'sedma' ? [1, 3] : [1, 2, 3]).map((n) => (
+              {GAME_INFO[gameId].botCounts.map((n) => (
                 <button key={n} type="button" role="radio" aria-checked={bots === n} className={bots === n ? 'is-on' : ''} onClick={() => setBots(n)}>
                   {n}
                 </button>
