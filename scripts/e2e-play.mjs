@@ -107,7 +107,7 @@ try {
   // ---- Lobby -------------------------------------------------------------
   await a.goto(BASE);
   await a.getByLabel('Tvoje jméno').fill('Anna');
-  await a.getByRole('button', { name: 'Vytvořit hru' }).click();
+  await a.getByRole('button', { name: 'Hrát s přáteli' }).click();
   await a.waitForURL(/\/r\/[A-Z]{4}$/);
   const code = a.url().slice(-4);
   check('room created', true, code);
@@ -176,7 +176,7 @@ try {
   report('suit', 'saw Q suit change splash');
 
   // ---- Rematch + reconnect -------------------------------------------------
-  await a.getByRole('button', { name: 'Hrát znovu' }).click();
+  await a.getByRole('button', { name: 'Odveta', exact: true }).click();
   await b.locator('.win-panel').waitFor({ state: 'detached' });
   check('rematch started for both players', true);
   await sleep(5000);
@@ -223,7 +223,7 @@ try {
     await solo.addInitScript(PROBE);
     await solo.goto(BASE);
     await solo.getByLabel('Tvoje jméno').fill('Sólista');
-    await solo.getByRole('radio', { name: '2' }).click();
+    await solo.getByRole('radio', { name: '2 soupeři' }).click();
     await sleep(900);
     await solo.screenshot({ path: join(OUT, '11-home-phone.png') });
     await solo.getByRole('button', { name: 'Hrát proti počítači' }).click();
@@ -249,7 +249,7 @@ try {
     await host.addInitScript(PROBE);
     await host.goto(BASE);
     await host.getByLabel('Tvoje jméno').fill('Telefon');
-    await host.getByRole('button', { name: 'Vytvořit hru' }).click();
+    await host.getByRole('button', { name: 'Hrát s přáteli' }).click();
     await host.waitForURL(/\/r\/[A-Z]{4}$/);
     const code4 = host.url().slice(-4);
     const others = [];
@@ -299,7 +299,7 @@ try {
   const c = await rm.newPage();
   await c.goto(BASE);
   await c.getByLabel('Tvoje jméno').fill('Klidná');
-  await c.getByRole('button', { name: 'Vytvořit hru' }).click();
+  await c.getByRole('button', { name: 'Hrát s přáteli' }).click();
   await c.waitForURL(/\/r\/[A-Z]{4}$/);
   const d = await (await browser.newContext()).newPage();
   await d.goto(`${BASE}/r/${c.url().slice(-4)}`);

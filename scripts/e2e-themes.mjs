@@ -13,14 +13,14 @@ try {
   for(const mobile of [false,true])for(const reduced of [false,true]){
     const context=await browser.newContext({viewport:mobile?{width:390,height:844}:{width:1440,height:1000},isMobile:mobile,hasTouch:mobile,reducedMotion:reduced?'reduce':'no-preference'});
     const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
-    await page.goto(base+'/dev/decks');
+    await page.goto(base+'/dev/decks');await page.locator('.lab-grid .card').nth(31).waitFor();
     assert.equal(await page.locator('.lab-grid .card').count(),32);
     await page.locator('.lab-grid .card').evaluateAll(els=>els.forEach((el,i)=>el.dataset.qaIdentity=String(i)));
     await page.getByLabel('Mobilní stůl',{exact:true}).setChecked(mobile);
     await page.getByLabel('Omezit pohyb',{exact:true}).setChecked(reduced);
     for(const deck of ['stormpunk','retro-arcade']){
-      await page.getByLabel('Edice',{exact:true}).selectOption(deck);
-      await page.getByLabel('Stůl',{exact:true}).selectOption(deck);
+      await page.locator('.lab-controls select').nth(0).selectOption(deck);
+      await page.locator('.lab-controls select').nth(1).selectOption(deck);
       await imageReady(page);
       assert.deepEqual(await page.locator('.lab-grid .card').evaluateAll(els=>els.map(el=>el.dataset.qaIdentity)),Array.from({length:32},(_,i)=>String(i)));
       assert.equal(await page.locator(`.lab-grid .card[data-deck="${deck}"]`).count(),32);
@@ -45,7 +45,7 @@ try {
     const host=await hostContext.newPage(),guest=await guestContext.newPage();
     for(const page of [host,guest]){page.on('pageerror',e=>errors.push(String(e)));await page.addInitScript(()=>localStorage.setItem('balik.sedma.intro','1'));}
     await host.goto(base);await host.getByRole('radio',{name:game==='prsi'?'Prší':'Sedma',exact:true}).click();
-    await host.getByLabel('Tvoje jméno').fill('Ada');await host.getByRole('button',{name:'Vytvořit hru s přáteli',exact:true}).click();
+    await host.getByLabel('Tvoje jméno').fill('Ada');await host.getByRole('button',{name:'Hrát s přáteli',exact:true}).click();
     await host.waitForURL(/\/r\/[A-Z]{4}$/);const url=host.url();
     await guest.goto(url);await guest.getByLabel('Tvoje jméno').fill('Max');await guest.getByRole('button',{name:'Sednout ke stolu',exact:true}).click();
     await host.getByText('Max',{exact:true}).waitFor();await host.getByRole('button',{name:/Rozdat karty/}).click();

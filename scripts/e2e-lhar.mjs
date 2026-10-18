@@ -35,7 +35,7 @@ try {
   await host.goto(base);
   await host.getByRole('radio', { name: 'Lhář', exact: true }).click();
   await host.getByLabel('Tvoje jméno').fill('Ada');
-  await host.getByRole('button', { name: 'Vytvořit hru s přáteli', exact: true }).click();
+  await host.getByRole('button', { name: 'Hrát s přáteli', exact: true }).click();
   await host.waitForURL(/\/r\/[A-Z]{4}$/);
   const url = host.url();
   await guest.goto(url);
@@ -49,11 +49,13 @@ try {
   await appearance.getByRole('button', { name: /Noční herna/ }).click();
   await appearance.getByRole('button', { name: 'Zavřít vzhled', exact: true }).click();
   await host.getByRole('button', { name: /Rozdat karty/ }).click();
-  for (const page of pages) {
-    await page.getByRole('dialog', { name: /1\/3 · Polož tajné karty/ }).waitFor();
-    await page.getByRole('button', { name: 'Dál', exact: true }).click();
-    await page.getByRole('button', { name: 'Dál', exact: true }).click();
-    await page.getByRole('button', { name: 'Jdeme hrát', exact: true }).click();
+  // The first play is explained by the shared guide above the table; nothing blocks the game.
+  for (const page of pages) await page.locator('.game-screen').waitFor();
+  {
+    const rooms = await Promise.all(pages.map(read));
+    const first = pages[rooms.findIndex((r) => r.you === rooms[0].game.currentPlayerId)];
+    await first.locator('.game-guide[data-hint="lhar.claim"]').waitFor();
+    for (const page of pages) assert.equal(await page.locator('dialog[open]').count(), 0, 'no blocking intro');
   }
   const challengeHelpSeen = new Set();
   for (let turn = 0; turn < 1000; turn++) {

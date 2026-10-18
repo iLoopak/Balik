@@ -8,6 +8,8 @@ import './screens.css';
 import { BrandMascot } from '../brand/BrandMascot';
 import { AppSettings } from '../themes/AppearancePicker';
 import { EmoteBubble, EmotePicker, useEmotes } from '../brand/Emotes';
+import { GameMotif } from '../library/GameMotif';
+import '../library/library.css';
 
 export function Lobby({ room }: { room: AnyRoomView }) {
   const emotes = useEmotes(room.code);
@@ -34,8 +36,9 @@ export function Lobby({ room }: { room: AnyRoomView }) {
     <main className="screen lobby">
       <div className="panel">
         <div className="lobby-head">
-          <div className="game-tag">
-            <span className="game-dot" /> {gameName(room.gameId)} · lobby
+          <div className="lobby-game">
+            <span className={`lobby-game-art library-art is-${room.gameId}`} aria-hidden><GameMotif id={room.gameId} /></span>
+            <span><b>{gameName(room.gameId)}</b><small>{GAME_INFO[room.gameId].family} · {GAME_INFO[room.gameId].playersLabel} · lobby</small></span>
           </div>
           <button className="btn btn-ghost" onClick={leaveRoom}>
             Odejít
@@ -43,7 +46,7 @@ export function Lobby({ room }: { room: AnyRoomView }) {
         </div>
 
         <div className="code-block">
-          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><div className="lobby-options"><AppSettings compact /><EmotePicker /></div></div>
+          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><div className="lobby-options"><AppSettings compact game={room.gameId} /><EmotePicker /></div></div>
           <span className="label">Kód místnosti</span>
           <div className="code-big brand-word" aria-label={`Kód ${room.code.split('').join(' ')}`}>
             {room.code.split('').map((ch, i) => (

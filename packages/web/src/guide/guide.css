@@ -1,0 +1,86 @@
+/* BLIK's contextual note: in the layout above the table, never over the cards. */
+.game-guide {
+  flex: none;
+  overflow: hidden;
+  position: relative;
+  z-index: 900;
+  background: color-mix(in srgb, var(--hud) 92%, var(--accent) 8%);
+  border-bottom: 1px solid color-mix(in srgb, var(--accent-text) 30%, var(--line));
+}
+.game-guide-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 6px 6px 6px 12px;
+}
+.game-guide .brand-mascot {
+  flex: none;
+}
+.game-guide-copy {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.game-guide-copy b {
+  font-weight: 750;
+}
+.game-guide-goal {
+  display: block;
+  margin-bottom: 1px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.game-guide-goal .type-machine {
+  font-size: 10px;
+  color: var(--accent-text);
+  margin-right: 4px;
+}
+.game-guide-off {
+  display: inline-block;
+  min-height: 28px;
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.game-guide-off:hover {
+  color: var(--ink);
+}
+.game-guide .rules-open,
+.game-guide-close {
+  flex: none;
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--muted);
+}
+.game-guide-close {
+  font-size: 24px;
+  line-height: 1;
+}
+.game-guide .rules-open:hover,
+.game-guide-close:hover {
+  color: var(--ink);
+  background: var(--soft-hover);
+}
+@media (max-width: 520px) {
+  .game-guide-inner {
+    gap: 6px;
+    padding-left: 8px;
+  }
+  .game-guide .brand-mascot {
+    display: none;
+  }
+  .game-guide-copy {
+    font-size: 13px;
+  }
+}

@@ -7,6 +7,8 @@ import { Avatar } from '../avatars/Avatar';
 import { addBot, eveningAction, leaveRoom, rematch, removeBot, voteGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
 import { EveningHistory, EveningScores, EveningSummary, MatchDetail } from './EveningScores';
+import { GameMotif } from '../library/GameMotif';
+import '../library/library.css';
 import './evening.css';
 
 export function EveningScreen({room}: {room: AnyRoomView}) {
@@ -24,7 +26,7 @@ export function EveningScreen({room}: {room: AnyRoomView}) {
   const last = e.history.at(-1);
   const canRematch = canStartGame(room.gameId,room.players.length) && room.players.every((p) => p.connected);
   return <main className="evening-screen">
-    <header className="evening-header"><span className="brand-word">BALÍK</span><span>Herní večer · <b>{room.code}</b></span><EmotePicker/><AppSettings compact/><button className="btn btn-ghost" onClick={leaveRoom}>Odejít</button></header>
+    <header className="evening-header"><span className="brand-word">BALÍK</span><span>Herní večer · <b>{room.code}</b></span><EmotePicker/><AppSettings compact game={room.gameId}/><button className="btn btn-ghost" onClick={leaveRoom}>Odejít</button></header>
     {connection !== 'open' && <p className="evening-connection" role="status">Obnovuji spojení se stolem…</p>}
     <div className="evening-layout">
       <section className={`evening-feature${closed ? ' is-closed' : ''}`} aria-labelledby="evening-title">
@@ -36,7 +38,7 @@ export function EveningScreen({room}: {room: AnyRoomView}) {
           <div className="evening-game-choices">{GAME_IDS.map((id) => {
             const available = ballot.available.includes(id), selected = e.votes[room.you] === id;
             return <div key={id} className={`evening-game-option${selected ? ' is-selected' : ''}`}>
-              <button type="button" aria-pressed={selected} disabled={!available || disabled} onClick={()=>voteGame(id)}><span className={`evening-game-mark is-${id}`} aria-hidden>{GAME_INFO[id].mark}</span><b>{gameName(id)}</b><small>{GAME_INFO[id].playersLabel}</small><strong>{ballot.counts[id]} hlasů{selected ? ' · tvůj hlas' : ''}</strong></button>
+              <button type="button" aria-pressed={selected} disabled={!available || disabled} onClick={()=>voteGame(id)}><span className={`evening-game-art library-art motif-host is-${id}${selected ? ' is-on' : ''}`} aria-hidden><GameMotif id={id} /></span><b>{gameName(id)}</b><small>{GAME_INFO[id].playersLabel}</small><strong>{ballot.counts[id]} hlasů{selected ? ' · tvůj hlas' : ''}</strong></button>
               <p>{available ? room.players.filter((p)=>p.connected && e.votes[p.id]===id).map((p)=>p.name).join(', ') || 'Zatím bez hlasu' : `${GAME_INFO[id].needPlayers} Upravte počet botů nebo vyberte jinou hru.`}</p>
               {host && <button className="btn btn-primary" disabled={disabled || !ballot.ready || !ballot.leaders.includes(id)} onClick={()=>eveningAction('confirm',id)}>Rozdat {gameName(id)}</button>}
             </div>;

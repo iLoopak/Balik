@@ -186,7 +186,7 @@ export const RULES: Record<string, GameRules> = {
       ] },
       { title: 'Tah', items: [
         'Otoč dvě karty. Když tvoří dvojici, bereš si je a hraješ znovu.',
-        'Když ne, otočí se zpět a hraje další. Pamatuj si, co jsi viděl.',
+        'Když ne, otočí se zpět a hraje další. Pamatuj si, co už bylo vidět.',
       ] },
       { title: 'Konec', items: [
         'Vyhrává, kdo má nejvíc dvojic, při shodě všichni nejlepší. Sólo hraješ na co nejméně tahů.',

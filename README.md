@@ -1,6 +1,6 @@
 # BALÍK
 
-Moderní webová herna karetních her. **Prší** pro 2–4 hráče a **Sedma** pro 2 nebo 4 hráče, online přes sdílený kód nebo odkaz, případně sólo proti počítači.
+Moderní webová herna karetních her: Prší, Sedma, Lhář, Šnaps, Durak, Mariáš, Černý Petr, Oko bere a Pexeso. Hraje se online přes sdílený kód nebo odkaz, případně sólo proti počítači.
 Cílové platformy: web, později Android/iOS (Capacitor) a Steam (Electron/Tauri). Klient je proto čisté SPA bez SSR.
 
 ## Rychlý start
@@ -15,15 +15,15 @@ npm run dev
 
 ### Multiplayer ve dvou oknech
 
-1. Otevři <http://localhost:5173>, zadej jméno a klikni na **Vytvořit hru s přáteli**.
-2. Ve druhém okně (anonymní okno nebo jiný prohlížeč; obyčejná druhá záložka funguje také, identita je per-záložka) otevři odkaz `http://localhost:5173/r/KÓD`, nebo zadej kód na úvodu.
+1. Otevři <http://localhost:5173>, vyber hru v knihovně a klikni na **Hrát s přáteli**.
+2. Ve druhém okně (anonymní okno nebo jiný prohlížeč; obyčejná druhá záložka funguje také, identita je per-záložka) otevři odkaz `http://localhost:5173/r/KÓD`, nebo zadej kód přes **Mám kód** na úvodu.
 3. Hostitel klikne na **Rozdat karty**.
 
 Obnovení stránky tě vrátí na stejné místo u stolu.
 
 ### Sólo proti počítači
 
-Na úvodu zvol hru a počet soupeřů (Prší 1–3, Sedma 1 nebo 3) a klikni na **Hrát proti počítači**. V lobby může hostitel počítačové hráče i přidávat a odebírat. Boti běží na serveru a táhnou se zpožděním odpovídajícím délce animací.
+V knihovně vyber hru, nabídnou se jen povolené počty soupeřů (z `GAME_INFO.botCounts`), a klikni na **Hrát proti počítači**. V lobby může hostitel počítačové hráče i přidávat a odebírat. Boti běží na serveru a táhnou se zpožděním odpovídajícím délce animací.
 
 ### Dev boti z terminálu
 
@@ -329,3 +329,31 @@ jedné partie (hra 1, sedma 2, kilo 4, betl 5, durch 10, krát flek), ne vyúčt
 Testy: každá hra má v `packages/shared/test/` odehrání celých partií botů
 s kontrolou, že pohled ani události hráče neobsahují cizí skryté karty
 (`helpers/playthrough.ts`).
+
+## BALÍK 1.0 · od funkcí k zážitku
+
+Cesta „vyber hru → hraj nebo pozvi → přizpůsob si vzhled, když chceš“:
+
+- **Knihovna her** (`web/src/library/`): devět titulů s vlastním SVG motivem podle mechaniky,
+  nezávislým na zvoleném balíčku. Detail říká, o čem hra je, typ hry a náročnost pravidel
+  (`GAME_INFO.pitch / family / learn`, náročnost = počet druhů rozhodnutí, ne minuty).
+  Filtr „U stolu“ ztlumí hry, které daný počet hráčů nerozehraje, a řekne proč. Na telefonu
+  drží obě volby dock pod palcem. Hlasování Herního večera používá stejné motivy.
+- **Showroom vzhledu** (`web/src/themes/Showroom.tsx`, `AppearanceDialog.tsx`): jeden dialog
+  pro celou aplikaci, živý mini stůl ze skutečného `GameTableTheme` a `CardView`, vějíř
+  rub/figura/číslo pro každý balíček, náhled obou stolů s tvým balíčkem a režim aplikace.
+  Seznamy čte z registru, nová edice se objeví sama. Volba je jen tvoje a partie běží dál.
+- **Kontextová nápověda** (`web/src/guide/`): `guideFor(room)` čte jen hráčův autorizovaný
+  view a enginové helpery legálních tahů, nikdy cizí karty a nikdy „nejlepší tah“. Proužek
+  nad stolem (stůl se zmenší, nic nezakryje) vysvětlí každou situaci jednou. Skrýt,
+  „V této hře už nezobrazovat“ a pravidla jsou vždy po ruce, lokálně per hra (`balik.guide`).
+- **Audit zážitku**: [docs/ux/BALIK_1_0_EXPERIENCE_AUDIT.md](docs/ux/BALIK_1_0_EXPERIENCE_AUDIT.md).
+
+QA (vyžaduje běžící `npm run dev` a Google Chrome):
+
+```bash
+npm run qa:showroom    # 6 balíčků × 2 stoly × světlo/tma živě v běžící hře + režim podle systému
+npm run qa:experience  # 9 her: knihovna → nápověda → pravidla → první tah v UI → reload → výsledek → odveta, plus mobil
+```
+
+Dva checkouty vedle sebe: `BALIK_WEB_PORT=5183 BALIK_WS_PORT=8797 npm run dev` (a `BASE=http://localhost:5183` pro QA).

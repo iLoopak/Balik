@@ -1,4 +1,6 @@
 // For an environment with browser permission. Not executed in the sandbox that blocks localhost.
+// Card clicks go through the element itself: this script checks the evening flow; real hit
+// targets and touch are covered by qa:experience and qa:e2e.
 // npm run dev, then npm run qa:evening (REDUCED=1 for the same flow without animation).
 import assert from 'node:assert/strict';
 import {mkdirSync} from 'node:fs';
@@ -16,7 +18,7 @@ try{
   ]);
   const pages=await Promise.all(contexts.map(c=>c.newPage()));const [host,guest]=pages;
   for(const page of pages){page.on('pageerror',e=>errors.push(String(e)));await page.addInitScript(()=>localStorage.setItem('balik.sedma.intro','1'));}
-  await host.goto(base);await host.getByLabel('Tvoje jméno').fill('Anna');await host.getByRole('button',{name:'Vytvořit hru s přáteli',exact:true}).click();
+  await host.goto(base);await host.getByLabel('Tvoje jméno').fill('Anna');await host.getByRole('button',{name:'Hrát s přáteli',exact:true}).click();
   await host.waitForURL(/\/r\/[A-Z]{4}$/);const roomUrl=host.url();
   await guest.goto(roomUrl);await guest.getByLabel('Tvoje jméno').fill('Bára');await guest.getByRole('button',{name:'Sednout ke stolu',exact:true}).click();
   await host.getByText('Bára',{exact:true}).waitFor();await host.getByRole('button',{name:/Rozdat karty/}).click();
@@ -25,14 +27,14 @@ try{
     while(Date.now()<end&&!(await host.locator('.brand-results').isVisible())){
       for(const page of pages){
         const skip=page.getByRole('button',{name:'Přeskočit animaci',exact:true});if(await skip.isVisible())await skip.click();
-        const suit=page.locator('.picker-option');if(await suit.first().isVisible()){await suit.first().click();continue;}
+        const suit=page.locator('.picker-option');if(await suit.first().isVisible()){await suit.first().click({timeout:3000}).catch(()=>{});continue;}
         if(await page.locator('.sedma-table[data-idle="true"]').count()){
           const collect=page.getByRole('button',{name:'Ukončit štych',exact:true});
           if(await collect.isVisible())await collect.click();
-          else{const cards=page.locator('.card-slot.is-interactive');if(await cards.count()){await cards.first().click();const confirm=page.getByRole('button',{name:'Zahrát',exact:true});if(await confirm.isVisible())await confirm.click();}}
+          else{const cards=page.locator('.card-slot.is-interactive');if(await cards.count()){await cards.first().evaluate(el=>el.click());const confirm=page.getByRole('button',{name:'Zahrát',exact:true});if(await confirm.isVisible())await confirm.click();}}
         }else if(await page.locator('.status-bar.is-mine').count()){
           const playable=page.locator('.card-slot').filter({has:page.locator('.card-fx.is-playable')});
-          if(await playable.count())await playable.first().click();else{const button=page.locator('.status-actions button');if(await button.count())await button.first().click();}
+          if(await playable.count())await playable.first().evaluate(el=>el.click());else{const button=page.locator('.status-actions button');if(await button.count())await button.first().click();}
         }
       }
       await pause(250);

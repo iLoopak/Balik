@@ -50,4 +50,9 @@
 .snaps-talon > .type-machine, .stock-pile > .type-machine { position: absolute; left: 50%; top: 50%; translate: -50% -50%; padding: 2px 6px; border-radius: 6px; background: var(--hud); color: var(--hud-ink); font-size: 9px; white-space: nowrap; }
 .snaps-talon.is-closed { rotate: 90deg; }
 /* A toggle among the table actions (Mariáš: „Se sedmou“). */
+/* Touch: 44 px hit area without changing the bar the layout reserves. */
+@media (pointer: coarse) {
+  .game-controls-actions .btn { position: relative; }
+  .game-controls-actions .btn::after { content: ''; position: absolute; inset: -3px -2px; }
+}
 .game-controls-actions .btn[aria-pressed='true'] { background: var(--hud-own); color: var(--accent-text); box-shadow: inset 0 0 0 1.5px var(--accent); }

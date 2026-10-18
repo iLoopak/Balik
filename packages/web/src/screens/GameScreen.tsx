@@ -20,11 +20,14 @@ import { AppSettings } from '../themes/AppearancePicker';
 import { GameTransition } from '../evening/GameTransition';
 import { EmotePicker } from '../brand/Emotes';
 import { RulesButton } from '../rules/RulesPanel';
+import { GameGuide } from '../guide/GameGuide';
+import { setGuideOff, useGuidePrefs } from '../guide/preferences';
 
 export function GameScreen({ room }: { room: AnyRoomView }) {
   const status = useApp((s) => s.status);
   const [menu, setMenu] = useState(false);
   const { pref, setPref, reduced } = useMotionPref();
+  const guideOff = useGuidePrefs((p) => p.off.includes(room.gameId));
 
   return (
     <main className="game-screen">
@@ -40,7 +43,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
             </motion.span>
           )}
         </AnimatePresence>
-        <EmotePicker /><RulesButton gameId={room.gameId} compact note={room.gameId === 'sedma' ? `V této místnosti má poslední štych +${room.sedmaBonus ?? 10} bodů.` : undefined} /><AppSettings compact />
+        <EmotePicker /><RulesButton gameId={room.gameId} compact note={room.gameId === 'sedma' ? `V této místnosti má poslední štych +${room.sedmaBonus ?? 10} bodů.` : undefined} /><AppSettings compact game={room.gameId} />
         <button className="btn btn-ghost topbar-menu" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label="Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
             <path fill="currentColor" d="M4 7h16v2H4zm0 4h16v2H4zm0 4h16v2H4z" />
@@ -60,6 +63,10 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
                 <input type="checkbox" checked={pref === 'reduced'} onChange={(e) => setPref(e.target.checked ? 'reduced' : 'system')} />
                 Omezit animace
               </label>
+              <label className="menu-row">
+                <input type="checkbox" checked={!guideOff} onChange={(e) => setGuideOff(room.gameId, !e.target.checked)} />
+                Nápověda ke hře {gameName(room.gameId)}
+              </label>
               <button className="menu-row danger" onClick={leaveRoom}>
                 Odejít ze hry
               </button>
@@ -67,6 +74,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
           )}
         </AnimatePresence>
       </header>
+      <GameGuide room={room} reduced={reduced} />
       {(() => {
         const key = `${room.code}:${room.you}`;
         switch (room.gameId) {

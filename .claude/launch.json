@@ -6,6 +6,13 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 5173
+    },
+    {
+      "name": "balik-dev-alt",
+      "runtimeExecutable": "env",
+      "runtimeArgs": ["BALIK_WEB_PORT=5183", "BALIK_WS_PORT=8797", "npm", "run", "dev"],
+      "port": 5183,
+      "autoPort": false
     }
   ]
 }

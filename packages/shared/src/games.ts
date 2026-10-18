@@ -33,19 +33,43 @@ export interface GameInfo {
   /** Computer opponents offered for a quick solo game. */
   botCounts: readonly number[];
   tagline: string;
+  /** What the game is about, in one or two plain sentences for the game library. */
+  pitch: string;
+  /** The kind of card game, so similar titles read as a family. */
+  family: string;
+  /**
+   * How much there is to learn, counted as the distinct decisions a turn can ask for.
+   * 1: one kind of move (play or draw, flip, hit or stand). 2: one more decision on top
+   * (continue a trick, challenge, defend or take). 3: several phases or special actions
+   * (trump choice, contracts, doubling, closing the talon, marriages).
+   * It classifies the rules and never promises a duration.
+   */
+  learn: 1 | 2 | 3;
 }
 export const GAME_INFO: Record<GameId, GameInfo> = {
-  prsi: { name: 'Prší', mark: 'P', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Prší potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Zbav se karet jako první.' },
-  sedma: { name: 'Sedma', mark: '7', players: [2, 4], playersLabel: '2 nebo 4 hráči', needPlayers: 'Sedma potřebuje přesně 2 nebo 4 hráče.', botCounts: [1, 3], tagline: 'Štychy, esa a desítky.' },
-  snaps: { name: 'Šnaps', mark: '66', players: [2], playersLabel: '2 hráči', needPlayers: 'Šnaps je hra pro přesně 2 hráče.', botCounts: [1], tagline: 'Šedesát šest, trumfy a hlášky.' },
-  durak: { name: 'Durak', mark: 'D', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Durak potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Útoč, braň se, nezůstaň hlupákem.' },
-  marias: { name: 'Mariáš', mark: 'M', players: [3], playersLabel: '3 hráči', needPlayers: 'Volený mariáš hrají přesně 3 hráči.', botCounts: [2], tagline: 'Volený mariáš: trumfy, hlášky a betl.' },
-  petr: { name: 'Černý Petr', mark: 'ČP', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Černý Petr potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Hlavně ať ti nezůstane Petr.' },
-  oko: { name: 'Oko bere', mark: '21', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Oko bere potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Jednadvacet bez sázek, jen o body.' },
-  pexeso: { name: 'Pexeso', mark: 'PX', players: [1, 2, 3, 4], playersLabel: '1–4 hráči', needPlayers: 'Pexeso hraje 1 až 4 hráči.', botCounts: [1, 2, 3], tagline: 'Najdi dvojice stejné hodnoty a barvy.' },
-  lhar: { name: 'Lhář', mark: 'L', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Lhář potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Blafuj, nebo prohlédni blaf.' },
+  prsi: { name: 'Prší', mark: 'P', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Prší potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Zbav se karet jako první.',
+    pitch: 'Přikládej stejnou barvu nebo hodnotu. Sedma dává trest, eso stojí, svršek mění barvu.', family: 'Odhazovací', learn: 1 },
+  sedma: { name: 'Sedma', mark: '7', players: [2, 4], playersLabel: '2 nebo 4 hráči', needPlayers: 'Sedma potřebuje přesně 2 nebo 4 hráče.', botCounts: [1, 3], tagline: 'Štychy, esa a desítky.',
+    pitch: 'Barva nehraje roli, rozhoduje hodnota. Sedma přebije cokoli, esa a desítky nesou body.', family: 'Štychová', learn: 2 },
+  snaps: { name: 'Šnaps', mark: '66', players: [2], playersLabel: '2 hráči', needPlayers: 'Šnaps je hra pro přesně 2 hráče.', botCounts: [1], tagline: 'Šedesát šest, trumfy a hlášky.',
+    pitch: 'Souboj dvou o 66 bodů. Sbírej štychy, hlas krále se svrškem a talon zavři ve správnou chvíli.', family: 'Štychová', learn: 3 },
+  durak: { name: 'Durak', mark: 'D', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Durak potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Útoč, braň se, nezůstaň hlupákem.',
+    pitch: 'Útočníci přihazují, obránce přebíjí vyšší kartou nebo trumfem. Kdo zůstane s kartami poslední, je durak.', family: 'Útok a obrana', learn: 2 },
+  marias: { name: 'Mariáš', mark: 'M', players: [3], playersLabel: '3 hráči', needPlayers: 'Volený mariáš hrají přesně 3 hráči.', botCounts: [2], tagline: 'Volený mariáš: trumfy, hlášky a betl.',
+    pitch: 'Hospodská klasika pro tři. Volič určí trumf a hru, dva obránci ho zkusí zastavit.', family: 'Štychová', learn: 3 },
+  petr: { name: 'Černý Petr', mark: 'ČP', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Černý Petr potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Hlavně ať ti nezůstane Petr.',
+    pitch: 'Tahej naslepo od souseda a odkládej dvojice. Komu nakonec zůstane Černý Petr, prohrál.', family: 'Táhací', learn: 1 },
+  oko: { name: 'Oko bere', mark: '21', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Oko bere potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Jednadvacet bez sázek, jen o body.',
+    pitch: 'Ber karty a blíž se k 21. Kdo přetáhne, prohraje ruku. Hraje se jen o body, bez sázek.', family: 'Riskovací', learn: 1 },
+  pexeso: { name: 'Pexeso', mark: 'PX', players: [1, 2, 3, 4], playersLabel: '1–4 hráči', needPlayers: 'Pexeso hraje 1 až 4 hráči.', botCounts: [1, 2, 3], tagline: 'Najdi dvojice stejné hodnoty a barvy.',
+    pitch: 'Otáčej po dvou kartách a pamatuj si, kde co leží. Najdi nejvíc dvojic.', family: 'Paměťová', learn: 1 },
+  lhar: { name: 'Lhář', mark: 'L', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Lhář potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Blafuj, nebo prohlédni blaf.',
+    pitch: 'Pokládáš karty rubem a tvrdíš, co jsou. Ostatní ti uvěří, nebo tě nachytají.', family: 'Blafovací', learn: 2 },
 };
 export const gameName = (id: GameId) => GAME_INFO[id].name;
+export const LEARN_LABEL: Record<GameInfo['learn'], string> = { 1: 'Naučíš se hned', 2: 'Pár pravidel navíc', 3: 'Bohatá pravidla' };
+/** Games a table with `count` seats can start, in registry order. */
+export const gamesForPlayers = (count: number) => GAME_IDS.filter((id) => GAME_INFO[id].players.includes(count));
 export const canStartGame = (id: GameId, count: number) => GAME_INFO[id].players.includes(count);
 
 export type GameApplyResult = { ok: true; state: GameState; events: GameEvent[] } | { ok: false; error: string };

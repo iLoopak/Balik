@@ -6,9 +6,11 @@ export default defineConfig({
   envDir: '../..', // One optional .env.local at the monorepo root.
   server: {
     host: true, // reachable from a phone on the same network
-    port: 5173,
+    // BALIK_WEB_PORT / BALIK_WS_PORT let a second checkout run next to the first one.
+    port: Number(process.env.BALIK_WEB_PORT ?? 5173),
+    strictPort: !!process.env.BALIK_WEB_PORT,
     proxy: {
-      '/ws': { target: 'ws://localhost:8787', ws: true },
+      '/ws': { target: `ws://localhost:${process.env.BALIK_WS_PORT ?? 8787}`, ws: true },
     },
   },
   build: {

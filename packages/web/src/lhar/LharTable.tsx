@@ -22,8 +22,8 @@ import { placeLhar } from './layout';
 import { useLharDirector } from './useLharDirector';
 import '../table/table.css';
 import './lhar.css';
-const INTRO = 'balik.lhar.intro',
-  CHALLENGE_HELP = 'balik.lhar.challenge';
+// The first moves are explained by the shared GameGuide; the rules open from „?“.
+const CHALLENGE_HELP = 'balik.lhar.challenge';
 const TIPS = [
   [
     'Polož tajné karty',
@@ -69,11 +69,8 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
   const canAct = idle && !pending && status === 'open' && lharCanAct(truth, me);
   const [selected, setSelected] = useState<string[]>([]),
     [hovered, setHovered] = useState<string | null>(null);
-  const [modal, setModal] = useState<'intro' | 'rules' | 'select' | 'challenge' | null>(() =>
-    seen(INTRO) ? null : 'intro',
-  );
-  const [tip, setTip] = useState(0),
-    [challengeId, setChallengeId] = useState<number | null>(null);
+  const [modal, setModal] = useState<'rules' | 'select' | 'challenge' | null>(null);
+  const [challengeId, setChallengeId] = useState<number | null>(null);
   const dialog = useRef<HTMLDialogElement>(null);
   const name = (id: string) => room.players.find((p) => p.id === id)?.name ?? 'Odpojený hráč';
   useEffect(() => {
@@ -89,10 +86,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
   useEffect(() => {
     if (truth.phase === 'finished') setModal(null);
   }, [truth.phase]);
-  const closeModal = () => {
-    if (modal === 'intro') remember(INTRO);
-    setModal(null);
-  };
+  const closeModal = () => setModal(null);
   const toggle = (id: string) => {
     if (!canAct || truth.pendingWinnerId) return;
     setSelected((old) =>
@@ -163,10 +157,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
           </div>
           <button
             className="lhar-help"
-            onClick={() => {
-              setTip(0);
-              setModal('rules');
-            }}
+            onClick={() => setModal('rules')}
             aria-label="Pravidla Lháře"
           >
             ?
@@ -339,7 +330,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
         <ol>
           {view.history.map((h) => (
             <li key={h.id}>
-              {name(h.playerId)}: {h.count}× {h.rank}
+              {name(h.playerId)}: {h.count}× {rankLabel(h.rank)}
               <span>
                 {
                   {
@@ -367,9 +358,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
               ? `Tvoje tvrzení: ${rankLabel(truth.requiredRank)}`
               : modal === 'challenge'
                 ? 'Co udělá výzva?'
-                : modal === 'intro'
-                  ? `${tip + 1}/3 · ${TIPS[tip]![0]}`
-                  : 'Pravidla Lháře'}
+                : 'Pravidla Lháře'}
           </h2>
           <button className="lhar-help" onClick={closeModal} aria-label="Zavřít nápovědu">
             ×
@@ -419,20 +408,8 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
                 }
               }}
             >
-              Zpochybnit {truth.lastClaim?.count}× {truth.lastClaim?.rank}
+              Zpochybnit {truth.lastClaim?.count}× {truth.lastClaim && rankLabel(truth.lastClaim.rank)}
             </button>
-          </>
-        ) : modal === 'intro' ? (
-          <>
-            <p>{TIPS[tip]![1]}</p>
-            <footer>
-              <button className="btn btn-primary" onClick={() => (tip < 2 ? setTip(tip + 1) : closeModal())}>
-                {tip < 2 ? 'Dál' : 'Jdeme hrát'}
-              </button>
-              <button className="btn btn-ghost" onClick={closeModal}>
-                Přeskočit
-              </button>
-            </footer>
           </>
         ) : (
           <>
