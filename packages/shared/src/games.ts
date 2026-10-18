@@ -12,7 +12,7 @@ import { chooseLharBotFromView, filterLharEventFor, lharViewFor } from './lhar/v
 import type { LharAction, LharClientEvent, LharEvent, LharState } from './lhar/types';
 import { GAME_MODULES_EXTRA, type ExtraAction, type ExtraClientEvent, type ExtraEvent, type ExtraState } from './extra';
 
-export const GAME_IDS = ['prsi', 'sedma', 'lhar'] as const;
+export const GAME_IDS = ['prsi', 'sedma', 'lhar', 'snaps'] as const;
 export type GameId = typeof GAME_IDS[number];
 export type GameState = PrsiState | SedmaState | LharState | ExtraState;
 export type GameEvent = PrsiEvent | SedmaEvent | LharEvent | ExtraEvent;
@@ -37,6 +37,7 @@ export interface GameInfo {
 export const GAME_INFO: Record<GameId, GameInfo> = {
   prsi: { name: 'Prší', mark: 'P', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Prší potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Zbav se karet jako první.' },
   sedma: { name: 'Sedma', mark: '7', players: [2, 4], playersLabel: '2 nebo 4 hráči', needPlayers: 'Sedma potřebuje přesně 2 nebo 4 hráče.', botCounts: [1, 3], tagline: 'Štychy, esa a desítky.' },
+  snaps: { name: 'Šnaps', mark: '66', players: [2], playersLabel: '2 hráči', needPlayers: 'Šnaps je hra pro přesně 2 hráče.', botCounts: [1], tagline: 'Šedesát šest, trumfy a hlášky.' },
   lhar: { name: 'Lhář', mark: 'L', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Lhář potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Blafuj, nebo prohlédni blaf.' },
 };
 export const gameName = (id: GameId) => GAME_INFO[id].name;

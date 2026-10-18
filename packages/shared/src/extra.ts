@@ -1,9 +1,11 @@
 /** Games added after the first three plug in here; see GameModule in games.ts. */
 import type { GameModule } from './games';
-export type ExtraState = never;
-export type ExtraEvent = never;
-export type ExtraAction = never;
-export type ExtraClientEvent = never;
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface ExtraViews {}
-export const GAME_MODULES_EXTRA: GameModule[] = [];
+import { SNAPS_MODULE } from './snaps/module';
+import type { SnapsAction, SnapsClientEvent, SnapsEvent, SnapsState, SnapsView } from './snaps/types';
+
+export type ExtraState = SnapsState;
+export type ExtraEvent = SnapsEvent;
+export type ExtraAction = SnapsAction;
+export type ExtraClientEvent = SnapsClientEvent;
+export interface ExtraViews { snaps: SnapsView }
+export const GAME_MODULES_EXTRA: GameModule[] = [SNAPS_MODULE];

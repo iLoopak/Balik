@@ -39,3 +39,8 @@
   .game-controls-copy b { font-size: 12px; }
   .game-controls-actions .btn { padding: 0 9px; font-size: 11px; }
 }
+/* A face-down stock that is not a card entity (identities unknown until drawn). */
+.snaps-talon, .stock-pile { position: absolute; translate: -50% -50%; z-index: 45; pointer-events: none; border-radius: 8%; filter: drop-shadow(0 4px 6px #0005); }
+.snaps-talon .card-back-art, .snaps-talon .card-back, .stock-pile .card-back-art, .stock-pile .card-back { border-radius: 8%; }
+.snaps-talon > .type-machine, .stock-pile > .type-machine { position: absolute; left: 50%; top: 50%; translate: -50% -50%; padding: 2px 6px; border-radius: 6px; background: var(--hud); color: var(--hud-ink); font-size: 9px; white-space: nowrap; }
+.snaps-talon.is-closed { rotate: 90deg; }

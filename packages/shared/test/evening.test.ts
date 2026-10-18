@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { applyEveningCommand, beginEveningMatch, createEvening, createGameRound, eveningBallot, eveningSummary, eveningView,
-  finishEveningMatch, reconcileEvening, ensureRoomEvening, mulberry32, isSedma,
+  finishEveningMatch, reconcileEvening, ensureRoomEvening, mulberry32, isSedma, GAME_IDS,
   type EveningPerson, type EveningState, type GameId, type GameState } from '../src';
 import { clientMessageSchema } from '../src/schema';
 const people = (n=2): EveningPerson[] => Array.from({length:n},(_,i)=>({id:`p${i}`,name:`Hráč ${i}`,connected:true,bot:false}));
@@ -116,5 +116,5 @@ it('adds Lhář to a three-seat ballot and records its verified win without card
 it('upgrades pre-W5 game counts without fabricating Lhář history or changing prior stats',()=>{
   const {e,roster}=setup();Object.assign(e,{gameCounts:{prsi:2,sedma:1}});
   const room={status:'lobby' as const,round:3,gameId:'prsi' as const,game:null,evening:e};
-  const upgraded=ensureRoomEvening(room,roster,100);expect(upgraded.gameCounts).toEqual({prsi:2,sedma:1,lhar:0});expect(upgraded.history).toEqual([]);
+  const upgraded=ensureRoomEvening(room,roster,100);expect(upgraded.gameCounts).toEqual({...Object.fromEntries(GAME_IDS.map((id)=>[id,0])),prsi:2,sedma:1});expect(upgraded.history).toEqual([]);
 });

@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { RANKS, SUITS } from './cards';
 import { GAME_IDS } from './games';
+import { extraActionSchemas } from './extraSchema';
 import { EMOTE_IDS } from './social';
 import { AVATAR_IDS } from './avatars';
 import { MAX_BOTS, MAX_NAME_LENGTH, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from './protocol';
@@ -27,6 +28,7 @@ export const gameActionSchema = z.union([prsiActionSchema, z.object({ type: z.li
   z.object({type:z.literal('lharPlay'),cardIds:z.array(z.string().min(1).max(16)).min(1).max(4).refine(ids=>new Set(ids).size===ids.length),declaredRank:z.enum(RANKS)}),
   z.object({type:z.literal('lharChallenge'),claimId:z.number().int().positive()}),
   z.object({type:z.literal('lharAccept'),claimId:z.number().int().positive()}),
+  ...extraActionSchemas,
 ]);
 
 const round = z.number().int().nonnegative().optional();

@@ -1,13 +1,13 @@
 import { expect, it } from 'vitest';
 import { WebSocket } from 'ws';
-import { chooseLharBotFromView, chooseSedmaBotFromView, legalMovesFromView, mulberry32, type AnyRoomView, type ClientMessage, type ServerMessage } from '@balik/shared';
+import { chooseLharBotFromView, chooseSedmaBotFromView, legalMovesFromView, mulberry32, type AnyRoomView, type ClientMessage, type RoomView, type ServerMessage } from '@balik/shared';
 import { startServer } from '../src/server';
 const pause=(ms:number)=>new Promise(r=>setTimeout(r,ms));
 async function wait<T>(read:()=>T|false|undefined):Promise<T>{const end=Date.now()+4000;while(Date.now()<end){const value=read();if(value)return value as T;await pause(10);}throw Error('WS session timeout');}
 function legal(room:AnyRoomView):Extract<ClientMessage,{t:'act'}>{
   if(room.gameId==='lhar')return {t:'act',baseSeq:room.seq,action:chooseLharBotFromView(room.game!,room.you,mulberry32(room.seq))};
   if(room.gameId==='sedma')return {t:'act',baseSeq:room.seq,action:chooseSedmaBotFromView(room.game!,room.you)};
-  const moves=legalMovesFromView(room.game!,room.you),id=moves.playable[0];
+  const moves=legalMovesFromView((room as RoomView<'prsi'>).game!,room.you),id=moves.playable[0];
   return {t:'act',baseSeq:room.seq,action:id?{type:'play',cardId:id,chosenSuit:id.endsWith('-Q')?'hearts':undefined}:moves.canPass?{type:'pass'}:{type:'draw'}};
 }
 it('real WS: one room, three alternating matches, voting reconnect, exact results and end summary',async()=>{

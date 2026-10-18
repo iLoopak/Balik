@@ -8,6 +8,7 @@ import { gameName } from '@balik/shared';
 import { LharTable } from '../lhar/LharTable';
 import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
+import { SnapsTable } from '../games/snaps/SnapsTable';
 import './screens.css';
 import { BrandOptions } from '../brand/BrandSettings';
 import { AppSettings } from '../themes/AppearancePicker';
@@ -61,7 +62,15 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
           )}
         </AnimatePresence>
       </header>
-      {room.gameId === 'lhar' ? <LharTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : room.gameId === 'sedma' ? <SedmaTable key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} /> : <Table key={`${room.code}:${room.you}`} room={room} reducedMotion={reduced} />}
+      {(() => {
+        const key = `${room.code}:${room.you}`;
+        switch (room.gameId) {
+          case 'lhar': return <LharTable key={key} room={room} reducedMotion={reduced} />;
+          case 'sedma': return <SedmaTable key={key} room={room} reducedMotion={reduced} />;
+          case 'snaps': return <SnapsTable key={key} room={room} reducedMotion={reduced} />;
+          default: return <Table key={key} room={room} reducedMotion={reduced} />;
+        }
+      })()}
       <GameTransition room={room} reduced={reduced} />
     </main>
   );

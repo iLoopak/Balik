@@ -12,3 +12,8 @@ export function cardsWord(n: number): string {
   if (n >= 2 && n <= 4) return 'karty';
   return 'karet';
 }
+
+/** Czech count with the right form: plural(2, 'štych', 'štychy', 'štychů') → "2 štychy". */
+export function plural(n: number, one: string, few: string, many: string): string {
+  return `${n} ${n === 1 ? one : n >= 2 && n <= 4 ? few : many}`;
+}

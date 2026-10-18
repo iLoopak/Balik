@@ -1,5 +1,5 @@
 import { afterEach, expect, it, vi } from 'vitest';
-import { chooseLharBotFromView, chooseSedmaBotFromView, legalMovesFromView, mulberry32, type AnyRoomView, type ClientMessage, type ServerMessage } from '@balik/shared';
+import { chooseLharBotFromView, chooseSedmaBotFromView, legalMovesFromView, mulberry32, type AnyRoomView, type ClientMessage, type RoomView, type ServerMessage } from '@balik/shared';
 import { RoomManager, type Conn } from '../src/rooms';
 class Seat implements Conn {
   messages: ServerMessage[]=[];
@@ -17,7 +17,7 @@ function setup(n=2,opts={}) {
 function legal(room:AnyRoomView):Extract<ClientMessage,{t:'act'}> {
   if(room.gameId==='lhar')return {t:'act',baseSeq:room.seq,action:chooseLharBotFromView(room.game!,room.you,mulberry32(room.seq))};
   if(room.gameId==='sedma')return {t:'act',baseSeq:room.seq,action:chooseSedmaBotFromView(room.game!,room.you)};
-  const moves=legalMovesFromView(room.game!,room.you),id=moves.playable[0];
+  const moves=legalMovesFromView((room as RoomView<'prsi'>).game!,room.you),id=moves.playable[0];
   return {t:'act',baseSeq:room.seq,action:id?{type:'play',cardId:id,chosenSuit:id.endsWith('-Q')?'hearts':undefined}:moves.canPass?{type:'pass'}:{type:'draw'}};
 }
 function finish(s:ReturnType<typeof setup>){for(let i=0;i<3000;i++){const room=s.seats[0]!.room;if(room.status==='finished')return;const seat=s.seats.find(p=>p.room.you===room.game!.currentPlayerId)!;s.rooms.handle(seat,legal(seat.room));}throw Error('unfinished');}
