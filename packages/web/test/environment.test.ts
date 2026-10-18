@@ -257,3 +257,22 @@ describe('BALÍK dealer apparatus', () => {
     expect(reset.resolution).toBeNull();
   });
 });
+
+describe('console wiring', () => {
+  it('cables each seat into the console, marks only the active lane and reads out the stock', () => {
+    for (const [w, h] of [[390, 844], [1440, 900], [844, 390]] as const) {
+      const geo = computeGeometry(w, h, ['me', 'ada', 'max', 'iva'], 'me', 6);
+      const html = renderToStaticMarkup(createElement(GameTableTheme, { geo, suit: 'hearts', reduced: true, lite: false, myTurn: false, game: 'prsi', drawCount: 13, active: 'max' }));
+      const lanes = [...html.matchAll(/data-console-lane="([^"]+)"/g)].map(m => m[1]!);
+      for (const id of lanes) expect(['ada', 'max', 'iva', 'me']).toContain(id);
+      expect(html.match(/class="console-lane is-live"/g)?.length ?? 0).toBe(lanes.includes('max') ? 1 : 0);
+      expect(html).toContain('data-console-gauge="4"');
+      expect(html).toContain('class="console-slot-count">13<');
+      expect(html).not.toContain('NaN');
+    }
+    const geo = computeGeometry(1440, 900, ['me', 'ada'], 'me', 4);
+    const lhar = renderToStaticMarkup(createElement(GameTableTheme, { geo, suit: null, reduced: true, lite: false, myTurn: true, game: 'lhar' }));
+    expect(lhar).not.toContain('data-console-gauge');
+    expect(lhar).toContain('data-console-lane="me"');
+  });
+});

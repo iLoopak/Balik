@@ -88,16 +88,18 @@
 }
 .lhar-claim {
   position: absolute;
-  left: 50%;
-  translate: -50% -100%;
+  translate: 0 -50%;
   z-index: 500;
-  text-align: center;
+  text-align: left;
   pointer-events: none;
   padding: 6px 12px;
   border-radius: 12px;
+  border-left: 3px solid var(--accent);
   background: var(--hud);
-  border: 1px solid var(--line);
-  white-space: nowrap;
+  border-top: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
 }
 .lhar-claim strong {
   display: block;

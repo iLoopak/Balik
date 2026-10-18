@@ -7,6 +7,7 @@ import { useAppearance } from '../themes/preferences';
 import { BrandMascot } from '../brand/BrandMascot';
 import { useBrandPreferences } from '../brand/preferences';
 import { ConsoleReactions } from './ConsoleReactions';
+import { ConsoleWiringOver, ConsoleWiringUnder, consoleWiring } from './ConsoleWiring';
 import { CONSOLE_LABELS, consolePocket, type EnvironmentPulse } from './environment';
 import type { Geometry } from './layout';
 import './arena.css';
@@ -41,6 +42,8 @@ export interface GameTableThemeProps {
   you?: string;
   drawCount?: number;
   pulses?: readonly EnvironmentPulse[];
+  /** Player whose turn it is; their lane into the console carries the signal. */
+  active?: string | null;
 }
 /** Room → apparatus → receiving slots/ambient → cards → overlays. All decoration is inert. */
 export function GameTableTheme({
@@ -55,6 +58,7 @@ export function GameTableTheme({
   you = 'me',
   drawCount,
   pulses = [],
+  active = null,
 }: GameTableThemeProps) {
   const selected = useAppearance((p) => p.table),
     selectedMode = useColorMode((p) => p.mode);
@@ -69,6 +73,7 @@ export function GameTableTheme({
   const labels = CONSOLE_LABELS[game];
   const width = Math.min(geo.w * 0.94, Math.max(geo.cardW * 5.8, geo.w * 0.54));
   const height = Math.min(geo.h * 0.55, geo.pileH * 1.9);
+  const wiring = consoleWiring(geo, game, { cx: geo.w / 2, cy: geo.discard.y, width, height });
   const last = pulses.at(-1)?.kind;
   const mascotState =
     last === 'win'
@@ -115,6 +120,7 @@ export function GameTableTheme({
           }}
         />
       ))}
+      <ConsoleWiringUnder geo={geo} wiring={wiring} active={active} myTurn={myTurn} />
       <div
         className="arena-stage console-stage"
         style={{ left: geo.w / 2, top: geo.discard.y, width, height }}
@@ -174,10 +180,12 @@ export function GameTableTheme({
           game={game}
           kind="draw"
           label={drawCount === 0 ? 'DOBRÁNO' : labels.input}
+          count={drawCount || undefined}
           empty={drawCount === 0}
         />
       )}
       <ConsoleSlot geo={geo} game={game} kind="play" label={labels.output} />
+      <ConsoleWiringOver geo={geo} wiring={wiring} drawCount={drawCount} />
       <ConsoleReactions geo={geo} pulses={pulses} game={game} quiet={quiet} you={you} />
       <div className="arena-hand-light" style={{ top: geo.handTop, height: geo.h - geo.handTop }} />
     </div>
@@ -188,12 +196,15 @@ function ConsoleSlot({
   game,
   kind,
   label,
+  count,
   empty = false,
 }: {
   geo: Geometry;
   game: GameId;
   kind: 'draw' | 'play';
   label: string;
+  /** Stock readout: the slot itself tells how many cards are left. */
+  count?: number;
   empty?: boolean;
 }) {
   const pocket = consolePocket(geo, game, kind);
@@ -204,9 +215,10 @@ function ConsoleSlot({
       data-empty={empty}
       style={{ left: pocket.x, top: pocket.y, width: pocket.width, height: pocket.height }}
     >
-      <span className="console-slot-name">
+      <span className={`console-slot-name${pocket.x < 72 ? ' is-edge' : ''}`}>
         <i />
         {label}
+        {count !== undefined && <b className="console-slot-count">{count}</b>}
       </span>
       <span className="console-slot-teeth" />
       <span className="console-slot-lip" />

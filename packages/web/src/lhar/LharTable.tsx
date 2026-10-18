@@ -7,6 +7,7 @@ import { brandAudio } from '../brand/audio';
 import { CardLayer } from '../table/CardLayer';
 import { computeGeometry } from '../table/layout';
 import { GameTableTheme } from '../table/GameTableTheme';
+import { consolePocket } from '../table/environment';
 import { SuitIcon } from '../cards/SuitIcon';
 import { suitColor } from '../cards/skin';
 import { useAppearance } from '../themes/preferences';
@@ -216,7 +217,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
         data-quiet={quiet}
         data-claim={claim?.id ?? 0}
       >
-        <GameTableTheme game="lhar" you={me} pulses={environment} geo={geo} suit={null} reduced={quiet} lite={lite} myTurn={status === 'open' && view.phase === 'playing' && view.currentPlayerId === me} />
+        <GameTableTheme game="lhar" you={me} pulses={environment} geo={geo} suit={null} reduced={quiet} lite={lite} myTurn={status === 'open' && view.phase === 'playing' && view.currentPlayerId === me} active={view.phase === 'playing' ? view.currentPlayerId : null} />
         {view.players
           .filter((p) => p.id !== me)
           .map((p) => {
@@ -240,7 +241,8 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
               </div>
             );
           })}
-        <div className="lhar-claim" style={{ top: geo.discard.y - geo.cardH * 0.67 }} aria-live="polite">
+        {/* The claim is the console's readout beside the TVRZENÍ slot, clear of the opponent seats. */}
+        <div className="lhar-claim" style={claimReadout(geo)} aria-live="polite">
           <span>{claim ? name(claim.playerId) : 'Tajný střed'}</span>
           <strong>{claim ? `Tvrdí: ${claim.count}× ${claim.rank}` : `Začínáme hodnotou ${view.requiredRank}`}</strong>
           <small>{display.pile.length} karet ve středu</small>
@@ -452,4 +454,10 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
       </dialog>
     </section>
   );
+}
+
+function claimReadout(geo: ReturnType<typeof computeGeometry>) {
+  const pocket = consolePocket(geo, 'lhar', 'play');
+  const left = geo.w / 2 + pocket.width / 2 + (geo.compact ? 10 : 18);
+  return { left, top: geo.discard.y, maxWidth: Math.max(96, geo.w - left - 10) };
 }

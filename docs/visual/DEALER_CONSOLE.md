@@ -93,3 +93,25 @@ V živém prohlížeči a na telefonu zkontrolovat kompozici s reálnou dlouhou 
 SFX pro podavač a příjem karty přes existující audio preference a feedback gate.
 Vizuální reakce už mají společné sémantické signály, není nutné měnit pravidla
 ani vytvářet další nezávislou herní časovou osu.
+
+## Kabeláž konzole (navazuje na PR #11)
+
+`ConsoleWiring.tsx` přidává pod konzoli a nad ni vrstvu v reálných pixelech
+stolu (bez roztaženého viewBoxu):
+
+- **Drážky k hráčům.** Každé sedadlo vede drážkou do zásuvky na hraně rámu.
+  Hráč na tahu (`active`) má v drážce pohyblivý amber signál a rozsvícenou zásuvku.
+  Vlastní hráč je připojený zářezem balíčku k přednímu tácu.
+- **Přední tác.** Zóna vlastní ruky se zkosenými rohy a zářezem. Na tahu se
+  rozsvítí její horní hrana. Tác nahrazuje obrys `arena-hand-light` ve světlém
+  režimu, záře zůstává.
+- **Přístroje slotů.** Vedle DOBÍRÁNÍ je ukazatel zásoby (8 buněk po 4 kartách)
+  a počet karet je přímo v popisku slotu (`DOBÍRÁNÍ 23`). Původní `.deck-count`
+  pod balíčkem zasahoval do kapsy. Kolem kapsy pro odehrání jsou registrační
+  rohy v barvě frakce.
+- **Lhář.** Tvrzení je odečet vpravo od slotu TVRZENÍ. Nad slotem
+  zakrývalo jmenovku soupeře.
+
+Klid (reduced motion / lite) nechává jen statickou strukturu, signál stojí.
+Ověřeno živě v prohlížeči: Prší, Sedma, Lhář, tmavý i světlý režim,
+desktop 800–1440 px a telefon 375 px.
