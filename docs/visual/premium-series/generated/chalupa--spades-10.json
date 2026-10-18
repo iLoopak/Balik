@@ -1,0 +1,28 @@
+{
+  "id": "chalupa:spades-10",
+  "deck": "chalupa",
+  "card": {
+    "id": "spades-10",
+    "suit": "spades",
+    "rank": "10"
+  },
+  "name": "Karavan na louce",
+  "meaning": "Malý obytný přívěs má velké plány a venkovní hrnek.",
+  "archetype": "Dominanta",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / CHALUPA!. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A charming squat cream-and-mustard vintage caravan leaning on a little single axle, door swung out, one folding chair strapped to its side and a tiny red kettle visible through the open window. Faded paint, corrugated aluminum, rubber tires and canvas awning give real construction. Three-quarter viewpoint, no surrounding field. World: Výpravy. Primary accent #F2C75B; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces. Card role: Dominanta; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-15e21204-d624-4ee6-946f-f15c9cf81d05.png",
+  "stickerAsset": "/decks/chalupa/stickers/spades-10.webp",
+  "width": 768,
+  "height": 643,
+  "bytes": 191310,
+  "sourceBounds": [
+    21,
+    111,
+    1235,
+    1109
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

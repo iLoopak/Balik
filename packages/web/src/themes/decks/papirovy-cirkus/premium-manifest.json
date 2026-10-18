@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Prasklý úsměv",
+    "meaning": "Divadelní maska praskla mezi úsměvem a překvapením.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-7.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Vějíř opony",
+    "meaning": "Papírový vějíř drží pohromadě křehkou scénickou obranu.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-8.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Pantomimí pták",
+    "meaning": "Poskládaný pták hraje potichu, zato s mimořádně hlasitým zobákem.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-9.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Jeviště dvou tváří",
+    "meaning": "Miniaturní divadlo rozevírá dvě zcela odlišné nálady.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-10.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Posel v půlmasce",
+    "meaning": "Akrobatický poslíček přináší roli svázanou červenou stuhou.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-j.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Paní proměn",
+    "meaning": "Vládkyně scény drží dvě masky, ale vlastní tvář si nechává pro sebe.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-q.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Principál ozvěn",
+    "meaning": "Vysoký principál s dvojitou tváří nese celý potlesk na ramenou.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-k.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Tvář před oponou",
+    "meaning": "Dvě vyřezané tváře a roztažené stuhy tvoří znak divadla.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/hearts-a.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Zamotaný závěs",
+    "meaning": "Loutkový kříž se stal obětí vlastních provázků.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-7.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Dřevěný paraván",
+    "meaning": "Skládané kulisy tvoří pevnost pro všechna křehká vystoupení.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-8.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Kloubový koník",
+    "meaning": "Malý dřevěný kůň má čtyři nohy, každou z jiné pohádky.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-9.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Točna provázků",
+    "meaning": "Malé kruhové jeviště otáčí celým papírovým světem.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-10.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Dřevěný doručovatel",
+    "meaning": "Loutka na volných provázcích nese svitek za hranice kulis.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-j.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Vodička hvězd",
+    "meaning": "Loutkářka vodí souhvězdí na dvou zlatých křížích.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-q.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Obr z rekvizit",
+    "meaning": "Loutkový král má ramena z beden a srdce z červeného papíru.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-k.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Kříž nad scénou",
+    "meaning": "Loutkářský kříž řídí geometrické srdce papírového světa.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/diamonds-a.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Rozstřižená obruč",
+    "meaning": "Akrobatická obruč se rozpadla na zubaté papírové plameny.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-7.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Hříva z papíru",
+    "meaning": "Skládaná lví hříva je ochranným erbem všech šelem.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-8.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Tygr na kolečkách",
+    "meaning": "Papírový tygr zůstává důstojný, i když stojí na tahací hračce.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-9.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Aréna modrých stínů",
+    "meaning": "Prázdný piedestal a velká obruč čekají na přesný skok.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-10.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Krotitel stínů",
+    "meaning": "Mladý akrobat doprovází šelmy jen světlem papírové lucerny.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-j.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Lvice rovnováhy",
+    "meaning": "Akrobatická lvice drží dva míče na jediné napnuté linii.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-q.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Lev principál",
+    "meaning": "Král šelem má kabát s výraznými klopami a skládací korunu.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-k.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Skok do světla",
+    "meaning": "Lev vystřižený z jediného archu proskakuje emblémovou obručí.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-a.webp"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Uprchlá hvězda",
+    "meaning": "Z kouzelnické krabičky utekl jeden nepatřičně velký nápad.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-7.webp"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Zrcadlová clona",
+    "meaning": "Dvě přeložená zrcadla chrání vše, co se právě nemá ukázat.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-8.webp"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Králík z rohu papíru",
+    "meaning": "Králík se složil sám a odmítá se vrátit do klobouku.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-9.webp"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Stroj na nemožné",
+    "meaning": "Magický kabinet skládá hvězdy z prázdného prostoru.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-10.webp"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Asistent za záhybem",
+    "meaning": "Hbitý asistent přináší kouzelnický klobouk složený naplocho.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-j.webp"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Kartografka snů",
+    "meaning": "Papírová loutka balancuje nad srpkem a rozvíjí schodiště z vlastního pláště jako mapu snů.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-q.webp"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "Mistr posledního triku",
+    "meaning": "Principál iluzí má plášť jako noční oblohu a hlavu z prázdného rámu.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-k.webp"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Oko za oponou",
+    "meaning": "Otevřené oko v papírové hvězdě je znakem každé dobré iluze.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-a.webp"
+  }
+]

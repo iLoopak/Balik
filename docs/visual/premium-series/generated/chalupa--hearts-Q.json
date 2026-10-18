@@ -1,0 +1,29 @@
+{
+  "id": "chalupa:hearts-Q",
+  "deck": "chalupa",
+  "card": {
+    "id": "hearts-Q",
+    "suit": "hearts",
+    "rank": "Q"
+  },
+  "name": "Paní záhonů",
+  "meaning": "Zahradnice s konví a slunečním kloboukem má vše pod kontrolou.",
+  "archetype": "Kapitán",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / CHALUPA!. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A broad-shouldered older woman gardener with short silver curls under a huge straw sunhat, freckles, determined grin and rolled red dungarees, lunging sideways as she pours a heavy green watering can over an absurdly proud tomato plant. One foot braced and one elbow high; expressive adult anatomy and rich cloth folds, unlike the lanky courier. World: Zahrada. Primary accent #F07859; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces. Card role: Kapitán; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-b03b1476-236e-4e8c-a0ae-7d8a10b338d3.png",
+  "attempt": 1,
+  "stickerAsset": "/decks/chalupa/stickers/hearts-q.webp",
+  "width": 768,
+  "height": 711,
+  "bytes": 202248,
+  "sourceBounds": [
+    27,
+    84,
+    1246,
+    1204
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

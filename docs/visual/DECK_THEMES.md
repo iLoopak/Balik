@@ -1,5 +1,8 @@
 # Vizuální edice BALÍKu — W4
 
+Aktuální rozšíření o BIO//PUNK, PANELÁK 3000, CHALUPA! a PAPÍROVÝ CIRKUS:
+[čtyři nové kolekce, mappingy a ověření](WORLD_EDITIONS.md). Následující audit popisuje původní W4.
+
 ## Audit před změnou
 
 CardView již skládá CardBase, CardIndices, CardStickerLayer, CardEffectLayer a rub.

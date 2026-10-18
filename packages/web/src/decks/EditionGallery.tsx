@@ -43,7 +43,7 @@ export default function EditionGallery({ deck }: { deck: GalleryDeckId }) {
     else if (!selected && dialog.current?.open) dialog.current.close();
   }, [selected]);
   return (
-    <main className={`deck-gallery${light ? ' gallery-light' : ''}`}>
+    <main className={`deck-gallery${light ? ' gallery-light' : ''}`} data-deck-gallery={deck}>
       <header className="gallery-nav">
         <a className="gallery-brand" href="/">
           BALÍK
@@ -69,6 +69,7 @@ export default function EditionGallery({ deck }: { deck: GalleryDeckId }) {
             <br />
             {edition.intro[1]}
           </p>
+          {theme.artStatus === 'study' && <p className="gallery-study-note">Pracovní SVG studie motivů. BIO//PUNK zatím čeká na posouzení zjednodušeného rastrového návrhu v2.{import.meta.env.DEV && <> <a href="/dev/art-poc">Porovnat BIO v1 a v2 ↗</a></>}</p>}
           <div className="gallery-hero-bottom">
             <a href="#collection" className="gallery-explore">
               Prohlédnout balíček ↘
@@ -217,6 +218,7 @@ export default function EditionGallery({ deck }: { deck: GalleryDeckId }) {
               </p>
               <h2 id="card-detail-title">{selected.name}</h2>
               <p>{selected.meaning}</p>
+              {theme.stickerFor(selected.card) && <a className="gallery-sticker-link" href={theme.stickerFor(selected.card)!.src} target="_blank" rel="noreferrer">Samostatný sticker ↗</a>}
               <button className="gallery-detail-animate" onClick={() => setDemo((n) => n + 1)}>
                 Rozhýbat sticker ↗
               </button>

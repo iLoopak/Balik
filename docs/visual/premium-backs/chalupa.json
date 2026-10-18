@@ -1,0 +1,17 @@
+{
+  "deck": "chalupa",
+  "name": "CHALUPA!",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "direction": "Víkendový talisman",
+  "prompt": "Use case: stylized-concept. Asset type: ONE finished portrait playing-card BACK ARTWORK for BALÍK. Portrait 5:7 composition, height 1.4 times width, straight-on flat view; artwork fills the entire rectangular canvas, no scene outside it and no perspective mockup. Input image is STYLE/MATERIAL reference only, not a character to reproduce. Create a new original ornamental composition. Keep the important inner frame at least 10 percent inside every edge so a small production crop cannot cut it. Dense enough to feel premium but organised into large clear masses readable on a 76px-wide card. Balanced opposed upper/lower ornaments around one strong central brand plaque. EXACTLY ONE text element: BALÍK, uppercase, with the acute accent on Í, in confident heavy sculptural serif letters. Make this short word sharply legible with excellent contrast. No other words, numbers, ranks, labels, corner indices, suit glyphs, logos, watermark or accidental lettering. No pasted face-card image, no UI icon pack, no stock clipart. Full-bleed OPAQUE background; no transparency and no outer paper/desk/photographic environment. Art direction: premium Czech summer comic illustration, confident varied black ink contours, warm late-afternoon light, cool green shadows and selective material texture. A deep forest-green enamel field with a warm ivory central camping-style plaque bearing BALÍK. Four large asymmetrically interlocking summer motifs form a balanced ornamental wreath: a huge golden sunflower with two broad leaves, a stout glossy bolete mushroom, one turquoise curled pond wave with a water-lily leaf, and a short braided hiking rope loop with a little red enamel kettle. Echo their broad shapes in opposed upper/lower corners so the back stays balanced. Warm red, sunflower yellow, moss green, turquoise and ivory, convincing metal, woven rope and leaf wax, generous dark breathing spaces. Adult stylish weekend warmth, no nostalgic kitsch, no childish faces, no generic clipart or tiny scattered props.",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-e2071c8c-6b27-47ea-8026-9efd02246920.png",
+  "status": "generated-proposal",
+  "export": {
+    "asset": "/decks/art-backs/chalupa.webp",
+    "width": 640,
+    "height": 896,
+    "bytes": 291578,
+    "isOpaque": true,
+    "method": "Sharp resize/encode only; no drawing or text compositing"
+  }
+}

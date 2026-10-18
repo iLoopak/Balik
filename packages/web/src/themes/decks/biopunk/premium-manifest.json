@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Přepólovaný klíček",
+    "meaning": "Prasklá baterie vypouští kořenový kabel místo proudu.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-7.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Trnový štít",
+    "meaning": "Skládaný list chrání citlivé procesorové jádro.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-8.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Mucholapka na nožkách",
+    "meaning": "Zubatý květ se sám přemisťuje za teplem nabíječek.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-9.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Skleník v serveru",
+    "meaning": "Ze serverové skříně vyrostla klenba masožravých listů.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-10.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Sběrač slunce",
+    "meaning": "Lehký zahradní kurýr nese nabitý semenný článek.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-j.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Královna roubů",
+    "meaning": "Dirigentka živého obvodu spojuje stonek s měděnou sběrnicí.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-q.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Fotosyntetický kolos",
+    "meaning": "Nehumanoidní fotosyntetický vládce střeží poslední světlo biomechanického světa.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-k.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Semenný reaktor",
+    "meaning": "Zubatá semenná kapsle je totemem růstu, který nic nezastaví.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/biopunk/stickers/hearts-a.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Chybová spora",
+    "meaning": "Prasklá datová kapsle omotaná myceliem hledá nový port.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-7.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Spórový deštník",
+    "meaning": "Masivní houbový klobouk odstíní i datový déšť.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-8.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Šnek s hotspotem",
+    "meaning": "Šnek nese na ulitě svítící houbový přístupový bod.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-9.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Katedrála podhoubí",
+    "meaning": "Tři plodnice tvoří živý síťový rozbočovač.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-10.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Spóronoš",
+    "meaning": "Úzký kurýr v pláštěnce doručuje lahvičku spór.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-j.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Dirigentka hyf",
+    "meaning": "Dva kabelové vějíře propojují celé podzemní město.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-q.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Král kolonizátor",
+    "meaning": "Houbový obr vyrostl přímo ze základové desky.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-k.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Mykojádro",
+    "meaning": "Jedna plodnice, nekonečná síť. Ikona sdílené paměti.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/biopunk/stickers/diamonds-a.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Utržené kusadlo",
+    "meaning": "Živý šroubovák s klepety překousl vlastní napájení.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-7.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Krovkový pancíř",
+    "meaning": "Dvě krovky zavřou organický zámek nad napájecím článkem.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-8.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Měděný krab",
+    "meaning": "Kabelový korýš sbírá konektory na svém hřbetě.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-9.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Líheň dronů",
+    "meaning": "Otevřené vajíčko vypouští čerstvého biomechanického brouka.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-10.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Kudlankový posel",
+    "meaning": "Okřídlený běžec svírá v kusadlech schránku se vzorkem.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-j.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Matka roje",
+    "meaning": "Přísná vládkyně se čtyřmi pažemi a korunou z tykadel.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-q.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Roháčový titán",
+    "meaning": "Těžký obr s rozevřenými parohy a segmentovým hrudníkem.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-k.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Chitinový erb",
+    "meaning": "Okřídlený brouk s jantarovým reaktorem tvoří znak roje.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/biopunk/stickers/clubs-a.webp"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Zběhlá ampule",
+    "meaning": "Zkumavka praskla a její obsah už má vlastní nohy.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/biopunk/stickers/spades-7.webp"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Membránový kokon",
+    "meaning": "Vrstvená buněčná skořápka izoluje zranitelný obvod.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/biopunk/stickers/spades-8.webp"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Axolotl z laboratoře",
+    "meaning": "Obojživelník s konektory místo žaber si oblíbil teplou zásuvku.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/biopunk/stickers/spades-9.webp"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Genová kolébka",
+    "meaning": "Plovoucí zárodek roste v otevřené servisní kapsli.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/biopunk/stickers/spades-10.webp"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Nosič vzorků",
+    "meaning": "Symbiotický potápěč doručuje buněčnou kapsli.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/biopunk/stickers/spades-j.webp"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Správkyně symbióz",
+    "meaning": "Plášť z membrán a dvě dávkovací paže udržují rovnováhu.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/biopunk/stickers/spades-q.webp"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "První organismus",
+    "meaning": "Mnohoruký živý stroj prorostl laboratorní exoskelet.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/biopunk/stickers/spades-k.webp"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Dvojitá evoluce",
+    "meaning": "Dvě živé šroubovice uzavírají zářící buněčné jádro.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/biopunk/stickers/spades-a.webp"
+  }
+]

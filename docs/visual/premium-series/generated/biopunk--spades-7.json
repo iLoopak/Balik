@@ -1,0 +1,28 @@
+{
+  "id": "biopunk:spades-7",
+  "deck": "biopunk",
+  "card": {
+    "id": "spades-7",
+    "suit": "spades",
+    "rank": "7"
+  },
+  "name": "Zběhlá ampule",
+  "meaning": "Zkumavka praskla a její obsah už má vlastní nohy.",
+  "archetype": "Glitch",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / BIO//PUNK. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A chunky turquoise laboratory ampoule tilted in alarm, its cracked glass lower shell unfolding into two thick translucent living feet. One curious eye forms within the liquid; a short membrane arm clutches its displaced dark ceramic stopper. A single clear bubble caught at the opening, large simple glass reflections and black metal collar, no gore. World: Genové lázně. Primary accent #63D7D1; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium biomechanical comic illustration following the simplified BIO v2 direction. Large designed anatomical planes, crisp varied black ink contours, three broad readable cel-shaded value groups and deep cool teal-black shadows. Strong head and concentrated eye area, coherent surprising NONHUMAN anatomy. Material separation: satin waxy leaves, broad matte bark facets, heavy chitin plates, translucent sap or membranes and restrained worn metal reflections. Selective fine craftsmanship at focal points, not a dense microtexture field. Few thick tendons and cables, only a few large teeth where relevant, controlled amber light. Fierce and evolutionary, never gore, generic fantasy treants, toys, cute humanoids, flat SVG icons or photorealism. Card role: Glitch; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/biopunk-hearts-k-v2.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-3fb93e92-53d8-471c-b1a7-664cc7191a70.png",
+  "stickerAsset": "/decks/biopunk/stickers/spades-7.webp",
+  "width": 750,
+  "height": 768,
+  "bytes": 187332,
+  "sourceBounds": [
+    35,
+    12,
+    1227,
+    1236
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

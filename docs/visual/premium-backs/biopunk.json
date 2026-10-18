@@ -1,0 +1,17 @@
+{
+  "deck": "biopunk",
+  "name": "BIO//PUNK",
+  "reference": "docs/visual/premium-poc/sources/biopunk-hearts-k-v2.png",
+  "direction": "Živý zámek",
+  "prompt": "Use case: stylized-concept. Asset type: ONE finished portrait playing-card BACK ARTWORK for BALÍK. Portrait 5:7 composition, height 1.4 times width, straight-on flat view; artwork fills the entire rectangular canvas, no scene outside it and no perspective mockup. Input image is STYLE/MATERIAL reference only, not a character to reproduce. Create a new original ornamental composition. Keep the important inner frame at least 10 percent inside every edge so a small production crop cannot cut it. Dense enough to feel premium but organised into large clear masses readable on a 76px-wide card. Balanced opposed upper/lower ornaments around one strong central brand plaque. EXACTLY ONE text element: BALÍK, uppercase, with the acute accent on Í, in confident heavy sculptural serif letters. Make this short word sharply legible with excellent contrast. No other words, numbers, ranks, labels, corner indices, suit glyphs, logos, watermark or accidental lettering. No pasted face-card image, no UI icon pack, no stock clipart. Full-bleed OPAQUE background; no transparency and no outer paper/desk/photographic environment. Art direction: premium biomechanical comic, simplified large anatomical planes and deliberate three-value cel shading. Deep bottle-green/teal-black back field. Two opposed serrated chartreuse leaf carapaces curl around a single warm amber seed reactor behind the central ivory BALÍK plaque. Thick roots weave through an industrial dark ceramic ring, a few copper hinges, tiny selective violet fungal and turquoise membrane accents connect all four factions. Organic and mechanical structures grow as one designed living lock. Broad satin leaf highlights, matte bark facets and restrained metal reflections, strong black contours, no dense hairline vine tangle. Clear bilateral balance and a narrow bone-ivory inner frame grown from two clean thorn arcs; fierce, elegant, no gore, no fantasy forest.",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-6abfc77d-981b-4591-a0f8-9b26f421a67e.png",
+  "status": "generated-proposal",
+  "export": {
+    "asset": "/decks/art-backs/biopunk.webp",
+    "width": 640,
+    "height": 896,
+    "bytes": 237616,
+    "isOpaque": true,
+    "method": "Sharp resize/encode only; no drawing or text compositing"
+  }
+}

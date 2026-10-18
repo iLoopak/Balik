@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Hadice na útěku",
+    "meaning": "Zahradní hadice udělala uzel a pustila se na výlet.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-7.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Kolečkový pancíř",
+    "meaning": "Kolečko zaparkované na bok kryje víkendové zásoby.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-8.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Sekačkový jezevčík",
+    "meaning": "Nízký zahradní pomocník má místo ocasu startovací šňůru.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-9.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Grilovací modul",
+    "meaning": "Improvizovaný gril vypadá jako malá víkendová kosmická loď.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-10.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Sazenicový kurýr",
+    "meaning": "Chalupář zachraňuje přetížené kolečko se sazenicemi, zatímco mu hadice podrazila gumák.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-j.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Paní záhonů",
+    "meaning": "Zahradnice s konví a slunečním kloboukem má vše pod kontrolou.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-q.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Trpaslík vedoucí směny",
+    "meaning": "Monumentální zahradní trpaslík dohlíží na velmi malou směnu.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-k.webp"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Zahradní slunce",
+    "meaning": "Velká slunečnice vyrůstá z konve jako totem letní úrody.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/chalupa/stickers/hearts-a.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Děravý košík",
+    "meaning": "Houby si otvorem v košíku právě vyhlásily samostatnost.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-7.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Mechový deštník",
+    "meaning": "Houbový klobouk chrání před vytrvalou víkendovou přeháňkou.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-8.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Ježek houbař",
+    "meaning": "Ježek nese úrodu tak pečlivě, až ji má po celých zádech.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-9.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Posed s výhledem",
+    "meaning": "Malý lesní posed nabízí výhled přesně na největší hřib.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-10.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Průzkumník paseky",
+    "meaning": "Houbař s lupou kontroluje každý nález ještě před košíkem.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-j.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Strážkyně podhoubí",
+    "meaning": "Lesní průvodkyně má korunovaný klobouk a atlas pod paží.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-q.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Král pařezu",
+    "meaning": "Lesní obr se zabydlel v pařezu a z hřibů si postavil korunu.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-k.webp"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Královský hřib",
+    "meaning": "Tři hřiby v mechu tvoří silnou siluetu lesního pokladu.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/chalupa/stickers/diamonds-a.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Píchlá labuť",
+    "meaning": "Nafukovací labuť ztrácí vzduch, ale drží si důstojnost.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-7.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Kruhová záchrana",
+    "meaning": "Velký kruh s lepicí záplatou je připravený na každou mělčinu.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-8.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Kapr v ploutvích",
+    "meaning": "Rybniční maskot si pořídil vybavení pro vlastní koupání.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-9.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Molo pro dva",
+    "meaning": "Dřevěné molo s jediným lehátkem a velkým letním klidem.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-10.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Pádlař z mělčiny",
+    "meaning": "Letní kurýr ve vestě dopravuje vzkazy na druhý břeh.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-j.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Pán plovárny",
+    "meaning": "Plavčík s píšťalkou a záchranným válcem hlídá letní pohodu.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-q.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Admirál bazénu",
+    "meaning": "Mohutný král malého nafukovacího bazénu nese slunečník jako žezlo.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-k.webp"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Rybniční léto",
+    "meaning": "Slunce, vlna a rákosí tvoří jeden vodní totem.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/chalupa/stickers/clubs-a.webp"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Stan po větru",
+    "meaning": "Stan si přeložil návod po svém a teď stojí na jediné tyčce.",
+    "archetype": "Glitch",
+    "stickerAsset": "/decks/chalupa/stickers/spades-7.webp"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Pláštěnkový štít",
+    "meaning": "Složená pláštěnka ochrání výpravu i před neplánovaným piknikem.",
+    "archetype": "Obrana",
+    "stickerAsset": "/decks/chalupa/stickers/spades-8.webp"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Turistický šnek",
+    "meaning": "Domov si nese s sebou a na zádech ještě stan pro hosty.",
+    "archetype": "Maskot",
+    "stickerAsset": "/decks/chalupa/stickers/spades-9.webp"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Karavan na louce",
+    "meaning": "Malý obytný přívěs má velké plány a venkovní hrnek.",
+    "archetype": "Dominanta",
+    "stickerAsset": "/decks/chalupa/stickers/spades-10.webp"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Posel posledního buřtu",
+    "meaning": "Pěší kurýr s batohem chrání poslední večeři na klacku.",
+    "archetype": "Kurýr",
+    "stickerAsset": "/decks/chalupa/stickers/spades-j.webp"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Vedoucí výpravy",
+    "meaning": "Průvodkyně s mapou a kompasem zná cestu i ke stánku.",
+    "archetype": "Kapitán",
+    "stickerAsset": "/decks/chalupa/stickers/spades-q.webp"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "Velmistr ohniště",
+    "meaning": "Zavalitý táborník má korunu z větviček a plášť z deky.",
+    "archetype": "Boss",
+    "stickerAsset": "/decks/chalupa/stickers/spades-k.webp"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Víkendový kompas",
+    "meaning": "Kompas s malým stanem ukazuje jediný směr: ven.",
+    "archetype": "Esence",
+    "stickerAsset": "/decks/chalupa/stickers/spades-a.webp"
+  }
+]

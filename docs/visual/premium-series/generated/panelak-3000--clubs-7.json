@@ -1,0 +1,28 @@
+{
+  "id": "panelak-3000:clubs-7",
+  "deck": "panelak-3000",
+  "card": {
+    "id": "clubs-7",
+    "suit": "clubs",
+    "rank": "7"
+  },
+  "name": "Přetlak v potrubí",
+  "meaning": "Odpojené koleno vypouští bubliny z jiného patra reality.",
+  "archetype": "Glitch",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PANELÁK 3000. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A thick violet basement pipe elbow whose loose ceramic flange has sprung open, releasing two glassy blue bubbles that contain miniature impossible stair steps. Rusty bolt heads, condensation, cast metal and enamel. Diagonal bent silhouette with one connected bubble close to the flange. World: Podzemí. Primary accent #AF98D2; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon. Card role: Glitch; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-f9d8251e-a335-4010-a45d-b122ecf46fb8.png",
+  "stickerAsset": "/decks/panelak-3000/stickers/clubs-7.webp",
+  "width": 759,
+  "height": 768,
+  "bytes": 189586,
+  "sourceBounds": [
+    16,
+    16,
+    1226,
+    1242
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

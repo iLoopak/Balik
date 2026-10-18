@@ -1,0 +1,28 @@
+{
+  "id": "chalupa:clubs-8",
+  "deck": "chalupa",
+  "card": {
+    "id": "clubs-8",
+    "suit": "clubs",
+    "rank": "8"
+  },
+  "name": "Kruhová záchrana",
+  "meaning": "Velký kruh s lepicí záplatou je připravený na každou mělčinu.",
+  "archetype": "Obrana",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / CHALUPA!. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A large turquoise-and-cream life ring with a comically oversized canvas repair patch, thick coiled rope threaded around it and a single fat water droplet. Tilted three-quarter composition, stitched canvas, supple rubber and frayed rope catch warm sun; protectively heavy rather than a flat circle icon. World: Voda. Primary accent #58BFC8; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces. Card role: Obrana; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-414c0e3d-c107-4eed-87ae-c945d852c671.png",
+  "stickerAsset": "/decks/chalupa/stickers/clubs-8.webp",
+  "width": 768,
+  "height": 767,
+  "bytes": 207922,
+  "sourceBounds": [
+    9,
+    10,
+    1247,
+    1247
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

@@ -1,0 +1,8 @@
+.back-proofs { max-width:none; }
+.back-proof { scroll-margin-top:24px; }
+.back-proof-comparison { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; align-items:start; }
+.back-proof-card { width:100%; aspect-ratio:5/7; }
+.back-proof-art { display:block; width:100%; height:auto; aspect-ratio:5/7; object-fit:cover; border-radius:8%; box-shadow:0 5px 15px #0003; }
+.back-proof-art.back-proof-mini { width:76px; flex:none; }
+.back-proof-comparison figcaption { min-height:36px; }
+@media(max-width:420px) { .back-proof-comparison { gap:8px; } .back-proof-comparison figcaption { font-size:10px; } }

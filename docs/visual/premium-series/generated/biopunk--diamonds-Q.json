@@ -1,0 +1,28 @@
+{
+  "id": "biopunk:diamonds-Q",
+  "deck": "biopunk",
+  "card": {
+    "id": "diamonds-Q",
+    "suit": "diamonds",
+    "rank": "Q"
+  },
+  "name": "Dirigentka hyf",
+  "meaning": "Dva kabelové vějíře propojují celé podzemní město.",
+  "archetype": "Kapitán",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / BIO//PUNK. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A stately hyphal conductor with a wide floating violet cap and a narrow segmented stem that coils into an S-curve. Two long ivory tendons spread into only three broad cable-ribbon fingers each, conducting between two heavy copper sockets. A small stern face is sculpted into the underside of the cap. Long horizontal gesture and lifted head; no humanoid torso or dress. World: Mykosíť. Primary accent #B29AE8; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium biomechanical comic illustration following the simplified BIO v2 direction. Large designed anatomical planes, crisp varied black ink contours, three broad readable cel-shaded value groups and deep cool teal-black shadows. Strong head and concentrated eye area, coherent surprising NONHUMAN anatomy. Material separation: satin waxy leaves, broad matte bark facets, heavy chitin plates, translucent sap or membranes and restrained worn metal reflections. Selective fine craftsmanship at focal points, not a dense microtexture field. Few thick tendons and cables, only a few large teeth where relevant, controlled amber light. Fierce and evolutionary, never gore, generic fantasy treants, toys, cute humanoids, flat SVG icons or photorealism. Card role: Kapitán; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/biopunk-hearts-k-v2.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-9de0bf0f-8b4a-4dd4-8964-ebac99d343de.png",
+  "stickerAsset": "/decks/biopunk/stickers/diamonds-q.webp",
+  "width": 765,
+  "height": 768,
+  "bytes": 226014,
+  "sourceBounds": [
+    10,
+    7,
+    1245,
+    1248
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

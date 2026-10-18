@@ -1,0 +1,29 @@
+{
+  "id": "chalupa:hearts-J",
+  "deck": "chalupa",
+  "card": {
+    "id": "hearts-J",
+    "suit": "hearts",
+    "rank": "J"
+  },
+  "name": "Sazenicový kurýr",
+  "meaning": "Chalupář zachraňuje přetížené kolečko se sazenicemi, zatímco mu hadice podrazila gumák.",
+  "archetype": "Kurýr",
+  "prompt": "Use case: illustration-story. Asset type: ONE premium Czech summer comic collectible sticker for BALÍK, CHALUPA! edition. Subject: a memorable adult weekend gardener caught in a gloriously precarious instant: a lanky sun-tanned man with a strong crooked nose, stubbled cheeks, thick brows and a determined grimace lunges sideways to save an overloaded red enamel wheelbarrow of tomato seedlings. His enormous moss-green rubber boot is caught in a looping garden hose; a short clear arc of water shoots toward his battered mustard bucket hat. One sinewy arm stretches to catch the tilting tray while the other hauls the wheelbarrow handle; rolled orange work overalls, worn white T-shirt, a patch on one knee, a single tomato bouncing just above the tray. Expressive specific face, believable anatomy, foreshortened arms, weight and a clear funny narrative. No idle front-facing gardener holding a pot. Style/medium: premium editorial Czech summer comic illustration with expressive varied ink line, confident gestural drawing, rich but economical cel-shaded forms and selective dry-brush material texture. Materials: chipped red enamel, dusty terracotta pots, springy tomato foliage, creased cotton, sun-worn canvas hat, glossy rubber boots and bright water. Lighting: warm late-afternoon summer sun, crisp blue-green shadows, subtle reflected warm light; cheerful without becoming childish. Palette: warm tomato red and mustard, lush leaf green and turquoise water, warm ivory, charcoal ink; large disciplined color masses. Composition: one integrated compact character-and-wheelbarrow scene, strong diagonal motion and triangular balance, complete figure and all props inside frame, silhouette clear at thumbnail size. All details remain in a single connected cluster with roughly 10% transparent breathing space. Opaque ivory die-cut contour follows the connected silhouette, small tight offset edge shadow. Genuinely transparent background; no garden scenery, floor plane, panel, card border, indices, text, numbers, suit symbols, brands or watermark. Avoid SVG clipart, generic faceless cartoon man, chibi or children's clipart, Czech nostalgia kitsch, flat unshaded objects, sprawling scenery, many floating particles and photographic realism.",
+  "reference": null,
+  "source": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "approvedPoc": true,
+  "stickerAsset": "/decks/chalupa/stickers/hearts-j.webp",
+  "width": 768,
+  "height": 672,
+  "bytes": 191532,
+  "sourceBounds": [
+    64,
+    102,
+    1279,
+    1151
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

@@ -1,0 +1,102 @@
+{
+  "method": "Format conversion only: RGBA crop threshold 8/255, max subject 704px, 32px transparent padding, WebP quality 90. Does not establish artistic acceptance.",
+  "assets": [
+    {
+      "id": "biopunk-hearts-k",
+      "deck": "biopunk",
+      "card": {
+        "id": "hearts-K",
+        "suit": "hearts",
+        "rank": "K"
+      },
+      "name": "Fotosyntetický kolos",
+      "status": "proof-of-concept",
+      "styleStatus": "revision-proposed",
+      "version": "v2",
+      "stickerAsset": "/decks/art-poc/biopunk-hearts-k-v2.webp",
+      "previousStickerAsset": "/decks/art-poc/biopunk-hearts-k.webp",
+      "width": 768,
+      "height": 761,
+      "bytes": 211432,
+      "sourceBounds": [
+        71,
+        60,
+        1229,
+        1207
+      ],
+      "sourceTouchesEdge": false
+    },
+    {
+      "id": "panelak-3000-hearts-q",
+      "deck": "panelak-3000",
+      "card": {
+        "id": "hearts-Q",
+        "suit": "hearts",
+        "rank": "Q"
+      },
+      "name": "Robotická domovnice",
+      "status": "proof-of-concept",
+      "styleStatus": "style-approved",
+      "version": "v1",
+      "stickerAsset": "/decks/art-poc/panelak-3000-hearts-q.webp",
+      "width": 768,
+      "height": 752,
+      "bytes": 191610,
+      "sourceBounds": [
+        3,
+        16,
+        1252,
+        1236
+      ],
+      "sourceTouchesEdge": false
+    },
+    {
+      "id": "chalupa-hearts-j",
+      "deck": "chalupa",
+      "card": {
+        "id": "hearts-J",
+        "suit": "hearts",
+        "rank": "J"
+      },
+      "name": "Sazenicový kurýr",
+      "status": "proof-of-concept",
+      "styleStatus": "style-approved",
+      "version": "v1",
+      "stickerAsset": "/decks/art-poc/chalupa-hearts-j.webp",
+      "width": 768,
+      "height": 672,
+      "bytes": 191532,
+      "sourceBounds": [
+        64,
+        102,
+        1279,
+        1151
+      ],
+      "sourceTouchesEdge": false
+    },
+    {
+      "id": "papirovy-cirkus-spades-q",
+      "deck": "papirovy-cirkus",
+      "card": {
+        "id": "spades-Q",
+        "suit": "spades",
+        "rank": "Q"
+      },
+      "name": "Kartografka snů",
+      "status": "proof-of-concept",
+      "styleStatus": "style-approved",
+      "version": "v1",
+      "stickerAsset": "/decks/art-poc/papirovy-cirkus-spades-q.webp",
+      "width": 731,
+      "height": 768,
+      "bytes": 139804,
+      "sourceBounds": [
+        62,
+        8,
+        1234,
+        1245
+      ],
+      "sourceTouchesEdge": false
+    }
+  ]
+}

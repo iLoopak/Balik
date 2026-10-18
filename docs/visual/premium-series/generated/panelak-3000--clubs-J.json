@@ -1,0 +1,28 @@
+{
+  "id": "panelak-3000:clubs-J",
+  "deck": "panelak-3000",
+  "card": {
+    "id": "clubs-J",
+    "suit": "clubs",
+    "rank": "J"
+  },
+  "name": "Potrubní kurýr",
+  "meaning": "Sklepní údržbář vozí náhradní ventil na skládacím vozíku.",
+  "archetype": "Kurýr",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PANELÁK 3000. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A skinny young maintenance robot assembled from long pipe limbs and a small square pressure-gauge head, hauling a folded hand trolley with an enormous purple valve wheel strapped to it. Hunched sprinting pose, one foot skidding, canvas tool pouch and chipped enamel. Gauge has simple marks only, no digits. World: Podzemí. Primary accent #AF98D2; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Absurdist retrofuturistic collectible vinyl-toy/clay art. Physically dimensional rounded sculpting, deliberately designed proportions, asymmetric silhouettes, specific expressive faces where appropriate, hand-shaped imperfections. Distinguish satin enamel, worn brass, brushed metal, soft rubber, canvas, plush fabric and concrete. Sophisticated soft warm key light, cool fill and deep contact shadows; selected restrained specular highlights. Premium art-toy illustration, not generic glossy plastic or an icon. Card role: Kurýr; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/panelak-3000-hearts-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-6e2946b9-f953-49ed-b400-50c86cecb936.png",
+  "stickerAsset": "/decks/panelak-3000/stickers/clubs-j.webp",
+  "width": 768,
+  "height": 735,
+  "bytes": 177754,
+  "sourceBounds": [
+    2,
+    10,
+    1253,
+    1203
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

@@ -1,0 +1,28 @@
+{
+  "id": "chalupa:clubs-Q",
+  "deck": "chalupa",
+  "card": {
+    "id": "clubs-Q",
+    "suit": "clubs",
+    "rank": "Q"
+  },
+  "name": "Pán plovárny",
+  "meaning": "Plavčík s píšťalkou a záchranným válcem hlídá letní pohodu.",
+  "archetype": "Kapitán",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / CHALUPA!. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A tall athletic middle-aged lifeguard with a strong jaw, messy dark braid and one eyebrow raised, blowing a brass whistle while swinging a chunky rescue float over one shoulder. Turquoise swimsuit under a tied striped towel, long powerful legs in a braced contrapposto. Warm summer light, skin, wet rubber and cloth materially distinct. World: Voda. Primary accent #58BFC8; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces. Card role: Kapitán; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-ea17ec62-1327-4974-8ff6-eb3e2ec4a662.png",
+  "stickerAsset": "/decks/chalupa/stickers/clubs-q.webp",
+  "width": 600,
+  "height": 768,
+  "bytes": 186328,
+  "sourceBounds": [
+    172,
+    3,
+    1115,
+    1243
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

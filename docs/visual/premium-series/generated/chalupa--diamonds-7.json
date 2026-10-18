@@ -1,0 +1,29 @@
+{
+  "id": "chalupa:diamonds-7",
+  "deck": "chalupa",
+  "card": {
+    "id": "diamonds-7",
+    "suit": "diamonds",
+    "rank": "7"
+  },
+  "name": "Děravý košík",
+  "meaning": "Houby si otvorem v košíku právě vyhlásily samostatnost.",
+  "archetype": "Glitch",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / CHALUPA!. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A woven mushroom basket tilted at a precarious angle, one large bolete pushing through a torn opening while two smaller mushrooms tumble just below it. Thick wicker strips, moss caught in the handle and rich mushroom skin. One connected cluster with comic escape narrative, not a flat basket icon. World: Les. Primary accent #94B765; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces. Card role: Glitch; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-29e3b85d-36e3-4505-a861-15c86091762a.png",
+  "attempt": 1,
+  "stickerAsset": "/decks/chalupa/stickers/diamonds-7.webp",
+  "width": 760,
+  "height": 768,
+  "bytes": 209850,
+  "sourceBounds": [
+    78,
+    55,
+    1198,
+    1188
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

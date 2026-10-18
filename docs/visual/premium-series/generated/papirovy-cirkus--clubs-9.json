@@ -1,0 +1,28 @@
+{
+  "id": "papirovy-cirkus:clubs-9",
+  "deck": "papirovy-cirkus",
+  "card": {
+    "id": "clubs-9",
+    "suit": "clubs",
+    "rank": "9"
+  },
+  "name": "Tygr na kolečkách",
+  "meaning": "Papírový tygr zůstává důstojný, i když stojí na tahací hračce.",
+  "archetype": "Maskot",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PAPÍROVÝ CIRKUS. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A long-bodied cobalt paper tiger on a little ochre wheeled toy platform, raising one jointed paw proudly while its angular head turns back with a mischievous eye slit. Stripes are separate raised midnight-blue paper strips, ivory layered muzzle, thick accordion tail and visible brass paper joints. Tangible crafted toy, not flat pull-toy clipart. World: Šelmy. Primary accent #729ACD; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Handcrafted layered theatrical papercut art, rendered as a photograph-like view of a physically built paper sculpture. Real visible paper thickness, raised stacked cutouts, curled folds, embossed fibers, matte rag paper, translucent mulberry tissue and restrained antique gold leaf. Precise deep CONTACT SHADOWS BETWEEN layers, tiny irregularities of hand cutting, dimensional sculptural faces and exposed paper-fastener joints for puppets. Warm raking theatrical side spotlight with cool fill. Not flat vector art, not smooth plastic, not an ordinary comic drawing. Card role: Maskot; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/papirovy-cirkus-spades-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-3127411d-56a4-4f7b-9cce-11764692cbf7.png",
+  "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-9.webp",
+  "width": 768,
+  "height": 765,
+  "bytes": 175588,
+  "sourceBounds": [
+    37,
+    17,
+    1244,
+    1219
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

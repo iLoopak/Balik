@@ -1,0 +1,28 @@
+{
+  "id": "papirovy-cirkus:clubs-A",
+  "deck": "papirovy-cirkus",
+  "card": {
+    "id": "clubs-A",
+    "suit": "clubs",
+    "rank": "A"
+  },
+  "name": "Skok do světla",
+  "meaning": "Lev vystřižený z jediného archu proskakuje emblémovou obručí.",
+  "archetype": "Esence",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PAPÍROVÝ CIRKUS. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A magnificent antique-gold paper lion in a dynamic long leap through a tilted thick cobalt circus hoop, all parts connected by the tail crossing the ring. Broad folded torso planes, raised indigo stripes, sculptural ivory muzzle and a mane made from a few layered fan segments. One iconic physical paper sculpture with clear negative space. World: Šelmy. Primary accent #729ACD; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Handcrafted layered theatrical papercut art, rendered as a photograph-like view of a physically built paper sculpture. Real visible paper thickness, raised stacked cutouts, curled folds, embossed fibers, matte rag paper, translucent mulberry tissue and restrained antique gold leaf. Precise deep CONTACT SHADOWS BETWEEN layers, tiny irregularities of hand cutting, dimensional sculptural faces and exposed paper-fastener joints for puppets. Warm raking theatrical side spotlight with cool fill. Not flat vector art, not smooth plastic, not an ordinary comic drawing. Card role: Esence; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/papirovy-cirkus-spades-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-5e330744-8680-4de0-b4f6-9e873212ee7d.png",
+  "stickerAsset": "/decks/papirovy-cirkus/stickers/clubs-a.webp",
+  "width": 768,
+  "height": 655,
+  "bytes": 152418,
+  "sourceBounds": [
+    17,
+    50,
+    1241,
+    1077
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

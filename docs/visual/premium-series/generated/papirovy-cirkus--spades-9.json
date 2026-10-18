@@ -1,0 +1,28 @@
+{
+  "id": "papirovy-cirkus:spades-9",
+  "deck": "papirovy-cirkus",
+  "card": {
+    "id": "spades-9",
+    "suit": "spades",
+    "rank": "9"
+  },
+  "name": "Králík z rohu papíru",
+  "meaning": "Králík se složil sám a odmítá se vrátit do klobouku.",
+  "archetype": "Maskot",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / PAPÍROVÝ CIRKUS. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: An expressive white rag-paper rabbit climbing halfway out of a collapsed plum magician hat, one enormous ear folds forward while the other points up, long faceted nose and sly black eye apertures. Layered paws clutch the thick curled hat brim; tissue-paper fur tufts and dramatic contact shadow inside the hat. Physical sculpture, not an origami symbol. World: Iluze. Primary accent #B28AB9; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Handcrafted layered theatrical papercut art, rendered as a photograph-like view of a physically built paper sculpture. Real visible paper thickness, raised stacked cutouts, curled folds, embossed fibers, matte rag paper, translucent mulberry tissue and restrained antique gold leaf. Precise deep CONTACT SHADOWS BETWEEN layers, tiny irregularities of hand cutting, dimensional sculptural faces and exposed paper-fastener joints for puppets. Warm raking theatrical side spotlight with cool fill. Not flat vector art, not smooth plastic, not an ordinary comic drawing. Card role: Maskot; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/papirovy-cirkus-spades-q.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-55139740-0628-433f-b3df-266290c37c38.png",
+  "stickerAsset": "/decks/papirovy-cirkus/stickers/spades-9.webp",
+  "width": 692,
+  "height": 768,
+  "bytes": 130544,
+  "sourceBounds": [
+    77,
+    4,
+    1185,
+    1247
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

@@ -1,0 +1,29 @@
+{
+  "id": "chalupa:hearts-A",
+  "deck": "chalupa",
+  "card": {
+    "id": "hearts-A",
+    "suit": "hearts",
+    "rank": "A"
+  },
+  "name": "Zahradní slunce",
+  "meaning": "Velká slunečnice vyrůstá z konve jako totem letní úrody.",
+  "archetype": "Esence",
+  "prompt": "Use case: stylized-concept. Asset type: ONE original premium transparent collectible playing-card sticker for BALÍK / CHALUPA!. Input image role: STYLE REFERENCE ONLY. The reference is the approved rendering medium and craftsmanship benchmark; create the completely NEW subject below. Do not redraw the reference character or reuse its anatomy, pose, props or silhouette. Subject and composition: A glorious oversized sunflower rising from a battered red watering can, its broad seed-head angled into summer sunlight, a handful of large sculptural petals and two bold curled leaves. Worn enamel, velvety seed pattern and satin leaves, compact iconic garden totem with no face or background. World: Zahrada. Primary accent #F07859; balance it with warm ivory, charcoal and physically appropriate material colors. The accent organizes large color masses; do not recolor every surface uniformly. Art direction: Premium Czech summer editorial comic illustration. Specific expressive adult faces, exaggerated but coherent anatomy, lively gestures, varied confident ink line, three readable cel-shaded value groups and selective dry-brush material texture. Warm late-afternoon summer sun and crisp cool shadows. Rich construction and material form without microdetail. Humor is in the observed situation, not text, nostalgia kitsch or childish chibi faces. Card role: Esence; the rank is only a visual archetype, do not show letters or numbers. Framing: entire subject and all connected props visible, one compact self-contained artful silhouette centered inside a square image with at least 8% genuinely transparent safety margins on EVERY side. Clear big forms readable at 64px, rich selective craftsmanship at 160–300px, one visual focal point. A narrow opaque warm ivory die-cut edge tightly follows the irregular silhouette, subtle tight edge shadow. No rectangular background, floor plane, scenery extending to the edge, display plinth unrelated to the subject, card bitmap, indices, suit symbols, lettering, numerals, signs, logos or watermark. Avoid SVG/icon-pack aesthetics, generic humanoid templates, repeated standing characters holding different props, generic clipart, cluttered confetti, diffuse smoky effects and photorealism. Preserve genuine alpha transparency.",
+  "reference": "docs/visual/premium-poc/sources/chalupa-hearts-j.png",
+  "status": "accepted-for-integration",
+  "source": "/Users/lukassitta/.codex/generated_images/01a14e87-0249-73d2-bdd6-95443f961eef/exec-bf8ddc22-b0b8-493d-80df-5e45778ef1f7.png",
+  "attempt": 1,
+  "stickerAsset": "/decks/chalupa/stickers/hearts-a.webp",
+  "width": 718,
+  "height": 768,
+  "bytes": 206102,
+  "sourceBounds": [
+    67,
+    6,
+    1192,
+    1217
+  ],
+  "sourceEdgePixels": 0,
+  "visualReview": "docs/visual/premium-series/visual-review.json"
+}

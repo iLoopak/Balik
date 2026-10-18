@@ -357,3 +357,28 @@ npm run qa:experience  # 9 her: knihovna → nápověda → pravidla → první 
 ```
 
 Dva checkouty vedle sebe: `BALIK_WEB_PORT=5183 BALIK_WS_PORT=8797 npm run dev` (a `BASE=http://localhost:5183` pro QA).
+
+## Čtyři další vizuální světy · edice 006–009
+
+**Všechny čtyři edice mají kompletní rastrové sady:** 128 samostatných
+transparentních WebP. BIO//PUNK navazuje na zjednodušenou v2 s velkými anatomickými
+plochami, řízeným stínováním a méně drobným šumem. Historie původních SVG studií
+a čtyř konceptů zůstává na `/dev/art-poc`.
+
+Pět samostatných imagegen návrhů rubů (včetně Stormpunku) je na
+`/dev/art-backs`; porovnání s líci, současnými ruby a 76px miniaturou.
+[Prompty, assety a stav návrhů](docs/visual/premium-backs/README.md).
+[Původní kritický audit](docs/visual/PREMIUM_ART_AUDIT.md) ·
+[Rastrová pipeline a prompty](docs/visual/premium-series/README.md).
+
+**BIO//PUNK**, **PANELÁK 3000**, **CHALUPA!** a **PAPÍROVÝ CIRKUS** jsou plně
+volitelné ve Vzhledu: každá má 32 identit, vlastní
+čtyři suit symboly, rub BALÍK a nezávisle volitelný stůl. Pravidla ani síťový stav
+se nemění. Galerie: `/decks/biopunk`, `/decks/panelak-3000`, `/decks/chalupa`,
+`/decks/papirovy-cirkus`; Dev Deck Lab podporuje všech devět her.
+
+[Art direction, všechny mappingy, struktura a QA](docs/visual/WORLD_EDITIONS.md).
+`npm run art:worlds` obnoví registry a zachová autoritativní rastrové manifesty.
+`SHARP_MODULE=/cesta/k/sharp npm run qa:premium-assets` ověří 128 exportů a vytvoří
+přehledy v 174/48 px. `qa:world-assets` kontroluje všech 128 aktivních identit
+ve všech čtyřech edicích. Sharp je jen exportní/QA nástroj, build jej nepotřebuje.
