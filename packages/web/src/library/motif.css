@@ -1,0 +1,169 @@
+/* Game motifs: neutral BALÍK cards, independent of the chosen deck edition. */
+.motif {
+  --m-face: var(--paper);
+  --m-edge: #0000002e;
+  --m-back: #232c4a;
+  --m-back-line: #ffb23f66;
+  --m-red: var(--suit-red);
+  --m-ink: var(--suit-black);
+  --m-hi: var(--accent);
+  --m-soft: color-mix(in srgb, var(--ink) 40%, transparent);
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+:root[data-color-mode='light'] .motif {
+  --m-edge: #5a3d1a40;
+  --m-back: #33405f;
+  --m-hi: #c77a12;
+}
+
+.motif .m-card {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.motif .m-face {
+  fill: var(--m-face);
+  stroke: var(--m-edge);
+  stroke-width: 0.8;
+  filter: drop-shadow(0 2px 2px #0003);
+}
+.motif .is-dark .m-face {
+  fill: #1d2130;
+}
+.motif .is-dark .m-rank,
+.motif .is-dark path {
+  fill: #fff4dc;
+}
+.motif .is-hi .m-face {
+  stroke: var(--m-hi);
+  stroke-width: 1.8;
+}
+.motif .m-back {
+  fill: var(--m-back);
+  stroke: var(--m-edge);
+  stroke-width: 0.8;
+  filter: drop-shadow(0 2px 2px #0003);
+}
+.motif .m-back-line {
+  fill: none;
+  stroke: var(--m-back-line);
+  stroke-width: 0.8;
+}
+.motif .m-back-mark {
+  fill: var(--m-back-line);
+}
+.motif .m-rank {
+  font-family: var(--font-brand);
+  font-weight: 800;
+  font-size: 10px;
+}
+.motif .m-red {
+  fill: var(--m-red);
+}
+.motif .m-ink {
+  fill: var(--m-ink);
+}
+.motif .m-dim {
+  opacity: 0.55;
+}
+.motif .m-trail,
+.motif .m-rain path {
+  fill: none;
+  stroke: var(--m-soft);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-dasharray: 3 4;
+}
+.motif .m-rain path {
+  stroke-dasharray: none;
+  stroke: color-mix(in srgb, var(--skip) 70%, transparent);
+}
+.motif .m-suits {
+  opacity: 0.85;
+}
+.motif .m-chip rect {
+  fill: var(--m-hi);
+}
+.motif .m-chip text,
+.motif .m-bubble text,
+.motif .m-eye text {
+  font-family: var(--font-machine);
+  font-weight: 700;
+  font-size: 8.5px;
+  text-anchor: middle;
+  fill: var(--accent-ink);
+}
+.motif .m-bubble path {
+  fill: var(--surface-2);
+  stroke: var(--m-soft);
+  stroke-width: 0.8;
+}
+.motif .m-bubble text {
+  fill: var(--ink);
+  font-size: 9px;
+}
+.motif .m-big,
+.motif .m-ghost {
+  font-family: var(--font-brand);
+  font-weight: 900;
+  text-anchor: middle;
+  fill: var(--m-hi);
+}
+.motif .m-big {
+  font-size: 30px;
+}
+.motif .m-ghost {
+  font-size: 64px;
+  opacity: 0.16;
+  fill: var(--ink);
+}
+.motif .m-eye path {
+  fill: var(--surface-2);
+  stroke: var(--m-hi);
+  stroke-width: 1.4;
+}
+.motif .m-eye circle {
+  fill: var(--m-hi);
+}
+.motif .m-eye text {
+  font-size: 6.5px;
+}
+
+/* Tactile response: the key card of the mechanic lifts on hover and on selection. */
+.motif .m-lift,
+.motif .m-flip {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 260ms cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+.motif-host:hover .motif .m-lift,
+.motif-host.is-on .motif .m-lift {
+  transform: translateY(-4px) rotate(-3deg);
+}
+.motif-host.is-on .motif .m-flip {
+  animation: motif-peek 1.6s ease-in-out 1 both;
+}
+@keyframes motif-peek {
+  0%,
+  100% {
+    transform: none;
+  }
+  40%,
+  60% {
+    transform: translateY(-3px) rotate(4deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .motif .m-lift,
+  .motif .m-flip {
+    transition: none;
+    animation: none !important;
+  }
+}
+.is-reduced .motif .m-lift,
+.is-reduced .motif .m-flip {
+  transition: none;
+  animation: none !important;
+}

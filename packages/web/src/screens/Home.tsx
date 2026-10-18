@@ -1,8 +1,7 @@
-import { motion, useReducedMotion } from 'motion/react';
-import { useState, type FormEvent } from 'react';
-import { GAME_IDS, GAME_INFO, gameName, MAX_NAME_LENGTH, ROOM_CODE_LENGTH, type Card, type GameId } from '@balik/shared';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { GAME_INFO, LEARN_LABEL, MAX_NAME_LENGTH, ROOM_CODE_LENGTH, type GameId } from '@balik/shared';
 import { RulesButton } from '../rules/RulesPanel';
-import { CardView } from '../cards/Card';
 import { getName } from '../lib/identity';
 import { createRoom } from '../net/client';
 import { navigate, useApp } from '../net/store';
@@ -10,30 +9,58 @@ import './screens.css';
 import '../sedma/sedma.css';
 import { BrandMascot } from '../brand/BrandMascot';
 import { AppSettings } from '../themes/AppearancePicker';
-import { EDITIONS } from '../themes/registry';
-import { editionHref } from '../decks/editions';
+import { GameLibrary, SeatFilter, defaultBots, fitsSeats } from '../library/GameLibrary';
+import { GameMotif } from '../library/GameMotif';
+import { ShowroomTeaser } from '../themes/Showroom';
 
-const HERO: Card[] = [
-  { id: 'hearts-Q', suit: 'hearts', rank: 'Q' },
-  { id: 'spades-7', suit: 'spades', rank: '7' },
-  { id: 'diamonds-A', suit: 'diamonds', rank: 'A' },
-];
+const LAST_GAME = 'balik.lastGame';
+const lastGame = (): GameId => {
+  try {
+    const id = localStorage.getItem(LAST_GAME);
+    return id && Object.hasOwn(GAME_INFO, id) ? (id as GameId) : 'prsi';
+  } catch {
+    return 'prsi';
+  }
+};
 
+/** Choose a game → play solo or invite → appearance only if you want to. */
 export function Home() {
   const [name, setName] = useState(getName);
   const [code, setCode] = useState('');
   const [joining, setJoining] = useState(false);
-  const [bots, setBots] = useState(1);
-  const [gameId, setGameId] = useState<GameId>('prsi');
+  const [gameId, setGameId] = useState<GameId>(lastGame);
+  const [seats, setSeats] = useState<number | null>(null);
+  const [bots, setBots] = useState(() => defaultBots(lastGame(), null));
   const [bonus, setBonus] = useState<0 | 10>(10);
   const status = useApp((s) => s.status);
-  const reduced = useReducedMotion();
+  const reduced = useReducedMotion() ?? false;
   const busy = status === 'connecting';
+  const info = GAME_INFO[gameId];
+  const fits = fitsSeats(gameId, seats);
+  const player = name.trim();
+  const detail = useRef<HTMLElement>(null);
+  const [detailInView, setDetailInView] = useState(false);
+  useEffect(() => {
+    const el = detail.current;
+    if (!el || typeof IntersectionObserver === 'undefined') return;
+    const io = new IntersectionObserver(([entry]) => setDetailInView(!!entry?.isIntersecting), { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
-  const onCreate = (e: FormEvent) => {
-    e.preventDefault();
-    if (!name.trim() || busy) return;
-    createRoom(name.trim(), 0, gameId, bonus);
+  const select = (id: GameId) => {
+    setGameId(id);
+    setBots((b) => defaultBots(id, seats, b));
+    try { localStorage.setItem(LAST_GAME, id); } catch { /* only a convenience */ }
+  };
+  const filter = (n: number | null) => {
+    setSeats(n);
+    setBots((b) => defaultBots(gameId, n, b));
+  };
+  const solo = () => { if (player && !busy) createRoom(player, bots, gameId, bonus); };
+  const friends = (e?: FormEvent) => {
+    e?.preventDefault();
+    if (player && !busy) createRoom(player, 0, gameId, bonus);
   };
   const onJoin = (e: FormEvent) => {
     e.preventDefault();
@@ -42,121 +69,106 @@ export function Home() {
   };
 
   return (
-    <main className="screen home">
-      <AppSettings />
-      <div className="hero">
-        <div className="hero-cards" aria-hidden>
-          {HERO.map((card, i) => (
-            <motion.div
-              key={card.id}
-              className="hero-card"
-              initial={reduced ? false : { y: 80, opacity: 0, rotate: 0 }}
-              animate={{ y: [0, 0], opacity: 1, rotate: (i - 1) * 12, x: (i - 1) * 46 }}
-              transition={{ type: 'spring', stiffness: 220, damping: 20, delay: 0.1 + i * 0.09 }}
-            >
-              <CardView card={card} faceUp initialFaceUp={!!reduced} flipTransition={{ duration: 0.5, delay: 0.35 + i * 0.09 }} />
-            </motion.div>
-          ))}
+    <main className="home2">
+      <header className="home-bar">
+        <span className="brand-word home-mark">BALÍK</span>
+        <button type="button" className={`home-code-open${joining ? ' is-on' : ''}`} aria-expanded={joining} onClick={() => setJoining((v) => !v)}>
+          Mám kód
+        </button>
+        <AppSettings compact />
+      </header>
+      <AnimatePresence initial={false}>
+        {joining && (
+          <motion.form className="home-join" onSubmit={onJoin} initial={reduced ? false : { opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+            <label className="home-join-label" htmlFor="room-code">Kód od kamaráda</label>
+            <input id="room-code" className="field code-field" placeholder="KÓD" value={code} maxLength={ROOM_CODE_LENGTH}
+              onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))} autoFocus autoCapitalize="characters" autoComplete="off" enterKeyHint="go" />
+            <button className="btn btn-secondary" type="submit" disabled={code.length !== ROOM_CODE_LENGTH}>Připojit</button>
+          </motion.form>
+        )}
+      </AnimatePresence>
+
+      <section className="home-intro">
+        <BrandMascot state={busy ? 'thinking' : 'deal'} size={58} reduced={reduced} />
+        <div>
+          <h1 className="brand-word home-headline">Co rozdáme?</h1>
+          <p className="home-lede">Devět karetních her pro partu i pro jednoho. Pošli odkaz, nebo hraj hned proti počítači. Bez registrace.</p>
         </div>
-        <motion.h1
-          className="brand-word home-title"
-          initial={reduced ? false : { opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 0.4 }}
-        >
-          BALÍK
-        </motion.h1>
-        <p className="home-tagline">Karetní hry s přáteli. Pošli odkaz, sedněte ke stolu, hrajte. Bez registrace.</p>
+      </section>
+
+      <div className="home-stage">
+        <section className="home-library" aria-label="Knihovna her">
+          <SeatFilter seats={seats} onChange={filter} />
+          <GameLibrary selected={gameId} onSelect={select} seats={seats} reduced={reduced} />
+        </section>
+
+        <aside ref={detail} className={`game-detail motif-host is-on is-${gameId}`} aria-live="polite" aria-labelledby="game-detail-name">
+          <div className="game-detail-art" aria-hidden>
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div key={gameId} initial={reduced ? false : { opacity: 0, y: 14, rotate: -2 }} animate={{ opacity: 1, y: 0, rotate: 0 }}
+                exit={reduced ? { opacity: 0 } : { opacity: 0, y: -10 }} transition={{ type: 'spring', stiffness: 420, damping: 30 }}>
+                <GameMotif id={gameId} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+          <div className="game-detail-body">
+            <p className="game-detail-kicker type-machine">{info.family} · {info.playersLabel}</p>
+            <h2 id="game-detail-name" className="game-detail-name">{info.name}</h2>
+            <p className="game-detail-pitch">{info.pitch}</p>
+            <div className="game-detail-facts">
+              <span className={`learn-meter is-${info.learn}`} title="Kolik rozhodnutí hra během tahu chce">
+                <i /><i /><i /> {LEARN_LABEL[info.learn]}
+              </span>
+              <RulesButton gameId={gameId} />
+            </div>
+            {!fits && <p className="game-detail-warn" role="note">{info.needPlayers} Proti počítači doplníme správný počet.</p>}
+            {gameId === 'sedma' && (
+              <label className="sedma-variant"><input type="checkbox" checked={bonus === 10} onChange={(e) => setBonus(e.target.checked ? 10 : 0)} /> Poslední štych +10 bodů (výchozí)</label>
+            )}
+            <label className="home-name">
+              <span>Hraješ jako</span>
+              <input className="field" value={name} maxLength={MAX_NAME_LENGTH} onChange={(e) => setName(e.target.value)} autoComplete="nickname" enterKeyHint="done" aria-label="Tvoje jméno" />
+            </label>
+            <div className="game-detail-cta">
+              <div className="game-detail-solo">
+                <div className="segmented" role="radiogroup" aria-label="Počet počítačových soupeřů">
+                  {info.botCounts.map((n) => (
+                    <button key={n} type="button" role="radio" aria-checked={bots === n} className={bots === n ? 'is-on' : ''} onClick={() => setBots(n)}
+                      aria-label={`${n} ${n === 1 ? 'soupeř' : 'soupeři'}`}>
+                      {n}
+                    </button>
+                  ))}
+                </div>
+                <button className="btn btn-primary" type="button" disabled={!player || busy} onClick={solo}>
+                  {busy ? 'Rozdávám…' : 'Proti počítači'}
+                </button>
+              </div>
+              <button className="btn btn-secondary" type="button" disabled={!player || busy} onClick={() => friends()}>
+                Hrát s přáteli
+              </button>
+            </div>
+            <p className="game-detail-fine">
+              {bots === 1 ? '1 soupeř' : `${bots} soupeři`} za počítač · s přáteli dostaneš odkaz a kód.
+            </p>
+          </div>
+        </aside>
       </div>
 
-      <motion.div
-        className="panel"
-        initial={reduced ? false : { opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.45, duration: 0.4 }}
-      >
-        <div className="game-tag">
-          <span className="game-dot" /> {gameName(gameId)} · {GAME_INFO[gameId].playersLabel}
-          <RulesButton gameId={gameId} />
-        </div>
-        <div className="game-grid" role="radiogroup" aria-label="Hra">
-          {GAME_IDS.map((id) => <button type="button" key={id} role="radio" aria-checked={gameId === id} className={gameId === id ? 'is-on' : ''}
-            onClick={() => { setGameId(id); const counts = GAME_INFO[id].botCounts; if (!counts.includes(bots)) setBots(counts[0]!); }}>
-            <span className={`game-grid-mark is-${id}`} aria-hidden>{GAME_INFO[id].mark}</span><b>{gameName(id)}</b><small>{GAME_INFO[id].playersLabel}</small>
-          </button>)}
-        </div>
-        <p className="game-grid-tagline">{GAME_INFO[gameId].tagline}</p>
-        {gameId === 'sedma' && <label className="sedma-variant"><input type="checkbox" checked={bonus === 10} onChange={(e) => setBonus(e.target.checked ? 10 : 0)} /> Poslední štych +10 bodů (výchozí)</label>}
-        <form onSubmit={onCreate}>
-          <div className="brand-welcome"><BrandMascot state={busy ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>Celý stůl v jednom BALÍKu.</strong>Rozdej přátelům dobrý večer.</span></div>
-          <label className="label" htmlFor="name">
-            Tvoje jméno
-          </label>
-          <input
-            id="name"
-            className="field"
-            value={name}
-            maxLength={MAX_NAME_LENGTH}
-            onChange={(e) => setName(e.target.value)}
-            autoComplete="nickname"
-            enterKeyHint="go"
-          />
-          <button className="btn btn-primary wide" type="submit" disabled={!name.trim() || busy}>
-            {busy ? 'Připojuji…' : 'Vytvořit hru s přáteli'}
-          </button>
-        </form>
+      {/* Phones: the decision stays under the thumb until the full detail scrolls into view. */}
+      <div className={`home-dock${detailInView ? ' is-hidden' : ''}`} aria-hidden={detailInView || undefined}>
+        <span className="home-dock-art" aria-hidden><GameMotif id={gameId} /></span>
+        <b className="home-dock-name">{info.name}</b>
+        <button className="btn btn-primary" type="button" disabled={!player || busy} onClick={solo} tabIndex={detailInView ? -1 : 0}>Proti počítači</button>
+        <button className="btn btn-secondary" type="button" disabled={!player || busy} onClick={() => friends()} tabIndex={detailInView ? -1 : 0}>S přáteli</button>
+      </div>
 
-        <div className="solo">
-          <div className="solo-row">
-            <span className="solo-label">Soupeři</span>
-            <div className="segmented" role="radiogroup" aria-label="Počet počítačových soupeřů">
-              {GAME_INFO[gameId].botCounts.map((n) => (
-                <button key={n} type="button" role="radio" aria-checked={bots === n} className={bots === n ? 'is-on' : ''} onClick={() => setBots(n)}>
-                  {n}
-                </button>
-              ))}
-            </div>
-          </div>
-          <button className="btn btn-secondary wide" type="button" disabled={!name.trim() || busy} onClick={() => createRoom(name.trim(), bots, gameId, bonus)}>
-            Hrát proti počítači
-          </button>
-        </div>
-
-        {joining ? (
-          <form className="join-row" onSubmit={onJoin}>
-            <input
-              className="field code-field"
-              placeholder="KÓD"
-              value={code}
-              maxLength={ROOM_CODE_LENGTH}
-              onChange={(e) => setCode(e.target.value.toUpperCase().replace(/[^A-Z]/g, ''))}
-              autoFocus
-              autoCapitalize="characters"
-              autoComplete="off"
-              enterKeyHint="go"
-              aria-label="Kód místnosti"
-            />
-            <button className="btn btn-secondary" type="submit" disabled={code.length !== ROOM_CODE_LENGTH}>
-              Připojit
-            </button>
-          </form>
-        ) : (
-          <button className="btn btn-ghost wide" onClick={() => setJoining(true)}>
-            Připojit se kódem
-          </button>
-        )}
-      </motion.div>
-      <p className="home-foot">Máš odkaz od kamaráda? Stačí ho otevřít.</p>
-      <nav className="home-editions" aria-labelledby="home-editions-title">
-        <p id="home-editions-title" className="home-foot">Prohlédnout balíčky</p>
-        {EDITIONS.map((t) => (
-          <a key={t.id} className="btn btn-ghost" href={editionHref(t.id)!}>
-            {t.name} ↗
-          </a>
-        ))}
-      </nav>
-      {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/avatars">Postavy · avatar playground ↗</a>}
-      {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/brand">BLIK · brand & game feel lab ↗</a>}
+      <ShowroomTeaser />
+      {import.meta.env.DEV && (
+        <nav className="home-dev">
+          <a className="btn btn-ghost" href="/dev/avatars">Postavy · avatar playground ↗</a>
+          <a className="btn btn-ghost" href="/dev/brand">BLIK · brand & game feel lab ↗</a>
+        </nav>
+      )}
     </main>
   );
 }

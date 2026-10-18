@@ -29,6 +29,8 @@
 .evening-game-option > button:disabled { opacity: .45; cursor: default; }
 .evening-game-option p { flex: 1; color: var(--muted); font-size: 11px; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
 .evening-game-option .btn { min-height: 44px; padding-inline: 10px; font-size: 12px; }
+.evening-game-art { width: 100%; max-width: 200px; padding: 2px; }
+.evening-game-option > button:disabled .evening-game-art { filter: saturate(.25); }
 .evening-game-mark { width: 34px; height: 39px; border: 1px solid color-mix(in srgb,var(--accent-text) 33.3%,transparent); border-radius: 6px; background: #ffd18812; display: grid; place-items: center; color: var(--accent-text); font: 700 24px var(--font-brand); flex-shrink: 0; }
 .evening-game-mark.is-sedma { border-color: color-mix(in srgb,var(--team-1) 33.3%,transparent); background: color-mix(in srgb,var(--team-1) 7.1%,transparent); color: var(--team-1); }
 .evening-ballot-status { font-size: 12px; color: var(--accent-text); line-height: 1.6; }
