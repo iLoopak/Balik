@@ -190,12 +190,8 @@
 :root[data-color-mode='light'] .status-bar.is-mine .status-text {
   color: var(--hud-ink);
 }
-:root[data-color-mode='light'] .deck-count,
 :root[data-color-mode='light'] .status-wins {
   color: var(--muted);
-}
-:root[data-color-mode='light'] .deck-count > span {
-  color: var(--faint);
 }
 :root[data-color-mode='light'] .deck-hit.is-ready {
   box-shadow:

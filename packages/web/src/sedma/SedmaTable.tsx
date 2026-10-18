@@ -66,7 +66,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
       <span className="sedma-total">{view.drawCount} v balíčku<br />Poslední +{view.lastTrickBonus}</span>
     </div>
     <div className="table sedma-table" ref={ref} data-game="sedma" data-idle={idle} data-quiet={quiet}>
-      <GameTableTheme game="sedma" you={me} drawCount={view.drawCount} pulses={environment} geo={geo} suit={display.trick.at(-1)?.entity.card?.suit ?? null} reduced={quiet} lite={lite} myTurn={status === 'open' && view.phase === 'playing' && view.currentPlayerId === me} />
+      <GameTableTheme game="sedma" you={me} drawCount={view.drawCount} pulses={environment} geo={geo} suit={display.trick.at(-1)?.entity.card?.suit ?? null} reduced={quiet} lite={lite} myTurn={status === 'open' && view.phase === 'playing' && view.currentPlayerId === me} active={view.phase === 'playing' ? view.currentPlayerId : null} />
       <div className="sedma-stock" aria-label={`Dobírací balíček: ${view.drawCount} karet`} style={{ left: geo.deck.x, top: geo.deck.y, width: geo.cardW * .35, height: geo.cardH * .35 }}><CardBack /><span>{view.drawCount}</span></div>
       {view.players.filter((p) => p.id !== me).map((p) => {
         const seat = geo.seats[p.id]!;

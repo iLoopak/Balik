@@ -491,3 +491,29 @@
     opacity: 0.6;
   }
 }
+
+/* Wiring: every seat is cabled into the console, the own side is a front tray. */
+.console-wiring { position: absolute; inset: 0; display: block; overflow: visible; }
+.console-wiring-over { z-index: 1; }
+.console-tray { fill: color-mix(in srgb, var(--console-shell) 70%, transparent); stroke: var(--console-shell-edge); stroke-width: 1; }
+.console-tray-live { fill: none; stroke: var(--console-gold); stroke-width: 2; stroke-linecap: round; opacity: 0; transition: opacity 400ms ease; }
+.arena-my-turn .console-tray-live { opacity: 0.9; }
+.console-lane-groove { fill: none; stroke: var(--console-shell-edge); stroke-width: 1; }
+.console-lane-socket { fill: var(--console-shell); stroke: var(--console-shell-edge); stroke-width: 1; transition: fill 300ms ease; }
+.console-lane-signal { fill: none; stroke: var(--console-gold); stroke-width: 2; stroke-linecap: round; stroke-dasharray: 2 8; opacity: 0; transition: opacity 300ms ease; }
+.console-lane.is-live .console-lane-signal { opacity: 0.95; animation: console-signal 1.2s linear infinite; }
+.console-lane.is-live .console-lane-socket { fill: var(--console-gold); }
+.console-gauge rect { fill: var(--console-pocket-edge); transition: fill 300ms ease; }
+.console-gauge rect.is-on { fill: var(--console-gold); }
+.console-brackets { fill: none; stroke: var(--arena-faction); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.85; transition: stroke 700ms ease; }
+.table-geometry-cabinet .console-tray-live { stroke-dasharray: 10 5; stroke-linecap: butt; }
+.table-geometry-cabinet .console-brackets { stroke-linecap: square; stroke-linejoin: miter; }
+.console-table.arena-is-quiet .console-lane-signal { animation: none; stroke-dasharray: none; }
+.console-table.arena-is-quiet .console-wiring * { transition: none; }
+@keyframes console-signal { to { stroke-dashoffset: -20; } }
+@media (prefers-reduced-motion: reduce) { .console-lane-signal { animation: none !important; stroke-dasharray: none; } }
+.console-slot-count { margin-left: 3px; padding: 1px 5px; border-radius: 4px; color: var(--console-gold); background: color-mix(in srgb, var(--console-gold) 12%, transparent); font: 750 10px/1.2 var(--font-brand); letter-spacing: 0; font-variant-numeric: tabular-nums; }
+/* The front tray owns the hand zone now; the hand light keeps only its glow. */
+.game-table-theme.console-table[data-color-mode='light'] .arena-hand-light { border-top-color: transparent; }
+/* A slot hugging the table edge (Sedma's stock) anchors its name to the slot instead of centring. */
+.console-slot-name.is-edge { left: 0; translate: 0 0; }

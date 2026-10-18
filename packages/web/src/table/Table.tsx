@@ -148,7 +148,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
 
   return (
     <div className={`table command-table${geo.short ? ' table-short' : ''}`} ref={tableRef} onClick={onTableClick}>
-      <GameTableTheme game="prsi" you={me} drawCount={display.drawCount} pulses={environmentFromEffects(fx.filter((f): f is EffectInstance => f.kind === 'effect'))} geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown} />
+      <GameTableTheme game="prsi" you={me} drawCount={display.drawCount} pulses={environmentFromEffects(fx.filter((f): f is EffectInstance => f.kind === 'effect'))} geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown} active={display.phase === 'playing' ? display.currentPlayerId : null} />
       <AnimatePresence>
         {myTurnShown && display.phase === 'playing' && (
           <motion.div
@@ -283,9 +283,8 @@ function DeckStack({ geo, count, canDraw, penalty, onDraw }: { geo: Geometry; co
           onDraw();
         }}
         disabled={!canDraw}
-        aria-label={penalty ? `Brát ${penalty} karty` : 'Líznout kartu'}
+        aria-label={`${penalty ? `Brát ${penalty} karty` : 'Líznout kartu'} · v balíčku ${count} ${cardsWord(count)}`}
       />
-      <div className="deck-count">{count} <span>{cardsWord(count)}</span></div>
     </div>
   );
 }
