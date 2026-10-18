@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Šipka · Srdce",
+    "meaning": "Sedm symbolů míří vzhůru: útok v Prší, vítěz štychu v Sedmě.",
+    "archetype": "Útočná sedma",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-7.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Dvě řady · Srdce",
+    "meaning": "Dvě klidné řady kolem okrového tulipánu.",
+    "archetype": "Klidná řada",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-8.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Mřížka · Srdce",
+    "meaning": "Pravidelná mřížka devíti symbolů.",
+    "archetype": "Mřížka",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-9.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Věnec · Srdce",
+    "meaning": "Deset symbolů ve věnci kolem medaile: body v Sedmě.",
+    "archetype": "Věnec",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-10.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Dudák",
+    "meaning": "Mladý muzikant rozehrává svatbu na dudy.",
+    "archetype": "Spodek",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-j.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Družička",
+    "meaning": "Vede průvod a praporem obrací celou hru.",
+    "archetype": "Svršek",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-q.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Král muzikantů",
+    "meaning": "Starý primáš s korunou a srdcovým žezlem.",
+    "archetype": "Král",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-k.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Srdcové eso · léto",
+    "meaning": "Srdce v plném slunci. Zastaví každý tah.",
+    "archetype": "Eso",
+    "stickerAsset": "/decks/mariasky/stickers/hearts-a.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Šipka · Kule",
+    "meaning": "Sedm symbolů míří vzhůru: útok v Prší, vítěz štychu v Sedmě.",
+    "archetype": "Útočná sedma",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-7.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Dvě řady · Kule",
+    "meaning": "Dvě klidné řady kolem okrového tulipánu.",
+    "archetype": "Klidná řada",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-8.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Mřížka · Kule",
+    "meaning": "Pravidelná mřížka devíti symbolů.",
+    "archetype": "Mřížka",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-9.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Věnec · Kule",
+    "meaning": "Deset symbolů ve věnci kolem medaile: body v Sedmě.",
+    "archetype": "Věnec",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-10.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Kramářka",
+    "meaning": "Na jarmarku nabízí tác cinkajících rolniček.",
+    "archetype": "Spodek",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-j.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Zvoník",
+    "meaning": "Svolává náves a jeho prapor mění barvu.",
+    "archetype": "Svršek",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-q.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Král jarmarku",
+    "meaning": "Kupec všech kupců s rolničkou na žezle.",
+    "archetype": "Král",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-k.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Kulové eso · podzim",
+    "meaning": "Rolnička mezi padajícím listím.",
+    "archetype": "Eso",
+    "stickerAsset": "/decks/mariasky/stickers/diamonds-a.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Šipka · Žaludy",
+    "meaning": "Sedm symbolů míří vzhůru: útok v Prší, vítěz štychu v Sedmě.",
+    "archetype": "Útočná sedma",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-7.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Dvě řady · Žaludy",
+    "meaning": "Dvě klidné řady kolem okrového tulipánu.",
+    "archetype": "Klidná řada",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-8.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Mřížka · Žaludy",
+    "meaning": "Pravidelná mřížka devíti symbolů.",
+    "archetype": "Mřížka",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-9.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Věnec · Žaludy",
+    "meaning": "Deset symbolů ve věnci kolem medaile: body v Sedmě.",
+    "archetype": "Věnec",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-10.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Mlynářský učeň",
+    "meaning": "Nosí pytle mouky pečetěné žaludem.",
+    "archetype": "Spodek",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-j.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Vozka",
+    "meaning": "Zastaví povoz a praporem stočí cestu.",
+    "archetype": "Svršek",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-q.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Král dubiny",
+    "meaning": "Mlynář v hermelínu se žaludovým žezlem.",
+    "archetype": "Král",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-k.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Žaludové eso · zima",
+    "meaning": "Žalud v dubových listech pod sněhem.",
+    "archetype": "Eso",
+    "stickerAsset": "/decks/mariasky/stickers/clubs-a.svg"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Šipka · Listy",
+    "meaning": "Sedm symbolů míří vzhůru: útok v Prší, vítěz štychu v Sedmě.",
+    "archetype": "Útočná sedma",
+    "stickerAsset": "/decks/mariasky/stickers/spades-7.svg"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Dvě řady · Listy",
+    "meaning": "Dvě klidné řady kolem okrového tulipánu.",
+    "archetype": "Klidná řada",
+    "stickerAsset": "/decks/mariasky/stickers/spades-8.svg"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Mřížka · Listy",
+    "meaning": "Pravidelná mřížka devíti symbolů.",
+    "archetype": "Mřížka",
+    "stickerAsset": "/decks/mariasky/stickers/spades-9.svg"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Věnec · Listy",
+    "meaning": "Deset symbolů ve věnci kolem medaile: body v Sedmě.",
+    "archetype": "Věnec",
+    "stickerAsset": "/decks/mariasky/stickers/spades-10.svg"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Zahradník",
+    "meaning": "Zalévá záhony, dokud ostatní hrají.",
+    "archetype": "Spodek",
+    "stickerAsset": "/decks/mariasky/stickers/spades-j.svg"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Myslivkyně",
+    "meaning": "S pérem za kloboukem vede hon jinou barvou.",
+    "archetype": "Svršek",
+    "stickerAsset": "/decks/mariasky/stickers/spades-q.svg"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "Lesní král",
+    "meaning": "Vousatý vládce háje se zeleným žezlem.",
+    "archetype": "Král",
+    "stickerAsset": "/decks/mariasky/stickers/spades-k.svg"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Listové eso · jaro",
+    "meaning": "Pupen, ptáček a první květy.",
+    "archetype": "Eso",
+    "stickerAsset": "/decks/mariasky/stickers/spades-a.svg"
+  }
+]

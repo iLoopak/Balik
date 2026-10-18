@@ -215,9 +215,11 @@
   margin-left: 5px;
   padding: 0 5px;
   border-radius: 4px;
-  font-size: 9px;
-  font-weight: 750;
-  letter-spacing: 0.06em;
+  font-family: var(--font-machine);
+  font-stretch: 87.5%;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   vertical-align: 1px;
   color: var(--skip);
@@ -618,8 +620,10 @@
 }
 
 .win-kicker {
-  font-size: 12px;
-  font-weight: 650;
+  font-family: var(--font-machine);
+  font-stretch: 87.5%;
+  font-size: 11px;
+  font-weight: 550;
   color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -716,7 +720,7 @@
 .command-table .status-text { font-size: 13px; font-weight: 550; }
 .command-table .status-bar.is-mine .status-text { color: #ffe2b3; }
 .command-table .status-actions .btn-sm { min-height: 36px; padding: 0 15px; border-radius: 10px; font-size: 12px; }
-.command-table .status-wins { color: #9ba6b9; font-size: 11px; }
+.command-table .status-wins { color: #9ba6b9; font-size: 10px; font-family: var(--font-machine); font-stretch: 87.5%; }
 .command-table .suit-chip { background: #101c2ce8; box-shadow: inset 0 0 0 1px #7d96ba33; font-size: 11px; font-weight: 600; padding: 5px 11px 5px 8px; }
 .command-table .suit-chip.is-forced { box-shadow: inset 0 0 0 1px var(--suit-tone), 0 0 20px -12px var(--suit-tone); }
 .command-table .fx-label { max-width: min(420px, calc(100vw - 32px)); overflow: hidden; text-overflow: ellipsis; font-size: 12px; padding: 6px 13px; }

@@ -8,7 +8,7 @@
 .lab-grid { display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 18px; }
 .lab-grid figure, .lab-comparison figure { margin: 0; min-width: 0; }
 .lab-card { width: 100%; aspect-ratio: 5/7; }
-.lab-grid figcaption, .lab-comparison figcaption { font: 11px/1.4 monospace; margin-top: 9px; overflow-wrap: anywhere; }
+.lab-grid figcaption, .lab-comparison figcaption { font: 11px/1.4 var(--font-machine); margin-top: 9px; overflow-wrap: anywhere; }
 .lab-grid.lab-small { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
 .lab-small .lab-card { max-width: 72px; }
 .lab-light { color-scheme: light; }

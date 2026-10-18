@@ -27,6 +27,7 @@ const SHAPES = {
   dash: 'M47 8h6v17h-6Z',
   leaf: 'M50 7q12 8 0 19Q38 15 50 7Z',
   bolt: 'm50 5-6 12h5l-1 9 9-14h-6l4-7Z',
+  tulip: 'M50 26q-9-4-9-13l4 3 5-9 5 9 4-3q0 9-9 13Z',
 };
 
 function Burst({ at, cardW, event, quality, delay, duration, big = false }: {

@@ -1,10 +1,7 @@
-@import '@fontsource-variable/bricolage-grotesque';
-@import '@fontsource-variable/inter';
+@import './typography.css';
 @import '../themes/colorTokens.css';
 
 :root {
-  --font-brand: 'Bricolage Grotesque Variable', 'Inter Variable', system-ui, sans-serif;
-  --font-ui: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --bg: #10141f;
   --bg-2: #161c2b;

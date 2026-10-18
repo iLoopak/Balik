@@ -65,8 +65,9 @@
   font-family: var(--font-brand);
   font-weight: 800;
   font-size: 23cqw;
-  letter-spacing: -0.06em;
-  font-variation-settings: 'wdth' 85;
+  letter-spacing: -0.04em;
+  font-variation-settings: 'SOFT' 60, 'WONK' 0, 'opsz' 72;
+  font-variant-numeric: lining-nums;
 }
 
 .card-index-suit {
@@ -309,3 +310,17 @@
 .card-deck-retro-arcade .card-index-suit { width: 18cqw; height: 18cqw; margin: 1cqw 0 0; }
 .card-deck-retro-arcade .card-sticker { inset: 27% 21.5%; }
 .card-deck-retro-arcade .card-sticker img { width: 100%; height: 100%; object-fit: contain; }
+
+/* Mariášky: printed paper, red double frame, condensed carved indices (VII–X, Sp, Sv, K, E). */
+.card-deck-mariasky .card-base { background: #fbf3e1; box-shadow: inset 0 0 0 1.4cqw #fbf3e1, inset 0 0 0 2cqw #b8282f, inset 0 0 0 3.2cqw #fbf3e1, inset 0 0 0 3.6cqw #b8282f8c; }
+.card-deck-mariasky .card-rank { font-size: 23cqw; color: #2a1f1a; font-weight: 800; letter-spacing: -0.05em; }
+.card-deck-mariasky .card-rank[data-len='3'] { font-size: 17cqw; letter-spacing: -0.07em; }
+.card-deck-mariasky .card-rank[data-len='4'] { font-size: 14cqw; letter-spacing: -0.08em; }
+.card-deck-mariasky .card-index-tl { top: 7cqw; left: 6cqw; width: 26cqw; }
+.card-deck-mariasky .card-index-br { bottom: 7cqw; right: 6cqw; width: 26cqw; }
+.card-deck-mariasky .card-index-suit { width: 17cqw; height: 17cqw; margin: 1.5cqw 0 0; }
+.card-deck-mariasky .card-sticker { inset: 21% 13%; }
+.card-deck-mariasky .card-sticker img { width: 100%; height: 100%; object-fit: contain; }
+@container (max-width: 110px) {
+  .card-deck-mariasky .card-hand-suit { left: 50%; top: 22cqw; translate: -50% 0; width: 11cqw; height: 11cqw; }
+}

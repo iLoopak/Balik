@@ -1,7 +1,7 @@
 import { motion, type Transition } from 'motion/react';
 import { memo, useState } from 'react';
 import { SUIT_NAME_CS, type Card } from '@balik/shared';
-import { RANK_HINT, suitColor, suitName, stickerFor, type DeckId, type GameId } from './skin';
+import { RANK_HINT, rankLabel, rankName, suitColor, suitName, stickerFor, type DeckId, type GameId } from './skin';
 import { SuitIcon } from './SuitIcon';
 import { CardEffectLayer } from '../effects/CardEffectLayer';
 import './cards.css';
@@ -51,7 +51,7 @@ export const CardView = memo(function CardView({
   const showFace = !!card && faceUp;
   const asset = showFace ? stickerFor(game, card, deck) : null;
   const visibleDeck = showFace && deck !== 'classic' && (!asset || asset.src === failedAsset) ? 'classic' : deck;
-  const label = card ? `${card.rank} ${SUIT_NAME_CS[card.suit]}${visibleDeck === 'classic' ? '' : ` · ${suitName(card.suit, visibleDeck)}`}` : 'rub karty';
+  const label = card ? (DECK_THEMES[visibleDeck].ranks ? `${rankName(card.rank, visibleDeck)} · ${suitName(card.suit, visibleDeck)}` : `${card.rank} ${SUIT_NAME_CS[card.suit]}${visibleDeck === 'classic' ? '' : ` · ${suitName(card.suit, visibleDeck)}`}`) : 'rub karty';
   return (
     <div className={`card card-deck-${visibleDeck}`} data-deck={visibleDeck} role="img" aria-label={showFace ? label : 'rub karty'}>
       <motion.div
@@ -84,15 +84,16 @@ export function CardBase() {
 }
 
 export function CardIndices({ card, deck = useAppearance.getState().deck }: { card: Card; deck?: DeckId }) {
+  const rank = rankLabel(card.rank, deck);
   if (DECK_THEMES[deck].indices === 'four-corners') return <>
-    <div className="card-index card-index-tl"><span className="card-rank">{card.rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
+    <div className="card-index card-index-tl"><span className="card-rank" data-len={rank.length}>{rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
     <div className="card-index card-index-tr"><SuitIcon suit={card.suit} deck={deck} className="card-index-suit" /></div>
-    <div className="card-index card-index-br"><span className="card-rank">{card.rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
+    <div className="card-index card-index-br"><span className="card-rank" data-len={rank.length}>{rank}</span><SuitIcon suit={card.suit} deck={deck} className="card-hand-suit" /></div>
     <div className="card-index card-index-bl"><SuitIcon suit={card.suit} deck={deck} className="card-index-suit" /></div>
   </>;
   const index = (
     <>
-      <span className="card-rank">{card.rank}</span>
+      <span className="card-rank" data-len={rank.length}>{rank}</span>
       <SuitIcon suit={card.suit} deck={deck} className="card-index-suit" />
     </>
   );

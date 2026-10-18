@@ -265,3 +265,28 @@ V **Vzhled → Režim aplikace** vyber Světlo, Tma nebo Podle systému.
 Režim je nezávislý na edici karet i prostředí stolu, ukládá se lokálně a lze
 ho přepnout během hry bez nového rozdání. [Materiály, tokeny, FX a QA](docs/visual/LIGHT_MODE.md).
 Nasazuje se pouze frontend; Supabase a SQL se nemění.
+
+## Mariášky · třetí edice
+
+Německé barvy nad nezměněným enginem: srdce (hearts), kule (diamonds), listy
+(spades) a žaludy (clubs). Indexy jsou VII, VIII, IX, X, Sp, Sv, K a E. Svršek je
+enginové Q, takže v Prší mění barvu stejně jako u české hospodské hry. 32 linorytů
+generuje `node scripts/create-mariasky.mjs`. Role karet: VII míří vzhůru (útok),
+X je věnec (body), svršek nese prapor (změna barvy), eso leží na pečeti (stop).
+Kule jsou žluté rolničky a žaludy tmavě ořechové, aby se ve hře nepletly.
+Mapování všech karet: [Mariášky](docs/visual/MARIASKY_CARD_MAPPING.md).
+
+## Typografie · BALÍK Type
+
+Tři hlasy (`packages/web/src/styles/typography.css`):
+
+- **Herní hlas: Fraunces** (měkký variabilní serif, osy SOFT/WONK). Logo, nadpisy,
+  indexy karet a skóre. Serif odkazuje na tištěné hrací karty. Hravé WONK tvary
+  dostávají jen logo a hlavní titulky.
+- **Lidský hlas: Instrument Sans.** Veškerý text a ovládání (`--font-ui`).
+- **Strojový hlas: Martian Mono** (`--font-machine`). Co „razí“ karetní stroj:
+  názvy slotů, kódy místností, počítadla a nadpisky. Vždy verzálky nebo čísla,
+  mírně zúžené.
+
+Všechna písma jsou self-hostovaná přes `@fontsource-variable` a mají `latin-ext`
+pro češtinu.

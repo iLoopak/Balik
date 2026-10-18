@@ -1,0 +1,53 @@
+/* BALÍK Type — three voices, one room.
+   Herní hlas (Fraunces, soft serif): the brand, headlines, card indices, scores.
+     Printed playing cards use serif indices; SOFT rounds them like worn card stock.
+   Lidský hlas (Instrument Sans): everything people read and tap.
+   Strojový hlas (Martian Mono): what the card apparatus stamps — slot names, codes,
+     counters, kickers. Always uppercase or numeric, slightly condensed. */
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/instrument-sans/wdth.css';
+@import '@fontsource-variable/martian-mono/wdth.css';
+
+:root {
+  --font-brand: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-ui: 'Instrument Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-machine: 'Martian Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+  /* Fraunces axes; other families ignore them, so the setting can inherit from the root. */
+  --type-soft: 'SOFT' 100, 'WONK' 0;
+  --type-wonk: 'SOFT' 100, 'WONK' 1;
+  font-variation-settings: var(--type-soft);
+  font-optical-sizing: auto;
+}
+
+/* The wordmark and hero lines get Fraunces' wonky letterforms: the one playful flourish. */
+.brand-word,
+.gallery-brand,
+.gallery-hero h1,
+.feel-heading h1,
+.game-transition h2,
+.win-title {
+  font-variation-settings: var(--type-wonk);
+}
+.brand-word {
+  font-weight: 900;
+  letter-spacing: -0.035em;
+}
+
+/* Scores and counters in the game voice line up as tabular lining figures. */
+.sb-wins,
+.sedma-score strong,
+.evening-scoreboard li > strong,
+.evening-summary-stats b,
+.penalty-badge,
+.seat-penalty {
+  font-variant-numeric: lining-nums tabular-nums;
+}
+
+/* Machine voice utility for stamped labels. */
+.type-machine {
+  font-family: var(--font-machine);
+  font-stretch: 87.5%;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

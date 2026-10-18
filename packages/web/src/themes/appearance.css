@@ -5,7 +5,7 @@
 .appearance-dialog { width: min(620px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); box-sizing: border-box; padding: clamp(16px, 4vw, 28px); border-radius: 22px; border: 1px solid var(--ui-border); background: var(--modal-bg); color: var(--ink); box-shadow: var(--shadow-lg); overflow-y: auto; }
 .appearance-dialog::backdrop { background: var(--scrim); }
 .appearance-dialog header { display: flex; align-items: start; gap: 12px; justify-content: space-between; }
-.appearance-dialog header p { color: var(--accent-text); font-size: 10px; letter-spacing: .12em; margin: 0 0 8px; }
+.appearance-dialog header p { font-family: var(--font-machine); font-stretch: 87.5%; color: var(--accent-text); font-size: 10px; letter-spacing: .12em; margin: 0 0 8px; }
 .appearance-dialog h2 { font-family: var(--font-brand); margin: 0; font-size: clamp(20px, 4vw, 28px); }
 .appearance-note { font-size: 12px; color: var(--note-ink); line-height: 1.6; }
 .appearance-close { width: 44px; height: 44px; flex-shrink: 0; background: var(--modal-close); border: 1px solid var(--line); border-radius: 12px; color: inherit; cursor: pointer; font-size: 26px; }

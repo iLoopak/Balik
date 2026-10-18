@@ -8,6 +8,8 @@ import { CardView } from '../src/cards/Card';
 import { DECK_THEMES, EDITIONS, TABLE_THEMES } from '../src/themes/registry';
 import { APPEARANCE_KEY, DEFAULT_APPEARANCE, deckAssetUrls, parseAppearance, preloadDeck, setAppearance, useAppearance } from '../src/themes/preferences';
 import { RETRO_ARCADE_CARDS } from '../src/themes/decks/retro-arcade/manifest';
+import { MARIASKY_CARDS } from '../src/themes/decks/mariasky/manifest';
+import { cardText, rankLabel } from '../src/cards/skin';
 import { stickerFor } from '../src/cards/skin';
 import { BrandMascot } from '../src/brand/BrandMascot';
 import { EmoteBubble } from '../src/brand/Emotes';
@@ -25,7 +27,7 @@ describe('interchangeable cosmetic editions', () => {
       expect(new Set(Object.values(theme.suits).map(s => s.paths.join(' '))).size).toBe(4);
       for (const game of ['prsi', 'sedma', 'lhar'] as const) for (const card of createDeck32()) {
         const html = renderToStaticMarkup(createElement(CardView, { card, faceUp: true, deck: theme.id, game, fx: { current: true } }));
-        expect(html).toContain(`>${card.rank}</span>`);
+        expect(html).toContain(`>${theme.ranks?.[card.rank]?.index ?? card.rank}</span>`);
         expect(html).toContain(theme.suits[card.suit].paths[0]);
         expect(html).toContain(theme.stickerFor(card)!.src);
         expect(html).toContain('class="card-base"');
@@ -36,7 +38,7 @@ describe('interchangeable cosmetic editions', () => {
     }
   });
   it('renders exactly the same back for every concealed identity, including known cards flipping down', () => {
-    expect(new Set(EDITIONS.map(t => t.back)).size).toBe(2);
+    expect(new Set(EDITIONS.map(t => t.back)).size).toBe(EDITIONS.length);
     for (const theme of EDITIONS) {
       const expected = renderToStaticMarkup(createElement(CardView, { card: null, faceUp: false, deck: theme.id }));
       expect(expected).toContain(theme.back);
@@ -78,6 +80,26 @@ describe('interchangeable cosmetic editions', () => {
     expect(String(replaceState.mock.calls.at(-1)![2])).toBe('https://example.test/r/ABCD?keep=1');
     setItem.mockImplementation(() => { throw new Error('denied'); });
     expect(() => setAppearance({deck:'stormpunk'})).not.toThrow();
+  });
+  it('ships Mariášky as German suits over the unchanged engine, with readable indices and bounded linocuts', () => {
+    const theme = DECK_THEMES.mariasky;
+    expect(MARIASKY_CARDS.map(a => a.card)).toEqual(createDeck32());
+    expect(new Set(MARIASKY_CARDS.map(a => a.name)).size).toBe(32);
+    expect(Object.values(theme.suits).map(s => s.name)).toEqual(['Srdce', 'Kule', 'Žaludy', 'Listy']);
+    expect(['7', '8', '9', '10', 'J', 'Q', 'K', 'A'].map(r => rankLabel(r as never, 'mariasky'))).toEqual(['VII', 'VIII', 'IX', 'X', 'Sp', 'Sv', 'K', 'E']);
+    expect(rankLabel('Q', 'stormpunk')).toBe('Q');
+    expect(cardText({ id: 'hearts-Q', suit: 'hearts', rank: 'Q' }, 'mariasky')).toBe('Sv srdce');
+    let total = 0;
+    for (const art of MARIASKY_CARDS) {
+      const file = root + art.stickerAsset, svg = readFileSync(file, 'utf8');
+      expect(svg).toContain('viewBox="0 0 256 256"'); expect(svg).toContain('feMorphology');
+      expect(svg).not.toMatch(/<text|<script|<image|<foreignObject|https?:\/\/(?!www.w3.org)/);
+      const bytes = statSync(file).size; expect(bytes).toBeLessThan(7000); total += bytes;
+    }
+    expect(total).toBeLessThan(120_000);
+    // Kule and žaludy must not collapse into one warm tone: keep them far apart in lightness.
+    const lum = (hex: string) => { const n = parseInt(hex.slice(1), 16); return 0.2126 * (n >> 16) + 0.7152 * ((n >> 8) & 255) + 0.0722 * (n & 255); };
+    expect(lum(theme.suits.diamonds.color) - lum(theme.suits.clubs.color)).toBeGreaterThan(80);
   });
   it('falls back to classic indices when a manifest entry is missing, retaining the edition back', () => {
     const theme = DECK_THEMES['retro-arcade'];
