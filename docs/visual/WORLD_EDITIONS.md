@@ -32,8 +32,8 @@ nikoli nová pravidla. Esa fungují jako dominantní totemy daného světa.
 
 - Hotové stickery: `packages/web/public/decks/{id}/stickers/{suit}-{rank}.webp`.
   Transparentní, bez textu a indexů, maximálně 768 px, 32px alpha padding.
-- Čtyři značkové ruby: `back.svg`. Grafický rub zachovává identitu BALÍKU a je
-  společný pro všechny identity dané edice.
+- Aktivní imagegen ruby: `/decks/art-backs/{id}.webp`, 640 × 896. Stejný rub
+  používá celá edice ve hrách, showroomu i galeriích; staré `back.svg` jsou archiv.
 - Každý svět má samostatný suit symbol a akcent; indexy používají tmavší inkoust.
   Výřezy symbolů mají explicitní `fillRule: 'evenodd'`.
 - Individuální kompozice: `scripts/art/premium-directions.mjs`.

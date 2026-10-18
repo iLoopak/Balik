@@ -49,7 +49,7 @@ export const DECK_THEMES: Record<DeckId, DeckTheme> = {
     stickerFor: () => null,
   },
   stormpunk: {
-    id: 'stormpunk', name: 'Stormpunk', description: 'Živé město, čtyři frakce a komiksové postavy.', indices: 'four-corners', back: '/decks/stormpunk/back.svg',
+    id: 'stormpunk', name: 'Stormpunk', description: 'Živé město, čtyři frakce a komiksové postavy.', indices: 'four-corners', back: '/decks/art-backs/stormpunk.webp',
     suits: mapSuits((s): SuitStyle => { const f = SUIT_FACTION[s]; return { name: FACTIONS[f].name, ink: FACTIONS[f].ink, color: FACTIONS[f].color, paths: [FACTION_PATHS[f]], viewBox: '0 0 24 24', filled: f === 'vyhen' }; }),
     stickerFor: card => { const art = stormpunkFor(card); return art ? { src: art.stickerAsset, scale: art.scale, offset: art.offset } : null; },
   },

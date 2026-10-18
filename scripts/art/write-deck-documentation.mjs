@@ -35,7 +35,7 @@ ${manifest.map(e=>`| ${e.card.id} | ${e.archetype} | **${e.name}** — ${e.meani
 ## Assety a integrace
 
 - ${assets} Bez textu, hodnot, indexů a bez líce karty.
-- Rub: \`packages/web/public/decks/${d.id}/back.svg\`, 200 × 280 se značkou BALÍK.
+- Rub: \`packages/web/public/decks/art-backs/${d.id}.webp\`, 640 × 896 se značkou BALÍK; aktivní v galerii, showroomu i během hry.
 - Manifest: \`packages/web/src/themes/decks/${d.id}/manifest.json\`.
 ${premium?`- Autoritativní manifest rastrové edice: \`packages/web/src/themes/decks/${d.id}/premium-manifest.json\`. Opětovné \`art:worlds\` jej zachová.\n`:''}- Veřejná galerie: \`/decks/${d.id}\` — skutečný CardView, filtr, detail, malé karty, světlý/tmavý podklad, ruby.
 - Stůl **${d.tableName}** je nezávisle volitelná decentní paleta stávajícího BALÍK aparátu.

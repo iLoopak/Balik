@@ -34,7 +34,8 @@ try {
       if(reduced)assert.equal(await page.locator('.lab-grid .card-sticker img').first().evaluate(el=>getComputedStyle(el).animationName),'none');
       await page.getByLabel('Rub',{exact:true}).check();
       assert.equal(await page.locator('.lab-grid [data-layer="sticker"]').count(),0);
-      assert.equal(await page.locator(`.lab-grid img[src="/decks/${deck}/back.svg"]`).count(),32);
+      const back = deck === 'stormpunk' ? '/decks/art-backs/stormpunk.webp' : `/decks/${deck}/back.svg`;
+      assert.equal(await page.locator(`.lab-grid img[src="${back}"]`).count(),32);
       await page.getByLabel('Rub',{exact:true}).uncheck();await page.getByLabel('Malé karty',{exact:true}).uncheck();
     }
     await context.close();

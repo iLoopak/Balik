@@ -21,7 +21,7 @@ const notes: Record<string,{medium:string;improved:string;review:string}> = {
 export default function ArtProofs(){
  const [light,setLight]=useState(false),[back,setBack]=useState(false);
  return <main className={`art-proofs${light?' art-proofs-light':''}`}>
-  <header><a href="/">BALÍK ↗</a><a href="/dev/decks">Deck Lab ↗</a><a href="/dev/art-backs">Návrhy rubů ↗</a><span>ART RESET / 4 POC</span></header>
+  <header><a href="/">BALÍK ↗</a><a href="/dev/decks">Deck Lab ↗</a><a href="/dev/art-backs">Ruby edic ↗</a><span>ART RESET / 4 POC</span></header>
   <h1>Čtyři světy.<br/>Nový výtvarný standard.</h1>
   <p className="art-proof-intro">BIO porovnává původní raster v1 a zjednodušenou v2. U ostatních edic zůstávají původní SVG studie vedle rastrového konceptu pro srovnání. Stejný CardView, stejné indexy a oddělený sticker. {bioComplete?'Všechny čtyři edice nyní používají kompletní rastrové sady: 128 samostatných ilustrací. Tato stránka zachovává historii výtvarného resetu.':seriesDecks.every(id=>DECK_THEMES[id].artStatus!=='study')?'Tři dokončené sady obsahují 96 rastrových ilustrací. Dokončení celé BIO série podle zjednodušené v2 právě probíhá.':'Kompletní rastrové sady se připravují.'}</p>
   <nav aria-label="Galerie edic">{(['biopunk',...seriesDecks] as const).map(id=><a key={id} href={`/decks/${id}`}>{DECK_THEMES[id].name} ↗ </a>)}</nav>

@@ -37,9 +37,13 @@ for(const d of definitions){
   const svg=sheet(small),suffix=small?'small':'contact';writeFileSync(`${out}/${d.id}-${suffix}.svg`,svg);
   await sharp(Buffer.from(svg)).png().toFile(`docs/visual/${d.id}-${suffix}.png`);
  }
- // Back also rasterizes; it may contain the permanent BALÍK brand and edition name.
- await sharp(`packages/web/public/decks/${d.id}/back.svg`).resize(200,280).png().toFile(`${out}/${d.id}-back.png`);
- report.push({edition:d.id,totalBytes:assets.reduce((sum,a)=>sum+a.bytes,0),assets});
+ // Decode the released runtime back, not the archived SVG study.
+ const back=`/decks/art-backs/${d.id}.webp`;
+ const meta=await sharp('packages/web/public'+back).metadata();
+ assert.equal(meta.width,640);assert.equal(meta.height,896);
+ assert.ok((await sharp('packages/web/public'+back).stats()).isOpaque);
+ await sharp('packages/web/public'+back).resize(200,280).png().toFile(`${out}/${d.id}-back.png`);
+ report.push({edition:d.id,back,totalBytes:assets.reduce((sum,a)=>sum+a.bytes,0),assets});
  console.log(`Rasterized ${d.name}: ${assets.length} transparent stickers, 256/48px, back.`);
 }
 writeFileSync('docs/visual/WORLD_EDITIONS_ASSET_AUDIT.json',JSON.stringify({method:'Sharp decoding normalized to 256 and 48px; alpha threshold 8/255; technical check, not an artistic quality score',editions:report},null,2)+'\n');

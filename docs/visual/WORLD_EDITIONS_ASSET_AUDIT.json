@@ -3,6 +3,7 @@
   "editions": [
     {
       "edition": "biopunk",
+      "back": "/decks/art-backs/biopunk.webp",
       "totalBytes": 6526680,
       "assets": [
         {
@@ -361,6 +362,7 @@
     },
     {
       "edition": "panelak-3000",
+      "back": "/decks/art-backs/panelak-3000.webp",
       "totalBytes": 5946922,
       "assets": [
         {
@@ -719,6 +721,7 @@
     },
     {
       "edition": "chalupa",
+      "back": "/decks/art-backs/chalupa.webp",
       "totalBytes": 6823958,
       "assets": [
         {
@@ -1077,6 +1080,7 @@
     },
     {
       "edition": "papirovy-cirkus",
+      "back": "/decks/art-backs/papirovy-cirkus.webp",
       "totalBytes": 4963270,
       "assets": [
         {
