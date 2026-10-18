@@ -1,3 +1,4 @@
+import { environmentFromEffects } from '../table/environment';
 import { AppearancePicker } from '../themes/AppearancePicker';
 import { MotionConfig } from 'motion/react';
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
@@ -79,7 +80,7 @@ export function GameFeelPlayground() {
           </div>
           <div className={`feel-stage-holder${phone ? ' is-phone' : ''}`}>
             <div className="table command-table feel-stage" ref={stageRef} data-preview="game-feel" data-running={running}>
-              <GameTableTheme geo={geo} suit={display.activeSuit} reduced={reduced} lite={lite} myTurn={display.currentPlayerId === 'me'} />
+              <GameTableTheme pulses={environmentFromEffects(effectItems)} geo={geo} suit={display.activeSuit} reduced={reduced} lite={lite} myTurn={display.currentPlayerId === 'me'} />
               <div className="feel-deck" style={{ left: geo.deck.x - geo.deckW / 2, top: geo.deck.y - geo.deckH / 2, width: geo.deckW, height: geo.deckH }}><CardView card={null} faceUp={false} /><span>{display.drawCount}</span></div>
               <CardLayer key={sceneId} placed={placed} geo={geo} stamp={display.stamp} speed={speed} reduced={reduced} fxFor={(p) => p.zone === 'discard' && p.entity.key === display.discard.at(-1)?.key ? { current: true } : undefined} hoverKey={null} interactive={() => false} onHover={noop} onActivate={noop} />
               {display.order.filter((id) => id !== 'me').map((id) => {

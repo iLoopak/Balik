@@ -100,3 +100,10 @@ measure on a lower-end phone, and tune recipient-label placement for extremely
 long player names. Names are already truncated in compact effect badges. Reverse
 integration belongs to a future game's actual direction event. No audio or
 haptics are included.
+
+## Dealer Console
+
+The apparatus under the cards now shares these semantic cues. Prší adapts
+existing effect instances; Sedma and Lhář emit public signals at their existing
+card-director steps. No new gameplay timeline or transport is involved. See
+[console architecture and validation](../../../../docs/visual/DEALER_CONSOLE.md).

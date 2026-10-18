@@ -1,3 +1,4 @@
+import type { EnvironmentSignal } from '../table/environment';
 import type { Card, SedmaClientEvent, SedmaView } from '@balik/shared';
 import type { CardEntity } from '../table/display';
 import { sortHand } from '../table/display';
@@ -12,7 +13,7 @@ export interface SedmaDisplay {
   stamp: number;
   resolution: { winnerId: string; points: number } | null;
 }
-export interface SedmaStep { apply: (d: SedmaDisplay) => SedmaDisplay; wait: number; sound?: SoundKind }
+export interface SedmaStep { environment?: EnvironmentSignal; apply: (d: SedmaDisplay) => SedmaDisplay; wait: number; sound?: SoundKind }
 let hidden = 0;
 const entity = (card: Card | null, stamp: number, extra: Partial<CardEntity> = {}): CardEntity => ({
   key: card?.id ?? `sedma-hidden-${++hidden}`, card, move: null, moveStamp: stamp, spawn: null, delay: 0, flash: null, ...extra,
@@ -33,7 +34,7 @@ export function sedmaSteps(event: SedmaClientEvent, me: string, target: SedmaVie
   switch (event.type) {
     case 'sedmaStarted': {
       let own = 0;
-      return [{ wait: 0, apply: (d) => ({ ...reconcileSedma({ ...target, myHand: [], trick: [], drawCount: 32, scores: [0, 0], phase: 'playing', result: null, players: target.players.map((p) => ({ ...p, handCount: 0 })) }, me), stamp: d.stamp + 1 }) },
+      return [{ wait: 0, environment: {kind:'deal'}, apply: (d) => ({ ...reconcileSedma({ ...target, myHand: [], trick: [], drawCount: 32, scores: [0, 0], phase: 'playing', result: null, players: target.players.map((p) => ({ ...p, handCount: 0 })) }, me), stamp: d.stamp + 1 }) },
         ...event.dealOrder.map((id) => {
           const card = id === me ? event.myCards[own++]! : null;
           return { wait: 85, sound: 'deal' as const, apply: (d: SedmaDisplay) => {
@@ -43,7 +44,7 @@ export function sedmaSteps(event: SedmaClientEvent, me: string, target: SedmaVie
           } };
         }), { wait: 480, apply: (d) => d }];
     }
-    case 'sedmaPlayed': return [{ wait: 500, sound: 'play', apply: (d) => {
+    case 'sedmaPlayed': return [{ wait: 500, environment: {kind:'play',sourcePlayerId:event.playerId}, sound: 'play', apply: (d) => {
       const stamp = d.stamp + 1;
       const hand = [...(d.hands[event.playerId] ?? [])];
       const index = event.playerId === me ? hand.findIndex((e) => e.card?.id === event.card.id) : Math.max(0, hand.length - 1);
@@ -53,18 +54,18 @@ export function sedmaSteps(event: SedmaClientEvent, me: string, target: SedmaVie
     } }];
     case 'trickResolved': return [
       { wait: 360, sound: 'special', apply: (d) => ({ ...d, resolution: { winnerId: event.winnerId, points: event.points } }) },
-      { wait: 440, sound: 'draw', apply: (d) => ({ ...d, stamp: d.stamp + 1, captureTo: event.winnerId,
+      { wait: 440, environment: {kind:'collect',targetPlayerId:event.winnerId}, sound: 'draw', apply: (d) => ({ ...d, stamp: d.stamp + 1, captureTo: event.winnerId,
         outgoing: d.trick.map((p) => ({ ...p.entity, move: 'toDeck', moveStamp: d.stamp + 1, spawn: null })), trick: [],
         view: { ...d.view, trick: [], leadRank: null, scores: event.scores, lastTrick: { winnerId: event.winnerId, team: event.team, points: event.points, cards: event.cards } } }) },
       { wait: 0, apply: (d) => ({ ...d, outgoing: [] }) },
     ];
-    case 'sedmaDrawn': return [{ wait: 170, sound: 'deal', apply: (d) => {
+    case 'sedmaDrawn': return [{ wait: 170, environment: {kind:'draw',targetPlayerId:event.playerId}, sound: 'deal', apply: (d) => {
       const stamp = d.stamp + 1;
       const cards = Array.from({ length: event.count }, (_, i) => entity(event.playerId === me ? event.cards?.[i] ?? null : null, stamp, { move: 'draw', spawn: { kind: 'deck' }, delay: i * .06 }));
       const hand = [...(d.hands[event.playerId] ?? []), ...cards];
       return { ...d, stamp, hands: { ...d.hands, [event.playerId]: event.playerId === me ? sortHand(hand) : hand }, view: { ...d.view, drawCount: Math.max(0, d.view.drawCount - event.count) } };
     } }];
     case 'sedmaTurn': return [{ wait: 0, apply: (d) => ({ ...d, view: { ...d.view, currentPlayerId: event.playerId, deciding: event.deciding } }) }];
-    case 'sedmaEnded': return [{ wait: 150, sound: event.result.winnerTeam === null ? 'reaction' : event.result.winnerIds.includes(me) ? 'win' : 'lose', apply: (d) => ({ ...d, view: { ...d.view, phase: 'finished', result: event.result, winnerId: event.result.winnerIds[0] ?? null, scores: event.result.scores } }) }];
+    case 'sedmaEnded': return [{ wait: 150, environment: event.result.winnerIds.length ? {kind:'win',targetPlayerId:event.result.winnerIds[0]} : undefined, sound: event.result.winnerTeam === null ? 'reaction' : event.result.winnerIds.includes(me) ? 'win' : 'lose', apply: (d) => ({ ...d, view: { ...d.view, phase: 'finished', result: event.result, winnerId: event.result.winnerIds[0] ?? null, scores: event.result.scores } }) }];
   }
 }
