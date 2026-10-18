@@ -96,7 +96,8 @@ ztracený výsledek ani chybné napojení na místnost se v devíti hrách neuk�
 1. Dvouřadá ruka na telefonu (Lhář 16 karet, Durak po sebrání): větší vertikální rozestup,
    nebo vějíř s horizontálním posunem a indikací, aby šlo ťukat i na střed karty.
 2. Horní lišta hry na telefonu: „Reakce“ jako ikona, menu jako jediné místo pro zvuk a
-   postavu; kód místnosti celý.
+   postavu; kód místnosti celý. Ve třech a čtyřech se na telefonu jména soupeřů u sedadel
+   zkracují až na jedno písmeno („R…“), protože místo zabírá odznak role.
 3. Nápověda na telefonu zabírá při prvním tahu až ~125 px výšky; zkrátit cíl na jednu řádku.
 4. Stůl Oka bere a Pexesa: poslední událost (kdo co otočil / kolik má bank) by mohla mít
    krátký „ticker“ stejně jako Lhář.
