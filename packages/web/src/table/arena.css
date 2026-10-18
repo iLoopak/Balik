@@ -54,3 +54,33 @@
 .table-geometry-cabinet .arena-rail-outer { stroke-width: 2; }
 .table-geometry-cabinet .arena-amber-segment { stroke: var(--arena-secondary); stroke-dasharray: 8 6; }
 .table-geometry-cabinet .arena-pile-dock { border-radius: 5%; }
+
+.arena-material-grain { opacity:0; color:#6e5739; }
+.arena-seat-dock { display:none; position:absolute; translate:-50% -50%; border-radius:24%; }
+/* Ivory linen and an inset play mat, with edition-specific geometry and detailing. */
+.game-table-theme[data-color-mode=light] {
+  background: radial-gradient(ellipse at 50% 5%,#fff9ebaa,transparent 65%),
+    repeating-linear-gradient(91deg,#7c67440a 0 1px,transparent 1px 5px), var(--arena-background);
+  box-shadow:inset 0 1px 3px #fffaf2, inset 0 -12px 36px #8e71431c;
+}
+.game-table-theme[data-color-mode=light] .arena-grid { opacity:.28; background-size:64px 64px; }
+.game-table-theme[data-color-mode=light] .arena-material-grain { opacity:.26; }
+.game-table-theme[data-color-mode=light] .arena-surface { fill-opacity:1; filter:drop-shadow(0 3px 2px #80613d33); }
+.game-table-theme[data-color-mode=light] .arena-rail-outer { stroke-width:1.5; }
+.game-table-theme[data-color-mode=light] .arena-rail-inner { stroke:#fff6e4a6; stroke-width:2; }
+.game-table-theme[data-color-mode=light] .arena-amber-segment { stroke:var(--arena-secondary); }
+.game-table-theme[data-color-mode=light] .arena-circuits { stroke:#705e4740; }
+.game-table-theme[data-color-mode=light] .arena-ticks { stroke:#73512c88; }
+.game-table-theme[data-color-mode=light] .arena-wordmark { color:#6b523e12; }
+.game-table-theme[data-color-mode=light] .arena-stage-underlight { background:radial-gradient(ellipse,color-mix(in srgb,var(--arena-faction) 12%,transparent),transparent 68%); opacity:.4; }
+.game-table-theme[data-color-mode=light] .arena-seat-dock { display:block; background:#fffaf22b; border:1px solid #90755122; box-shadow:inset 0 1px 3px #8e71431a; }
+.game-table-theme[data-color-mode=light] .arena-edge-light { border-color:#876c422e; box-shadow:inset 0 1px #fff9ee; }
+.game-table-theme[data-color-mode=light] .arena-edge-light::before,.game-table-theme[data-color-mode=light] .arena-edge-light::after { background:#8d602d70; }
+.game-table-theme[data-color-mode=light] .arena-deck-dock { background:#a8864b10; border-color:#806c4759; box-shadow:inset 0 2px 4px #6d522e16; }
+.game-table-theme[data-color-mode=light] .arena-discard-dock { background:color-mix(in srgb,var(--arena-faction) 8%,#fff6e4); border-color:color-mix(in srgb,var(--arena-faction) 40%,transparent); box-shadow:inset 0 1px 7px #77512b22,0 1px #fffaf2; }
+.game-table-theme[data-color-mode=light] .arena-hand-light { border-top:1px solid #97784929; border-radius:50% 50% 0 0; background:radial-gradient(ellipse at 50% 100%,#fffaf2b3,transparent 74%); }
+.game-table-theme[data-color-mode=light].arena-my-turn .arena-hand-light { border-top-color:#a36a2966; }
+.game-table-theme[data-color-mode=light].table-geometry-cabinet .arena-grid { background-size:32px 32px; opacity:.4; }
+.game-table-theme[data-color-mode=light].table-geometry-cabinet .arena-seat-dock { border-radius:8px; }
+.game-table-theme[data-color-mode=light].table-geometry-cabinet .arena-edge-light { border-color:#916b8b4d; }
+@media(max-width:699px) { .game-table-theme[data-color-mode=light] .arena-seat-dock { border-radius:12px; } }

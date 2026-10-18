@@ -1,9 +1,9 @@
-.deck-lab { padding: clamp(14px, 4vw, 48px); background: #101827; color: #f8f2e8; min-height: 100vh; }
+.deck-lab { padding: clamp(14px, 4vw, 48px); background: var(--bg); color: var(--ink); min-height: 100vh; }
 .deck-lab header { display: flex; align-items: center; justify-content: space-between; }
 .deck-lab h1, .deck-lab h2 { font-family: var(--font-brand); }
 .lab-controls { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding-block: 20px; }
 .lab-controls label { display: flex; align-items: center; gap: 6px; }
-.lab-controls button, .lab-controls select { font: inherit; color: inherit; background: #ffffff12; border: 1px solid #a3b2c455; padding: 10px; border-radius: 8px; }
+.lab-controls button, .lab-controls select { font: inherit; color: inherit; background: var(--soft-hover); border: 1px solid var(--ui-border); padding: 10px; border-radius: 8px; }
 .lab-controls option { color: #202338; }
 .lab-grid { display: grid; grid-template-columns: repeat(8, minmax(0,1fr)); gap: 18px; }
 .lab-grid figure, .lab-comparison figure { margin: 0; min-width: 0; }
@@ -11,7 +11,7 @@
 .lab-grid figcaption, .lab-comparison figcaption { font: 11px/1.4 monospace; margin-top: 9px; overflow-wrap: anywhere; }
 .lab-grid.lab-small { grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
 .lab-small .lab-card { max-width: 72px; }
-.lab-light { background: #e4dfd4; color: #202338; }
+.lab-light { color-scheme: light; }
 .lab-grid figure:hover .card-sticker img, .lab-grid figure:focus-visible .card-sticker img, .lab-playing .card-sticker img { animation: sticker-hop 700ms ease-out; }
 .lab-reduced *, .lab-reduced *::before { animation: none !important; transition: none !important; }
 .lab-comparison { display: grid; grid-template-columns: repeat(3, minmax(0, 180px)); gap: 26px; align-items: center; }

@@ -1,0 +1,351 @@
+/* Application materials; edition artwork, card paper and suit inks are independent. */
+:root {
+  --accent-text: #ffb23f;
+  --focus: #ffb23f;
+  --hover-surface: #2b3550;
+  --soft-hover: #ffffff0d;
+  --ui-border: #62728d50;
+  --panel-top: #252c39;
+  --panel-bottom: #182030;
+  --panel-inset: #0b14204d;
+  --hud: #111c2ce8;
+  --hud-active: #24251fe8;
+  --hud-own: #1c211fe8;
+  --hud-ink: #ffe2b3;
+  --hud-shadow: inset 0 0 0 1px #7d96ba33, 0 7px 22px -12px #0008;
+  --scrim: #080d19bd;
+  --result-scrim: #080f1cba;
+  --transition-scrim: #111927ed;
+  --modal-bg: #141d2c;
+  --modal-close: #ffffff0b;
+  --option-bg: #1c2739;
+  --option-selected: #ffb23f0c;
+  --note-ink: #b2bdcd;
+  --error-bg: #3a1820;
+  --error-ink: #ffc2c8;
+  --danger-ink: #ff8a95;
+  --truth-ink: #70dbad;
+  --lie-ink: #ff8297;
+  --team-0: #ffc16b;
+  --team-1: #8cd5f3;
+  --lhar-ink: #c7afff;
+  --fx-panel: #142020f0;
+  --fx-detail: #f5f1e7;
+  --fx-shadow: 0 0.3em 0.8em #0005;
+  --fx-neutral: rgba(255, 248, 230, 0.75);
+  --fx-penalty: #ff586b;
+  --fx-skip: #9bcbff;
+  --fx-danger: #ffd16a;
+  --fx-win: #d6f580;
+  --fx-penalty-bg: #781622f2;
+  --fx-penalty-ink: #ffffff;
+  --fx-skip-bg: #0e2846f2;
+  --fx-skip-ink: #d9ecff;
+  --card-outline: none;
+  --card-shadow: drop-shadow(0 3px 2px #0004) drop-shadow(0 13px 18px #0005);
+  --card-hover-shadow: drop-shadow(0 7px 3px #0004) drop-shadow(0 18px 18px #0006);
+  --card-select: #ffb23f;
+  --card-dim: rgba(16, 20, 31, 0.42);
+  --card-draw-flash: #ffffffd9;
+  --avatar-disk-base: #182132;
+  --avatar-turn-ink: #ffce83;
+  --avatar-choice-bg: #101621;
+  --avatar-choice-hover: #232d40;
+  --avatar-choice-selected: #303040;
+  --emote-shadow: 0 5px 18px #0004;
+}
+
+:root[data-color-mode='light'] {
+  color-scheme: light;
+  --bg: #f5f0e6;
+  --bg-2: #ece4d6;
+  --surface: #fffaf2;
+  --surface-2: #ebe0ce;
+  --line: #6653352e;
+  --ink: #282c31;
+  --muted: #645e56;
+  --faint: #6d6254;
+  --accent-text: #8b5008;
+  --focus: #8b5008;
+  --penalty: #b72c47;
+  --skip: #24699f;
+  --ok: #226d52;
+  --shadow-lg: 0 22px 58px -24px #6c4c2859, 0 3px 10px -5px #6c4c2833;
+  --hover-surface: #e2d3ba;
+  --soft-hover: #795a2210;
+  --ui-border: #88704b50;
+  --panel-top: #fffbf3;
+  --panel-bottom: #f0e7d8;
+  --panel-inset: #dfcfb322;
+  --hud: #fffaf2f5;
+  --hud-active: #fff0cbf5;
+  --hud-own: #fff0cbf5;
+  --hud-ink: #73440a;
+  --hud-shadow: inset 0 0 0 1px #947c5340, 0 4px 12px -5px #71542e33;
+  --scrim: #57452e66;
+  --result-scrim: #58473166;
+  --transition-scrim: #f5f0e6ed;
+  --modal-bg: #fffaf2;
+  --modal-close: #886b3010;
+  --option-bg: #f0e7d8;
+  --option-selected: #ffb23f22;
+  --note-ink: #645e56;
+  --error-bg: #ffe5df;
+  --error-ink: #942d3d;
+  --danger-ink: #a12b3d;
+  --truth-ink: #226d52;
+  --lie-ink: #a82743;
+  --team-0: #8b5008;
+  --team-1: #205f87;
+  --lhar-ink: #71508b;
+  --fx-panel: #fffaf2fa;
+  --fx-detail: #514b43;
+  --fx-shadow: 0 0.25em 0.7em #6a4a2933;
+  --fx-neutral: #6c5740;
+  --fx-penalty: #b72c47;
+  --fx-skip: #24699f;
+  --fx-danger: #8b5008;
+  --fx-win: #386a2c;
+  --fx-penalty-bg: #ffe5df;
+  --fx-penalty-ink: #942d3d;
+  --fx-skip-bg: #e1edf5;
+  --fx-skip-ink: #205f87;
+  --card-outline: 0 0 0 0.65px #79623d66;
+  --card-shadow: drop-shadow(0 2px 1px #60462040) drop-shadow(0 10px 8px #60462038);
+  --card-hover-shadow: drop-shadow(0 4px 2px #60462045) drop-shadow(0 18px 12px #6046204d);
+  --card-select: #9b5a0c;
+  --card-dim: #746b612b;
+  --card-draw-flash: #c7893859;
+  --avatar-disk-base: #e6dac6;
+  --avatar-turn-ink: #8b5008;
+  --avatar-choice-bg: #f2e9da;
+  --avatar-choice-hover: #e7d7bd;
+  --avatar-choice-selected: #ffedc7;
+  --emote-shadow: 0 4px 12px #6a4a2938;
+}
+
+/* Light mode has its own material composition, without changing card geometry. */
+:root[data-color-mode='light'] .screen,
+:root[data-color-mode='light'] .evening-screen {
+  background:
+    radial-gradient(ellipse at 15% 0%, #ffe6b980, transparent 58%),
+    radial-gradient(ellipse at 95% 95%, #c9d8cd3b, transparent 55%), var(--bg);
+}
+:root[data-color-mode='light'] .panel {
+  background: linear-gradient(145deg, #fffdf8, var(--surface));
+  box-shadow:
+    inset 0 1px #fff,
+    var(--shadow-lg);
+  backdrop-filter: none;
+}
+:root[data-color-mode='light'] .home-title {
+  background: linear-gradient(165deg, #34332e 25%, #8b5008 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+:root[data-color-mode='light'] .hero-card {
+  filter: var(--card-hover-shadow);
+}
+:root[data-color-mode='light'] .topbar {
+  background: #fffaf2ed;
+  box-shadow: 0 2px 12px #72562f0d;
+}
+:root[data-color-mode='light'] .segmented button.is-on {
+  background: #fffaf2;
+  box-shadow:
+    inset 0 0 0 1px #aa722b80,
+    0 2px 5px #72562f1a;
+}
+:root[data-color-mode='light'] .seat-list li.is-empty,
+:root[data-color-mode='light'] .avatar.empty {
+  border-color: var(--ui-border);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+:root[data-color-mode='light'] .game-dot {
+  box-shadow: 0 0 0 3px #226d5215;
+}
+:root[data-color-mode='light'] .seat .seat-inner {
+  background: var(--hud);
+  box-shadow: var(--hud-shadow);
+  backdrop-filter: none;
+}
+:root[data-color-mode='light'] .seat.is-active .seat-inner {
+  background: var(--hud-active);
+  box-shadow:
+    inset 0 0 0 1.5px #a66b1a,
+    0 5px 14px #7f55282b;
+}
+:root[data-color-mode='light'] .status-bar,
+:root[data-color-mode='light'] .suit-chip {
+  background: var(--hud);
+  box-shadow: var(--hud-shadow);
+  backdrop-filter: none;
+}
+:root[data-color-mode='light'] .status-bar.is-mine {
+  background: var(--hud-own);
+  box-shadow:
+    inset 0 0 0 1.5px #a66b1a,
+    0 5px 14px #7f55282b;
+}
+:root[data-color-mode='light'] .status-bar.is-mine .status-text {
+  color: var(--hud-ink);
+}
+:root[data-color-mode='light'] .deck-count,
+:root[data-color-mode='light'] .status-wins {
+  color: var(--muted);
+}
+:root[data-color-mode='light'] .deck-count > span {
+  color: var(--faint);
+}
+:root[data-color-mode='light'] .deck-hit.is-ready {
+  box-shadow:
+    0 0 0 1px #976221,
+    0 3px 12px #7f552833;
+}
+:root[data-color-mode='light'] .deck-hit:hover:not(:disabled),
+:root[data-color-mode='light'] .deck-hit:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--focus),
+    0 5px 18px #7f552833;
+}
+:root[data-color-mode='light'] .suit-chip.is-forced {
+  box-shadow:
+    inset 0 0 0 2px var(--suit-tone),
+    0 3px 10px #71542e33;
+}
+:root[data-color-mode='light'] .penalty-target {
+  color: var(--danger-ink);
+  text-shadow: 0 1px #fffaf2;
+}
+:root[data-color-mode='light'] .win-backdrop {
+  background: radial-gradient(ellipse at 50% 45%, #ffe3a855, var(--result-scrim));
+}
+:root[data-color-mode='light'] .card-slot {
+  filter: var(--card-shadow);
+}
+:root[data-color-mode='light'] .card-slot[aria-pressed='true'],
+:root[data-color-mode='light'] .card-slot:focus-visible {
+  filter: var(--card-hover-shadow);
+}
+:root[data-color-mode='light'] .player-avatar[data-turn='self'] .player-avatar-ring,
+:root[data-color-mode='light'] .player-avatar[data-turn='thinking'] .player-avatar-ring {
+  border-color: color-mix(in srgb, var(--avatar-color) 55%, #665039);
+  box-shadow:
+    0 0 0 1px #fffaf2,
+    0 2px 5px #71542e40;
+}
+:root[data-color-mode='light'] .player-avatar[data-winner='true'] .player-avatar-ring {
+  border-color: #a86c0e;
+  box-shadow: 0 0 0 2px #ffda7b;
+}
+:root[data-color-mode='light'] .player-avatar[data-danger='true'] .player-avatar-ring {
+  border-color: #b94735;
+}
+:root[data-color-mode='light'] .lhar-seat {
+  background: #fffaf2df;
+  padding: 4px 7px;
+  border-radius: 12px;
+  box-shadow: var(--hud-shadow);
+}
+:root[data-color-mode='light'] .game-fx-svg path[fill]:not([fill='none']),
+:root[data-color-mode='light'] .game-fx-trail path {
+  paint-order: stroke fill;
+  stroke: #fffaf2;
+  stroke-width: 0.6px;
+}
+:root[data-color-mode='light'] .game-fx-flight {
+  color: #fffaf2;
+  border-color: #fffaf2;
+}
+:root[data-color-mode='light'] .game-fx-faction {
+  padding: 8%;
+  border-radius: 50%;
+  background: #fffaf2ed;
+  box-shadow: 0 2px 10px #71542e33;
+  filter: none;
+}
+:root[data-color-mode='light'] .game-fx-color-wash {
+  background: radial-gradient(ellipse, color-mix(in srgb, var(--fx-color) 27%, transparent), transparent 70%);
+}
+:root[data-color-mode='light'] .fx-spark,
+:root[data-color-mode='light'] .confetti > span {
+  box-shadow: 0 1px 1px #6e51394d;
+}
+@media (hover: hover) and (pointer: fine) {
+  :root[data-color-mode='light'] .card-slot.is-interactive:hover {
+    filter: var(--card-hover-shadow);
+  }
+}
+
+.color-mode-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.color-mode-options button {
+  padding: 10px;
+  border: 1px solid var(--ui-border);
+  border-radius: 14px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.color-mode-options strong {
+  font-size: 12px;
+}
+.color-mode-options small {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+.color-mode-swatch {
+  width: 100%;
+  height: 64px;
+  background: #ece0cb;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #8a704d40;
+}
+.color-mode-swatch.is-dark {
+  background: #172235;
+}
+.color-mode-swatch.is-system {
+  background: linear-gradient(90deg, #ece0cb 50%, #172235 50%);
+}
+.color-mode-swatch i {
+  position: absolute;
+  inset: 10px 12%;
+  border: 1px solid #ad8b54aa;
+  border-radius: 50%;
+}
+.color-mode-swatch b,
+.color-mode-swatch em {
+  position: absolute;
+  top: 17px;
+  left: 42%;
+  width: 21px;
+  height: 30px;
+  border-radius: 3px;
+  background: #fffaf2;
+  box-shadow: 1px 3px 5px #30231150;
+  rotate: 12deg;
+}
+.color-mode-swatch em {
+  left: 29%;
+  rotate: -12deg;
+  background: #303b50;
+  border: 2px solid #fffaf2;
+}
+@media (max-width: 420px) {
+  .color-mode-options {
+    gap: 6px;
+  }
+  .color-mode-options button {
+    padding: 7px;
+  }
+  .color-mode-swatch {
+    height: 54px;
+  }
+}

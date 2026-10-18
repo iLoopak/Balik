@@ -1,3 +1,4 @@
+import { environmentFromEffects } from './environment';
 import { useAppearance } from '../themes/preferences';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -147,7 +148,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
 
   return (
     <div className={`table command-table${geo.short ? ' table-short' : ''}`} ref={tableRef} onClick={onTableClick}>
-      <GameTableTheme geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown} />
+      <GameTableTheme game="prsi" you={me} drawCount={display.drawCount} pulses={environmentFromEffects(fx.filter((f): f is EffectInstance => f.kind === 'effect'))} geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown} />
       <AnimatePresence>
         {myTurnShown && display.phase === 'playing' && (
           <motion.div

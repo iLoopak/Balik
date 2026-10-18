@@ -150,14 +150,18 @@ Lokální `npm run dev` dál používá původní Node/WebSocket adaptér. Samos
 Node server nebo Docker zůstává alternativou pro jiný hosting:
 [Nasazení Node backendu](docs/DEPLOYMENT.md). `vercel.json` nasazuje pouze Vite web.
 
-## Stormpunk command arena
+## Karetní stroj / Dealer Console
 
-Stůl sdílí `GameTableTheme` mezi hrou a `/dev/game-feel`. Jemný ambient reaguje
-na aktivní frakci a respektuje reduced motion i lite režim. Sizing tokeny v
-`responsiveCardScale.ts` zvětšují běžnou desktopovou ruku o 20–35 % a rezervují
-místo pro střed, ovládání a zvednuté karty. Dlouhá ruka přechází do dvou řad.
-Geometrické testy kontrolují 8 rozměrů včetně mobilu na šířku a až 31 karet;
-živá vizuální kontrola v prohlížeči zatím nebyla provedena.
+Herní prostředí má vlastní rám BALÍKu s přehybem pouzdra, amber kontakty,
+zapuštěnými kapsami a BLIKem v roli drobného dealera. Prší, Sedma i Lhář
+používají smysluplné zóny a krátké reakce na skutečné cue kroky. Karty, materiál
+konzole a režim aplikace se volí nezávisle. Dark i ivory light mají vlastní hloubku.
+[Koncept, vrstvy, reakce, QA a další krok](docs/visual/DEALER_CONSOLE.md).
+
+Sizing tokeny v `responsiveCardScale.ts` rezervují místo pro střed, ovládání
+a zvednuté karty. Dlouhá ruka přechází do dvou řad. Statickou studii samotného
+zařízení vytvoří `node scripts/preview-environment.mjs`; živá vizuální kontrola
+v prohlížeči zůstává neprovedená. Nasazuje se jen frontend.
 
 ## BALÍK personality · vlna 1
 
@@ -253,3 +257,11 @@ pak `supabase functions deploy game --project-ref <project-ref>`). SQL a env se 
 
 Tato změna vyžaduje nový frontend **i Supabase funkci `game`** (nebo Node server).
 SQL, bucket ani proměnné prostředí nepřibývají.
+
+
+## Světlý režim
+
+V **Vzhled → Režim aplikace** vyber Světlo, Tma nebo Podle systému.
+Režim je nezávislý na edici karet i prostředí stolu, ukládá se lokálně a lze
+ho přepnout během hry bez nového rozdání. [Materiály, tokeny, FX a QA](docs/visual/LIGHT_MODE.md).
+Nasazuje se pouze frontend; Supabase a SQL se nemění.

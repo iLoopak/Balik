@@ -100,7 +100,7 @@
 }
 
 .code-inline {
-  color: var(--accent);
+  color: var(--accent-text);
   letter-spacing: 0.08em;
 }
 
@@ -162,7 +162,7 @@
   margin: 6px 0 2px;
   font-size: 52px;
   line-height: 1;
-  color: var(--accent);
+  color: var(--accent-text);
   user-select: all;
 }
 
@@ -199,7 +199,7 @@
 
 .seat-list li.is-empty {
   background: transparent;
-  box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.07);
+  box-shadow: inset 0 0 0 1.5px var(--line);
   color: var(--faint);
 }
 
@@ -230,11 +230,11 @@
   padding: 3px 8px;
   border-radius: 999px;
   background: rgba(255, 178, 63, 0.16);
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .pill.muted {
-  background: rgba(255, 255, 255, 0.07);
+  background: var(--line);
   color: var(--muted);
 }
 
@@ -312,7 +312,7 @@
 
 .topbar-brand {
   font-size: 18px;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 .topbar-room {
@@ -336,7 +336,7 @@
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(255, 77, 94, 0.15);
-  color: #ffc2c8;
+  color: var(--error-ink);
   font-size: 12px;
   font-weight: 650;
 }
@@ -376,11 +376,11 @@
 }
 
 .menu-row:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--soft-hover);
 }
 
 .menu-row.danger {
-  color: #ff8a95;
+  color: var(--danger-ink);
 }
 
 .menu-row input {
@@ -414,7 +414,7 @@
 }
 
 .toast.error {
-  background: #3a1820;
+  background: var(--error-bg);
   box-shadow: inset 0 0 0 1px rgba(255, 77, 94, 0.5);
 }
 
@@ -479,7 +479,7 @@
 }
 
 .seat-remove:hover {
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--soft-hover);
   color: var(--ink);
 }
 
@@ -487,5 +487,5 @@
   min-height: 32px;
   padding: 0 10px;
   font-size: 13px;
-  color: var(--accent);
+  color: var(--accent-text);
 }

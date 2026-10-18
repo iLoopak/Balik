@@ -1,3 +1,5 @@
+import { environmentFromEffects } from '../table/environment';
+import { AppearancePicker } from '../themes/AppearancePicker';
 import { MotionConfig } from 'motion/react';
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { CardView } from '../cards/Card';
@@ -62,7 +64,7 @@ export function GameFeelPlayground() {
 
   return <MotionConfig reducedMotion={reduced ? 'always' : 'user'}>
     <main className="feel-page" style={{ '--feel-faction': FACTIONS[faction].color } as CSSProperties}>
-      <header className="feel-nav"><a href="/" className="brand-word">BALÍK<span>.</span></a><a href="/dev/deck-stormpunk">← Galerie balíčku</a></header>
+      <header className="feel-nav"><AppearancePicker compact/><a href="/" className="brand-word">BALÍK<span>.</span></a><a href="/dev/deck-stormpunk">← Galerie balíčku</a></header>
       <div className="feel-heading"><div><p>LAB / GAME FEEL 001</p><h1>Každý tah má váhu<span>.</span></h1></div><span className="feel-local-tag">Lokální playground</span></div>
       <p className="feel-intro">Zahraj, dober, přeruš tok hry. Vyzkoušej efekty všech čtyř frakcí bez rozehrávání partie.</p>
 
@@ -78,7 +80,7 @@ export function GameFeelPlayground() {
           </div>
           <div className={`feel-stage-holder${phone ? ' is-phone' : ''}`}>
             <div className="table command-table feel-stage" ref={stageRef} data-preview="game-feel" data-running={running}>
-              <GameTableTheme geo={geo} suit={display.activeSuit} reduced={reduced} lite={lite} myTurn={display.currentPlayerId === 'me'} />
+              <GameTableTheme pulses={environmentFromEffects(effectItems)} geo={geo} suit={display.activeSuit} reduced={reduced} lite={lite} myTurn={display.currentPlayerId === 'me'} />
               <div className="feel-deck" style={{ left: geo.deck.x - geo.deckW / 2, top: geo.deck.y - geo.deckH / 2, width: geo.deckW, height: geo.deckH }}><CardView card={null} faceUp={false} /><span>{display.drawCount}</span></div>
               <CardLayer key={sceneId} placed={placed} geo={geo} stamp={display.stamp} speed={speed} reduced={reduced} fxFor={(p) => p.zone === 'discard' && p.entity.key === display.discard.at(-1)?.key ? { current: true } : undefined} hoverKey={null} interactive={() => false} onHover={noop} onActivate={noop} />
               {display.order.filter((id) => id !== 'me').map((id) => {
