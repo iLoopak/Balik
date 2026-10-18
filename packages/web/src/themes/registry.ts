@@ -5,12 +5,28 @@ import { FACTION_PATHS } from '../decks/stormpunk/FactionIcon';
 import { CLASSIC_PATHS } from './decks/classic';
 import { RETRO_ARCADE_CARDS } from './decks/retro-arcade/manifest';
 import { MARIASKY_CARDS } from './decks/mariasky/manifest';
+import { STRASIDLA_CARDS } from './decks/strasidla/manifest';
 import type { DeckId, DeckTheme, TableId, TableTheme, SuitStyle } from './types';
 export type { DeckId, DeckTheme, TableId, TableTheme, StickerAsset } from './types';
 const mapSuits = <T,>(fn: (suit: Suit) => T) => Object.fromEntries(SUITS.map(s => [s, fn(s)])) as Record<Suit, T>;
 const colors = { hearts: '#F34B61', diamonds: '#F5C544', clubs: '#38BA87', spades: '#528FFF' };
 const inks = { hearts: '#B6223C', diamonds: '#795600', clubs: '#126747', spades: '#2351A4' };
 const names = { hearts: 'Power', diamonds: 'Speed', clubs: 'Life', spades: 'Signal' };
+const STRASIDLA_SUITS: Record<Suit, Pick<SuitStyle, 'name' | 'ink' | 'color' | 'paths'>> = {
+  hearts: { name: 'Oheň', ink: '#A82C1A', color: '#D9432B', paths: ['M50 4C62 26 82 38 82 64 82 84 68 96 50 96S18 84 18 64C18 48 28 40 34 30 38 44 44 48 50 50 46 36 44 20 50 4Z'] },
+  diamonds: { name: 'Noc', ink: '#4E33A0', color: '#6C4BC2', paths: ['M60 6A45 45 0 1 0 60 94A36 36 0 1 1 60 6Z', 'M80 34l4 9 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1Z'] },
+  clubs: { name: 'Les', ink: '#33612A', color: '#4E8A3A', paths: ['M50 2 78 38H62L86 66H66L92 90H8L34 66H14L38 38H22Z', 'M43 88h14v12H43Z'] },
+  // Drop with a counter-wound wave cut out, so it never reads as the flame.
+  spades: { name: 'Voda', ink: '#0F6470', color: '#1F8E9E', paths: ['M50 4C66 30 84 48 84 66 84 84 68 96 50 96S16 84 16 66C16 48 34 30 50 4ZM28 62v9q11-8 22 0t22 0v-9q-11-8-22 0t-22 0Z'] },
+};
+const ring = (cx: number, cy: number, r: number) => `M${cx - r} ${cy}a${r} ${r} 0 1 1 ${2 * r} 0a${r} ${r} 0 1 1 ${-2 * r} 0Z`;
+// Kontrast: colour-blind-safe inks (≥ 5.7:1 on white) and a pattern per suit for monochrome reading.
+const KONTRAST_SUITS: Record<Suit, Pick<SuitStyle, 'name' | 'ink' | 'color' | 'paths'>> = {
+  hearts: { name: 'Srdce', ink: '#B83200', color: '#B83200', paths: [CLASSIC_PATHS.hearts[0]!] },
+  diamonds: { name: 'Káry', ink: '#0060A8', color: '#0060A8', paths: [`${CLASSIC_PATHS.diamonds[0]}M34 30v6h32v-6ZM28 47v6h44v-6ZM34 64v6h32v-6Z`] },
+  clubs: { name: 'Kříže', ink: '#00745A', color: '#00745A', paths: [...CLASSIC_PATHS.clubs.slice(0, 3).map((d, i) => d + ring([50, 29, 71][i]!, [29, 59, 59][i]!, 7)), ...CLASSIC_PATHS.clubs.slice(3)] },
+  spades: { name: 'Piky', ink: '#141414', color: '#141414', paths: CLASSIC_PATHS.spades },
+};
 const MARIASKY_SUITS: Record<Suit, Pick<SuitStyle, 'name' | 'ink' | 'color' | 'paths'>> = {
   hearts: { name: 'Srdce', ink: '#9E1F28', color: '#C8323A', paths: ['M50 90C22 70 8 52 8 33 8 18 19 9 31 9c9 0 15 5 19 12 4-7 10-12 19-12 12 0 23 9 23 24 0 19-14 37-42 57Z'] },
   // Bell with its loop and a counter-wound slot so the sound hole stays open.
@@ -26,7 +42,7 @@ const retroPaths: Record<Suit, string[]> = {
 };
 export const DECK_THEMES: Record<DeckId, DeckTheme> = {
   classic: {
-    id: 'classic', name: 'Klasika', description: 'Čisté hodnoty a tradiční francouzské symboly.', indices: 'paired', back: null,
+    id: 'classic', name: 'Klasika', center: 'symbols', description: 'Čisté hodnoty a tradiční francouzské symboly.', indices: 'paired', back: null,
     suits: mapSuits(s => ({ name: SUIT_NAME_CS[s], ink: s === 'hearts' || s === 'diamonds' ? '#BC3044' : '#27323D', color: colors[s], paths: CLASSIC_PATHS[s], viewBox: '0 0 100 100', filled: true })),
     stickerFor: () => null,
   },
@@ -49,6 +65,17 @@ export const DECK_THEMES: Record<DeckId, DeckTheme> = {
       J: { index: 'Sp', name: 'spodek' }, Q: { index: 'Sv', name: 'svršek' }, K: { index: 'K', name: 'král' }, A: { index: 'E', name: 'eso' } },
     stickerFor: card => { const art = MARIASKY_CARDS.find(e => e.card.suit === card.suit && e.card.rank === card.rank); return art ? { src: art.stickerAsset } : null; },
   },
+  strasidla: {
+    id: 'strasidla', name: 'Strašidla', fx: { shape: 'spark', secondary: '#FFE36E' }, description: 'Čerti, bludičky, hejkalové a vodníci. Česká strašidla se svítícíma očima.', indices: 'four-corners', back: '/decks/strasidla/back.svg',
+    // Four worlds over the engine's suits: hearts→Oheň, diamonds→Noc, clubs→Les, spades→Voda.
+    suits: mapSuits(s => ({ ...STRASIDLA_SUITS[s], viewBox: '0 0 100 100', filled: true })),
+    stickerFor: card => { const art = STRASIDLA_CARDS.find(e => e.card.suit === card.suit && e.card.rank === card.rank); return art ? { src: art.stickerAsset } : null; },
+  },
+  kontrast: {
+    id: 'kontrast', name: 'Kontrast', center: 'symbols', fx: { shape: 'dash', secondary: '#FFFFFF' }, description: 'Velké indexy, vzorované symboly a barvy čitelné i pro barvoslepé.', indices: 'paired', back: '/decks/kontrast/back.svg',
+    suits: mapSuits(s => ({ ...KONTRAST_SUITS[s], viewBox: '0 0 100 100', filled: true })),
+    stickerFor: () => null,
+  },
 };
 export const TABLE_THEMES: Record<TableId, TableTheme> = {
   stormpunk: { id: 'stormpunk', name: 'Městská aréna', geometry: 'oval', background: '#101827', surface: '#162237', rail: '#a3b2c426', grid: '#34445a24',
@@ -59,6 +86,6 @@ export const TABLE_THEMES: Record<TableId, TableTheme> = {
     light: { background: '#eee4d9', surface: '#ded0c9', rail: '#88658285', grid: '#916b8b24', secondary: '#885b83' },
     ambient: { hearts: 'M160 260h12v-12h12v12h12v12h-12v12h-12v-12h-12Z', diamonds: 'm160 260 14 12-14 12m24-24 14 12-14 12', clubs: 'M164 248h12v12h12v12h-12v12h-12v-12h-12v-12h12Z', spades: 'M790 144v-12h12v12m-24 0v-24h36v24m-48 0v-36h60v36' } },
 };
-export const EDITIONS = [DECK_THEMES.stormpunk, DECK_THEMES['retro-arcade'], DECK_THEMES.mariasky] as const;
+export const EDITIONS = [DECK_THEMES.stormpunk, DECK_THEMES['retro-arcade'], DECK_THEMES.mariasky, DECK_THEMES.strasidla, DECK_THEMES.kontrast] as const;
 export function isDeckId(id: unknown): id is DeckId { return typeof id === 'string' && Object.hasOwn(DECK_THEMES, id); }
 export function isTableId(id: unknown): id is TableId { return typeof id === 'string' && Object.hasOwn(TABLE_THEMES, id); }

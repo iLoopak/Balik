@@ -290,3 +290,18 @@ Tři hlasy (`packages/web/src/styles/typography.css`):
 
 Všechna písma jsou self-hostovaná přes `@fontsource-variable` a mají `latin-ext`
 pro češtinu.
+
+## Strašidla a Kontrast · čtvrtá a pátá edice
+
+**Strašidla:** česká folklorní strašidla jako papírové loutky se svítícíma očima.
+Čtyři světy nad nezměněným enginem: Oheň (hearts), Noc (diamonds), Les (clubs) a
+Voda (spades). Každý má vlastní tvar symbolu: plamen, srpek, smrček a kapku s vlnou.
+7 útočí, 10 nese poklad, Q drží bludnou lucernu (mění barvu) a eso je předmět,
+který hru zastaví (kotel, půlnoční hodiny, pařez, hrnek s dušičkou). Generuje je
+`node scripts/create-strasidla.mjs`, mapování je v
+[Strašidla](docs/visual/STRASIDLA_CARD_MAPPING.md).
+
+**Kontrast:** edice pro přístupnost bez ilustrací (`center: 'symbols'`). Bílá
+karta, silný rámeček, velké indexy, barvy bezpečné pro barvoslepé (≥ 5,7:1 na
+bílé) a vzor na každé barvě: kára jsou pruhovaná, kříže mají okénka. Nápovědy
+rolí (+2, stop, barva, 10 bodů) jsou plné pilulky. Kontrast barev hlídá test.

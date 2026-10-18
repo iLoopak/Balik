@@ -1,0 +1,354 @@
+[
+  {
+    "card": {
+      "id": "hearts-7",
+      "suit": "hearts",
+      "rank": "7"
+    },
+    "name": "Ohnivák",
+    "meaning": "Ohnivý pták se střemhlav vrhá do hry.",
+    "archetype": "Útok",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-7.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-8",
+      "suit": "hearts",
+      "rank": "8"
+    },
+    "name": "Uhlíček",
+    "meaning": "Kulatý uhlík s doutnajícími prasklinami.",
+    "archetype": "Hlídka",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-8.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-9",
+      "suit": "hearts",
+      "rank": "9"
+    },
+    "name": "Smolníček",
+    "meaning": "Kapající smolný skřítek, co se lepí na karty.",
+    "archetype": "Tulák",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-9.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-10",
+      "suit": "hearts",
+      "rank": "10"
+    },
+    "name": "Pekelný pokladník",
+    "meaning": "Čertík hlídá měšec plný bodů.",
+    "archetype": "Poklad",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-10.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-J",
+      "suit": "hearts",
+      "rank": "J"
+    },
+    "name": "Čertík",
+    "meaning": "Mladý čert s vidlemi a ocasem na pérku.",
+    "archetype": "Strašidýlko",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-j.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-Q",
+      "suit": "hearts",
+      "rank": "Q"
+    },
+    "name": "Ohnivá žínka",
+    "meaning": "Plamenné vlasy a bludná lucerna mění barvu hry.",
+    "archetype": "Bludná lucerna",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-q.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-K",
+      "suit": "hearts",
+      "rank": "K"
+    },
+    "name": "Lucifer",
+    "meaning": "Pán pekla s korunou mezi rohy a trojzubcem.",
+    "archetype": "Pán světa",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-k.svg"
+  },
+  {
+    "card": {
+      "id": "hearts-A",
+      "suit": "hearts",
+      "rank": "A"
+    },
+    "name": "Pekelný kotel",
+    "meaning": "Víko zaklapne: kotel zastaví každý tah.",
+    "archetype": "Zastavení",
+    "stickerAsset": "/decks/strasidla/stickers/hearts-a.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-7",
+      "suit": "diamonds",
+      "rank": "7"
+    },
+    "name": "Můra",
+    "meaning": "Noční můra se snáší střemhlav na hráče.",
+    "archetype": "Útok",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-7.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-8",
+      "suit": "diamonds",
+      "rank": "8"
+    },
+    "name": "Netopýr",
+    "meaning": "Rozpjatá křídla, uši nastražené na každý tah.",
+    "archetype": "Hlídka",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-8.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-9",
+      "suit": "diamonds",
+      "rank": "9"
+    },
+    "name": "Půlnoční kocour",
+    "meaning": "Černý kocour s měsíčníma očima sedí na střeše.",
+    "archetype": "Tulák",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-9.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-10",
+      "suit": "diamonds",
+      "rank": "10"
+    },
+    "name": "Hvězdný poklad",
+    "meaning": "Truhla plná hvězd: deset bodů ve štychu.",
+    "archetype": "Poklad",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-10.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-J",
+      "suit": "diamonds",
+      "rank": "J"
+    },
+    "name": "Strašidýlko",
+    "meaning": "Malé prostěradlové strašidlo, co jen dělá baf.",
+    "archetype": "Strašidýlko",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-j.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-Q",
+      "suit": "diamonds",
+      "rank": "Q"
+    },
+    "name": "Bludička",
+    "meaning": "Svítí na cestu, a přece tě svede jinou barvou.",
+    "archetype": "Bludná lucerna",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-q.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-K",
+      "suit": "diamonds",
+      "rank": "K"
+    },
+    "name": "Bezhlavý rytíř",
+    "meaning": "Půlnoční pán nese hlavu v podpaží a meč u boku.",
+    "archetype": "Pán světa",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-k.svg"
+  },
+  {
+    "card": {
+      "id": "diamonds-A",
+      "suit": "diamonds",
+      "rank": "A"
+    },
+    "name": "Půlnoční hodiny",
+    "meaning": "Odbila dvanáctá: všechno se zastaví.",
+    "archetype": "Zastavení",
+    "stickerAsset": "/decks/strasidla/stickers/diamonds-a.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-7",
+      "suit": "clubs",
+      "rank": "7"
+    },
+    "name": "Kořenáč",
+    "meaning": "Kořenová bytost vyráží drápy proti hráčům.",
+    "archetype": "Útok",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-7.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-8",
+      "suit": "clubs",
+      "rank": "8"
+    },
+    "name": "Mechová žába",
+    "meaning": "Sedí na pařezu a hlídá, kdo tahá.",
+    "archetype": "Hlídka",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-8.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-9",
+      "suit": "clubs",
+      "rank": "9"
+    },
+    "name": "Hříbek",
+    "meaning": "Houbový skřítek s puntíkovaným kloboukem.",
+    "archetype": "Tulák",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-9.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-10",
+      "suit": "clubs",
+      "rank": "10"
+    },
+    "name": "Zlatá šiška",
+    "meaning": "Šiška ze zlata: deset bodů pro šťastlivce.",
+    "archetype": "Poklad",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-10.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-J",
+      "suit": "clubs",
+      "rank": "J"
+    },
+    "name": "Hejkálek",
+    "meaning": "Malý chlupatý hejkal se učí houkat.",
+    "archetype": "Strašidýlko",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-j.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-Q",
+      "suit": "clubs",
+      "rank": "Q"
+    },
+    "name": "Lesní žínka",
+    "meaning": "Mechové vlasy a lucerna, co svede z cesty.",
+    "archetype": "Bludná lucerna",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-q.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-K",
+      "suit": "clubs",
+      "rank": "K"
+    },
+    "name": "Hejkal",
+    "meaning": "Vládce hvozdu s větvemi místo parohů.",
+    "archetype": "Pán světa",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-k.svg"
+  },
+  {
+    "card": {
+      "id": "clubs-A",
+      "suit": "clubs",
+      "rank": "A"
+    },
+    "name": "Starý pařez",
+    "meaning": "Kořeny sevřou stůl: tah se zastaví.",
+    "archetype": "Zastavení",
+    "stickerAsset": "/decks/strasidla/stickers/clubs-a.svg"
+  },
+  {
+    "card": {
+      "id": "spades-7",
+      "suit": "spades",
+      "rank": "7"
+    },
+    "name": "Štika",
+    "meaning": "Hladová štika se zuby vyráží z hlubiny.",
+    "archetype": "Útok",
+    "stickerAsset": "/decks/strasidla/stickers/spades-7.svg"
+  },
+  {
+    "card": {
+      "id": "spades-8",
+      "suit": "spades",
+      "rank": "8"
+    },
+    "name": "Žabák",
+    "meaning": "Vodníkův poslíček na leknínu.",
+    "archetype": "Hlídka",
+    "stickerAsset": "/decks/strasidla/stickers/spades-8.svg"
+  },
+  {
+    "card": {
+      "id": "spades-9",
+      "suit": "spades",
+      "rank": "9"
+    },
+    "name": "Rak",
+    "meaning": "Couvá, ale klepeta má vždycky připravená.",
+    "archetype": "Tulák",
+    "stickerAsset": "/decks/strasidla/stickers/spades-9.svg"
+  },
+  {
+    "card": {
+      "id": "spades-10",
+      "suit": "spades",
+      "rank": "10"
+    },
+    "name": "Perlorodka",
+    "meaning": "Lastura s perlou: deset bodů na dně.",
+    "archetype": "Poklad",
+    "stickerAsset": "/decks/strasidla/stickers/spades-10.svg"
+  },
+  {
+    "card": {
+      "id": "spades-J",
+      "suit": "spades",
+      "rank": "J"
+    },
+    "name": "Vodníček",
+    "meaning": "Malý vodník, kterému z šosu pořád kape.",
+    "archetype": "Strašidýlko",
+    "stickerAsset": "/decks/strasidla/stickers/spades-j.svg"
+  },
+  {
+    "card": {
+      "id": "spades-Q",
+      "suit": "spades",
+      "rank": "Q"
+    },
+    "name": "Rusalka",
+    "meaning": "Dlouhé vlasy, tichá voda a lucerna, co mění směr.",
+    "archetype": "Bludná lucerna",
+    "stickerAsset": "/decks/strasidla/stickers/spades-q.svg"
+  },
+  {
+    "card": {
+      "id": "spades-K",
+      "suit": "spades",
+      "rank": "K"
+    },
+    "name": "Vodník",
+    "meaning": "Starý pán rybníka s dýmkou, cylindrem a mokrým šosem.",
+    "archetype": "Pán světa",
+    "stickerAsset": "/decks/strasidla/stickers/spades-k.svg"
+  },
+  {
+    "card": {
+      "id": "spades-A",
+      "suit": "spades",
+      "rank": "A"
+    },
+    "name": "Hrnek s dušičkou",
+    "meaning": "Pod pokličkou dušička: zastaví celý stůl.",
+    "archetype": "Zastavení",
+    "stickerAsset": "/decks/strasidla/stickers/spades-a.svg"
+  }
+]
