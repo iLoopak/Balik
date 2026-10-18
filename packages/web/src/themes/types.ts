@@ -9,9 +9,19 @@ export interface DeckTheme {
   suits: Record<Suit, SuitStyle>; back: string | null;
   stickerFor(card: Card): StickerAsset | null;
 }
+export type TableTone = 'dark' | 'light';
+/** Material of the BALÍK console in one tone. Shape and zoning never change with the palette. */
+export interface ConsolePalette {
+  bg: string; spot: string; frame: string; pattern: string;
+  bezel: string; edge: string; faceTop: string; faceBottom: string; highlight: string;
+  wellTop: string; wellBottom: string; wellLip: string;
+  line: string; pad: string; trayTop: string; trayBottom: string;
+  amber: string; shadow: string; shadowOpacity: number; engrave: string;
+}
 export interface TableTheme {
-  id: TableId; name: string; geometry: 'oval' | 'cabinet';
-  background: string; surface: string; rail: string; grid: string;
+  id: TableId; name: string;
+  /** `soft` rounds the console's cut corners, `hard` keeps them crisp. */
+  cut: 'soft' | 'hard';
+  tones: Record<TableTone, ConsolePalette>;
   colors: Record<Suit, string>; secondary: string;
-  ambient: Record<Suit, string>;
 }

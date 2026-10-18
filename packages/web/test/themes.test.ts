@@ -64,15 +64,18 @@ describe('interchangeable cosmetic editions', () => {
   });
   it('validates storage, keeps choices independent, persists and removes stale URL overrides', () => {
     for (const raw of ['null', '[]', '3', 'invalid', '{"deck":"__proto__","table":"constructor"}']) expect(parseAppearance(raw)).toEqual(DEFAULT_APPEARANCE);
-    expect(parseAppearance('{"deck":"retro-arcade","table":"bad"}')).toEqual({ deck: 'retro-arcade', table: 'stormpunk' });
+    expect(parseAppearance('{"deck":"retro-arcade","table":"bad"}')).toEqual({ deck: 'retro-arcade', table: 'stormpunk', tone: 'dark' });
+    expect(parseAppearance('{"tone":"light"}')).toEqual({ ...DEFAULT_APPEARANCE, tone: 'light' });
+    expect(parseAppearance('{"tone":"sepia"}').tone).toBe('dark');
     const setItem = vi.fn(), replaceState = vi.fn();
     vi.stubGlobal('localStorage', { setItem });
-    vi.stubGlobal('window', { location: { href: 'https://example.test/r/ABCD?deck=classic&keep=1' }, history: { state: null, replaceState } });
+    vi.stubGlobal('window', { location: { href: 'https://example.test/r/ABCD?deck=classic&tone=light&keep=1' }, history: { state: null, replaceState } });
     setAppearance({deck:'retro-arcade'});
-    expect(useAppearance.getState()).toEqual({deck:'retro-arcade',table:'stormpunk'});
+    expect(useAppearance.getState()).toEqual({deck:'retro-arcade',table:'stormpunk',tone:'dark'});
     setAppearance({table:'retro-arcade'});
     setAppearance({deck:'classic'});
-    expect(useAppearance.getState()).toEqual({deck:'classic',table:'retro-arcade'});
+    setAppearance({tone:'light'});
+    expect(useAppearance.getState()).toEqual({deck:'classic',table:'retro-arcade',tone:'light'});
     expect(JSON.parse(setItem.mock.calls.at(-1)![1])).toEqual(useAppearance.getState());
     expect(setItem.mock.calls.at(-1)![0]).toBe(APPEARANCE_KEY);
     expect(String(replaceState.mock.calls.at(-1)![2])).toBe('https://example.test/r/ABCD?keep=1');
@@ -125,6 +128,8 @@ describe('interchangeable cosmetic editions', () => {
         const geo=computeGeometry(w!,h!,['a','b'],'a',4);
         const html=renderToStaticMarkup(createElement(GameTableTheme,{geo,suit:'hearts',theme:table.id,reduced:true,lite:false,myTurn:true}));
         expect(html).toContain(`data-table-theme="${table.id}"`); expect(html).toContain('data-ambient="static"'); expect(html).toContain('data-motion="off"');
+        const light=renderToStaticMarkup(createElement(GameTableTheme,{geo,suit:'hearts',theme:table.id,tone:'light',reduced:true,lite:false,myTurn:true}));
+        expect(light).toContain('data-tone="light"'); expect(light).toContain(table.tones.light.faceTop);
         const items: EffectInstance[] = [{kind:'effect',id:1,event:{kind:'play',suit:'hearts',label:'Ada hraje'},scale:1,ttl:900}];
         const fx=renderToStaticMarkup(createElement(EffectOrchestrator,{items,geo,me:'a',reduced:true}));
         expect(fx).toContain('data-effect="play"'); expect(fx).toContain('fx-quality-reduced');

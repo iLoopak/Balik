@@ -150,10 +150,18 @@ Lokální `npm run dev` dál používá původní Node/WebSocket adaptér. Samos
 Node server nebo Docker zůstává alternativou pro jiný hosting:
 [Nasazení Node backendu](docs/DEPLOYMENT.md). `vercel.json` nasazuje pouze Vite web.
 
-## Stormpunk command arena
+## Stůl · BALÍK dealer console
 
-Stůl sdílí `GameTableTheme` mezi hrou a `/dev/game-feel`. Jemný ambient reaguje
-na aktivní frakci a respektuje reduced motion i lite režim. Sizing tokeny v
+Stůl je jeden karetní aparát pro všechny hry i edice (`GameTableTheme`, sdílený
+hrou, `/dev/game-feel` a `/dev/decks`). Uprostřed je deska se zkosenými rohy
+(jazyk loga), v ní zapuštěné sloty: balíček s ukazatelem zásoby a stage pro
+odhoz/štych/hromádku s registračními rohy. Mezi sloty sedí diamantový náboj
+s barvou aktivní frakce. Každý soupeř má vlastní pad a drážku do portu v desce,
+hráč na tahu dostává pohybující se signál; vlastní strana je přední tác pod rukou.
+Edice karet mění jen světlo frakce, tvar patří BALÍKU. Tmavý tón je „aréna“,
+světlý „dealer console“ (ivory, ink, amber) — volba je ve Vzhledu a v
+`?tone=light`. Stage se krátce probudí po dopadu karty, balíček při líznutí;
+reduced motion i lite režim nechávají jen statickou strukturu. Sizing tokeny v
 `responsiveCardScale.ts` zvětšují běžnou desktopovou ruku o 20–35 % a rezervují
 místo pro střed, ovládání a zvednuté karty. Dlouhá ruka přechází do dvou řad.
 Geometrické testy kontrolují 8 rozměrů včetně mobilu na šířku a až 31 karet;

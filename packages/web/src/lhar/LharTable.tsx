@@ -216,7 +216,8 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
         data-quiet={quiet}
         data-claim={claim?.id ?? 0}
       >
-        <GameTableTheme geo={geo} suit={null} reduced={quiet} lite={lite} myTurn={canAct} />
+        <GameTableTheme geo={geo} suit={null} reduced={quiet} lite={lite} myTurn={canAct} active={view.phase === 'playing' ? view.currentPlayerId : null}
+          stage={{ kind: 'trick', width: geo.cardW * (geo.compact ? .82 : 1) * 1.25, height: geo.cardH * (geo.compact ? .82 : 1) + 16, label: 'HROMÁDKA' }} beat={{ play: claim?.id ?? null }} />
         {view.players
           .filter((p) => p.id !== me)
           .map((p) => {

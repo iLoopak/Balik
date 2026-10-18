@@ -7,9 +7,6 @@
 .sedma-score strong { grid-row: span 2; font-size: 28px; align-self: center; }
 .sedma-score small { font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
 .sedma-total { font-size: 10px; line-height: 1.6; color: var(--muted); }
-.sedma-table .arena-wordmark { display: none; }
-.sedma-table .arena-discard-dock { width: 72% !important; max-width: 640px; opacity: .4; }
-.sedma-table .arena-deck-dock { display: none; }
 .sedma-stock { position: absolute; transform: translate(-50%, -50%); opacity: .65; }
 .sedma-stock .card-back { width: 100%; height: 100%; border-radius: 3px; overflow: hidden; }
 .sedma-stock > span { position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; color: white; background: #10162077; }

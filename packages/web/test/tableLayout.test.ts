@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 import type { CardEntity } from '../src/table/display';
-import { GameTableTheme } from '../src/table/GameTableTheme';
+import { GameTableTheme, consoleGeometry } from '../src/table/GameTableTheme';
 import { computeGeometry, placeMyHand, type HandUi, type Placement } from '../src/table/layout';
 import { responsiveCardScale } from '../src/table/responsiveCardScale';
 
@@ -82,4 +82,28 @@ describe('responsive arena layout', () => {
       expect(html).toContain('data-ambient="static"');
     }
   });
+
+  it('keeps the console apparatus inside the table and around both slots at every size', () => {
+    const inside = (outer: { x: number; y: number; w: number; h: number }, x: number, y: number, w: number, h: number) =>
+      outer.x <= x - w / 2 + .5 && outer.y <= y - h / 2 + .5 && outer.x + outer.w >= x + w / 2 - .5 && outer.y + outer.h >= y + h / 2 - .5;
+    for (const [w, h] of [[360, 640], [390, 844], [844, 390], [768, 1024], [1280, 720], [1440, 900], [1920, 1080]] as const) {
+      for (const players of [order.slice(0, 2), order]) {
+        const geo = computeGeometry(w, h, players, 'me', 7);
+        for (const cut of ['soft', 'hard'] as const) {
+          const c = consoleGeometry(geo, { kind: 'piles' }, cut);
+          expect(c.plate.x0).toBeGreaterThanOrEqual(0); expect(c.plate.x1).toBeLessThanOrEqual(w);
+          expect(c.plate.y1).toBeLessThan(geo.controlY);
+          expect(inside(c.deck!, geo.deck.x, geo.deck.y, geo.deckW, geo.deckH)).toBe(true);
+          expect(inside(c.stage, geo.discard.x, geo.discard.y, geo.pileW, geo.pileH)).toBe(true);
+          expect(c.pads.map(p => p.id).sort()).toEqual(players.filter(id => id !== 'me').sort());
+          for (const lane of c.lanes) expect(players).toContain(lane.id);
+          expect(c.plateD).not.toContain('NaN'); expect(c.tray).not.toContain('NaN');
+        }
+        const trick = consoleGeometry(geo, { kind: 'trick', width: geo.cardW * 3, height: geo.cardH, label: 'ŠTYCH' }, 'soft');
+        expect(trick.deck).toBeNull(); expect(trick.hub).toBeNull();
+        expect(trick.stage.x).toBeGreaterThanOrEqual(0); expect(trick.stage.x + trick.stage.w).toBeLessThanOrEqual(w);
+      }
+    }
+  });
 });
+
