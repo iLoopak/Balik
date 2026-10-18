@@ -25,3 +25,6 @@ export * from './snaps/view';
 export * from './durak/types';
 export * from './durak/engine';
 export * from './durak/view';
+export * from './marias/types';
+export * from './marias/engine';
+export * from './marias/view';

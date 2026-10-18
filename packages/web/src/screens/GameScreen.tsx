@@ -10,6 +10,7 @@ import { SedmaTable } from '../sedma/SedmaTable';
 import { Table } from '../table/Table';
 import { SnapsTable } from '../games/snaps/SnapsTable';
 import { DurakTable } from '../games/durak/DurakTable';
+import { MariasTable } from '../games/marias/MariasTable';
 import './screens.css';
 import { BrandOptions } from '../brand/BrandSettings';
 import { AppSettings } from '../themes/AppearancePicker';
@@ -70,6 +71,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
           case 'sedma': return <SedmaTable key={key} room={room} reducedMotion={reduced} />;
           case 'snaps': return <SnapsTable key={key} room={room} reducedMotion={reduced} />;
           case 'durak': return <DurakTable key={key} room={room} reducedMotion={reduced} />;
+          case 'marias': return <MariasTable key={key} room={room} reducedMotion={reduced} />;
           default: return <Table key={key} room={room} reducedMotion={reduced} />;
         }
       })()}

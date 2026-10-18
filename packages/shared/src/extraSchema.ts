@@ -9,4 +9,7 @@ export const extraActionSchemas = [
   z.object({ type: z.literal('durakDefend'), cardId }),
   z.object({ type: z.literal('durakTake') }),
   z.object({ type: z.literal('durakPass') }),
+  z.object({ type: z.literal('mariasTrump'), cardId }),
+  z.object({ type: z.literal('mariasDeclare'), discard: z.array(cardId).length(2), contract: z.enum(['hra', 'betl', 'durch']) }),
+  z.object({ type: z.literal('mariasPlay'), cardId }),
 ] as const;
