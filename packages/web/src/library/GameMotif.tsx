@@ -158,7 +158,7 @@ const MOTIFS: Record<GameId, ReactNode> = {
       </g>
     </>
   ),
-  // A grid of backs with one matching pair turned up.
+  // A grid of backs with one pair turned up: same rank, same colour.
   pexeso: (
     <>
       {[0, 1, 2, 3].flatMap((c) => [0, 1].map((r) => {
@@ -167,7 +167,7 @@ const MOTIFS: Record<GameId, ReactNode> = {
         return <Back key={`${c}${r}`} x={x} y={y} s={0.82} />;
       }))}
       <Face x={64} y={30} s={0.82} rank="9" suit="hearts" hi />
-      <Face x={128} y={76} s={0.82} rank="9" suit="hearts" hi className="m-lift" />
+      <Face x={128} y={76} s={0.82} rank="9" suit="diamonds" hi className="m-lift" />
       <path d="M76 38Q108 40 118 64" className="m-trail" />
     </>
   ),

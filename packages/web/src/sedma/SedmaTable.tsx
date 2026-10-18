@@ -38,9 +38,8 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
   const emotes = useEmotes(room.code);
   const [hovered, setHovered] = useState<string | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
-  const [tip, setTip] = useState<number | null>(() => {
-    try { return localStorage.getItem('balik.sedma.intro') ? null : 0; } catch { return 0; }
-  });
+  // The shared GameGuide explains the first moves; these three tips open from „?“.
+  const [tip, setTip] = useState<number | null>(null);
   const geo: Geometry = useMemo(() => {
     const result = computeGeometry(size.width || 360, size.height || 560, view.players.map((p) => p.id), me, (display.hands[me] ?? []).length);
     return { ...result, discard: { x: result.w / 2, y: result.discard.y }, deck: { x: 28, y: result.controlY - 30 }, deckScale: .35, deckW: result.cardW * .35, deckH: result.cardH * .35 };
@@ -58,7 +57,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
   const play = (id: string) => { if (playable.has(id) && sendAction({ type: 'play', cardId: id })) setSelected(null); };
   const start = view.players.findIndex((p) => p.id === (display.trick[0]?.playerId ?? view.leaderId));
   const order = [...view.players.slice(start), ...view.players.slice(0, start)];
-  const closeTip = () => { setTip(null); try { localStorage.setItem('balik.sedma.intro', '1'); } catch { /* no storage */ } };
+  const closeTip = () => setTip(null);
 
   return <section className="sedma-shell" aria-label="Sedma">
     <div className="sedma-scores" aria-label="Týmové body">
