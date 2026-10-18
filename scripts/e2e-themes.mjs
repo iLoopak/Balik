@@ -45,7 +45,7 @@ try {
     const host=await hostContext.newPage(),guest=await guestContext.newPage();
     for(const page of [host,guest]){page.on('pageerror',e=>errors.push(String(e)));await page.addInitScript(()=>localStorage.setItem('balik.sedma.intro','1'));}
     await host.goto(base);await host.getByRole('radio',{name:game==='prsi'?'Prší':'Sedma',exact:true}).click();
-    await host.getByLabel('Tvoje jméno').fill('Ada');await host.getByRole('button',{name:'Vytvořit hru s přáteli',exact:true}).click();
+    await host.getByLabel('Tvoje jméno').fill('Ada');await host.getByRole('button',{name:'Hrát s přáteli',exact:true}).click();
     await host.waitForURL(/\/r\/[A-Z]{4}$/);const url=host.url();
     await guest.goto(url);await guest.getByLabel('Tvoje jméno').fill('Max');await guest.getByRole('button',{name:'Sednout ke stolu',exact:true}).click();
     await host.getByText('Max',{exact:true}).waitFor();await host.getByRole('button',{name:/Rozdat karty/}).click();

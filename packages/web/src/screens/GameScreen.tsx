@@ -40,7 +40,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
             </motion.span>
           )}
         </AnimatePresence>
-        <EmotePicker /><RulesButton gameId={room.gameId} compact note={room.gameId === 'sedma' ? `V této místnosti má poslední štych +${room.sedmaBonus ?? 10} bodů.` : undefined} /><AppSettings compact />
+        <EmotePicker /><RulesButton gameId={room.gameId} compact note={room.gameId === 'sedma' ? `V této místnosti má poslední štych +${room.sedmaBonus ?? 10} bodů.` : undefined} /><AppSettings compact game={room.gameId} />
         <button className="btn btn-ghost topbar-menu" onClick={() => setMenu((m) => !m)} aria-expanded={menu} aria-label="Menu">
           <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden>
             <path fill="currentColor" d="M4 7h16v2H4zm0 4h16v2H4zm0 4h16v2H4z" />

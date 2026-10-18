@@ -43,7 +43,7 @@ export function Lobby({ room }: { room: AnyRoomView }) {
         </div>
 
         <div className="code-block">
-          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><div className="lobby-options"><AppSettings compact /><EmotePicker /></div></div>
+          <div className="brand-welcome"><BrandMascot state={connected < 2 ? 'thinking' : 'idle'} size={56} /><span className="brand-welcome-copy"><strong>{connected < 2 ? 'Držím místo u stolu.' : 'Balík čeká na rozdání.'}</strong>Pošli odkaz a hrajte spolu.</span><div className="lobby-options"><AppSettings compact game={room.gameId} /><EmotePicker /></div></div>
           <span className="label">Kód místnosti</span>
           <div className="code-big brand-word" aria-label={`Kód ${room.code.split('').join(' ')}`}>
             {room.code.split('').map((ch, i) => (

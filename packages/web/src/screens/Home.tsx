@@ -140,7 +140,7 @@ export function Home() {
                   ))}
                 </div>
                 <button className="btn btn-primary" type="button" disabled={!player || busy} onClick={solo}>
-                  {busy ? 'Rozdávám…' : 'Proti počítači'}
+                  {busy ? 'Rozdávám…' : 'Hrát proti počítači'}
                 </button>
               </div>
               <button className="btn btn-secondary" type="button" disabled={!player || busy} onClick={() => friends()}>

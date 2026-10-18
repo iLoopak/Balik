@@ -41,10 +41,10 @@ export function GameLibrary({ selected, onSelect, seats, reduced = false }: {
         return (
           <button key={id} type="button" role="radio" aria-checked={on} tabIndex={on ? 0 : -1} data-game={id}
             className={`library-title motif-host is-${id}${on ? ' is-on' : ''}${fits ? '' : ' is-unfit'}`}
-            aria-describedby={fits ? undefined : `unfit-${id}`} onClick={() => onSelect(id)}>
+            aria-label={info.name} aria-describedby={fits ? `meta-${id}` : `meta-${id} unfit-${id}`} onClick={() => onSelect(id)}>
             <span className="library-art"><GameMotif id={id} /></span>
             <span className="library-name">{info.name}</span>
-            <span className="library-meta">{info.playersLabel}</span>
+            <span className="library-meta" id={`meta-${id}`}>{info.playersLabel}</span>
             {!fits && <span className="library-unfit" id={`unfit-${id}`}>{info.needPlayers}</span>}
           </button>
         );

@@ -19,6 +19,7 @@
     "qa:sedma": "node scripts/e2e-sedma.mjs",
     "qa:evening": "node scripts/e2e-evening.mjs",
     "qa:themes": "node scripts/e2e-themes.mjs",
+    "qa:showroom": "node --import tsx scripts/e2e-showroom.mjs",
     "qa:assets": "node scripts/audit-deck-assets.mjs",
     "art:retro": "node scripts/create-retro-arcade.mjs",
     "qa:lhar": "node --import tsx scripts/e2e-lhar.mjs"

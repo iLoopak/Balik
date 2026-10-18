@@ -35,7 +35,7 @@ try {
   await host.goto(base);
   await host.getByRole('radio', { name: 'Lhář', exact: true }).click();
   await host.getByLabel('Tvoje jméno').fill('Ada');
-  await host.getByRole('button', { name: 'Vytvořit hru s přáteli', exact: true }).click();
+  await host.getByRole('button', { name: 'Hrát s přáteli', exact: true }).click();
   await host.waitForURL(/\/r\/[A-Z]{4}$/);
   const url = host.url();
   await guest.goto(url);

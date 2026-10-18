@@ -395,19 +395,6 @@ body:has(.home2) {
   font-size: 14px;
 }
 
-.showroom-teaser {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-  font-size: 13px;
-  color: var(--faint);
-}
-.showroom-teaser p {
-  margin: 0;
-}
-.showroom-teaser nav,
 .home-dev {
   display: flex;
   flex-wrap: wrap;

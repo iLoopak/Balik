@@ -24,7 +24,7 @@ try {
     const host = pages[0]; await host.goto(base);
     await host.getByRole('radio',{ name:'Sedma',exact:true }).click();
     await host.getByLabel('Tvoje jméno').fill('Telefon');
-    await host.getByRole('button',{name:'Vytvořit hru s přáteli',exact:true}).click();
+    await host.getByRole('button',{name:'Hrát s přáteli',exact:true}).click();
     await host.waitForURL(/\/r\/[A-Z]{4}$/);
     const code = host.url().slice(-4);
     for (let i=1;i<count;i++) {

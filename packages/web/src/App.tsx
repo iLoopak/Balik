@@ -9,6 +9,7 @@ import { lazy, Suspense, useEffect } from 'react';
 import { BrandInteraction } from './brand/BrandInteraction';
 import { preloadDeck, useAppearance } from './themes/preferences';
 import { galleryDeckFromPath } from './decks/editions';
+import { AppearanceDialog } from './themes/AppearanceDialog';
 const EditionGallery = lazy(() => import('./decks/EditionGallery'));
 const AvatarPlayground = import.meta.env.DEV ? lazy(() => import('./avatars/AvatarPlayground')) : null;
 const DeckLab = import.meta.env.DEV ? lazy(() => import('./dev/DeckLab')) : null;
@@ -56,6 +57,7 @@ export function App() {
       ) : (
         <Home />
       )}
+      <AppearanceDialog />
       <div className="toast-host" aria-live="polite">
         <AnimatePresence>
           {toast && (

@@ -16,7 +16,7 @@ try{
   ]);
   const pages=await Promise.all(contexts.map(c=>c.newPage()));const [host,guest]=pages;
   for(const page of pages){page.on('pageerror',e=>errors.push(String(e)));await page.addInitScript(()=>localStorage.setItem('balik.sedma.intro','1'));}
-  await host.goto(base);await host.getByLabel('Tvoje jméno').fill('Anna');await host.getByRole('button',{name:'Vytvořit hru s přáteli',exact:true}).click();
+  await host.goto(base);await host.getByLabel('Tvoje jméno').fill('Anna');await host.getByRole('button',{name:'Hrát s přáteli',exact:true}).click();
   await host.waitForURL(/\/r\/[A-Z]{4}$/);const roomUrl=host.url();
   await guest.goto(roomUrl);await guest.getByLabel('Tvoje jméno').fill('Bára');await guest.getByRole('button',{name:'Sednout ke stolu',exact:true}).click();
   await host.getByText('Bára',{exact:true}).waitFor();await host.getByRole('button',{name:/Rozdat karty/}).click();
