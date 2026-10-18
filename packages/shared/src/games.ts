@@ -12,7 +12,7 @@ import { chooseLharBotFromView, filterLharEventFor, lharViewFor } from './lhar/v
 import type { LharAction, LharClientEvent, LharEvent, LharState } from './lhar/types';
 import { GAME_MODULES_EXTRA, type ExtraAction, type ExtraClientEvent, type ExtraEvent, type ExtraState } from './extra';
 
-export const GAME_IDS = ['prsi', 'sedma', 'lhar', 'snaps', 'durak', 'marias', 'petr', 'oko'] as const;
+export const GAME_IDS = ['prsi', 'sedma', 'lhar', 'snaps', 'durak', 'marias', 'petr', 'oko', 'pexeso'] as const;
 export type GameId = typeof GAME_IDS[number];
 export type GameState = PrsiState | SedmaState | LharState | ExtraState;
 export type GameEvent = PrsiEvent | SedmaEvent | LharEvent | ExtraEvent;
@@ -42,6 +42,7 @@ export const GAME_INFO: Record<GameId, GameInfo> = {
   marias: { name: 'Mariáš', mark: 'M', players: [3], playersLabel: '3 hráči', needPlayers: 'Volený mariáš hrají přesně 3 hráči.', botCounts: [2], tagline: 'Volený mariáš: trumfy, hlášky a betl.' },
   petr: { name: 'Černý Petr', mark: 'ČP', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Černý Petr potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Hlavně ať ti nezůstane Petr.' },
   oko: { name: 'Oko bere', mark: '21', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Oko bere potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Jednadvacet bez sázek, jen o body.' },
+  pexeso: { name: 'Pexeso', mark: 'PX', players: [1, 2, 3, 4], playersLabel: '1–4 hráči', needPlayers: 'Pexeso hraje 1 až 4 hráči.', botCounts: [1, 2, 3], tagline: 'Najdi dvojice stejné hodnoty a barvy.' },
   lhar: { name: 'Lhář', mark: 'L', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Lhář potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Blafuj, nebo prohlédni blaf.' },
 };
 export const gameName = (id: GameId) => GAME_INFO[id].name;

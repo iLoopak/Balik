@@ -34,3 +34,6 @@ export * from './petr/view';
 export * from './oko/types';
 export * from './oko/engine';
 export * from './oko/view';
+export * from './pexeso/types';
+export * from './pexeso/engine';
+export * from './pexeso/view';

@@ -13,6 +13,7 @@ import { DurakTable } from '../games/durak/DurakTable';
 import { MariasTable } from '../games/marias/MariasTable';
 import { PetrTable } from '../games/petr/PetrTable';
 import { OkoTable } from '../games/oko/OkoTable';
+import { PexesoTable } from '../games/pexeso/PexesoTable';
 import './screens.css';
 import { BrandOptions } from '../brand/BrandSettings';
 import { AppSettings } from '../themes/AppearancePicker';
@@ -76,6 +77,7 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
           case 'marias': return <MariasTable key={key} room={room} reducedMotion={reduced} />;
           case 'petr': return <PetrTable key={key} room={room} reducedMotion={reduced} />;
           case 'oko': return <OkoTable key={key} room={room} reducedMotion={reduced} />;
+          case 'pexeso': return <PexesoTable key={key} room={room} reducedMotion={reduced} />;
           default: return <Table key={key} room={room} reducedMotion={reduced} />;
         }
       })()}

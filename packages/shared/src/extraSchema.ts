@@ -15,4 +15,5 @@ export const extraActionSchemas = [
   z.object({ type: z.literal('petrDraw'), index: z.number().int().min(0).max(31) }),
   z.object({ type: z.literal('okoHit') }),
   z.object({ type: z.literal('okoStand') }),
+  z.object({ type: z.literal('pexesoFlip'), index: z.number().int().min(0).max(31) }),
 ] as const;

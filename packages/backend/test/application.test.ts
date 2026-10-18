@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { chooseGameBotAction, isLhar, mulberry32, type ClientMessage } from '@balik/shared';
+import { chooseGameBotAction, isLhar, mulberry32, type Card, type ClientMessage } from '@balik/shared';
+// These rooms play hand-based games; Pexeso states have no hands, so read them through a narrow helper.
+const handOf = (p: object) => (p as { hand: Card[] }).hand;
 import { RoomApplication, type Commit, type Frame, type Reply, type Room, type RoomRepository } from '../src/application';
 import { gameHttpHandler } from '../src/adapters/http';
 
@@ -58,7 +60,7 @@ describe('portable persisted multiplayer', () => {
     expect(after.botDueAt).toBe(before.botDueAt);
     expect(after.evening).toEqual(before.evening);
     expect(s.last().message).toMatchObject({ events: [], reset: false });
-    const hidden = after.game!.players.find(p => p.id === bot.id)!.hand;
+    const hidden = handOf(after.game!.players.find(p => p.id === bot.id)!);
     for (const card of hidden) expect(JSON.stringify(s.last())).not.toContain(`\"${card.id}\"`);
     expect((await s.send('outsider', { t: 'profile', avatarId: 'kocour' }, code)).message).toMatchObject({ code: 'not-in-room' });
     s.restart();
@@ -156,7 +158,7 @@ describe('portable persisted multiplayer', () => {
   it('filters every journal entry and refuses an outsider who knows the room code', async () => {
     const s = setup(); const code = await s.create(); await s.join(code); await s.send('a', { t: 'start' }, code);
     const raw = (await s.repository.load(code))!;
-    const bHand = raw.game!.players.find((p) => p.id === 'b')!.hand;
+    const bHand = handOf(raw.game!.players.find((p) => p.id === 'b')!);
     const aPayload = JSON.stringify(s.last('a'));
     for (const card of bHand) expect(aPayload).not.toContain(`"${card.id}"`);
     expect(aPayload).not.toContain('drawPile');
@@ -227,7 +229,7 @@ describe('Sedma persisted rooms', () => {
         expect(frame.message.room.game).not.toHaveProperty('drawPile');
         for (const e of frame.message.events) expect(e).not.toHaveProperty('hands');
         const latest = (await s.repository.load(code))!;
-        for (const opponent of latest.game!.players.filter((p) => p.id !== viewer)) for (const card of opponent.hand) expect(JSON.stringify(frame)).not.toContain(`"${card.id}"`);
+        for (const opponent of latest.game!.players.filter((p) => p.id !== viewer)) for (const card of handOf(opponent)) expect(JSON.stringify(frame)).not.toContain(`"${card.id}"`);
       }
     }
     const final = (await s.repository.load(code))!;
