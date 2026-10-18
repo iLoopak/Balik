@@ -14,6 +14,11 @@ předpokladů. Co nešlo spustit, je níže označené jako **neověřené** i s
     jen hráčův view, až k výsledku. Pak **Odveta** a kontrola, že začalo nové kolo.
   - **telefon 390×844, dotyk, světlý režim**: start z knihovny, první tah ťuknutím, měření
     ovládacích prvků pod 40 px, interaktivních karet mimo viewport a ořezu názvu v liště.
+    Od navazující větve `claude/phone-p2-fixes` navíc: celý kód místnosti (`roomCodeWhole`,
+    shodí běh), ořezaná jména u sedadel (`seatNamesCut`), překryv sedadel (`seatsOverlap`,
+    shodí běh) a kolik karet v ruce jde ťuknout na líc pod indexem (`handFaceTappable`).
+    Měří se až po ~1 s klidu karet (nápověda se objeví po 450 ms klidu a ruka se přesune);
+    ťuk míří na líc karty (20 % zleva, 40 % shora), ne na horní hranu.
   - Chyby z konzole a `pageerror` shodí běh.
 - `npm run qa:showroom`: 6 balíčků × 2 stoly × světlo/tma přepínané živě v běžící hře dvou
   lidí (stav hry a identita karet se nesmí změnit, druhý hráč si drží svůj vzhled, žádný
@@ -36,7 +41,7 @@ a `qa-output/showroom/*.png` (lokální, git je ignoruje; vzniknou spuštěním 
 | Prší | telefon, první tah dotykem | ✅ | — | dotyk: 1. ťuk zvedne, 2. zahraje; svršek otevře volbu barvy | — | — |
 | Sedma | 1v1, štych, výsledek, odveta | ✅ | — | `sedma.lead`, 60 : 30, odveta OK | blokující úvod nahradila nápověda | 2v2 jen v `qa:sedma` |
 | Lhář | tvrzení, výzva, výsledek, odveta | ✅ | — | `lhar.claim`, výsledek za 157 s (dlouhá hra) | blokující úvod → nápověda; indexy tvrzení v jazyce balíčku | — |
-| Lhář | telefon, 16 karet ve dvou řadách | ⚠️ | P2 | horní řada má viditelný jen index; střed karty zakrývá spodní řada | — (ťuk na index i dialog *Vybrat 1–4 karty* fungují) | zvážit větší rozestup řad u ≥ 12 karet |
+| Lhář | telefon, 16 karet ve dvou řadách | ✅ | — | dřív: horní řada měla viditelný jen index, na líc šlo ťuknout u 8/16 karet; teď 16/16 | větší rozestup řad na telefonu na výšku (`phoneRowOffset`), viz „Telefon P2“ | — |
 | Šnaps | výměna devítky, štychy, 66 | ✅ | — | `snaps.exchange`, 75 : 17, odveta OK | — | — |
 | Durak | útok/obrana, durak | ✅ | — | `durak.attack`, výsledek a pořadí, odveta OK | text výsledku genderově neutrální („Zůstáváš durakem.“) | — |
 | Mariáš | volba trumfu, odhoz, hra + sedma, flek, výsledek | ✅ | — | `marias.trump`, „Hra nevyšla, sedma vyšla. Vyhráváš.“, odveta OK | — | — |
@@ -71,7 +76,7 @@ ztracený výsledek ani chybné napojení na místnost se v devíti hrách neuk�
 - Lhář ukazoval tvrzení v enginových hodnotách (Q) i v balíčku Mariášky (Sv).
 - Telefon: v horní liště se ořezával název hry („D…“). Výběr postavy se na úzkých displejích
   z lišty schovává (zůstává v lobby a na úvodu), název hry je vidět. Kód místnosti se
-  může zkrátit (celý je v lobby a v odkazu); viz backlog.
+  mohl zkrátit; opraveno v navazující větvi, viz „Telefon P2“.
 - Telefon: tlačítka ovládací lišty měla 38 px; pro dotyk mají neviditelnou plochu 44 px bez
   změny rozvržení. (Měření v `qa:experience` čte vizuální rámeček, proto je dál hlásí jako 38 px.)
 - Texty: „Zůstal ti durak.“ → „Zůstáváš durakem.“, „co jsi viděl“ → „co už bylo vidět“.
@@ -93,16 +98,32 @@ ztracený výsledek ani chybné napojení na místnost se v devíti hrách neuk�
 
 ## Backlog (P2, nepřepisováno)
 
-1. Dvouřadá ruka na telefonu (Lhář 16 karet, Durak po sebrání): větší vertikální rozestup,
-   nebo vějíř s horizontálním posunem a indikací, aby šlo ťukat i na střed karty.
-2. Horní lišta hry na telefonu: „Reakce“ jako ikona, menu jako jediné místo pro zvuk a
-   postavu; kód místnosti celý. Ve třech a čtyřech se na telefonu jména soupeřů u sedadel
-   zkracují až na jedno písmeno („R…“), protože místo zabírá odznak role.
+1. ~~Dvouřadá ruka na telefonu (Lhář 16 karet, Durak po sebrání): větší vertikální rozestup,
+   nebo vějíř s horizontálním posunem a indikací, aby šlo ťukat i na střed karty.~~
+   ✅ hotovo v `claude/phone-p2-fixes`, viz „Telefon P2“.
+2. Horní lišta hry na telefonu: ~~„Reakce“ jako ikona; kód místnosti celý. Ve třech a čtyřech
+   se na telefonu jména soupeřů u sedadel zkracují až na jedno písmeno („R…“), protože místo
+   zabírá odznak role.~~ ✅ hotovo v `claude/phone-p2-fixes`. Zbývá zvážit menu jako jediné
+   místo pro zvuk (postava už je z lišty na telefonu schovaná); lišta má na telefonu pět
+   ikon po 44 px a na 320 px kvůli tomu ustupuje slovní značka BALÍK.
 3. Nápověda na telefonu zabírá při prvním tahu až ~125 px výšky; zkrátit cíl na jednu řádku.
 4. Stůl Oka bere a Pexesa: poslední událost (kdo co otočil / kolik má bank) by mohla mít
    krátký „ticker“ stejně jako Lhář.
 5. `qa:experience` hraje proti botům; multiplayer s více lidmi u každé hry pokrývají jen
    `qa:themes`/`qa:sedma`/`qa:evening`/`qa:lhar` (Prší, Sedma, Lhář) a unit testy.
+
+## Telefon P2 (navazující větev `claude/phone-p2-fixes`)
+
+Měřeno `qa:experience` (telefon 390×844) proti `origin/main` a proti větvi:
+
+| Položka | Před | Po | Změna |
+|---|---|---|---|
+| Lhář 16 karet: karty, na které jde ťuknout na líc pod indexem | 8/16 | 16/16 | Na telefonu na výšku jsou řady od sebe 0,62 výšky karty místo 0,42 (`TABLE_METRICS.phoneRowOffset`, `Geometry.rowOffset`), zadní řada ukazuje víc než polovinu líce. Prostor se rezervuje v `responsiveCardScale`, karty se jen přecílí (žádný remount). Telefon na šířku a desktop beze změny (výška je tam vzácnější). Platí pro všechny hry s `placeMyHand` (Durak po sebrání, Prší, Sedma…). Unit test: `tableLayout.test.ts` (390×844, 390×740, 360×640; 12 a 16 karet). |
+| Kód místnosti v liště | zkrácený („XJ…“) | celý ve všech 9 hrách | „Reakce“ je na telefonu ikona (bublina, `aria-label` „Poslat reakci“, `title` „Reakce“; na desktopu ikona + text). Název hry je na telefonu nad kódem; ustupuje jen název, kód nikdy. Pod 375 px ustoupí slovní značka BALÍK. Ověřeno i na 320 a 375 px („Černý Petr“ celý). |
+| Jména u sedadel (Mariáš ve třech) | „R…“, „B…“; odznak překrýval počet štychů | „Robo Rudla“, „Bot Božka“ celé | Odznak role je na telefonu štítek na horní hraně sedadla; horní sedadlo smí být široké jako mezera k sousedům (`GameShell`: dvě sedadla ~171 px, tři ~122 px). Podtitul se ořízne trojtečkou místo překryvu. |
+
+Screenshoty: `qa-output/experience/lhar-phone-first.png` (16 karet) a
+`qa-output/experience/marias-phone-first.png` (sedadla); kopie u PR.
 
 ## Testy (stav při odevzdání)
 

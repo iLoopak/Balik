@@ -5,6 +5,8 @@ export const TABLE_METRICS = {
   desktopMaxCardW: 158,
   desktopHandMaxW: 1100,
   rowOffset: .42,
+  /** Phones in portrait: the back row shows more than its index, so a card can be tapped on its face. */
+  phoneRowOffset: .62,
   handBottom: .57,
   handHeadroom: .8,
   hoverLift: .17,
@@ -40,12 +42,13 @@ export function responsiveCardScale(width: number, height: number, handCount: nu
   const desired = compact ? original : Math.min(TABLE_METRICS.desktopMaxCardW, original * TABLE_METRICS.desktopGain);
   const spread = handCount > 1 ? (handMaxW - desired) / (handCount - 1) : desired;
   const rows: 1 | 2 = handCount > 6 && spread < desired * (compact ? .4 : .42) ? 2 : 1;
+  const rowOffset = compact && !short ? TABLE_METRICS.phoneRowOffset : TABLE_METRICS.rowOffset;
   const staticSpace = edge + controlHeight + controlGap + hudClearance + topInset + seatHeight + seatGap + zoneGap;
-  const heightUnits = TABLE_METRICS.handBottom + TABLE_METRICS.handHeadroom + (rows - 1) * TABLE_METRICS.rowOffset + oppScale + pileEnvelope;
+  const heightUnits = TABLE_METRICS.handBottom + TABLE_METRICS.handHeadroom + (rows - 1) * rowOffset + oppScale + pileEnvelope;
   const verticalLimit = (height - staticSpace) / (TABLE_METRICS.aspect * heightUnits);
   const cardW = Math.max(24, Math.min(desired, verticalLimit, handMaxW));
   return {
-    compact, short, cardW, cardH: cardW * TABLE_METRICS.aspect, handMaxW, rows,
+    compact, short, cardW, cardH: cardW * TABLE_METRICS.aspect, handMaxW, rows, rowOffset,
     edge, topInset, seatHeight, seatGap, controlHeight, controlGap, hudClearance,
     zoneGap, oppScale, discardScale, deckScale, pileEnvelope, badgeBeside,
   };

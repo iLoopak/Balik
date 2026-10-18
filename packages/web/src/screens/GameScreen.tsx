@@ -34,7 +34,8 @@ export function GameScreen({ room }: { room: AnyRoomView }) {
       <header className="topbar">
         <span className="brand-word topbar-brand">BALÍK</span>
         <span className="topbar-room">
-          {gameName(room.gameId)} · <b>{room.code}</b>
+          {/* On phones the game name gives way first; the room code always stays whole. */}
+          <span className="topbar-game">{gameName(room.gameId)}</span><span className="topbar-sep" aria-hidden> · </span><b>{room.code}</b>
         </span>
         <AnimatePresence>
           {status !== 'open' && (

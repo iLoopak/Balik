@@ -40,10 +40,11 @@ async function startSolo(page, game) {
 /** One move through the real UI: a playable card, then the primary control if one appears. */
 async function uiMove(page, touch) {
   const before = (await room(page))?.seq ?? 0;
-  // Aim at the card's top edge: in a two-row hand that is the part people can actually see.
+  // Aim at the card's face below its index, near the left edge: the part a neighbour on the
+  // right does not cover, and in a two-row hand the part the front row leaves free.
   const tap = async (loc) => {
     const box = await loc.boundingBox();
-    const position = box && (await loc.evaluate((el) => el.classList.contains('card-slot'))) ? { x: box.width / 2, y: Math.min(14, box.height / 4) } : undefined;
+    const position = box && (await loc.evaluate((el) => el.classList.contains('card-slot'))) ? { x: box.width * .2, y: box.height * .4 } : undefined;
     return touch ? loc.tap({ position, timeout: 5000 }) : loc.click({ position, timeout: 5000 });
   };
   const playable = page.locator('.card-slot.is-interactive:has(.is-playable)');
@@ -154,6 +155,10 @@ try {
       await startSolo(phone, game);
       r.phone.myTurnWithin20s = await waitFor(() => myTurn(phone), 20000);
       await sleep(1600);
+      // Measure the resting layout. The guide appears after 450 ms of still cards and the hand
+      // then glides to its new place, so wait for ~1 s of stillness (longer than the guide's wait).
+      let calm = 0;
+      await waitFor(async () => (calm = (await phone.evaluate(() => [...document.querySelectorAll('.card-slot')].every((el) => el.getAnimations().every((a) => a.playState !== 'running')))) ? calm + 1 : 0) >= 7, 8000);
       await phone.screenshot({ path: join(out, `${game}-phone-first.png`) });
       const layout = await phone.evaluate(() => {
         const vw = innerWidth, vh = innerHeight;
@@ -162,8 +167,18 @@ try {
           return s.visibility !== 'hidden' && rect.width > 0 && rect.height > 0 && !b.closest('.card-slot') && (rect.height < 40 || rect.width < 40);
         }).map((b) => `${(b.getAttribute('aria-label') ?? b.textContent ?? '').trim().slice(0, 24)} ${Math.round(b.getBoundingClientRect().width)}×${Math.round(b.getBoundingClientRect().height)}`);
         const clipped = [...document.querySelectorAll('.card-slot.is-interactive')].filter((el) => { const b = el.getBoundingClientRect(); return b.left < -2 || b.right > vw + 2 || b.bottom > vh + 2; }).length;
-        const name = document.querySelector('.topbar-room');
-        return { small, clippedInteractiveCards: clipped, topbarNameTruncated: !!name && name.scrollWidth > name.clientWidth + 1 };
+        const name = document.querySelector('.topbar-game'), code = document.querySelector('.topbar-room b');
+        const cut = (el) => el.scrollWidth > el.clientWidth + 1;
+        // The room code must stay whole; the game name may give way to it.
+        const roomCodeWhole = !!code && !cut(code) && code.getBoundingClientRect().right <= document.querySelector('.topbar-room').getBoundingClientRect().right + 1;
+        const seats = [...document.querySelectorAll('.game-seat')];
+        const seatNamesCut = seats.map((s) => s.querySelector('b')).filter((b) => b && cut(b)).map((b) => b.textContent);
+        const seatBoxes = seats.map((s) => s.getBoundingClientRect());
+        const seatsOverlap = seatBoxes.some((a, i) => seatBoxes.some((b, j) => j > i && a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom));
+        // A hand card counts as tappable on its face when a point below its index (40% down) hits it.
+        const hand = [...document.querySelectorAll('.card-slot.is-interactive')];
+        const faceTappable = hand.filter((el) => { const b = el.getBoundingClientRect(); return document.elementFromPoint(b.left + 10, b.top + b.height * .4)?.closest('.card-slot') === el; }).length;
+        return { small, clippedInteractiveCards: clipped, topbarNameTruncated: !!name && cut(name), roomCodeWhole, seatNamesCut, seatsOverlap, handFaceTappable: `${faceTappable}/${hand.length}` };
       });
       Object.assign(r.phone, layout);
       r.phone.firstMove = r.phone.myTurnWithin20s ? await uiMove(phone, true) : null;
@@ -177,6 +192,6 @@ try {
 } finally {
   await browser.close();
 }
-const bad = results.filter((r) => r.desktop.failure || r.phone.failure || !r.desktop.rematch || r.errors.length);
+const bad = results.filter((r) => r.desktop.failure || r.phone.failure || !r.desktop.rematch || r.errors.length || r.phone.roomCodeWhole === false || r.phone.seatsOverlap);
 console.log(bad.length ? `ATTENTION: ${bad.map((r) => r.game).join(', ')}` : `PASS: ${results.length} games from library to result and rematch`);
 process.exitCode = bad.length ? 1 : 0;

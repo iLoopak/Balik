@@ -48,7 +48,12 @@ export function EmotePicker({ send = sendEmote }: { send?: (id: EmoteId) => bool
   const details = useRef<HTMLDetailsElement>(null);
   useEffect(() => () => clearTimeout(timer.current), []);
   return <details className="emote-picker" ref={details}>
-    <summary aria-label="Poslat reakci">Reakce</summary>
+    <summary aria-label="Poslat reakci" title="Reakce">
+      <svg className="emote-picker-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M4 5h16v11H10l-5 4v-4H4Z" /><path d="M9 9.5h.01M15 9.5h.01M9 12.5q3 2 6 0" />
+      </svg>
+      <span className="emote-picker-label">Reakce</span>
+    </summary>
     <div className="emote-options" role="group" aria-label="Rychlé reakce">
       {EMOTE_IDS.map((id) => <button key={id} disabled={cooldown} onClick={() => {
         if (!send(id)) return;

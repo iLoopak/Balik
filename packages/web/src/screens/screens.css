@@ -446,10 +446,18 @@
 .game-tag .rules-open { margin-left: auto; min-height: 36px; padding: 4px 8px; }
 
 /* Phones: the game's name beats a rarely used control. The character stays in lobby and home. */
-.topbar-room { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 @media (max-width: 560px) {
   .topbar { gap: 4px; padding-left: 12px; }
   .topbar .avatar-picker-open { display: none; }
   .topbar-brand { font-size: 16px; }
   .topbar-room { flex: 1; }
+  /* Game name above the room code: both stay readable next to five icon buttons. */
+  .topbar-room { flex-direction: column; align-items: flex-start; gap: 0; line-height: 1.2; }
+  .topbar-room .topbar-sep { display: none; }
+  .topbar-game { max-width: 100%; }
+  .game-screen .topbar { gap: 4px; }
+}
+/* The narrowest phones: the room code matters more than the wordmark mid-game. */
+@media (max-width: 374px) {
+  .game-screen .topbar-brand { display: none; }
 }

@@ -66,6 +66,21 @@ describe('responsive arena layout', () => {
     }
   });
 
+  it('leaves more than the index of a back-row card free to tap on portrait phones', () => {
+    for (const [w, h] of [[390, 844], [390, 740], [360, 640]]) {
+      for (const count of [12, 16]) {
+        const geo = computeGeometry(w!, h!, order, 'me', count);
+        expect(geo.handRows).toBe(2);
+        const placed = [...placeMyHand(geo, hand(count), false, { ...idle, playable: new Set(hand(count).map((c) => c.key)) }).values()];
+        const back = placed.filter((p) => p.z < 260), front = placed.filter((p) => p.z >= 260);
+        const frontTop = Math.min(...front.map((p) => bounds(p, geo.cardW, geo.cardH).top));
+        for (const p of back) expect(frontTop - (p.y - geo.cardH / 2)).toBeGreaterThan(geo.cardH * .5);
+      }
+    }
+    // Landscape phones and desktop keep the tighter rows: height is scarcer there.
+    expect(computeGeometry(844, 390, order, 'me', 16).rowOffset).toBeLessThan(.5);
+  });
+
   it('exposes the chosen theme and suit and disables ambient motion for reduced and lite modes', () => {
     const geo = computeGeometry(1280, 720, order, 'me', 5);
     for (const suit of ['hearts', 'diamonds', 'clubs', 'spades'] as const) {

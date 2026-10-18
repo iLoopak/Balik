@@ -23,6 +23,8 @@ export interface Geometry {
   oppScale: number;
   short: boolean;
   handRows: 1 | 2;
+  /** Vertical distance between the two hand rows, in card heights. */
+  rowOffset: number;
   discardScale: number;
   deckScale: number;
   pileW: number;
@@ -65,10 +67,10 @@ export function opponentsOf(order: string[], me: string): string[] {
 
 export function computeGeometry(w: number, h: number, order: string[], me: string, myHandCount: number): Geometry {
   const metrics = responsiveCardScale(w, h, myHandCount);
-  const { compact, cardW, cardH, oppScale, handMaxW, rows, discardScale, deckScale } = metrics;
+  const { compact, cardW, cardH, oppScale, handMaxW, rows, rowOffset, discardScale, deckScale } = metrics;
   const handY = h - metrics.edge - cardH * TABLE_METRICS.handBottom;
   // Includes a fully lifted card: the control bar never sits underneath the hand.
-  const handTop = handY - cardH * (TABLE_METRICS.handHeadroom + (rows - 1) * TABLE_METRICS.rowOffset);
+  const handTop = handY - cardH * (TABLE_METRICS.handHeadroom + (rows - 1) * rowOffset);
   const controlY = handTop - metrics.controlHeight - metrics.controlGap;
   const seatsY = metrics.topInset + cardH * oppScale * .5;
   const opponentsBottom = metrics.topInset + cardH * oppScale + metrics.seatGap + metrics.seatHeight;
@@ -103,6 +105,7 @@ export function computeGeometry(w: number, h: number, order: string[], me: strin
     oppScale,
     short: metrics.short,
     handRows: rows,
+    rowOffset,
     discardScale, deckScale, pileW, pileH, deckW, deckH,
     controlY, controlHeight: metrics.controlHeight,
     suitBadge: metrics.badgeBeside
@@ -154,7 +157,7 @@ export function placeMyHand(geo: Geometry, hand: CardEntity[], collapsed: boolea
   rows.forEach((row, r) => {
     const m = row.length;
     const isBack = twoRows && r === 0;
-    const baseY = isBack ? geo.handY - geo.cardH * TABLE_METRICS.rowOffset : geo.handY;
+    const baseY = isBack ? geo.handY - geo.cardH * geo.rowOffset : geo.handY;
     const spacing = m > 1 ? Math.min(geo.cardW * (geo.compact ? 0.66 : 0.68), (geo.handMaxW - geo.cardW) / (m - 1)) : 0;
     const maxAngle = Math.min(geo.compact ? 9 : 10, m * 1.8);
     row.forEach((e, i) => {
