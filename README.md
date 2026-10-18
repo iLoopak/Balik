@@ -252,7 +252,7 @@ pak `supabase functions deploy game --project-ref <project-ref>`). SQL a env se 
 - Avatar se přenáší spoluhráčům, uchová při reconnectu a funguje napříč hrami i edicemi.
 - Aktivní ring a přemýšlející mini kartičky vycházejí z veřejného tahu; omezený pohyb má statickou variantu.
 - `/dev/avatars`: vývojový přehled všech postav, pickeru, stavů a velikostí.
-- `/decks/retro-arcade`: veřejná produkční galerie všech 32 karet, dostupná z úvodu.
+- `/decks/retro-arcade`, `/decks/mariasky`, `/decks/strasidla`, `/decks/kontrast`: veřejné galerie všech 32 karet (`decks/EditionGallery.tsx`, texty v `decks/editions.ts`), odkazy na úvodu.
 - [Architektura, prompty, rozšíření, QA a nasazení](docs/brand/AVATARS.md).
 
 Tato změna vyžaduje nový frontend **i Supabase funkci `game`** (nebo Node server).

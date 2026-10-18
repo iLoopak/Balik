@@ -8,7 +8,8 @@ import { GameFeelPlayground } from './effects/GameFeelPlayground';
 import { lazy, Suspense, useEffect } from 'react';
 import { BrandInteraction } from './brand/BrandInteraction';
 import { preloadDeck, useAppearance } from './themes/preferences';
-const ArcadeGallery = lazy(() => import('./decks/ArcadeGallery'));
+import { galleryDeckFromPath } from './decks/editions';
+const EditionGallery = lazy(() => import('./decks/EditionGallery'));
 const AvatarPlayground = import.meta.env.DEV ? lazy(() => import('./avatars/AvatarPlayground')) : null;
 const DeckLab = import.meta.env.DEV ? lazy(() => import('./dev/DeckLab')) : null;
 const BrandPlayground = import.meta.env.DEV ? lazy(() => import('./dev/BrandPlayground')) : null;
@@ -16,9 +17,9 @@ const BrandPlayground = import.meta.env.DEV ? lazy(() => import('./dev/BrandPlay
 export function App() {
   const deck = useAppearance((p) => p.deck);
   const path = useApp((s) => s.path);
-  const arcadeGallery = path.replace(/\/$/, '') === '/decks/retro-arcade';
-  const assetDeck = arcadeGallery
-    ? 'retro-arcade'
+  const galleryDeck = galleryDeckFromPath(path);
+  const assetDeck = galleryDeck
+    ? galleryDeck
     : path.replace(/\/$/, '') === '/dev/deck-stormpunk'
       ? 'stormpunk'
       : deck;
@@ -34,9 +35,9 @@ export function App() {
         <Suspense fallback={<p>Načítám postavy…</p>}>
           <AvatarPlayground />
         </Suspense>
-      ) : arcadeGallery ? (
+      ) : galleryDeck ? (
         <Suspense fallback={<p>Načítám sbírku…</p>}>
-          <ArcadeGallery />
+          <EditionGallery key={galleryDeck} deck={galleryDeck} />
         </Suspense>
       ) : DeckLab && path.replace(/\/$/, '') === '/dev/decks' ? (
         <Suspense fallback={<p>Načítám edice…</p>}>
