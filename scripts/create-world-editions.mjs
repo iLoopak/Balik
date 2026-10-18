@@ -27,8 +27,9 @@ for(const [i,d] of definitions.entries()) {
  if(premium&&(premium.length!==32||new Set(premium.map(e=>e.card.id)).size!==32||premium.some(e=>!e.stickerAsset.endsWith('.webp')||!existsSync('packages/web/public'+e.stickerAsset))))throw new Error(`Incomplete premium release: ${d.id}`);
  const manifest=premium??cards.map(({art,...entry})=>entry);
  write(`${src}/manifest.json`,JSON.stringify(manifest,null,2));
+ if(!existsSync(`packages/web/public/decks/art-backs/${d.id}.webp`))throw new Error(`Missing released back: ${d.id}`);
  const suits=Object.fromEntries(Object.entries(d.suits).map(([s,{character,...style}])=>[s,style]));
- decks[d.id]={id:d.id,name:d.name,description:d.description,...(premium?{}:{artStatus:'study'}),indices:'four-corners',back:`/decks/${d.id}/back.svg`,fx:d.fx,suits};
+ decks[d.id]={id:d.id,name:d.name,description:d.description,...(premium?{}:{artStatus:'study'}),indices:'four-corners',back:`/decks/art-backs/${d.id}.webp`,fx:d.fx,suits};
  tables[d.id]={id:d.id,name:d.tableName,geometry:d.geometry,background:d.bg,surface:d.surface,rail:d.accent+'35',grid:d.accent+'0C',secondary:d.secondary,
    light:{background:d.lightBg,surface:d.lightSurface,rail:'#74655255',grid:'#74655212',secondary:Object.values(d.suits)[0].ink},
    colors:Object.fromEntries(Object.entries(d.suits).map(([s,v])=>[s,v.color])),

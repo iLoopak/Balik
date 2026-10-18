@@ -1,8 +1,8 @@
-# Pět návrhů rubů BALÍK
+# Pět aktivních imagegen rubů BALÍK
 
-2026-10-18 · vytvořeno vestavěným **image_gen**, jeden samostatný rastrový návrh pro každou edici. Stormpunk je rozšíření původního zadání čtyř rubů. Jde o návrhy k vizuálnímu porovnání, nikoli o náhradu rubů v produkčním registru.
+2026-10-18 · vytvořeno vestavěným **image_gen**, jeden samostatný rastrový návrh pro každou edici. Stormpunk je rozšíření původního zadání čtyř rubů. Všech pět rubů je nyní zapojených v produkčním registru a používá je herní CardBack, showroom, veřejné galerie i přednačítání decku.
 
-Dev galerie: **`/dev/art-backs`**. U každé edice ukazuje skutečný `CardView` líce a dosavadního rubu, nový návrh a jeho miniaturu v šířce 76 px. Světlý/tmavý podklad je lokální stav galerie a nemění appearance preference. Galerie je načítána pouze v dev sestavení.
+Dev galerie: **`/dev/art-backs`**. U každé edice ukazuje skutečný `CardView` líce a aktivního rastrového rubu, archivovaný SVG a miniaturu rubu v šířce 76 px. Světlý/tmavý podklad je lokální stav galerie a nemění appearance preference. Galerie je načítána pouze v dev sestavení.
 
 | Edice | Koncept | Materiály a motivy | Asset |
 | --- | --- | --- | --- |
@@ -17,7 +17,7 @@ Dev galerie: **`/dev/art-backs`**. U každé edice ukazuje skutečný `CardView`
 - Společný velký nápis **BALÍK** v kontrastním středu; žádné hodnoty, rohové indexy či identita konkrétní karty.
 - Vlastní materiálový jazyk každé edice podle skutečného referenčního stickeru. Stormpunk používá původní eso Výhně a Bouře jako stylové reference, nikoli estetiku BIO//PUNKU.
 - Větší ornamentální hmoty, vyvážený horní a dolní motiv a čitelný střed v malé velikosti.
-- Plně neprůhledný rub 5:7. Protipóly jsou kompoziční, návrhy nemají přesnou rotační symetrii; čitelný středový nápis určuje orientaci.
+- Plně neprůhledný rub 5:7. Protipóly jsou kompoziční, ruby nemají přesnou rotační symetrii; čitelný středový nápis určuje orientaci.
 
 ## Pipeline a původ
 
@@ -27,4 +27,6 @@ Export: `scripts/prepare-premium-backs.mjs` → `640 × 896`, WebP quality 92, b
 
 ## Stav a limity
 
-Výtvarně zkontrolovány všechny návrhy včetně nápisu BALÍK. Nové ruby jsou **návrhy v oddělené galerii**. Dosavadní `back.svg` v deck registry, skutečné skryté karty a herní chování zůstávají beze změny. Dalším krokem po výběru návrhů je jejich napojení do registry a kontrola pickeru, přednačítání a všech herních velikostí.
+Všech pět rubů je aktivních: BIO//PUNK, PANELÁK 3000, CHALUPA!, PAPÍROVÝ CIRKUS i Stormpunk. Předchozí PR je obsahovalo pouze jako návrhy; následná oprava přepíná runtime registry na existující WebP. Žádné nové generování nebylo potřeba.
+
+`art:worlds` zachovává nové runtime cesty a ověřuje existenci rubů, takže regenerování registry neobnoví staré SVG. Staré soubory zůstávají jen pro historické porovnání. Přednačítá se celý deck včetně jednoho společného rubu; výběr ani síťové požadavky neodhalují hodnotu skryté karty. Testy ověřují skutečné ruby v rendereru, showroomu a preload seznamu.

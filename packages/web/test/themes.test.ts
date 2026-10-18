@@ -24,6 +24,13 @@ import type { EffectInstance } from '../src/effects/effectEvents';
 vi.mock('../src/net/client', () => ({ onEmote: vi.fn(), sendEmote: vi.fn() }));
 const root = fileURLToPath(new URL('../public', import.meta.url));
 afterEach(() => { useAppearance.setState(DEFAULT_APPEARANCE); vi.unstubAllGlobals(); });
+const expectValidBack = (src: string) => {
+  const bytes = readFileSync(root + src);
+  if (src.endsWith('.webp')) {
+    expect(bytes.toString('ascii', 0, 4)).toBe('RIFF');
+    expect(bytes.toString('ascii', 8, 12)).toBe('WEBP');
+  } else expect(bytes.toString('utf8')).toContain('BALÍK');
+};
 
 describe('interchangeable cosmetic editions', () => {
   it('isolates an art proof override to the face sticker, preserving indices and concealed identity', () => {
@@ -74,7 +81,7 @@ describe('interchangeable cosmetic editions', () => {
       }
     }
     expect(geometry.size).toBe(32);
-    expect(readFileSync(root + theme.back!, 'utf8')).toContain('BALÍK');
+    expectValidBack(theme.back!);
   });
   it('renders all editions with layered indices, distinct symbols and stickers across every supported game', () => {
     for (const theme of EDITIONS) {
@@ -105,7 +112,7 @@ describe('interchangeable cosmetic editions', () => {
       expect(expected).not.toContain('card-front');
       expect(expected).not.toContain('/stickers/');
       for (const card of createDeck32()) expect(renderToStaticMarkup(createElement(CardView, { card, faceUp: false, deck: theme.id }))).toBe(expected);
-      expect(readFileSync(root + theme.back!, 'utf8')).toContain('BALÍK');
+      expectValidBack(theme.back!);
     }
   });
   it('ships 32 different bounded transparent vector illustrations with no text, scripts or baked card', () => {
@@ -175,7 +182,7 @@ describe('interchangeable cosmetic editions', () => {
       const bytes = statSync(file).size; expect(bytes).toBeLessThan(7000); total += bytes;
     }
     expect(total).toBeLessThan(120_000);
-    expect(readFileSync(root + theme.back!, 'utf8')).toContain('BALÍK');
+    expectValidBack(theme.back!);
   });
   it('keeps Kontrast readable: AA contrast on white, a pattern per suit and role hints on the card', () => {
     const theme = DECK_THEMES.kontrast;

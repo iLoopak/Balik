@@ -1,5 +1,8 @@
 # Ověření návrhů rubů · 2026-10-18
 
+**Aktuální stav:** všech pět rubů je následnou opravou aktivováno v runtime registry.
+Kontroly vydání: [RUNTIME_RELEASE.md](RUNTIME_RELEASE.md). Níže zůstává historie návrhů před aktivací.
+
 Všech pět skutečných imagegen výstupů zkontrolováno vizuálně. Nápis BALÍK má čárku nad Í; bez hodnot, indexů, dodatečných textů či vnějšího fotografického mockupu. U Stormpunku použity skutečné původní sticker assety Výhně a Bouře jako stylové reference.
 
 Export všech pěti návrhů: neprůhledný WebP 640 × 896, poměr 5:7. Metadata a velikosti jsou v jednotlivých job JSON; celkem 1 283 788 B. Není to přesná rotační symetrie ani tisková sazba.

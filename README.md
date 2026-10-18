@@ -365,9 +365,9 @@ transparentních WebP. BIO//PUNK navazuje na zjednodušenou v2 s velkými anatom
 plochami, řízeným stínováním a méně drobným šumem. Historie původních SVG studií
 a čtyř konceptů zůstává na `/dev/art-poc`.
 
-Pět samostatných imagegen návrhů rubů (včetně Stormpunku) je na
-`/dev/art-backs`; porovnání s líci, současnými ruby a 76px miniaturou.
-[Prompty, assety a stav návrhů](docs/visual/premium-backs/README.md).
+Pět imagegen rubů (včetně Stormpunku) je aktivních ve hrách, veřejných galeriích
+a showroomu. `/dev/art-backs` porovnává aktivní ruby s líci, archivovanými SVG
+a 76px miniaturou. [Prompty, assety a stav vydání](docs/visual/premium-backs/README.md).
 [Původní kritický audit](docs/visual/PREMIUM_ART_AUDIT.md) ·
 [Rastrová pipeline a prompty](docs/visual/premium-series/README.md).
 

@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { DECK_THEMES, EDITIONS, TABLE_THEMES } from '../src/themes/registry';
-import { DEFAULT_APPEARANCE, setAppearance, useAppearance } from '../src/themes/preferences';
+import { DEFAULT_APPEARANCE, deckAssetUrls, setAppearance, useAppearance } from '../src/themes/preferences';
 import { DeckFan, TableStage, deckTraits, showroomDecks, showroomTables } from '../src/themes/Showroom';
 import { ShowroomContent } from '../src/themes/AppearanceDialog';
 import { closeAppearance, openAppearance, useAppearanceDialog } from '../src/themes/appearanceStore';
@@ -36,6 +36,22 @@ describe('appearance showroom', () => {
     expect(fan).toContain('/decks/strasidla/back.svg');
     expect(fan.match(/class="card /g)).toHaveLength(3);
   });
+
+  it.each(['stormpunk', 'biopunk', 'panelak-3000', 'chalupa', 'papirovy-cirkus'] as const)(
+    'shows and preloads the released imagegen back for %s', deck => {
+      const back = `/decks/art-backs/${deck}.webp`;
+      expect(DECK_THEMES[deck].back).toBe(back);
+      expect(deckAssetUrls(deck)).toContain(back);
+      expect(deckAssetUrls(deck)).toHaveLength(33);
+      for (const html of [
+        renderToStaticMarkup(createElement(DeckFan, { deck })),
+        renderToStaticMarkup(createElement(TableStage, { deck, table: 'stormpunk' })),
+      ]) {
+        expect(html).toContain(`src="${back}"`);
+        expect(html).not.toContain(`/decks/${deck}/back.svg`);
+      }
+    },
+  );
 
   it('offers every deck and table in one dialog and opens from any game', () => {
     openAppearance('marias');

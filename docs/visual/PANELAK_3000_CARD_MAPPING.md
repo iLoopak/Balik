@@ -62,7 +62,7 @@ nikoli nové herní role. Esa jsou velké ikonické totemy.
 ## Assety a integrace
 
 - 32 transparentních WebP s max. hranou 768 px, 32px bezpečnostní okraj: `packages/web/public/decks/panelak-3000/stickers/{suit}-{rank}.webp`. Bez textu, hodnot, indexů a bez líce karty.
-- Rub: `packages/web/public/decks/panelak-3000/back.svg`, 200 × 280 se značkou BALÍK.
+- Rub: `packages/web/public/decks/art-backs/panelak-3000.webp`, 640 × 896 se značkou BALÍK; aktivní v galerii, showroomu i během hry.
 - Manifest: `packages/web/src/themes/decks/panelak-3000/manifest.json`.
 - Autoritativní manifest rastrové edice: `packages/web/src/themes/decks/panelak-3000/premium-manifest.json`. Opětovné `art:worlds` jej zachová.
 - Veřejná galerie: `/decks/panelak-3000` — skutečný CardView, filtr, detail, malé karty, světlý/tmavý podklad, ruby.
