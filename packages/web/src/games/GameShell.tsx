@@ -53,6 +53,9 @@ export function GameShell({ room, gameId, tableRef, geo, placed, stamp, lite, re
   const name = (id: string) => room.players.find((p) => p.id === id)?.name ?? 'Odpojený hráč';
   const person = (id: string) => room.players.find((p) => p.id === id) ?? { id, name: name(id) };
   const opponents = Object.keys(geo.seats);
+  // A top seat may use the gap to its neighbours: wider names with two opponents, no overlap with three.
+  const topSeats = opponents.filter((id) => geo.seats[id]!.side === 'top').length;
+  const seatMaxW = Math.round(Math.min(190, topSeats <= 1 ? geo.w - 24 : geo.w / topSeats - 8));
   return <section className={`game-shell game-shell-${gameId}`} aria-label={gameId}>
     {top && <div className="game-shell-top">{top}</div>}
     <div className={`table game-shell-table${apparatus ? '' : ' is-open-table'}`} ref={tableRef} data-game={gameId} data-idle={idle} data-quiet={quiet}>
@@ -64,7 +67,7 @@ export function GameShell({ room, gameId, tableRef, geo, placed, stamp, lite, re
         const message = emotes.find((m) => m.playerId === id);
         const turn = avatarTurn(room, id, status === 'open');
         return <div key={id} className={`game-seat${activeId === id ? ' is-current' : ''}${info.tone ? ` is-${info.tone}` : ''}`}
-          style={seat.side === 'top' ? { left: seat.x, top: seat.y + geo.cardH * geo.oppScale * .56 + 8 } : { left: seat.x, top: seat.y + geo.cardH * .45 }}>
+          style={seat.side === 'top' ? { left: seat.x, top: seat.y + geo.cardH * geo.oppScale * .56 + 8, maxWidth: seatMaxW } : { left: seat.x, top: seat.y + geo.cardH * .45 }}>
           <Avatar player={person(id)} size={geo.short ? 26 : 32} turn={turn} reduced={quiet} />
           <span><b>{name(id)}</b><AvatarTurnLabel turn={turn} />{info.sub && <small>{info.sub}</small>}</span>
           {info.badge && <em className="game-seat-badge">{info.badge}</em>}
