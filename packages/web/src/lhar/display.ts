@@ -1,3 +1,4 @@
+import type { EnvironmentSignal } from '../table/environment';
 import type { Card, LharClientEvent, LharResolution, LharView } from '@balik/shared';
 import type { CardEntity } from '../table/display';
 import { sortHand } from '../table/display';
@@ -15,6 +16,7 @@ export interface LharDisplay {
   beat: 'quiet' | 'challenge' | 'reveal' | 'take';
 }
 export interface LharStep {
+  environment?: EnvironmentSignal;
   apply: (d: LharDisplay) => LharDisplay;
   wait: number;
   quietWait?: number;
@@ -77,6 +79,7 @@ export function lharSteps(event: LharClientEvent, me: string, target: LharView):
       return [
         {
           wait: 0,
+          environment: {kind:'deal'},
           apply: (d) => ({
             ...reconcileLhar(
               {
@@ -121,6 +124,7 @@ export function lharSteps(event: LharClientEvent, me: string, target: LharView):
       return [
         {
           wait: 440,
+          environment: {kind:'play',sourcePlayerId:event.claim.playerId},
           sound: 'play',
           apply: (d) => {
             const stamp = d.stamp + 1,
@@ -158,6 +162,7 @@ export function lharSteps(event: LharClientEvent, me: string, target: LharView):
       return [
         {
           wait: 260,
+          environment: {kind:'challenge'},
           quietWait: 0,
           apply: (d) =>
             d.view.lastClaim?.id !== event.resolution.claim.id
@@ -166,6 +171,7 @@ export function lharSteps(event: LharClientEvent, me: string, target: LharView):
         },
         {
           wait: 850,
+          environment: {kind:'reveal'},
           quietWait: 950,
           sound: 'special',
           apply: (d) => {
@@ -202,6 +208,7 @@ export function lharSteps(event: LharClientEvent, me: string, target: LharView):
       return [
         {
           wait: 580,
+          environment: {kind:'collect',targetPlayerId:event.playerId},
           quietWait: 450,
           sound: 'draw',
           apply: (d) => {
@@ -250,6 +257,7 @@ export function lharSteps(event: LharClientEvent, me: string, target: LharView):
       return [
         {
           wait: 250,
+          environment: event.result.winnerIds.length ? {kind:'win',targetPlayerId:event.result.winnerIds[0]} : undefined,
           sound: event.result.winnerIds.includes(me) ? 'win' : 'lose',
           apply: (d) => ({
             ...d,

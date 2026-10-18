@@ -1,14 +1,14 @@
 import { create } from 'zustand';
-import { DECK_THEMES, isDeckId, isTableId, isTableTone, type DeckId, type TableId, type TableTone } from './registry';
-export interface AppearancePreferences { deck: DeckId; table: TableId; tone: TableTone }
+import { DECK_THEMES, isDeckId, isTableId, type DeckId, type TableId } from './registry';
+export interface AppearancePreferences { deck: DeckId; table: TableId }
 export const APPEARANCE_KEY = 'balik.appearance';
-export const DEFAULT_APPEARANCE: AppearancePreferences = { deck: 'stormpunk', table: 'stormpunk', tone: 'dark' };
+export const DEFAULT_APPEARANCE: AppearancePreferences = { deck: 'stormpunk', table: 'stormpunk' };
 export function parseAppearance(raw: string | null): AppearancePreferences {
   try {
     const value: unknown = JSON.parse(raw ?? '{}');
     if (!value || typeof value !== 'object') return { ...DEFAULT_APPEARANCE };
     const v = value as Record<string, unknown>;
-    return { deck: isDeckId(v.deck) ? v.deck : DEFAULT_APPEARANCE.deck, table: isTableId(v.table) ? v.table : DEFAULT_APPEARANCE.table, tone: isTableTone(v.tone) ? v.tone : DEFAULT_APPEARANCE.tone };
+    return { deck: isDeckId(v.deck) ? v.deck : DEFAULT_APPEARANCE.deck, table: isTableId(v.table) ? v.table : DEFAULT_APPEARANCE.table };
   } catch { return { ...DEFAULT_APPEARANCE }; }
 }
 function load() {
@@ -18,21 +18,20 @@ function load() {
     const query = new URLSearchParams(window.location.search);
     if (isDeckId(query.get('deck'))) value.deck = query.get('deck') as DeckId;
     if (isTableId(query.get('table'))) value.table = query.get('table') as TableId;
-    if (isTableTone(query.get('tone'))) value.tone = query.get('tone') as TableTone;
   }
   return value;
 }
 export const useAppearance = create<AppearancePreferences>(() => load());
 export function setAppearance(patch: Partial<AppearancePreferences>) {
   const old = useAppearance.getState();
-  const next = { deck: isDeckId(patch.deck) ? patch.deck : old.deck, table: isTableId(patch.table) ? patch.table : old.table, tone: isTableTone(patch.tone) ? patch.tone : old.tone };
+  const next = { deck: isDeckId(patch.deck) ? patch.deck : old.deck, table: isTableId(patch.table) ? patch.table : old.table };
   useAppearance.setState(next);
   try { localStorage.setItem(APPEARANCE_KEY, JSON.stringify(next)); } catch { /* session still works */ }
   // A URL preview is an initial override only; a manual choice must survive reload.
   if (typeof window !== 'undefined') {
     const url = new URL(window.location.href);
-    if (['deck', 'table', 'tone'].some(k => url.searchParams.has(k))) {
-      url.searchParams.delete('deck'); url.searchParams.delete('table'); url.searchParams.delete('tone');
+    if (url.searchParams.has('deck') || url.searchParams.has('table')) {
+      url.searchParams.delete('deck'); url.searchParams.delete('table');
       window.history.replaceState(window.history.state, '', url);
     }
   }

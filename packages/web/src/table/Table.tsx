@@ -1,3 +1,4 @@
+import { environmentFromEffects } from './environment';
 import { useAppearance } from '../themes/preferences';
 import { AnimatePresence, motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -147,8 +148,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
 
   return (
     <div className={`table command-table${geo.short ? ' table-short' : ''}`} ref={tableRef} onClick={onTableClick}>
-      <GameTableTheme geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown}
-        active={display.phase === 'playing' ? display.currentPlayerId : null} beat={{ play: display.discard.at(-1)?.key ?? null, draw: display.drawCount }} />
+      <GameTableTheme game="prsi" you={me} drawCount={display.drawCount} pulses={environmentFromEffects(fx.filter((f): f is EffectInstance => f.kind === 'effect'))} geo={geo} suit={display.activeSuit} reduced={reducedMotion} lite={lite} myTurn={myTurnShown} />
       <AnimatePresence>
         {myTurnShown && display.phase === 'playing' && (
           <motion.div
@@ -267,7 +267,7 @@ export function Table({ room, reducedMotion }: { room: RoomView; reducedMotion: 
 function DeckStack({ geo, count, canDraw, penalty, onDraw }: { geo: Geometry; count: number; canDraw: boolean; penalty: number; onDraw: () => void }) {
   const layers = Math.min(3, count);
   return (
-    <div className="deck" style={{ left: geo.deck.x - geo.deckW / 2, top: geo.deck.y - geo.deckH / 2, width: geo.deckW, height: geo.deckH, ['--card-w' as string]: `${geo.cardW}px` }}>
+    <div className="deck" style={{ left: geo.deck.x - geo.deckW / 2, top: geo.deck.y - geo.deckH / 2, width: geo.deckW, height: geo.deckH }}>
       {count === 0 && <div className="deck-empty">prázdný</div>}
       {Array.from({ length: layers }, (_, i) => (
         <div key={i} className="deck-card" style={{ transform: `translate(${-(layers - 1 - i) * 1.5}px, ${-(layers - 1 - i) * 1.5}px)` }}>

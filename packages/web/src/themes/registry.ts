@@ -4,8 +4,8 @@ import { FACTIONS, SUIT_FACTION } from '../decks/stormpunk/tokens';
 import { FACTION_PATHS } from '../decks/stormpunk/FactionIcon';
 import { CLASSIC_PATHS } from './decks/classic';
 import { RETRO_ARCADE_CARDS } from './decks/retro-arcade/manifest';
-import type { ConsolePalette, DeckId, DeckTheme, TableId, TableTheme, SuitStyle } from './types';
-export type { ConsolePalette, DeckId, DeckTheme, TableId, TableTheme, TableTone, StickerAsset } from './types';
+import type { DeckId, DeckTheme, TableId, TableTheme, SuitStyle } from './types';
+export type { DeckId, DeckTheme, TableId, TableTheme, StickerAsset } from './types';
 const mapSuits = <T,>(fn: (suit: Suit) => T) => Object.fromEntries(SUITS.map(s => [s, fn(s)])) as Record<Suit, T>;
 const colors = { hearts: '#F34B61', diamonds: '#F5C544', clubs: '#38BA87', spades: '#528FFF' };
 const inks = { hearts: '#B6223C', diamonds: '#795600', clubs: '#126747', spades: '#2351A4' };
@@ -33,35 +33,15 @@ export const DECK_THEMES: Record<DeckId, DeckTheme> = {
     stickerFor: card => { const art = RETRO_ARCADE_CARDS.find(e => e.card.suit === card.suit && e.card.rank === card.rank); return art ? { src: art.stickerAsset } : null; },
   },
 };
-// The console is BALÍK's own: both tables share one apparatus and differ only in material.
-const IVORY: ConsolePalette = {
-  bg: '#e4d9c4', spot: '#f4ede0', frame: '#5c4a3036', pattern: '#6b5636',
-  bezel: '#d8cab0', edge: '#7a643f45', faceTop: '#fbf7ee', faceBottom: '#efe6d5', highlight: '#ffffff',
-  wellTop: '#c9b896', wellBottom: '#dccdb0', wellLip: '#fffaf0',
-  line: '#4b3b2640', pad: '#efe6d4', trayTop: '#f3ecdf', trayBottom: '#e3d6bd',
-  amber: '#c47a0c', shadow: '#5a4123', shadowOpacity: .28, engrave: '#6d5a3f',
-};
 export const TABLE_THEMES: Record<TableId, TableTheme> = {
-  stormpunk: { id: 'stormpunk', name: 'Městská aréna', cut: 'soft', colors: mapSuits(s => FACTIONS[SUIT_FACTION[s]].color), secondary: '#FFE5AF',
-    tones: {
-      dark: { bg: '#0a111e', spot: '#17243b', frame: '#8ea6c42b', pattern: '#9fb6d4',
-        bezel: '#0d1626', edge: '#a9bdd63a', faceTop: '#1b2a43', faceBottom: '#111c2f', highlight: '#d6e4f64d',
-        wellTop: '#060b15', wellBottom: '#0c1525', wellLip: '#c8d8ee26',
-        line: '#9fb4d038', pad: '#121d30', trayTop: '#14213a', trayBottom: '#0a1120',
-        amber: '#ffb23f', shadow: '#000000', shadowOpacity: .6, engrave: '#8fa3be' },
-      light: IVORY,
-    } },
-  'retro-arcade': { id: 'retro-arcade', name: 'Noční herna', cut: 'hard', colors, secondary: '#F5C544',
-    tones: {
-      dark: { bg: '#130f24', spot: '#271f45', frame: '#e597f230', pattern: '#c79be8',
-        bezel: '#171229', edge: '#e597f247', faceTop: '#2a2148', faceBottom: '#1b1531', highlight: '#f1d6ff4d',
-        wellTop: '#0b0817', wellBottom: '#151027', wellLip: '#e9c4ff26',
-        line: '#c79be83d', pad: '#1c1633', trayTop: '#221a3d', trayBottom: '#120e21',
-        amber: '#f5c544', shadow: '#000000', shadowOpacity: .6, engrave: '#b39ccf' },
-      light: { ...IVORY, bg: '#e2d9cc', frame: '#5a3f6a33', pattern: '#5e4472', edge: '#6e4f7f45', line: '#4a325c3d', engrave: '#6a5378', amber: '#b9820b' },
-    } },
+  stormpunk: { id: 'stormpunk', name: 'Městská aréna', geometry: 'oval', background: '#101827', surface: '#162237', rail: '#a3b2c426', grid: '#34445a24',
+    light: { background: '#e9dfcf', surface: '#e1d1b8', rail: '#9a78547a', grid: '#92785126', secondary: '#a36a29' },
+    colors: mapSuits(s => FACTIONS[SUIT_FACTION[s]].color), secondary: '#FFE5AF',
+    ambient: { hearts: 'm210 272 4 8-4 9-4-9Z', diamonds: 'M130 270h78m-55 8h31m606-128h78', clubs: 'M188 278q25-29 41-13-1 22-41 13Z', spades: 'm185 263 18 2-9 14 25-2m593-127-18-2 9-14-25 2' } },
+  'retro-arcade': { id: 'retro-arcade', name: 'Noční herna', geometry: 'cabinet', background: '#18152D', surface: '#241E3C', rail: '#E597F263', grid: '#9D69CB20', colors, secondary: '#F5C544',
+    light: { background: '#eee4d9', surface: '#ded0c9', rail: '#88658285', grid: '#916b8b24', secondary: '#885b83' },
+    ambient: { hearts: 'M160 260h12v-12h12v12h12v12h-12v12h-12v-12h-12Z', diamonds: 'm160 260 14 12-14 12m24-24 14 12-14 12', clubs: 'M164 248h12v12h12v12h-12v12h-12v-12h-12v-12h12Z', spades: 'M790 144v-12h12v12m-24 0v-24h36v24m-48 0v-36h60v36' } },
 };
 export const EDITIONS = [DECK_THEMES.stormpunk, DECK_THEMES['retro-arcade']] as const;
 export function isDeckId(id: unknown): id is DeckId { return typeof id === 'string' && Object.hasOwn(DECK_THEMES, id); }
-export function isTableTone(tone: unknown): tone is 'dark' | 'light' { return tone === 'dark' || tone === 'light'; }
 export function isTableId(id: unknown): id is TableId { return typeof id === 'string' && Object.hasOwn(TABLE_THEMES, id); }

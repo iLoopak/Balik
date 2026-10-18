@@ -1,16 +1,19 @@
 .sedma-shell { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-.sedma-scores { display: flex; align-items: center; justify-content: center; gap: 24px; min-height: 62px; padding: 6px 12px; background: #121c28; border-bottom: 1px solid #ffffff12; }
+.sedma-scores { display: flex; align-items: center; justify-content: center; gap: 24px; min-height: 62px; padding: 6px 12px; background: var(--bg-2); border-bottom: 1px solid #ffffff12; }
 .sedma-score { display: grid; grid-template-columns: 1fr auto; gap: 1px 12px; min-width: 130px; max-width: 32%; border-left: 3px solid var(--team); padding-left: 10px; }
-.sedma-team-0 { --team: #ffc16b; }
-.sedma-team-1 { --team: #8cd5f3; }
+.sedma-team-0 { --team: var(--team-0); }
+.sedma-team-1 { --team: var(--team-1); }
 .sedma-score > span { font-size: 11px; color: var(--team); }
 .sedma-score strong { grid-row: span 2; font-size: 28px; align-self: center; }
 .sedma-score small { font-size: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 200px; }
 .sedma-total { font-size: 10px; line-height: 1.6; color: var(--muted); }
+.sedma-table .arena-wordmark { display: none; }
+.sedma-table .arena-discard-dock { width: 72% !important; max-width: 640px; opacity: .4; }
+.sedma-table .arena-deck-dock { display: none; }
 .sedma-stock { position: absolute; transform: translate(-50%, -50%); opacity: .65; }
 .sedma-stock .card-back { width: 100%; height: 100%; border-radius: 3px; overflow: hidden; }
 .sedma-stock > span { position: absolute; inset: 0; display: grid; place-items: center; font-size: 11px; color: white; background: #10162077; }
-.sedma-seat { position: absolute; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; max-width: 190px; padding: 5px 9px; border: 1px solid #ffffff16; border-bottom: 2px solid var(--team); border-radius: 10px; background: #172232e8; z-index: 160; }
+.sedma-seat { position: absolute; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; max-width: 190px; padding: 5px 9px; border: 1px solid var(--line); border-bottom: 2px solid var(--team); border-radius: 10px; background: var(--hud); z-index: 160; }
 .sedma-seat.is-current { box-shadow: 0 0 0 2px var(--team); }
 .sedma-seat > span:not(.avatar) { min-width: 0; }
 .sedma-seat b { display: block; font-size: 12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
@@ -18,17 +21,17 @@
 .sedma-seat .emote-bubble { position: absolute; top: 100%; left: 0; }
 .sedma-trick-order { position: absolute; left: 50%; transform: translateX(-50%); display: flex; gap: 16px; width: min(80%, 620px); justify-content: center; pointer-events: none; }
 .sedma-trick-order span { color: var(--team); font-size: 10px; max-width: 25%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.sedma-resolution { position: absolute; left: 50%; transform: translateX(-50%); color: #ffe4b6; border: 1px solid #ffbd6155; background: #1c2838ee; border-radius: 20px; padding: 8px 16px; font-size: 13px; font-weight: 700; white-space: nowrap; z-index: 500; pointer-events: none; }
+.sedma-resolution { position: absolute; left: 50%; transform: translateX(-50%); color: var(--hud-ink); border: 1px solid #ffbd6155; background: var(--hud); border-radius: 20px; padding: 8px 16px; font-size: 13px; font-weight: 700; white-space: nowrap; z-index: 500; pointer-events: none; }
 .sedma-controls { position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: center; gap: 8px; width: min(96%, 820px); height: 44px; z-index: 550; }
 .sedma-turn { flex: 1; max-width: 330px; color: var(--team); font-weight: 700; font-size: 13px; min-width: 0; }
 .sedma-turn small { display: block; color: var(--muted); font-size: 10px; font-weight: 400; }
 .sedma-controls .btn { padding: 8px 12px; min-height: 44px; font-size: 12px; flex-shrink: 0; }
-.sedma-help { width: 44px; height: 44px; border: 1px solid #ffffff24; background: #1a2635; border-radius: 50%; color: var(--ink); flex-shrink: 0; }
-.sedma-tip { position: absolute; top: 100px; right: 12px; width: min(290px, calc(100% - 24px)); z-index: 700; border-radius: 16px; border: 1px solid #ffd18a55; padding: 16px; background: #172434f5; box-shadow: 0 12px 36px #0007; }
-.sedma-tip strong { font-size: 14px; color: #ffd18a; }
+.sedma-help { width: 44px; height: 44px; border: 1px solid var(--ui-border); background: var(--surface-2); border-radius: 50%; color: var(--ink); flex-shrink: 0; }
+.sedma-tip { position: absolute; top: 100px; right: 12px; width: min(290px, calc(100% - 24px)); z-index: 700; border-radius: 16px; border: 1px solid var(--ui-border); padding: 16px; background: var(--modal-bg); box-shadow: 0 12px 36px #0007; }
+.sedma-tip strong { font-size: 14px; color: var(--accent-text); }
 .sedma-tip p { font-size: 12px; line-height: 1.6; }
 .sedma-tip > div { display: flex; gap: 8px; }
-.sedma-results-wrap { position: absolute; inset: 0; background: #080f1cba; backdrop-filter: blur(5px); display: grid; place-items: center; overflow: auto; z-index: 800; padding: 12px; }
+.sedma-results-wrap { position: absolute; inset: 0; background: var(--result-scrim); backdrop-filter: blur(5px); display: grid; place-items: center; overflow: auto; z-index: 800; padding: 12px; }
 .sedma-results-wrap .win-panel { position: relative; transform: none; inset: auto; width: min(100%, 460px); max-height: 100%; overflow: auto; }
 .sedma-result-teams { display: flex; gap: 16px; font-size: 12px; }
 .sedma-result-teams p { display: grid; gap: 4px; margin: 0; }

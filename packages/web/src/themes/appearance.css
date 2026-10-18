@@ -1,38 +1,30 @@
 .app-settings { display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
 .home > .app-settings { align-self: center; margin-bottom: 12px; }
 .appearance-open { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; min-height: 44px; padding: 7px; background: transparent; color: inherit; border: 0; border-radius: 10px; cursor: pointer; font: inherit; font-size: 12px; }
-.appearance-open:hover { background: #ffffff0d; }
-.appearance-dialog { width: min(620px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); box-sizing: border-box; padding: clamp(16px, 4vw, 28px); border-radius: 22px; border: 1px solid #6e7e964a; background: #141d2c; color: #f9f4e9; box-shadow: 0 20px 90px #0008; overflow-y: auto; }
-.appearance-dialog::backdrop { background: #080d19c9; }
+.appearance-open:hover { background: var(--soft-hover); }
+.appearance-dialog { width: min(620px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); box-sizing: border-box; padding: clamp(16px, 4vw, 28px); border-radius: 22px; border: 1px solid var(--ui-border); background: var(--modal-bg); color: var(--ink); box-shadow: var(--shadow-lg); overflow-y: auto; }
+.appearance-dialog::backdrop { background: var(--scrim); }
 .appearance-dialog header { display: flex; align-items: start; gap: 12px; justify-content: space-between; }
-.appearance-dialog header p { color: #ffb23f; font-size: 10px; letter-spacing: .12em; margin: 0 0 8px; }
+.appearance-dialog header p { color: var(--accent-text); font-size: 10px; letter-spacing: .12em; margin: 0 0 8px; }
 .appearance-dialog h2 { font-family: var(--font-brand); margin: 0; font-size: clamp(20px, 4vw, 28px); }
-.appearance-note { font-size: 12px; color: #b2bdcd; line-height: 1.6; }
-.appearance-close { width: 44px; height: 44px; flex-shrink: 0; background: #ffffff0b; border: 1px solid #ffffff18; border-radius: 12px; color: inherit; cursor: pointer; font-size: 26px; }
+.appearance-note { font-size: 12px; color: var(--note-ink); line-height: 1.6; }
+.appearance-close { width: 44px; height: 44px; flex-shrink: 0; background: var(--modal-close); border: 1px solid var(--line); border-radius: 12px; color: inherit; cursor: pointer; font-size: 26px; }
 .appearance-dialog fieldset { border: 0; padding: 0; margin: 24px 0 0; min-width: 0; }
 .appearance-dialog legend { font-size: 13px; font-weight: 750; margin-bottom: 12px; }
 .edition-options, .table-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-.edition-option, .table-options button { display: flex; flex-direction: column; align-items: start; text-align: left; color: inherit; background: #1c2739; padding: 14px; border: 1px solid #62728d50; border-radius: 14px; cursor: pointer; gap: 8px; min-width: 0; }
-.appearance-dialog button[aria-pressed=true] { border-color: #ffb23f; background: #ffb23f0c; }
+.edition-option, .table-options button { display: flex; flex-direction: column; align-items: start; text-align: left; color: inherit; background: var(--option-bg); padding: 14px; border: 1px solid var(--ui-border); border-radius: 14px; cursor: pointer; gap: 8px; min-width: 0; }
+.appearance-dialog button[aria-pressed=true] { border-color: var(--accent-text); background: var(--option-selected); }
 .edition-option strong { font-family: var(--font-brand); font-size: 19px; }
-.edition-option small { color: #b2bdcd; line-height: 1.5; font-size: 12px; }
-.edition-selected { color: #ffcb7e; margin-top: auto; font-size: 12px; padding-top: 4px; }
+.edition-option small { color: var(--note-ink); line-height: 1.5; font-size: 12px; }
+.edition-selected { color: var(--accent-text); margin-top: auto; font-size: 12px; padding-top: 4px; }
 .edition-preview { position: relative; width: 100%; height: clamp(130px, 27vw, 180px); display: block; }
 .edition-preview-face, .edition-preview-back { position: absolute; height: 94%; aspect-ratio: 5/7; left: 50%; top: 3%; transform: translateX(-32%) rotate(7deg); }
 .edition-preview-back { transform: translateX(-75%) rotate(-13deg); height: 85%; top: 8%; }
-.appearance-classic { margin-top: 10px; padding: 10px; width: 100%; border: 1px solid #62728d50; border-radius: 10px; background: transparent; color: #c7cfdb; cursor: pointer; }
+.appearance-classic { margin-top: 10px; padding: 10px; width: 100%; border: 1px solid var(--ui-border); border-radius: 10px; background: transparent; color: var(--note-ink); cursor: pointer; }
 .table-swatch { width: 100%; height: 58px; display: grid; place-items: center; border: 1px solid; border-radius: 8px; }
-.table-swatch i { width: 72%; height: 58%; border: 1px solid; display: flex; align-items: center; justify-content: center; gap: 8%; clip-path: polygon(10% 0, 90% 0, 100% 22%, 100% 78%, 90% 100%, 10% 100%, 0 78%, 0 22%); }
-.table-swatch b { width: 17%; height: 66%; border-radius: 3px; }
-.table-swatch b:last-child { outline: 1.5px solid; outline-offset: 1px; }
-.table-swatch em { width: 6px; height: 6px; rotate: 45deg; }
-.tone-options { display: flex; gap: 8px; margin-top: 12px; }
-.tone-options button { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 8px 10px; border: 1px solid #62728d50; border-radius: 12px; background: transparent; color: #c7cfdb; font-size: 12px; cursor: pointer; }
-.tone-options button.is-on { border-color: #ffb23f; background: #ffb23f0c; color: inherit; }
-.tone-dot { width: 14px; height: 14px; rotate: 45deg; border-radius: 2px; border: 1px solid #ffb23f; }
-.tone-dot.is-dark { background: #111c2f; }
-.tone-dot.is-light { background: #f4ede0; }
-.table-options button > span:last-child { font-size: 11px; color: #c7cfdb; }
+.table-swatch i { width: 70%; height: 65%; border: 1px solid; border-radius: 50%; }
+.table-swatch.is-cabinet i { border-radius: 5px; }
+.table-options button > span:last-child { font-size: 11px; color: var(--note-ink); }
 @media (max-width: 420px) { .edition-options, .table-options { gap: 8px; } .edition-option, .table-options button { padding: 10px; } .edition-option strong { font-size: 16px; } .edition-option small { font-size: 11px; } }
 @media (prefers-reduced-motion: reduce) { .appearance-dialog *, .appearance-dialog *::before { animation: none !important; transition: none !important; } }
 

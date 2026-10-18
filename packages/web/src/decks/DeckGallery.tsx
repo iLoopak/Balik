@@ -1,3 +1,5 @@
+import { useColorMode } from '../themes/colorMode';
+import { AppearancePicker } from '../themes/AppearancePicker';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { CardView } from '../cards/Card';
 import type { DeckId } from '../cards/skin';
@@ -11,9 +13,13 @@ function Arrow({ back = false }: { back?: boolean }) {
 }
 
 export function DeckGallery() {
+  const mode = useColorMode(p => p.mode);
   const [faction, setFaction] = useState<FactionId | 'all'>('all');
   const [small, setSmall] = useState(false);
-  const [light, setLight] = useState(false);
+  const [lightPreview, setLightPreview] = useState<{ base: typeof mode; light: boolean } | null>(null);
+  const light = lightPreview?.base === mode ? lightPreview.light : mode === 'light';
+  useEffect(() => setLightPreview(null), [mode]);
+  const toggleLight = () => setLightPreview({ base: mode, light: !light });
   const [back, setBack] = useState(false);
   const [deck, setDeck] = useState<DeckId>('stormpunk');
   const [demo, setDemo] = useState(0);
@@ -39,7 +45,7 @@ export function DeckGallery() {
     <main className={`deck-gallery${light ? ' gallery-light' : ''}`}>
       <header className="gallery-nav">
         <a className="gallery-brand" href="/">BALÍK<span className="gallery-brand-dot" /></a>
-        <span className="gallery-nav-label">Vlastní svět. Vlastní karty.</span>
+        <AppearancePicker compact /><span className="gallery-nav-label">Vlastní svět. Vlastní karty.</span>
         <a className="gallery-play" href="/?deck=stormpunk">Zahrát Prší <Arrow /></a>
       </header>
 
@@ -72,7 +78,7 @@ export function DeckGallery() {
           </div>
           <div className="gallery-view-controls" role="group" aria-label="Nastavení náhledu">
             <button aria-pressed={small} onClick={() => setSmall((v) => !v)} title="Velikost jako v mobilní ruce"><svg viewBox="0 0 24 24" width="16" height="16" aria-hidden><rect x="6" y="2" width="12" height="20" rx="3" fill="none" stroke="currentColor" strokeWidth="1.7" /><path d="M10 18h4" stroke="currentColor" strokeWidth="1.7" /></svg>Mobil</button>
-            <button aria-pressed={light} onClick={() => setLight((v) => !v)}>{light ? '◐ Tmavý stůl' : '◑ Světlý stůl'}</button>
+            <button aria-pressed={light} onClick={toggleLight}>{light ? '◐ Tmavý stůl' : '◑ Světlý stůl'}</button>
             <button aria-pressed={back} onClick={() => setBack((v) => !v)}>{back ? 'Líc' : 'Rub'}</button>
             <button onClick={() => setDeck((v) => v === 'classic' ? 'stormpunk' : 'classic')} aria-pressed={deck === 'classic'}>Klasika</button>
           </div>

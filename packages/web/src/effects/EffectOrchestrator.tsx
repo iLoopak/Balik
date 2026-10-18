@@ -6,6 +6,7 @@ import type { EffectEvent, EffectInstance } from './effectEvents';
 import { EFFECT_PRESETS, primitiveTransition } from './effectPresets';
 import { EFFECT_BUDGET, effectQuality, effectTheme, particleBudget, type EffectQuality } from './effectTokens';
 import './effects.css';
+import { useColorMode } from '../themes/colorMode';
 import { useAppearance } from '../themes/preferences';
 
 export function playerEffectAnchor(geo: Geometry, id?: string, me?: string): Pt {
@@ -78,7 +79,7 @@ function Flight({ event, geo, me, quality, duration, delay }: { event: EffectEve
   const quiet = quality === 'reduced';
   const from = event.kind === 'draw' ? geo.deck : playerEffectAnchor(geo, event.sourcePlayerId, me);
   const target = playerEffectAnchor(geo, event.targetPlayerId, me);
-  const color = event.kind === 'penalty' ? '#FF586B' : effectTheme(event.suit).color;
+  const color = event.kind === 'penalty' ? 'var(--fx-penalty)' : effectTheme(event.suit).color;
   const middle = { x: geo.discard.x, y: Math.max(geo.cardH * .4, geo.discard.y - geo.cardH * .65) };
   const pointsX = [from.x, middle.x, target.x];
   const pointsY = [from.y, middle.y, target.y];
@@ -127,11 +128,11 @@ function EffectVisual({ item, geo, me, quality }: { item: EffectInstance; geo: G
       </>;
     case 'skip':
       return <>
-        <Anchor at={target} size={geo.cardW * 1.8} color="#9BCBFF">
+        <Anchor at={target} size={geo.cardW * 1.8} color="var(--fx-skip)">
           <svg className="game-fx-svg" viewBox="0 0 100 100" aria-hidden><motion.path d="M22 72 78 28M29 79 85 35" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round"
             initial={{ pathLength: quiet ? 1 : 0, opacity: 0 }} animate={{ pathLength: 1, opacity: [0, 1, 0] }} transition={primitiveTransition(duration * .7, delay)} /></svg>
         </Anchor>
-        <LocalBadge at={target} size={geo.cardW} color="#9BCBFF" label="STOP" detail={event.targetName} quiet={quiet} delay={delay + .08 * scale} duration={duration} />
+        <LocalBadge at={target} size={geo.cardW} color="var(--fx-skip)" label="STOP" detail={event.targetName} quiet={quiet} delay={delay + .08 * scale} duration={duration} />
       </>;
     case 'pause':
       return <Anchor at={geo.discard} size={geo.cardW * 1.7} color={theme.secondary}>
@@ -146,9 +147,9 @@ function EffectVisual({ item, geo, me, quality }: { item: EffectInstance; geo: G
         </motion.g></svg>
       </Anchor>;
     case 'danger':
-      return <><Burst at={target} cardW={geo.cardW} event={event} quality={quiet ? 'reduced' : 'lite'} delay={delay} duration={duration} /><LocalBadge at={target} size={geo.cardW} color="#FFD16A" label="POSLEDNÍ KARTA" detail={event.targetName} quiet={quiet} delay={delay} duration={duration} /></>;
+      return <><Burst at={target} cardW={geo.cardW} event={event} quality={quiet ? 'reduced' : 'lite'} delay={delay} duration={duration} /><LocalBadge at={target} size={geo.cardW} color="var(--fx-danger)" label="POSLEDNÍ KARTA" detail={event.targetName} quiet={quiet} delay={delay} duration={duration} /></>;
     case 'win':
-      return <><Burst at={geo.discard} cardW={geo.cardW} event={event} quality={quality} delay={delay} duration={duration} big /><Burst at={target} cardW={geo.cardW} event={event} quality={quality} delay={delay + .1 * scale} duration={duration * .8} big /><LocalBadge at={target} size={geo.cardW} color="#D6F580" label="VÍTĚZSTVÍ" detail={event.targetName} quiet={quiet} delay={delay + .08 * scale} duration={duration * .85} /></>;
+      return <><Burst at={geo.discard} cardW={geo.cardW} event={event} quality={quality} delay={delay} duration={duration} big /><Burst at={target} cardW={geo.cardW} event={event} quality={quality} delay={delay + .1 * scale} duration={duration * .8} big /><LocalBadge at={target} size={geo.cardW} color="var(--fx-win)" label="VÍTĚZSTVÍ" detail={event.targetName} quiet={quiet} delay={delay + .08 * scale} duration={duration * .85} /></>;
   }
 }
 
@@ -157,9 +158,10 @@ export function EffectOrchestrator({ items, geo, me, reduced = false, lite = fal
   items: readonly EffectInstance[]; geo: Geometry; me: string; reduced?: boolean; lite?: boolean;
 }) {
   useAppearance(p => p.deck);
+  const mode = useColorMode(p => p.mode);
   const quality = effectQuality(reduced, lite, geo.compact);
   const visible = items.slice(-EFFECT_BUDGET.concurrent);
-  return <div className={`game-fx-layer fx-quality-${quality}`} data-effect-quality={quality} aria-hidden="true">
+  return <div className={`game-fx-layer fx-quality-${quality}`} data-effect-quality={quality} data-color-mode={mode} aria-hidden="true">
     {visible.map((item) => <div className="game-fx-instance" key={item.id} data-effect={item.event.kind}><EffectVisual item={item} geo={geo} me={me} quality={quality} /></div>)}
   </div>;
 }

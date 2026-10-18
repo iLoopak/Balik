@@ -12,7 +12,7 @@ import { useApp } from '../net/store';
 import { eveningAction, leaveRoom, rematch, returnToLobby, sendAction } from '../net/client';
 import { CardLayer } from '../table/CardLayer';
 import { computeGeometry, type Geometry } from '../table/layout';
-import { GameTableTheme, type ConsoleStage } from '../table/GameTableTheme';
+import { GameTableTheme } from '../table/GameTableTheme';
 import { usePerfLite } from '../table/usePerfLite';
 import { placeSedma } from './layout';
 import { useSedmaDirector } from './useSedmaDirector';
@@ -28,7 +28,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
   const [busy, setBusy] = useState(false);
   const lite = usePerfLite(busy);
   const quiet = reducedMotion || lite;
-  const { display, idle } = useSedmaDirector(room, quiet);
+  const { display, idle, environment } = useSedmaDirector(room, quiet);
   useEffect(() => setBusy(!idle), [idle]);
   const view = display.view;
   const [ref, size] = useElementSize<HTMLDivElement>();
@@ -43,7 +43,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
   });
   const geo: Geometry = useMemo(() => {
     const result = computeGeometry(size.width || 360, size.height || 560, view.players.map((p) => p.id), me, (display.hands[me] ?? []).length);
-    return { ...result, discard: { x: result.w / 2, y: result.discard.y }, deck: { x: 28, y: result.controlY - 30 }, deckScale: .35 };
+    return { ...result, discard: { x: result.w / 2, y: result.discard.y }, deck: { x: 28, y: result.controlY - 30 }, deckScale: .35, deckW: result.cardW * .35, deckH: result.cardH * .35 };
   }, [size.width, size.height, view.players, display.hands, me]);
   const truth = room.game!;
   const canAct = idle && !pending && status === 'open' && truth.phase === 'playing' && truth.currentPlayerId === me;
@@ -66,8 +66,7 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
       <span className="sedma-total">{view.drawCount} v balíčku<br />Poslední +{view.lastTrickBonus}</span>
     </div>
     <div className="table sedma-table" ref={ref} data-game="sedma" data-idle={idle} data-quiet={quiet}>
-      <GameTableTheme geo={geo} suit={display.trick.at(-1)?.entity.card?.suit ?? null} reduced={quiet} lite={lite} myTurn={canAct}
-        stage={sedmaStage(geo, view.players.length)} active={view.phase === 'playing' ? view.currentPlayerId : null} beat={{ play: display.trick.at(-1)?.entity.key ?? null }} />
+      <GameTableTheme game="sedma" you={me} drawCount={view.drawCount} pulses={environment} geo={geo} suit={display.trick.at(-1)?.entity.card?.suit ?? null} reduced={quiet} lite={lite} myTurn={status === 'open' && view.phase === 'playing' && view.currentPlayerId === me} />
       <div className="sedma-stock" aria-label={`Dobírací balíček: ${view.drawCount} karet`} style={{ left: geo.deck.x, top: geo.deck.y, width: geo.cardW * .35, height: geo.cardH * .35 }}><CardBack /><span>{view.drawCount}</span></div>
       {view.players.filter((p) => p.id !== me).map((p) => {
         const seat = geo.seats[p.id]!;
@@ -108,11 +107,4 @@ export function SedmaTable({ room, reducedMotion }: { room: RoomView<'sedma'>; r
       {view.phase === 'finished' && idle && <div className="sedma-results-wrap"><div className="win-panel"><BrandResults onChangeGame={()=>eveningAction('openVote')} onCloseEvening={()=>eveningAction('close')} reactions={<ResultReactions room={room} messages={emotes}/>} room={room} winnerId={view.winnerId} pending={pending} reduced={quiet} onRematch={rematch} onLobby={returnToLobby} onLeave={leaveRoom} /></div></div>}
     </div>
   </section>;
-}
-
-/** The stage spans the trick columns placed by `placeSedma`. */
-function sedmaStage(geo: Geometry, n: number): ConsoleStage {
-  const scale = geo.compact ? .82 : 1;
-  const step = Math.min(geo.cardW * (geo.compact ? .88 : 1.12), (geo.w - geo.cardW * scale - 20) / Math.max(1, n - 1));
-  return { kind: 'trick', width: (n - 1) * step + geo.cardW * scale * 1.1, height: geo.cardH * scale + 12, label: 'ŠTYCH' };
 }

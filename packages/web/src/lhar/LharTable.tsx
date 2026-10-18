@@ -54,7 +54,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
   const [busy, setBusy] = useState(false),
     lite = usePerfLite(busy),
     quiet = reducedMotion || lite;
-  const { display, idle } = useLharDirector(room, quiet);
+  const { display, idle, environment } = useLharDirector(room, quiet);
   useEffect(() => setBusy(!idle), [idle]);
   useAppearance((p) => p.deck);
   const [ref, size] = useElementSize<HTMLDivElement>(),
@@ -216,8 +216,7 @@ export function LharTable({ room, reducedMotion }: { room: RoomView<'lhar'>; red
         data-quiet={quiet}
         data-claim={claim?.id ?? 0}
       >
-        <GameTableTheme geo={geo} suit={null} reduced={quiet} lite={lite} myTurn={canAct} active={view.phase === 'playing' ? view.currentPlayerId : null}
-          stage={{ kind: 'trick', width: geo.cardW * (geo.compact ? .82 : 1) * 1.25, height: geo.cardH * (geo.compact ? .82 : 1) + 16, label: 'HROMÁDKA' }} beat={{ play: claim?.id ?? null }} />
+        <GameTableTheme game="lhar" you={me} pulses={environment} geo={geo} suit={null} reduced={quiet} lite={lite} myTurn={status === 'open' && view.phase === 'playing' && view.currentPlayerId === me} />
         {view.players
           .filter((p) => p.id !== me)
           .map((p) => {

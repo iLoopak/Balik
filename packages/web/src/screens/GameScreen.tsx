@@ -13,16 +13,14 @@ import { BrandOptions } from '../brand/BrandSettings';
 import { AppSettings } from '../themes/AppearancePicker';
 import { GameTransition } from '../evening/GameTransition';
 import { EmotePicker } from '../brand/Emotes';
-import { useAppearance } from '../themes/preferences';
 
 export function GameScreen({ room }: { room: AnyRoomView }) {
   const status = useApp((s) => s.status);
   const [menu, setMenu] = useState(false);
   const { pref, setPref, reduced } = useMotionPref();
-  const tone = useAppearance((p) => p.tone);
 
   return (
-    <main className="game-screen" data-table-tone={tone}>
+    <main className="game-screen">
       <header className="topbar">
         <span className="brand-word topbar-brand">BALÍK</span>
         <span className="topbar-room">
