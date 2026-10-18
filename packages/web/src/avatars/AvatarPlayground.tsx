@@ -1,3 +1,4 @@
+import { AppearancePicker } from '../themes/AppearancePicker';
 import { useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import type { AvatarId } from '@balik/shared';
@@ -15,7 +16,7 @@ export default function AvatarPlayground() {
   return (
     <MotionConfig reducedMotion={reduced ? 'always' : 'user'}>
       <main className="avatar-playground">
-        <a href="/" className="brand-word">
+        <AppearancePicker compact/><a href="/" className="brand-word">
           BALÍK / POSTAVY
         </a>
         <h1>Každý hraje po svém.</h1>

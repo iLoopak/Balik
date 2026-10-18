@@ -253,3 +253,11 @@ pak `supabase functions deploy game --project-ref <project-ref>`). SQL a env se 
 
 Tato změna vyžaduje nový frontend **i Supabase funkci `game`** (nebo Node server).
 SQL, bucket ani proměnné prostředí nepřibývají.
+
+
+## Světlý režim
+
+V **Vzhled → Režim aplikace** vyber Světlo, Tma nebo Podle systému.
+Režim je nezávislý na edici karet i prostředí stolu, ukládá se lokálně a lze
+ho přepnout během hry bez nového rozdání. [Materiály, tokeny, FX a QA](docs/visual/LIGHT_MODE.md).
+Nasazuje se pouze frontend; Supabase a SQL se nemění.

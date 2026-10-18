@@ -1,5 +1,6 @@
 @import '@fontsource-variable/bricolage-grotesque';
 @import '@fontsource-variable/inter';
+@import '../themes/colorTokens.css';
 
 :root {
   --font-brand: 'Bricolage Grotesque Variable', 'Inter Variable', system-ui, sans-serif;
@@ -80,7 +81,7 @@ input {
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
+  outline: 2px solid var(--focus);
   outline-offset: 3px;
 }
 
@@ -123,7 +124,7 @@ input {
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #2b3550;
+  background: var(--hover-surface);
 }
 
 .btn-ghost {
@@ -157,7 +158,7 @@ input {
 }
 
 .field:focus {
-  border-color: var(--accent);
+  border-color: var(--focus);
 }
 
 .sr-only {

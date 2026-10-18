@@ -1,15 +1,15 @@
 .evening-screen { min-height: 100%; overflow-y: auto; color: var(--ink); background: radial-gradient(ellipse at 25% 5%,#ffba5410,transparent 50%),var(--bg); }
 .evening-header { display: flex; align-items: center; gap: 16px; max-width: 1240px; margin: auto; min-height: 72px; padding: 12px 24px; }
-.evening-header > .brand-word { font-size: 24px; color: var(--accent); }
+.evening-header > .brand-word { font-size: 24px; color: var(--accent-text); }
 .evening-header > span:nth-child(2) { flex: 1; color: var(--muted); font-size: 12px; }
 .evening-header > span b { color: var(--ink); letter-spacing: .12em; }
 .evening-layout { display: grid; grid-template-columns: minmax(0,1.35fr) minmax(0,1fr); gap: 24px; max-width: 1240px; margin: auto; padding: 12px 24px 40px; align-items: start; }
-.evening-feature { border: 1px solid #ffca7733; padding: 28px; border-radius: 28px; background: linear-gradient(150deg,#252c39,#182030); box-shadow: 0 16px 60px #0003; min-width: 0; }
+.evening-feature { border: 1px solid #ffca7733; padding: 28px; border-radius: 28px; background: linear-gradient(150deg,var(--panel-top),var(--panel-bottom)); box-shadow: 0 16px 60px #0003; min-width: 0; }
 .evening-welcome { display: flex; align-items: center; gap: 18px; }
 .evening-welcome > div { min-width: 0; }
 .evening-welcome h1 { font-size: clamp(30px,4vw,46px); letter-spacing: -.04em; margin: 6px 0; }
 .evening-welcome p:not(.evening-kicker) { margin: 8px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
-.evening-kicker { color: var(--accent); font-size: 9px; letter-spacing: .13em; margin: 0; }
+.evening-kicker { color: var(--accent-text); font-size: 9px; letter-spacing: .13em; margin: 0; }
 .evening-party { display: flex; flex-wrap: wrap; gap: 14px; padding: 24px 0 12px; }
 .evening-party > div { display: flex; align-items: center; gap: 8px; max-width: 100%; }
 .evening-party > div > span:nth-child(2) { min-width: 0; overflow-wrap: anywhere; font-size: 12px; }
@@ -20,18 +20,18 @@
 .evening-emotes > div { display: grid; gap: 4px; font-size: 11px; }
 .evening-emotes .emote-bubble { position: relative; }
 .evening-game-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
-.evening-game-option { padding: 14px; background: #0b14204d; border: 1px solid #ffffff18; border-radius: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.evening-game-option { padding: 14px; background: var(--panel-inset); border: 1px solid var(--line); border-radius: 20px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .evening-game-option.is-selected { border-color: var(--accent); background: #ffb23f0b; }
 .evening-game-option > button:first-child { background: transparent; border: 0; color: var(--ink); padding: 0; display: grid; justify-items: start; gap: 6px; min-height: 120px; text-align: left; width: 100%; }
 .evening-game-option > button:first-child b { font: 700 26px var(--font-brand); }
 .evening-game-option > button:first-child small { color: var(--muted); font-size: 11px; }
-.evening-game-option > button:first-child strong { color: var(--accent); font-size: 11px; }
+.evening-game-option > button:first-child strong { color: var(--accent-text); font-size: 11px; }
 .evening-game-option > button:disabled { opacity: .45; cursor: default; }
 .evening-game-option p { flex: 1; color: var(--muted); font-size: 11px; line-height: 1.5; margin: 0; overflow-wrap: anywhere; }
 .evening-game-option .btn { min-height: 44px; padding-inline: 10px; font-size: 12px; }
-.evening-game-mark { width: 34px; height: 39px; border: 1px solid #ffc67855; border-radius: 6px; background: #ffd18812; display: grid; place-items: center; color: #ffc678; font: 700 24px var(--font-brand); flex-shrink: 0; }
-.evening-game-mark.is-sedma { border-color: #91d3da55; background: #91d3da12; color: #91d3da; }
-.evening-ballot-status { font-size: 12px; color: var(--accent); line-height: 1.6; }
+.evening-game-mark { width: 34px; height: 39px; border: 1px solid color-mix(in srgb,var(--accent-text) 33.3%,transparent); border-radius: 6px; background: #ffd18812; display: grid; place-items: center; color: var(--accent-text); font: 700 24px var(--font-brand); flex-shrink: 0; }
+.evening-game-mark.is-sedma { border-color: color-mix(in srgb,var(--team-1) 33.3%,transparent); background: color-mix(in srgb,var(--team-1) 7.1%,transparent); color: var(--team-1); }
+.evening-ballot-status { font-size: 12px; color: var(--accent-text); line-height: 1.6; }
 .evening-vote-rules { font-size: 12px; color: var(--muted); margin: 12px 0; }
 .evening-vote-rules summary { min-height: 44px; display: list-item; padding-top: 12px; cursor: pointer; }
 .evening-vote-rules p { line-height: 1.6; }
@@ -43,7 +43,7 @@
 .evening-invite { width: 100%; margin-top: 8px; white-space: normal; }
 .evening-fine { font-size: 11px; color: var(--muted); line-height: 1.6; }
 .evening-side { min-width: 0; display: grid; gap: 20px; }
-.evening-scoreboard, .evening-history, .evening-last { background: #1a2131; border: 1px solid var(--line); border-radius: 22px; padding: 20px; min-width: 0; }
+.evening-scoreboard, .evening-history, .evening-last { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 20px; min-width: 0; }
 .evening-side h2, .evening-scoreboard h2 { font: 700 20px var(--font-brand); margin: 0 0 16px; }
 .evening-scoreboard h2 small { display: block; color: var(--muted); font: 400 11px var(--font-ui); margin-top: 5px; }
 .evening-scoreboard ol { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
@@ -51,7 +51,7 @@
 .evening-score-name { flex: 1; min-width: 0; }
 .evening-score-name b { display: block; font-size: 13px; overflow-wrap: anywhere; }
 .evening-score-name small { display: block; margin-top: 4px; font-size: 10px; color: var(--muted); line-height: 1.5; }
-.evening-scoreboard li > strong { font: 700 24px var(--font-brand); color: var(--accent); text-align: right; }
+.evening-scoreboard li > strong { font: 700 24px var(--font-brand); color: var(--accent-text); text-align: right; }
 .evening-scoreboard li > strong small { display: block; color: var(--muted); font: 400 9px var(--font-ui); }
 .evening-scoreboard.is-compact { padding: 12px; width: 100%; text-align: left; }
 .evening-scoreboard.is-compact h2 { font-size: 16px; margin-bottom: 12px; }
@@ -67,10 +67,10 @@
 .evening-match-detail > small { color: var(--muted); font-size: 10px; }
 .evening-summary-stats { display: flex; gap: 20px; flex-wrap: wrap; padding: 12px 0 20px; }
 .evening-summary-stats p { display: grid; gap: 4px; margin: 0; }
-.evening-summary-stats b { color: var(--accent); font: 700 24px var(--font-brand); }
+.evening-summary-stats b { color: var(--accent-text); font: 700 24px var(--font-brand); }
 .evening-summary-stats span { color: var(--muted); font-size: 11px; }
-.evening-connection { text-align: center; color: var(--accent); font-size: 12px; padding: 8px; }
-.game-transition { position: absolute; inset: 56px 0 0; z-index: 900; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: #111927ed; backdrop-filter: blur(4px); }
+.evening-connection { text-align: center; color: var(--accent-text); font-size: 12px; padding: 8px; }
+.game-transition { position: absolute; inset: 56px 0 0; z-index: 900; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; background: var(--transition-scrim); backdrop-filter: blur(4px); }
 .game-transition h2 { margin: 0; font: 700 36px var(--font-brand); }
 .game-transition p { color: var(--muted); font-size: 12px; margin: 0; }
 .brand-results .evening-result-actions { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
@@ -95,7 +95,7 @@
 }
 @media (prefers-reduced-motion: reduce) { .game-transition { display: none; } }
 
-.evening-match summary::after { content: '+'; color: var(--accent); font-size: 18px; flex-shrink: 0; }
+.evening-match summary::after { content: '+'; color: var(--accent-text); font-size: 18px; flex-shrink: 0; }
 .evening-match[open] summary::after { content: '−'; }
 
-.evening-game-mark.is-lhar { color: #c7afff; background: #a679ff18; border-color: #a679ff55; }
+.evening-game-mark.is-lhar { color: var(--lhar-ink); background: #a679ff18; border-color: #a679ff55; }

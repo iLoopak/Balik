@@ -1,3 +1,5 @@
+import { useColorMode } from '../themes/colorMode';
+import { AppearancePicker } from '../themes/AppearancePicker';
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { RANKS, SUITS, type Suit } from '@balik/shared';
 import { CardView } from '../cards/Card';
@@ -16,9 +18,13 @@ const selectEdition = () => setAppearance({ deck: 'retro-arcade', table: 'retro-
 
 /** Public collection uses the same CardView and assets as the table. */
 export default function ArcadeGallery() {
+  const mode = useColorMode(p => p.mode);
   const [suit, setSuit] = useState<Suit | 'all'>('all');
   const [small, setSmall] = useState(false);
-  const [light, setLight] = useState(false);
+  const [lightPreview, setLightPreview] = useState<{ base: typeof mode; light: boolean } | null>(null);
+  const light = lightPreview?.base === mode ? lightPreview.light : mode === 'light';
+  useEffect(() => setLightPreview(null), [mode]);
+  const toggleLight = () => setLightPreview({ base: mode, light: !light });
   const [back, setBack] = useState(false);
   const [demo, setDemo] = useState(0);
   const [selected, setSelected] = useState<RetroArcadeCard | null>(null);
@@ -41,7 +47,7 @@ export default function ArcadeGallery() {
           BALÍK
           <span className="gallery-brand-dot" />
         </a>
-        <span className="gallery-nav-label">Další svět v jednom balíku.</span>
+        <AppearancePicker compact /><span className="gallery-nav-label">Další svět v jednom balíku.</span>
         <a className="gallery-play" href="/?deck=retro-arcade&table=retro-arcade" onClick={selectEdition}>
           Hrát s touto edicí ↗
         </a>
@@ -119,7 +125,7 @@ export default function ArcadeGallery() {
             <button aria-pressed={small} onClick={() => setSmall((v) => !v)}>
               Malé karty
             </button>
-            <button aria-pressed={light} onClick={() => setLight((v) => !v)}>
+            <button aria-pressed={light} onClick={toggleLight}>
               {light ? 'Tmavý stůl' : 'Světlý stůl'}
             </button>
             <button aria-pressed={back} onClick={() => setBack((v) => !v)}>

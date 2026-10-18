@@ -1,15 +1,16 @@
+import { useColorMode } from '../themes/colorMode';
+import { effectTheme } from '../effects/effectTokens';
 import { useAppearance } from '../themes/preferences';
 import { AnimatePresence, motion } from 'motion/react';
 import { useMemo } from 'react';
 import { type Suit } from '@balik/shared';
 import { SuitIcon } from '../cards/SuitIcon';
-import { suitTone } from '../cards/skin';
 export { suitName } from '../cards/skin';
 import type { FxItem, FxTone } from './display';
 import type { Pt } from './layout';
 
 const TONE_COLOR: Record<FxTone, string> = {
-  neutral: 'rgba(255, 248, 230, 0.75)',
+  neutral: 'var(--fx-neutral)',
   penalty: 'var(--penalty)',
   skip: 'var(--skip)',
   suit: 'var(--accent)',
@@ -52,19 +53,20 @@ export function Impact({ at, tone, delay, lite, cardW }: { at: Pt; tone: FxTone;
 /** Big suit glyph blooming out of the discard pile after a Q. */
 export function SuitSplash({ at, suit, cardW }: { at: Pt; suit: Suit; cardW: number }) {
   useAppearance(p => p.deck);
+  useColorMode(p => p.mode);
   const size = cardW * 1.3;
   return (
     <div className="fx-anchor" style={{ left: at.x, top: at.y }}>
       <motion.div
         className="fx-wash"
-        style={{ width: size * 3, height: size * 3, marginLeft: -size * 1.5, marginTop: -size * 1.5, background: `radial-gradient(circle, ${suitTone(suit)}55 0%, transparent 65%)` }}
+        style={{ width: size * 3, height: size * 3, marginLeft: -size * 1.5, marginTop: -size * 1.5, background: `radial-gradient(circle, ${effectTheme(suit).color}55 0%, transparent 65%)` }}
         initial={{ scale: 0.2, opacity: 0 }}
         animate={{ scale: 1, opacity: [0, 1, 0] }}
         transition={{ duration: 1, ease: 'easeOut' }}
       />
       <motion.div
         className="fx-suit"
-        style={{ width: size, height: size, marginLeft: -size / 2, marginTop: -size / 2, color: suitTone(suit) }}
+        style={{ width: size, height: size, marginLeft: -size / 2, marginTop: -size / 2, color: effectTheme(suit).color }}
         initial={{ scale: 0.3, opacity: 0, rotate: -20 }}
         animate={{ scale: [0.3, 1.25, 1.05, 1.6], opacity: [0, 1, 1, 0], rotate: [-20, 6, 0, 0] }}
         transition={{ duration: 1, times: [0, 0.3, 0.6, 1], ease: 'easeOut' }}

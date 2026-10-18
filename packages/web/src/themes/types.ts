@@ -12,6 +12,7 @@ export interface DeckTheme {
 export interface TableTheme {
   id: TableId; name: string; geometry: 'oval' | 'cabinet';
   background: string; surface: string; rail: string; grid: string;
+  light: { background: string; surface: string; rail: string; grid: string; secondary: string };
   colors: Record<Suit, string>; secondary: string;
   ambient: Record<Suit, string>;
 }

@@ -35,9 +35,11 @@ export const DECK_THEMES: Record<DeckId, DeckTheme> = {
 };
 export const TABLE_THEMES: Record<TableId, TableTheme> = {
   stormpunk: { id: 'stormpunk', name: 'Městská aréna', geometry: 'oval', background: '#101827', surface: '#162237', rail: '#a3b2c426', grid: '#34445a24',
+    light: { background: '#e9dfcf', surface: '#e1d1b8', rail: '#9a78547a', grid: '#92785126', secondary: '#a36a29' },
     colors: mapSuits(s => FACTIONS[SUIT_FACTION[s]].color), secondary: '#FFE5AF',
     ambient: { hearts: 'm210 272 4 8-4 9-4-9Z', diamonds: 'M130 270h78m-55 8h31m606-128h78', clubs: 'M188 278q25-29 41-13-1 22-41 13Z', spades: 'm185 263 18 2-9 14 25-2m593-127-18-2 9-14-25 2' } },
   'retro-arcade': { id: 'retro-arcade', name: 'Noční herna', geometry: 'cabinet', background: '#18152D', surface: '#241E3C', rail: '#E597F263', grid: '#9D69CB20', colors, secondary: '#F5C544',
+    light: { background: '#eee4d9', surface: '#ded0c9', rail: '#88658285', grid: '#916b8b24', secondary: '#885b83' },
     ambient: { hearts: 'M160 260h12v-12h12v12h12v12h-12v12h-12v-12h-12Z', diamonds: 'm160 260 14 12-14 12m24-24 14 12-14 12', clubs: 'M164 248h12v12h12v12h-12v12h-12v-12h-12v-12h12Z', spades: 'M790 144v-12h12v12m-24 0v-24h36v24m-48 0v-36h60v36' } },
 };
 export const EDITIONS = [DECK_THEMES.stormpunk, DECK_THEMES['retro-arcade']] as const;

@@ -1,3 +1,4 @@
+import { AppearancePicker } from '../themes/AppearancePicker';
 import { MotionConfig } from 'motion/react';
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from 'react';
 import { CardView } from '../cards/Card';
@@ -62,7 +63,7 @@ export function GameFeelPlayground() {
 
   return <MotionConfig reducedMotion={reduced ? 'always' : 'user'}>
     <main className="feel-page" style={{ '--feel-faction': FACTIONS[faction].color } as CSSProperties}>
-      <header className="feel-nav"><a href="/" className="brand-word">BALÍK<span>.</span></a><a href="/dev/deck-stormpunk">← Galerie balíčku</a></header>
+      <header className="feel-nav"><AppearancePicker compact/><a href="/" className="brand-word">BALÍK<span>.</span></a><a href="/dev/deck-stormpunk">← Galerie balíčku</a></header>
       <div className="feel-heading"><div><p>LAB / GAME FEEL 001</p><h1>Každý tah má váhu<span>.</span></h1></div><span className="feel-local-tag">Lokální playground</span></div>
       <p className="feel-intro">Zahraj, dober, přeruš tok hry. Vyzkoušej efekty všech čtyř frakcí bez rozehrávání partie.</p>
 

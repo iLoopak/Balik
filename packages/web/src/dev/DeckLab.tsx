@@ -1,3 +1,5 @@
+import { useColorMode, setColorMode } from '../themes/colorMode';
+import { AppearancePicker } from '../themes/AppearancePicker';
 import { useEffect, useState } from 'react';
 import { MotionConfig } from 'motion/react';
 import { RANKS, SUITS, type Card, type GameId } from '@balik/shared';
@@ -16,7 +18,9 @@ export default function DeckLab() {
   const initial = useAppearance.getState();
   const [deck, setDeck] = useState<DeckId>(initial.deck);
   const [table, setTable] = useState<TableId>(initial.table);
-  const [small, setSmall] = useState(false), [light, setLight] = useState(false), [back, setBack] = useState(false);
+  const [small, setSmall] = useState(false), [back, setBack] = useState(false);
+  const light = useColorMode(p => p.mode) === 'light';
+  const setLight = (on: boolean) => setColorMode(on ? 'light' : 'dark');
   const [reduced, setReduced] = useState(false), [mobile, setMobile] = useState(false);
   const [demo, setDemo] = useState(0), [playing, setPlaying] = useState(false), [game, setGame] = useState<GameId>('prsi');
   useEffect(() => preloadDeck(deck), [deck]);
@@ -26,7 +30,7 @@ export default function DeckLab() {
   const sample = CARDS.find(c => c.suit === 'hearts' && c.rank === 'J')!;
   const art = DECK_THEMES[deck].stickerFor(sample);
   return <MotionConfig reducedMotion={reduced ? 'always' : 'user'}><main className={`deck-lab${light ? ' lab-light' : ''}${reduced ? ' lab-reduced' : ''}`}>
-    <header><a href="/" className="brand-word">BALÍK / DECK LAB</a><BrandMascot state="idle" size={48} reduced={reduced}/></header>
+    <header><AppearancePicker compact/><a href="/" className="brand-word">BALÍK / DECK LAB</a><BrandMascot state="idle" size={48} reduced={reduced}/></header>
     <h1>Dva světy. Stejné karty.</h1><p>32 identit po hodnotách. Lokální náhled; bez připojení do místnosti.</p>
     <div className="lab-controls"><label>Edice <select value={deck} onChange={e => setDeck(e.target.value as DeckId)}>{Object.values(DECK_THEMES).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
       <label>Stůl <select value={table} onChange={e => setTable(e.target.value as TableId)}>{Object.values(TABLE_THEMES).map(t => <option key={t.id} value={t.id}>{t.name}</option>)}</select></label>
