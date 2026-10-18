@@ -28,3 +28,6 @@ export * from './durak/view';
 export * from './marias/types';
 export * from './marias/engine';
 export * from './marias/view';
+export * from './petr/types';
+export * from './petr/engine';
+export * from './petr/view';

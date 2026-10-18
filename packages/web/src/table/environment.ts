@@ -29,6 +29,7 @@ export const CONSOLE_LABELS: Record<GameId, { input: string | null; output: stri
   snaps: { input: 'TALON', output: 'ŠTYCH' },
   durak: { input: 'TALON', output: 'ÚTOK A OBRANA' },
   marias: { input: 'TALON', output: 'ŠTYCH' },
+  petr: { input: 'DVOJICE', output: 'TAHÁNÍ' },
 };
 export const MAX_ENVIRONMENT_PULSES = 4;
 export const ENVIRONMENT_PULSE_MS = 1100;

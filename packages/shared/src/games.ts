@@ -12,7 +12,7 @@ import { chooseLharBotFromView, filterLharEventFor, lharViewFor } from './lhar/v
 import type { LharAction, LharClientEvent, LharEvent, LharState } from './lhar/types';
 import { GAME_MODULES_EXTRA, type ExtraAction, type ExtraClientEvent, type ExtraEvent, type ExtraState } from './extra';
 
-export const GAME_IDS = ['prsi', 'sedma', 'lhar', 'snaps', 'durak', 'marias'] as const;
+export const GAME_IDS = ['prsi', 'sedma', 'lhar', 'snaps', 'durak', 'marias', 'petr'] as const;
 export type GameId = typeof GAME_IDS[number];
 export type GameState = PrsiState | SedmaState | LharState | ExtraState;
 export type GameEvent = PrsiEvent | SedmaEvent | LharEvent | ExtraEvent;
@@ -40,6 +40,7 @@ export const GAME_INFO: Record<GameId, GameInfo> = {
   snaps: { name: 'Šnaps', mark: '66', players: [2], playersLabel: '2 hráči', needPlayers: 'Šnaps je hra pro přesně 2 hráče.', botCounts: [1], tagline: 'Šedesát šest, trumfy a hlášky.' },
   durak: { name: 'Durak', mark: 'D', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Durak potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Útoč, braň se, nezůstaň hlupákem.' },
   marias: { name: 'Mariáš', mark: 'M', players: [3], playersLabel: '3 hráči', needPlayers: 'Volený mariáš hrají přesně 3 hráči.', botCounts: [2], tagline: 'Volený mariáš: trumfy, hlášky a betl.' },
+  petr: { name: 'Černý Petr', mark: 'ČP', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Černý Petr potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Hlavně ať ti nezůstane Petr.' },
   lhar: { name: 'Lhář', mark: 'L', players: [2, 3, 4], playersLabel: '2–4 hráči', needPlayers: 'Lhář potřebuje 2 až 4 hráče.', botCounts: [1, 2, 3], tagline: 'Blafuj, nebo prohlédni blaf.' },
 };
 export const gameName = (id: GameId) => GAME_INFO[id].name;
