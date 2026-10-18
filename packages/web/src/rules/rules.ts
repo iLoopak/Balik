@@ -113,22 +113,33 @@ export const RULES: Record<string, GameRules> = {
     sections: [
       { title: 'Volba', items: [
         'Volič dostane 7 karet a jednu z nich vybere jako trumf. Pak dostane dalších 5, ostatní po 10.',
-        'Volič odhodí 2 karty do talonu (ne eso ani desítku) a zvolí hru: Hra (s trumfy), Betl nebo Durch.',
+        'Volič odhodí 2 karty do talonu a zvolí hru: Hra nebo Kilo (s trumfy, do talonu ne eso ani desítku), Betl nebo Durch (bez trumfů).',
+        'K Hře nebo Kilu může volič přidat sedmu, když drží trumfovou sedmu.',
       ] },
       { title: 'Pořadí a povinnosti', items: [
-        'Ve Hře platí pořadí 7, 8, 9, spodek, svršek, král, desítka, eso. V Betlu a Durchu 7–10, spodek, svršek, král, eso a bez trumfů.',
-        'Musíš přiznat barvu a přebít, když to jde. Nemáš-li barvu, musíš trumfovat (jen ve Hře).',
+        'Ve Hře a Kilu platí pořadí 7, 8, 9, spodek, svršek, král, desítka, eso. V Betlu a Durchu 7–10, spodek, svršek, král, eso a bez trumfů.',
+        'Musíš přiznat barvu a přebít, když to jde. Nemáš-li barvu, musíš trumfovat (jen ve Hře a Kilu).',
       ] },
       { title: 'Hra', items: [
-        'Eso a desítka mají po 10 bodech, poslední štych 10.',
+        'Eso a desítka mají po 10 bodech, poslední štych 10. Body se počítají ve Hře i v Kilu.',
         'Král a svršek stejné barvy jsou hláška 20 bodů, v trumfech 40. Hlásí se sama při zahrání jednoho z nich, když držíš i druhého.',
-        'Volič vyhrává s víc body než oba obránci dohromady. Shoda je pro obránce.',
+        'Hra vyjde, když má volič víc bodů než oba obránci dohromady. Shoda je pro obránce.',
+      ] },
+      { title: 'Kilo a sedma', items: [
+        'Kilo: volič musí držet trumfovou hlášku (krále a svrška v trumfech), vyhlásit ji a uhrát aspoň 60 bodů ze štychů. Body z hlášek se do těch 60 nepočítají.',
+        'Sedma: volič musí vzít poslední štych trumfovou sedmou. Zahraje-li ji dřív, nebo štych nevezme, sedma nevyšla.',
+        'Sedma se počítá zvlášť: Hra může vyjít a sedma ne, i naopak.',
       ] },
       { title: 'Betl a Durch', items: [
         'Betl: volič nesmí vzít ani jeden štych. Durch: volič musí vzít všechny štychy.',
       ] },
-      { title: 'Zjednodušení v BALÍKu', items: [
-        'Hra se sedmou, kilo a flekování zatím nejsou. Vyhodnocuje se výhra, ne vyúčtování.',
+      { title: 'Flekování', items: [
+        'Před první kartou můžou obránci (nejdřív ten po voliči) dát flek. Na flek může volič dát re, na re obránci tutti, pak volič boty a obránci kalhoty.',
+        'Každý flek zdvojí celou sázku včetně sedmy. „Dobrý“ flekování ukončí a vynáší volič.',
+      ] },
+      { title: 'Sázka', items: [
+        'Hra 1, sedma 2, Kilo 4, Betl 5, Durch 10, vynásobeno flekem (×2, ×4, ×8 …).',
+        'Volič bere sázku od každého obránce, nebo ji každému platí. Vyhrává ta strana, která je v plusu. Večer počítá výhry, sázky se mezi partiemi nesčítají.',
       ] },
     ],
   },

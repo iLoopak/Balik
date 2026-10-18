@@ -15,5 +15,5 @@ export const MARIAS_MODULE: GameModule = {
   remove: (s, id) => removeMariasPlayer(s as MariasState, id),
   bot: (s) => chooseMariasBotFromView(mariasViewFor(s as MariasState, cur(s as MariasState)), cur(s as MariasState)),
   winners: (s) => (s as MariasState).result?.winnerIds ?? [],
-  eventMs: (e) => ({ mariasStarted: 900, mariasTrump: 900, mariasDealt: 1600, mariasDeclared: 900, mariasPlayed: 520, mariasTrick: 900, mariasEnded: 900 } as Record<string, number>)[e.type] ?? 160,
+  eventMs: (e) => ({ mariasStarted: 900, mariasTrump: 900, mariasDealt: 1600, mariasDeclared: 900, mariasFlek: 700, mariasPlayed: 520, mariasTrick: 900, mariasEnded: 900 } as Record<string, number>)[e.type] ?? 160,
 };

@@ -15,7 +15,10 @@ export interface MariasDisplay {
 }
 type Step = GameStep<MariasDisplay>;
 const bump = (d: MariasDisplay) => ({ ...d, stamp: d.stamp + 1 });
-export const CONTRACT_NAME = { hra: 'Hra', betl: 'Betl', durch: 'Durch' } as const;
+export const CONTRACT_NAME = { hra: 'Hra', kilo: 'Kilo', betl: 'Betl', durch: 'Durch' } as const;
+/** Doubling levels as players call them; index = MariasView.flek. */
+export const FLEK_NAME = ['', 'Flek', 'Re', 'Tutti', 'Boty', 'Kalhoty'] as const;
+export const contractLabel = (contract: keyof typeof CONTRACT_NAME, sedma: boolean) => `${CONTRACT_NAME[contract]}${sedma ? ' se sedmou' : ''}`;
 
 export function reconcileMarias(view: MariasView, me: string, prev?: MariasDisplay): MariasDisplay {
   const known = knownEntities(...Object.values(prev?.hands ?? {}), prev?.trick.map((p) => p.entity), prev?.talon);
@@ -36,7 +39,7 @@ const addToHand = (d: MariasDisplay, id: string, me: string, cards: CardEntity[]
 export function mariasSteps(event: MariasClientEvent, me: string, target: MariasView): Step[] {
   switch (event.type) {
     case 'mariasStarted': {
-      const empty: MariasView = { ...target, myHand: [], trick: [], talonCount: 0, talon: null, trump: null, trumpCard: null, contract: null, phase: 'choosingTrump', result: null, winnerId: null, marriages: [], lastTrick: null,
+      const empty: MariasView = { ...target, myHand: [], trick: [], talonCount: 0, talon: null, trump: null, trumpCard: null, contract: null, sedma: false, flek: 0, phase: 'choosingTrump', result: null, winnerId: null, marriages: [], lastTrick: null,
         declarerId: event.declarerId, players: target.players.map((p) => ({ ...p, handCount: 0, points: 0, tricks: 0 })) };
       return [
         { wait: 0, environment: { kind: 'deal' }, apply: (d) => ({ ...reconcileMarias(empty, me), talon: [], stamp: d.stamp + 1, banner: null }) },
@@ -64,8 +67,12 @@ export function mariasSteps(event: MariasClientEvent, me: string, target: Marias
         hand = rest;
         if (taken) laid.push({ ...taken, card: null, key: taken.key, move: 'toDeck', moveStamp: s.stamp });
       }
-      return { ...s, hands: { ...s.hands, [event.playerId]: hand }, talon: laid, banner: CONTRACT_NAME[event.contract], view: { ...s.view, contract: event.contract, phase: 'playing', talonCount: event.discardCount } };
+      return { ...s, hands: { ...s.hands, [event.playerId]: hand }, talon: laid, banner: contractLabel(event.contract, event.sedma),
+        view: { ...s.view, contract: event.contract, sedma: event.sedma, flek: 0, phase: 'flek', talonCount: event.discardCount } };
     } }];
+    case 'mariasFlek': return [{ wait: event.flek ? 760 : 420, ...(event.flek ? { sound: 'special' as const } : {}), apply: (d) => ({ ...d,
+      banner: event.flek ? `${FLEK_NAME[event.level]} ×${2 ** event.level}` : 'Dobrý',
+      view: { ...d.view, flek: event.level, phase: event.done ? 'playing' : 'flek' } }) }];
     case 'mariasPlayed': return [{ wait: event.marriage ? 760 : 480, sound: event.marriage ? 'special' : 'play', environment: { kind: 'play', sourcePlayerId: event.playerId }, apply: (d) => {
       const s = bump(d);
       const { rest, taken } = takeFromHand(s.hands[event.playerId] ?? [], event.card, event.playerId === me);

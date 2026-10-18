@@ -316,15 +316,15 @@ společné kostře `GameShell` a režisérovi `useGameDirector` (`packages/web/s
 |---|---|---|
 | Šnaps (66) | 2 | 24 karet, otevřený/zavřený talon, výměna trumfové devítky, hlášky 20/40 |
 | Durak | 2–4 | útok, obrana a přihazování, dobírání do 6, poslední s kartami je durak |
-| Mariáš (volený) | 3 | volba trumfu ze 7 karet, odhoz do talonu, Hra / Betl / Durch, hlášky |
+| Mariáš (volený) | 3 | volba trumfu ze 7 karet, odhoz do talonu, Hra / Kilo / Betl / Durch, sedma, flek až po kalhoty, hlášky |
 | Černý Petr | 2–4 | 29 karet, tah naslepo od souseda (server ruku zamíchá), dvojice se odkládají samy |
 | Oko bere | 2–4 | jen o body, střídá se bankéř, oko = dvě esa |
 | Pexeso | 1–4 | 32 karet, dvojice stejné hodnoty a barvy, sólo na počet tahů |
 
 **Pravidla všech devíti her** jsou kdykoli k přečtení: tlačítko „Pravidla“ v horní
 liště během hry, v lobby a na domovské obrazovce (`packages/web/src/rules/`).
-Texty popisují přesně variantu, kterou implementuje engine. U Mariáše zatím chybí
-hra se sedmou, kilo a flekování, což pravidla uvádějí.
+Texty popisují přesně variantu, kterou implementuje engine. Mariáš vyhodnocuje sázku
+jedné partie (hra 1, sedma 2, kilo 4, betl 5, durch 10, krát flek), ne vyúčtování večera.
 
 Testy: každá hra má v `packages/shared/test/` odehrání celých partií botů
 s kontrolou, že pohled ani události hráče neobsahují cizí skryté karty
