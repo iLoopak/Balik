@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { ROOM_MAX_PLAYERS, canStartGame, gameName, type AnyRoomView } from '@balik/shared';
+import { GAME_INFO, ROOM_MAX_PLAYERS, canStartGame, gameName, type AnyRoomView } from '@balik/shared';
+import { RulesContent } from '../rules/RulesPanel';
 import { Avatar } from '../avatars/Avatar';
 import { addBot, eveningAction, leaveRoom, removeBot, startGame } from '../net/client';
 import { showToast, useApp } from '../net/store';
@@ -105,7 +106,7 @@ export function Lobby({ room }: { room: AnyRoomView }) {
         <div className="lobby-emotes">{emotes.map((message) => <div className="lobby-emote" key={message.id}><b>{room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'}</b><EmoteBubble message={message} author={room.players.find((p) => p.id === message.playerId)?.name ?? 'Hráč'} /></div>)}</div>
         {isHost ? (
           <button className="btn btn-primary wide" onClick={startGame} disabled={pending || !canStartGame(room.gameId, connected) || room.players.some((p)=>!p.connected)}>
-            {!canStartGame(room.gameId, connected) ? (room.gameId === 'sedma' ? 'Sedma potřebuje 2 nebo 4 hráče' : 'Čekáme na dalšího hráče…') : `Rozdat karty (${connected} hráči)`}
+            {!canStartGame(room.gameId, connected) ? GAME_INFO[room.gameId].needPlayers : `Rozdat karty (${connected} ${connected === 1 ? 'hráč' : 'hráči'})`}
           </button>
         ) : (
           <p className="lobby-wait">
@@ -114,23 +115,8 @@ export function Lobby({ room }: { room: AnyRoomView }) {
         )}
       </div>
       <details className="rules">
-        <summary>Pravidla {gameName(room.gameId)} v kostce</summary>
-        {room.gameId === 'lhar' ? <ul><li>Polož 1–4 karty rubem. Povinné tvrzení postupuje 7–A.</li><li>Další hráč pokračuje, nebo zpochybní poslední sadu.</li><li>Za lež bere střed autor, za pravdu vyzyvatel. Vítěz sporu začíná hodnotou napadeného tvrzení.</li><li>Poslední karta vyhraje až po přijetí či vyřešení výzvy.</li><li>Ve třech se rozdává 11/11/10 od začínajícího.</li></ul> : room.gameId === 'sedma' ? <ul><li>Hraj jakoukoli kartu. Barva nerozhoduje.</li><li>Štych drží poslední sedma nebo karta původní hodnoty.</li><li>Vycházející může ukončit štych nebo pokračovat sedmou či původní hodnotou.</li><li>Vítěz dobírá první. Eso i desítka mají 10 bodů, poslední štych {room.sedmaBonus ?? 10}.</li><li>Ve čtyřech sedí spoluhráči naproti sobě. Tři hráči nejsou podporovaní.</li></ul> : (
-        <ul>
-          <li>Každý dostane 4 karty. Přikládáš stejnou barvu nebo hodnotu.</li>
-          <li>
-            <b>7</b> — další bere 2 karty, nebo přiloží svou sedmičku (trest se sčítá).
-          </li>
-          <li>
-            <b>A</b> — další hráč stojí.
-          </li>
-          <li>
-            <b>Q</b> (svršek) — jde na cokoli a určíš novou barvu.
-          </li>
-          <li>Nemáš co hrát? Lízni si. Pokud líznutá karta sedí, můžeš ji hned zahrát.</li>
-          <li>Kdo se první zbaví všech karet, vyhrává.</li>
-        </ul>
-        )}
+        <summary>Pravidla {gameName(room.gameId)}</summary>
+        <RulesContent gameId={room.gameId} note={room.gameId === 'sedma' ? `V této místnosti má poslední štych +${room.sedmaBonus ?? 10} bodů.` : undefined} />
       </details>
     </main>
   );

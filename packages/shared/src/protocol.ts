@@ -5,6 +5,7 @@ import type { SedmaClientEvent, SedmaView } from './sedma/types';
 import type { PrsiClientEvent, PrsiView } from './prsi/types';
 import type { EmoteMessage } from './social';
 import type { AvatarId } from './avatars';
+import type { ExtraClientEvent, ExtraViews } from './extra';
 
 // ---- Room / transport layer. Game specifics are confined to `game` + `events`. ----
 
@@ -39,11 +40,14 @@ export interface RoomView<G extends GameId = 'prsi'> {
   round: number;
   /** Sequence number of the last game event; actions must reference it. */
   seq: number;
-  game: (G extends 'sedma' ? SedmaView : G extends 'lhar' ? LharView : PrsiView) | null;
+  game: GameViews[G] | null;
 }
 
-export type AnyRoomView = RoomView<'prsi'> | RoomView<'sedma'> | RoomView<'lhar'>;
-export type GameSeqEvent = (LharClientEvent & { seq: number }) | SeqEvent | (SedmaClientEvent & { seq: number });
+/** Per-game view type; added games extend `ExtraViews`. */
+export interface GameViews extends ExtraViews { prsi: PrsiView; sedma: SedmaView; lhar: LharView }
+
+export type AnyRoomView = { [K in GameId]: RoomView<K> }[GameId];
+export type GameSeqEvent = (LharClientEvent & { seq: number }) | SeqEvent | (SedmaClientEvent & { seq: number }) | (ExtraClientEvent & { seq: number });
 export type SeqEvent = PrsiClientEvent & { seq: number };
 
 export type ServerMessage =

@@ -1,4 +1,4 @@
-import { EveningError, canStartGame, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '@balik/shared';
+import { EveningError, canStartGame, GAME_INFO, ROOM_CODE_ALPHABET, ROOM_CODE_LENGTH } from '@balik/shared';
 import { execute, frameFor, GameError, newRoom, refreshPresence, scheduleBot, stamp,
   type Environment, type Reply, type Request } from './model';
 import type { RoomRepository } from './ports';
@@ -15,7 +15,7 @@ export class RoomApplication {
     const creating = request.message.t === 'create';
     const joining = request.message.t === 'join';
     if (request.message.t === 'create' && request.message.bots && !canStartGame(request.message.gameId ?? 'prsi', request.message.bots + 1)) {
-      return { message: { t: 'error', code: 'not-enough-players', message: 'Sedma potřebuje přesně 2 nebo 4 hráče.' } };
+      return { message: { t: 'error', code: 'not-enough-players', message: GAME_INFO[request.message.gameId ?? 'prsi'].needPlayers } };
     }
     const membership = await this.repository.membership(userId);
     const targetCode = request.message.t === 'join' ? request.message.code : request.code ?? membership;

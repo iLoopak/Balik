@@ -1,4 +1,5 @@
-import { GAME_IDS, canStartGame, gameWinnerIds, type GameId, type GameState } from './games';
+import { GAME_IDS, GAME_INFO, canStartGame, gameWinnerIds, type GameId, type GameState } from './games';
+const zeroCounts = () => Object.fromEntries(GAME_IDS.map((id) => [id, 0])) as Record<GameId, number>;
 import { isSedma } from './sedma/engine';
 import type { ErrorCode } from './protocol';
 
@@ -33,7 +34,7 @@ export class EveningError extends Error {
 const fail = (code: ErrorCode, message: string): never => { throw new EveningError(code, message); };
 export function createEvening(now: number): EveningState {
   return { revision: 0, phase: 'ready', startedAt: now, closedAt: null, ballotId: 0, votes: {}, stats: {},
-    history: [], completedMatches: 0, gameCounts: { prsi: 0, sedma: 0, lhar: 0 }, active: null, lastRecordedId: -1, rosterSignature: '' };
+    history: [], completedMatches: 0, gameCounts: zeroCounts(), active: null, lastRecordedId: -1, rosterSignature: '' };
 }
 export function eveningView(state: EveningState): EveningView {
   const { active: _active, lastRecordedId: _recorded, rosterSignature: _roster, ...view } = state;
@@ -80,7 +81,7 @@ export function eveningBallot(state: EveningView, people: EveningPerson[]) {
   const present = people.filter((p) => p.connected || p.bot);
   const voters = present.filter((p) => !p.bot);
   const available = GAME_IDS.filter((game) => canStartGame(game, present.length));
-  const counts: Record<GameId, number> = { prsi: 0, sedma: 0, lhar: 0 };
+  const counts = zeroCounts();
   let cast = 0;
   for (const p of voters) { const game = state.votes[p.id]; if (game && available.includes(game)) { counts[game]++; cast++; } }
   const majority = available.find((game) => counts[game] > voters.length / 2);
@@ -99,7 +100,7 @@ export function applyEveningCommand(state: EveningState, people: EveningPerson[]
   if (command.t === 'vote') {
     if (state.phase !== 'voting' || command.ballotId !== state.ballotId) fail('stale', 'Toto hlasování už není aktuální.');
     const ballot = eveningBallot(state, people);
-    if (!ballot.available.includes(command.gameId)) fail('not-enough-players', command.gameId === 'sedma' ? 'Sedma potřebuje 2 nebo 4 připojené hráče.' : 'Ke hře jsou potřeba aspoň 2 hráči.');
+    if (!ballot.available.includes(command.gameId)) fail('not-enough-players', GAME_INFO[command.gameId].needPlayers);
     if (state.votes[userId] === command.gameId) return { changed: false, directive: 'none' };
     state.votes[userId] = command.gameId; state.revision++; return { changed: true, directive: 'none' };
   }
@@ -143,7 +144,7 @@ export function ensureRoomEvening(room: { evening?: EveningState; status: 'lobby
     if (room.status === 'playing' && room.game) beginEveningMatch(room.evening, room.round, room.gameId ?? 'prsi', room.game, people, null);
     else if (room.status === 'finished') room.evening.phase = 'between';
   }
-  room.evening.gameCounts.lhar ??= 0; // Lazy upgrade of persisted pre-W5 sessions.
+  for (const id of GAME_IDS) room.evening.gameCounts[id] ??= 0; // Lazy upgrade of sessions persisted before a game existed.
   reconcileEvening(room.evening, people);
   return room.evening;
 }

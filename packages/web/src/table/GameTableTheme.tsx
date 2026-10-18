@@ -44,6 +44,8 @@ export interface GameTableThemeProps {
   pulses?: readonly EnvironmentPulse[];
   /** Player whose turn it is; their lane into the console carries the signal. */
   active?: string | null;
+  /** False for games whose cards cover the whole table (Pexeso): no central console. */
+  apparatus?: boolean;
 }
 /** Room → apparatus → receiving slots/ambient → cards → overlays. All decoration is inert. */
 export function GameTableTheme({
@@ -59,6 +61,7 @@ export function GameTableTheme({
   drawCount,
   pulses = [],
   active = null,
+  apparatus = true,
 }: GameTableThemeProps) {
   const selected = useAppearance((p) => p.table),
     selectedMode = useColorMode((p) => p.mode);
@@ -120,6 +123,7 @@ export function GameTableTheme({
           }}
         />
       ))}
+      {apparatus && <>
       <ConsoleWiringUnder geo={geo} wiring={wiring} active={active} myTurn={myTurn} />
       <div
         className="arena-stage console-stage"
@@ -186,6 +190,7 @@ export function GameTableTheme({
       )}
       <ConsoleSlot geo={geo} game={game} kind="play" label={labels.output} />
       <ConsoleWiringOver geo={geo} wiring={wiring} drawCount={drawCount} />
+      </>}
       <ConsoleReactions geo={geo} pulses={pulses} game={game} quiet={quiet} you={you} />
       <div className="arena-hand-light" style={{ top: geo.handTop, height: geo.h - geo.handTop }} />
     </div>

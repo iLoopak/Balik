@@ -1,0 +1,41 @@
+/* Shared frame for the newer games: seats, control bar, chips and results. */
+.game-shell { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.game-shell-top { display: flex; align-items: center; justify-content: center; gap: 18px; min-height: 52px; padding: 6px 12px; flex-wrap: wrap; background: var(--hud); border-bottom: 1px solid var(--line); font-size: 12px; }
+.game-shell-top b { font-family: var(--font-brand); font-size: 18px; font-variant-numeric: lining-nums tabular-nums; }
+.game-shell-top small { display: block; color: var(--muted); font-size: 10px; }
+.game-score { display: grid; gap: 1px; min-width: 70px; text-align: center; }
+.game-score.is-current b { color: var(--accent-text); }
+.game-seat { position: absolute; translate: -50% 0; z-index: 450; display: flex; align-items: center; gap: 6px; max-width: 190px; padding: 4px 10px 4px 4px; border-radius: 12px; background: var(--hud); box-shadow: var(--hud-shadow); pointer-events: none; }
+.game-seat.is-current { background: var(--hud-active); box-shadow: inset 0 0 0 1.5px var(--accent), var(--hud-shadow); }
+.game-seat.is-muted { opacity: .6; }
+.game-seat.is-good { box-shadow: inset 0 0 0 1.5px var(--ok), var(--hud-shadow); }
+.game-seat.is-danger { box-shadow: inset 0 0 0 1.5px var(--penalty), var(--hud-shadow); }
+.game-seat > span:not(.avatar) { min-width: 0; }
+.game-seat b { display: block; font-size: 12px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.game-seat small { display: block; font-size: 10px; color: var(--muted); white-space: nowrap; }
+.game-seat-badge { font-style: normal; font: 600 9px var(--font-machine); font-stretch: 87.5%; padding: 2px 6px; border-radius: 6px; background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent-text); white-space: nowrap; }
+.game-seat .emote-bubble { position: absolute; top: 100%; left: 0; }
+.game-controls { position: absolute; left: 50%; translate: -50% 0; z-index: 550; display: flex; align-items: center; gap: 8px; width: min(96%, 820px); min-height: 44px; padding: 3px 4px 3px 6px; border-radius: 14px; background: var(--hud); box-shadow: var(--hud-shadow); }
+.game-controls.is-mine { background: var(--hud-own); box-shadow: inset 0 0 0 1px var(--accent), var(--hud-shadow); }
+.game-controls-copy { flex: 1; min-width: 0; display: grid; }
+.game-controls-copy b { font-size: 13px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.game-controls.is-mine .game-controls-copy b { color: var(--hud-ink); }
+.game-controls-copy small { font-size: 10px; color: var(--muted); overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.game-controls-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.game-controls-actions .btn { min-height: 38px; padding: 0 12px; border-radius: 10px; font-size: 12px; }
+.game-controls .emote-bubble { position: absolute; bottom: 100%; left: 8px; }
+.table-chip { position: absolute; translate: -50% -50%; z-index: 420; display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 10px; background: var(--hud); box-shadow: var(--hud-shadow); font-size: 11px; font-weight: 600; white-space: nowrap; pointer-events: none; }
+.table-chip .type-machine { font-size: 8px; color: var(--muted); }
+.table-chip.is-accent { box-shadow: inset 0 0 0 1.5px var(--accent), var(--hud-shadow); }
+.table-chip.is-danger { box-shadow: inset 0 0 0 1.5px var(--penalty), var(--hud-shadow); }
+.table-chip.is-good { box-shadow: inset 0 0 0 1.5px var(--ok), var(--hud-shadow); }
+.table-chip svg { width: 14px; height: 14px; }
+.game-results-wrap { position: absolute; inset: 0; z-index: 800; display: grid; place-items: center; padding: 12px; overflow: auto; background: color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter: blur(5px); }
+.game-results-wrap .win-panel { position: relative; width: min(100%, 460px); max-height: 100%; overflow: auto; }
+@media (max-width: 699px) {
+  .game-seat { max-width: 120px; padding: 3px 6px 3px 3px; }
+  .game-seat b { font-size: 10px; }
+  .game-seat small { font-size: 8px; }
+  .game-controls-copy b { font-size: 12px; }
+  .game-controls-actions .btn { padding: 0 9px; font-size: 11px; }
+}

@@ -7,7 +7,7 @@ import {
   createEvening, ensureRoomEvening, eveningView, applyEveningCommand, beginEveningMatch, finishEveningMatch, EveningError, type EveningState, type EveningCommand,
   emoteAllowed, EMOTE_TTL_MS, type EmoteId,
   applyGameAction as applyAction,
-  canStartGame, gameWinnerIds, type GameId,
+  canStartGame, gameWinnerIds, gameEventMs, GAME_INFO, type GameId,
   chooseGameBotAction as chooseBotAction,
   createGameRound as createRound,
   filterGameEventFor as filterEventFor,
@@ -122,7 +122,7 @@ function animationMs(events: GameEvent[]): number {
         ms += 900;
         break;
       default:
-        ms += 160;
+        ms += gameEventMs(e) ?? 160;
     }
   }
   return ms;
@@ -257,7 +257,7 @@ export class RoomManager {
   }
 
   private create(conn: Conn, token: string, name: string, bots: number, gameId: GameId, sedmaBonus: 0 | 10, avatarId?: AvatarId): void {
-    if (bots && !canStartGame(gameId, bots + 1)) return this.error(conn, 'not-enough-players', 'Sedma potřebuje přesně 2 nebo 4 hráče.');
+    if (bots && !canStartGame(gameId, bots + 1)) return this.error(conn, 'not-enough-players', GAME_INFO[gameId].needPlayers);
     this.detach(conn);
     const code = this.newCode();
     const player = this.newPlayer(token, name, conn);
@@ -354,7 +354,7 @@ export class RoomManager {
     if (room.players.some((p) => !p.bot && !p.conn)) return this.error(conn, 'not-enough-players', 'Čekáme na návrat nebo uvolnění odpojeného místa.');
     if (!canStartGame(room.gameId, room.players.length)) {
       this.broadcast(room, []);
-      return this.error(conn, 'not-enough-players', room.gameId === 'sedma' ? 'Sedma potřebuje přesně 2 nebo 4 hráče.' : undefined);
+      return this.error(conn, 'not-enough-players', GAME_INFO[room.gameId].needPlayers);
     }
     room.round += 1;
     room.startIndex = (room.startIndex + 1) % room.players.length;

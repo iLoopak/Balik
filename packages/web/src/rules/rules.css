@@ -1,0 +1,16 @@
+.rules-open { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 44px; min-height: 44px; padding: 7px; border-radius: 10px; color: inherit; font-size: 12px; }
+.rules-open:hover { background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.rules-dialog { width: min(560px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); box-sizing: border-box; padding: clamp(16px, 4vw, 26px); border-radius: 20px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-lg); overflow-y: auto; }
+.rules-dialog::backdrop { background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(3px); }
+.rules-dialog header { display: flex; justify-content: space-between; align-items: start; gap: 12px; margin-bottom: 6px; }
+.rules-dialog header p { margin: 0 0 6px; color: var(--accent-text, var(--accent)); font-size: 10px; }
+.rules-dialog h2 { margin: 0; font-family: var(--font-brand); font-size: clamp(24px, 5vw, 32px); }
+.rules-close { width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px; border: 1px solid var(--line); font-size: 24px; }
+.rules-content { display: grid; gap: 14px; font-size: 14px; line-height: 1.55; }
+.rules-content h3 { margin: 0 0 4px; font-family: var(--font-brand); font-size: 16px; }
+.rules-content ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.rules-content li::marker { color: var(--accent-text, var(--accent)); }
+.rules-goal { margin: 8px 0 0; display: grid; gap: 4px; padding: 12px 14px; border-radius: 12px; background: color-mix(in srgb, var(--accent) 10%, transparent); font-weight: 600; }
+.rules-goal .type-machine { font-size: 9px; color: var(--accent-text, var(--accent)); }
+.rules-note { margin: 0; font-size: 12px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .rules-dialog { animation: none; } }

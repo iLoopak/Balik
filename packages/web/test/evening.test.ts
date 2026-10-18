@@ -29,7 +29,7 @@ describe('Evening shared UI',()=>{
     e.phase='voting';e.ballotId=1;e.votes={a:'prsi'};room.evening=eveningView(e);
     html=renderToStaticMarkup(createElement(EveningScreen,{room}));expect(html).toContain('Co dáme dál?');expect(html).toContain('aria-pressed="true"');expect(html).toContain('Jak vybíráme hru?');
     room.players.push({id:'c',name:'Cyril',bot:false,connected:true,wins:0});
-    html=renderToStaticMarkup(createElement(EveningScreen,{room}));expect(html).toContain('Sedma ve třech nejde.');
+    html=renderToStaticMarkup(createElement(EveningScreen,{room}));expect(html).toContain('Sedma potřebuje přesně 2 nebo 4 hráče. Upravte počet botů nebo vyberte jinou hru.');
     e.phase='closed';e.closedAt=300;room.evening=eveningView(e);
     html=renderToStaticMarkup(createElement(EveningScreen,{room}));expect(html).toContain('To byl večer.');expect(html).toContain('Večer vyhrává Anna.');expect(html).toContain('Zpět na úvod');expect(html).not.toContain('Rozdat Prší');
   });
