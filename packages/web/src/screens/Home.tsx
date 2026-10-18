@@ -10,6 +10,8 @@ import './screens.css';
 import '../sedma/sedma.css';
 import { BrandMascot } from '../brand/BrandMascot';
 import { AppSettings } from '../themes/AppearancePicker';
+import { EDITIONS } from '../themes/registry';
+import { editionHref } from '../decks/editions';
 
 const HERO: Card[] = [
   { id: 'hearts-Q', suit: 'hearts', rank: 'Q' },
@@ -145,8 +147,14 @@ export function Home() {
         )}
       </motion.div>
       <p className="home-foot">Máš odkaz od kamaráda? Stačí ho otevřít.</p>
-      <a className="btn btn-ghost" href="/dev/deck-stormpunk">Prohlédnout balíček Stormpunk ↗</a>
-      <a className="btn btn-ghost" href="/decks/retro-arcade">Prohlédnout balíček Retro Arcade ↗</a>
+      <nav className="home-editions" aria-labelledby="home-editions-title">
+        <p id="home-editions-title" className="home-foot">Prohlédnout balíčky</p>
+        {EDITIONS.map((t) => (
+          <a key={t.id} className="btn btn-ghost" href={editionHref(t.id)!}>
+            {t.name} ↗
+          </a>
+        ))}
+      </nav>
       {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/avatars">Postavy · avatar playground ↗</a>}
       {import.meta.env.DEV && <a className="btn btn-ghost" href="/dev/brand">BLIK · brand & game feel lab ↗</a>}
     </main>

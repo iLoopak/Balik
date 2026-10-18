@@ -50,6 +50,18 @@
   color: var(--faint);
 }
 
+.home-editions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 420px;
+}
+
+.home-editions .home-foot {
+  flex-basis: 100%;
+  text-align: center;
+}
+
 .panel form {
   display: flex;
   flex-direction: column;

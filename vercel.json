@@ -8,6 +8,12 @@
     { "source": "/r/:code", "destination": "/index.html" },
     { "source": "/decks/retro-arcade", "destination": "/index.html" },
     { "source": "/decks/retro-arcade/", "destination": "/index.html" },
+    { "source": "/decks/mariasky", "destination": "/index.html" },
+    { "source": "/decks/mariasky/", "destination": "/index.html" },
+    { "source": "/decks/strasidla", "destination": "/index.html" },
+    { "source": "/decks/strasidla/", "destination": "/index.html" },
+    { "source": "/decks/kontrast", "destination": "/index.html" },
+    { "source": "/decks/kontrast/", "destination": "/index.html" },
     { "source": "/dev/:path*", "destination": "/index.html" }
   ]
 }

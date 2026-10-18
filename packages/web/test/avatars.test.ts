@@ -17,7 +17,8 @@ import { AvatarChoices } from '../src/avatars/AvatarPicker';
 import { AVATAR_KEY, setAvatarPreference, useAvatarPreference } from '../src/avatars/preferences';
 import { avatarTurn } from '../src/avatars/status';
 import { useAppearance } from '../src/themes/preferences';
-import ArcadeGallery from '../src/decks/ArcadeGallery';
+import EditionGallery from '../src/decks/EditionGallery';
+import { GALLERY_EDITIONS, type GalleryDeckId } from '../src/decks/editions';
 vi.mock('../src/net/client', () => ({ sendAvatar: vi.fn() }));
 vi.mock('../src/net/store', () => ({ useApp: vi.fn() }));
 
@@ -115,11 +116,17 @@ describe('permanent BALÍK player identity', () => {
 });
 
 it('exposes all 32 Arcade cards in a production gallery using the game CardView', () => {
-  const html = renderToStaticMarkup(createElement(ArcadeGallery));
+  const html = renderToStaticMarkup(createElement(EditionGallery, { deck: 'retro-arcade' }));
   expect(html).toContain('32 / 32 karet');
   expect(html.match(/class="gallery-card-item"/g)).toHaveLength(32);
   expect(html).toContain('/?deck=retro-arcade&amp;table=retro-arcade');
   expect(html).not.toContain('/decks/stormpunk/stickers/');
+});
+
+it.each(Object.keys(GALLERY_EDITIONS) as GalleryDeckId[])('serves a 32-card gallery for %s', (deck) => {
+  const html = renderToStaticMarkup(createElement(EditionGallery, { deck }));
+  expect(html.match(/class="gallery-card-item"/g)).toHaveLength(32);
+  expect(html).toContain(`/?deck=${deck}`);
   const vercel = JSON.parse(readFileSync(new URL('../../../vercel.json', import.meta.url), 'utf8'));
-  expect(vercel.rewrites).toContainEqual({ source: '/decks/retro-arcade', destination: '/index.html' });
+  expect(vercel.rewrites).toContainEqual({ source: `/decks/${deck}`, destination: '/index.html' });
 });
