@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { applyEveningCommand, beginEveningMatch, createEvening, createGameRound, eveningBallot, eveningSummary, eveningView,
-  finishEveningMatch, reconcileEvening, ensureRoomEvening, mulberry32, isSedma, GAME_IDS,
+  finishEveningMatch, reconcileEvening, ensureRoomEvening, mulberry32, isSedma, GAME_IDS, canStartGame,
   type EveningPerson, type EveningState, type GameId, type GameState } from '../src';
 import { clientMessageSchema } from '../src/schema';
 const people = (n=2): EveningPerson[] => Array.from({length:n},(_,i)=>({id:`p${i}`,name:`Hráč ${i}`,connected:true,bot:false}));
@@ -43,7 +43,7 @@ describe('Herní večer: shared session ledger and voting',()=>{
     vote(e,roster,'p0','sedma'); vote(e,roster,'p1','sedma'); vote(e,roster,'p2','sedma');
     const revision=e.revision; roster[3]!.connected=false; reconcileEvening(e,roster);
     expect(e.revision).toBeGreaterThan(revision); expect(e.votes).toEqual({});
-    expect(eveningBallot(e,roster)).toMatchObject({available:['prsi','lhar'],allPresent:false,ready:false});
+    expect(eveningBallot(e,roster)).toMatchObject({available:GAME_IDS.filter((id)=>canStartGame(id,3)),allPresent:false,ready:false});
     expect(()=>vote(e,roster,'p0','sedma')).toThrow('2 nebo 4');
     roster[3]!.connected=true; reconcileEvening(e,roster); expect(e.votes).toEqual({});
     roster[1]!.bot=true; reconcileEvening(e,roster);
@@ -106,7 +106,7 @@ describe('Herní večer: shared session ledger and voting',()=>{
 
 it('adds Lhář to a three-seat ballot and records its verified win without card points',()=>{
   const {e,roster}=setup(3);applyEveningCommand(e,roster,'p0','p0',command(e,'openVote'),2);
-  expect(eveningBallot(e,roster).available).toEqual(['prsi','lhar']);vote(e,roster,'p0','lhar');vote(e,roster,'p1','lhar');
+  expect(eveningBallot(e,roster).available).toEqual(GAME_IDS.filter((id)=>canStartGame(id,3)));expect(eveningBallot(e,roster).available).toContain('lhar');vote(e,roster,'p0','lhar');vote(e,roster,'p1','lhar');
   expect(applyEveningCommand(e,roster,'p0','p0',command(e,'confirm','lhar'),3)).toMatchObject({directive:'start',gameId:'lhar'});
   const game=createGameRound('lhar',roster.map(p=>p.id),0,mulberry32(3)).state;
   if(!('kind' in game)||game.kind!=='lhar')throw Error();game.phase='finished';game.winnerId='p1';game.result={winnerIds:['p1'],reason:'cards'};

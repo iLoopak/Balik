@@ -22,3 +22,6 @@ export * from './tricks';
 export * from './snaps/types';
 export * from './snaps/engine';
 export * from './snaps/view';
+export * from './durak/types';
+export * from './durak/engine';
+export * from './durak/view';

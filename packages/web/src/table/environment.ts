@@ -27,12 +27,14 @@ export const CONSOLE_LABELS: Record<GameId, { input: string | null; output: stri
   sedma: { input: 'DOBÍRÁNÍ', output: 'ŠTYCH' },
   lhar: { input: null, output: 'TVRZENÍ' },
   snaps: { input: 'TALON', output: 'ŠTYCH' },
+  durak: { input: 'TALON', output: 'ÚTOK A OBRANA' },
 };
 export const MAX_ENVIRONMENT_PULSES = 4;
 export const ENVIRONMENT_PULSE_MS = 1100;
 /** Receiving pockets follow the card geometry, including Sedma's multi-column trick. */
 export function consolePocket(geo: Geometry, game: GameId, kind: 'draw' | 'play') {
   if (kind === 'draw') return { ...geo.deck, width: geo.deckW * 1.36, height: geo.deckH * 1.3 };
+  if (geo.stage) return { ...geo.discard, ...geo.stage };
   if (game === 'sedma') {
     const players = Object.keys(geo.seats).length + 1;
     const scale = geo.compact ? 0.82 : 1;

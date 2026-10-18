@@ -8,10 +8,16 @@ import { applyGameAction, chooseGameBotAction, createGameRound, filterGameEventF
 export function playthrough(game: GameId, players: string[], seed: number, secret: (state: GameState, viewer: string) => string[], maxSteps = 3000) {
   const rng = mulberry32(seed);
   let { state, events } = createGameRound(game, players, seed % players.length, rng);
+  // A card every seat has seen face up (a trump, a taken table) stays public afterwards.
+  const shown = new Set<string>();
+  const ids = (json: string) => new Set(json.match(/"(?:hearts|diamonds|clubs|spades)-(?:7|8|9|10|J|Q|K|A)"/g) ?? []);
   const check = (s: GameState, evs: typeof events) => {
-    for (const viewer of players) {
-      const hidden = secret(s, viewer);
-      const view = JSON.stringify(gameViewFor(s, viewer));
+    const views = players.map((viewer) => JSON.stringify(gameViewFor(s, viewer)));
+    const everyone = views.map(ids).reduce((a, b) => new Set([...a].filter((x) => b.has(x))));
+    for (const id of everyone) shown.add(id.slice(1, -1));
+    for (const [i, viewer] of players.entries()) {
+      const hidden = secret(s, viewer).filter((id) => !shown.has(id));
+      const view = views[i]!;
       const filtered = JSON.stringify(evs.map((e) => filterGameEventFor(e, viewer)));
       for (const id of hidden) {
         expect(view, `${game} view for ${viewer} leaks ${id}`).not.toContain(`"${id}"`);
